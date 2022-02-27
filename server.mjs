@@ -2,7 +2,7 @@
 import Fastify from 'fastify'
 import FastifySensible from 'fastify-sensible'
 import FastifyPlugin from 'fastify-plugin'
-// import FastifyVite from 'fastify-vite'
+import FastifyVite from 'fastify-vite'
 
 import { 
   devLogger, 
@@ -11,7 +11,7 @@ import {
 } from './utils.mjs'
 
 export async function setup (context, dispatcher) {  
-  const { init, root, dev, server, tenants } = context
+  const { init, renderer, root, dev, server, tenants } = context
 
   const app = Fastify({
     logger: {
@@ -20,13 +20,16 @@ export async function setup (context, dispatcher) {
   })
 
   await app.register(FastifySensible)
-  // await fastify.register(FastifyVite, { root, renderer })
-  // await fastify.vite.ready() 
+  await app.register(FastifyVite, { root, renderer })
+  await app.vite.ready() 
 
-  const initializer = FastifyPlugin(async function () {
-    await init(app, context)
-  })
-  await app.register(initializer)
+  if (typeof init === 'function') {
+    const initializer = FastifyPlugin(async function () {
+      await init(app, context)
+    })
+
+    await app.register(initializer)
+  }
 
   return app
 }
