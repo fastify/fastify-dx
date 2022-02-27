@@ -8,7 +8,7 @@ Fastify's DX-oriented CLI for SSR-enabled application development powered by Vit
 npm i universify
 ```
 
-## Running single Fastify app
+## Running vanilla Fastify app
 
 Create `app.mjs` file as follows:
 
@@ -21,45 +21,23 @@ export default (app) => {
 Run with:
 
 ```sh
-npx uni app
+npx uni app dev
 ```
 
-## Running multi-tenant Fastify app
-
-Create `bar.mjs` file as follows:
-
-```js
-export default (app) => {
-  app.get('/', (_, reply) => reply.send('Hello from bar.dev'))
-}
-```
-
-Create `foo.mjs` file as follows:
-
-```js
-export default (app) => {
-  app.get('/', (_, reply) => reply.send('Hello from foo.dev'))
-}
-```
+## Running Fastify-Vite app
 
 Create `app.mjs` file as follows:
 
 ```js
-export const tenants = {
-  foo: 'foo.dev',
-  bar: 'bar.dev',
-}
+import FastifyViteVue from 'fastify-vite-vue'
+
+export const renderer = FastifyViteVue
 ```
 
-Add relevant entries to `/etc/hosts` for testing:
-
-```
-::1 foo.dev
-::1 bar.dev
-```
+Create `views/index.vue` and export `path` to set a route.
 
 Run with:
 
 ```sh
-npx uni app
+npx uni app dev
 ```
