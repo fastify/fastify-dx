@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "universify",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A work in progress.",
   "scripts": {
     "lint": "eslint . --ext .js,.jsx --fix"
@@ -10,7 +10,7 @@
     "uni": "./index.mjs"
   },
   "files": [
-    "core/*",
+    "commands/*",
     "index.mjs",
     "utils.mjs",
     "server.mjs"
