@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import Fastify from 'fastify'
 import { setup, listen } from './server.mjs'
 import { resolveInit, getContext, getDispatcher } from './utils.mjs'
 import dev from './commands/dev.mjs'

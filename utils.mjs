@@ -62,7 +62,6 @@ function applyHostContraint (host, method) {
       return method(options)
     } else if (args.length === 2) {
       handler = args[1]
-      console.log('options', options)
       return method(path, options, handler)
     } else if (args.length === 3) {
       Object.assign(options, {
