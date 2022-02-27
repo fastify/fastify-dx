@@ -43,49 +43,6 @@ export function getContext ({ init, root }) {
   return context
 }
 
-function applyHostContraint (host, method) {
-  return (...args) => {
-    let path
-    let handler    
-    let options = {
-      constraints: { host }
-    }
-    path = args[0]
-    if (args.length === 1) {
-      Object.assign(options, {
-        ...args[0],
-        constraints: {
-          ...options.constraints,
-          ...args[0].constraints,
-        }
-      })
-      return method(options)
-    } else if (args.length === 2) {
-      handler = args[1]
-      return method(path, options, handler)
-    } else if (args.length === 3) {
-      Object.assign(options, {
-        ...args[1],
-        constraints: {
-          ...options.constraints,
-          ...args[1].constraints,
-        }
-      })
-      handler = args[2]
-      return method(path, options, handler)
-    }
-  }
-}
-
-export function applyTenantOverrides (tenantScope, tenantHost) {
-  for (const method of ['route', 'get', 'post', 'put', 'delete', 'patch', 'options']) {
-    tenantScope[method] = applyHostContraint(
-      tenantHost, 
-      tenantScope[method].bind(tenantScope)
-    )
-  }
-}
-
 export const devLogger = {
   translateTime: 'HH:MM:ss Z',
   ignore: 'pid,hostname'
