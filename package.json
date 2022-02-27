@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "universify",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A work in progress.",
   "scripts": {
     "lint": "eslint . --ext .js,.jsx --fix"

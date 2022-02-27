@@ -37,7 +37,7 @@ export function getContext ({ init, root }) {
     tenants: init.tenants,
     init: init.default,
     renderer: init.renderer,
-    port: init.port,
+    port: init.port || 3000,
     host: init.host,
   }
   return context
@@ -45,7 +45,6 @@ export function getContext ({ init, root }) {
 
 function applyHostContraint (host, method) {
   return (...args) => {
-    console.log(args)
     let path
     let handler    
     let options = {

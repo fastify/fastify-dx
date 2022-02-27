@@ -54,5 +54,5 @@ export async function listen (app, { dev, port, host }) {
   if (dev) {
     app.log.info('Development mode is enabled')
   }
-  await app.listen(port || 3000, host)
+  await app.listen(port, host)
 }
