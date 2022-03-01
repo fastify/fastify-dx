@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 import { setup, listen } from './server.mjs'
-import { resolveInit, getContext, getDispatcher } from './utils.mjs'
-import dev from './commands/dev.mjs'
+import { getContext, getDispatcher } from './core.mjs'
 
-const [init, root] = await resolveInit(process.argv[2])
-const context = getContext({ init, root })
-const dispatcher = getDispatcher(context, { dev })
+import commands from './commands/index.mjs'
 
-await dispatcher(context)
+const context = await getContext(process.argv[2])
+const dispatcher = getDispatcher(context, commands)
+
+await dispatcher.immediate(context)
 
 const app = await setup(context, dispatcher)
 
