@@ -1,4 +1,5 @@
 const middie = require('middie')
+const { writeFile, readFile, existsSync } = require('./utils')
 const { createServer } = require('vite')
 const { resolve } = require('path')
 const { kEmitter } = require('./symbols')
@@ -10,7 +11,7 @@ async function ensureIndexHtml (options, indexHtmlPath) {
   }
 }
 
-async function setup ({ dev, root, server, renderer, getHandler, getEntry }) {
+async function setup (options) {
   // Vite's pesky opinionated constraint of having index.html
   // as the main entry point for bundling — the file needs to exist
   const indexHtmlPath = resolve(options.root, 'index.html')
@@ -22,24 +23,24 @@ async function setup ({ dev, root, server, renderer, getHandler, getEntry }) {
 
   // Create and enable Vite's Dev Server middleware
   const devServerOptions = {
-    ...vite,
+    ...options.vite,
     server: {
       middlewareMode: 'ssr',
-      ...vite.server
-    }
+      ...options.vite.server,
+    },
   }
   this.devServer = await createServer(devServerOptions)
-  this.scope.use(vite.middlewares)
+  this.scope.use(this.devServer.middlewares)
 
-  // In development mode, template is passed as an async function, which is 
+  // In development mode, template is passed as an async function, which is
   // called on every request to ensure the newest index.html version is loaded
   const template = async (url) => {
     const indexHtml = await readFile(indexHtmlPath, 'utf8')
     const transformedHtml = await vite.transformIndexHtml(url, indexHtml)
-    return await renderer.compileIndexHtml(transformedHtml)
+    return await options.renderer.compileIndexHtml(transformedHtml)
   }
 
-  const entry = await getEntry(options, vite)
+  const entry = await getEntry(options, this.devServer)
   const handler = getHandler(scope, options, entry, template, this.devServer)
 
   this[kEmitter].emit('ready', { routes: entry.routes, handler })
@@ -49,9 +50,9 @@ module.exports = setup
 
 // Loads the Vite application server entry
 //
-// getEntry() must produce an object with a render function and 
-// optionally, a routes array. The official adapters will 
-// automatically load view files from the views/ folder and 
+// getEntry() must produce an object with a render function and
+// optionally, a routes array. The official adapters will
+// automatically load view files from the views/ folder and
 // provide them in the routes array. The routes array is then used
 // to register an individual Fastify route for each of the views.
 async function getEntry (options, vite) {
@@ -59,8 +60,8 @@ async function getEntry (options, vite) {
   const entry = entryModule.default || entryModule
   return {
     routes: await entry.routes?.(),
-    // In development mode, render is an async function so it 
-    // can always return the freshest version of the render 
+    // In development mode, render is an async function so it
+    // can always return the freshest version of the render
     // function exported by the Vite application server entry
     async render () {
       const entryModule = await vite.ssrLoadModule(modulePath)
@@ -70,7 +71,7 @@ async function getEntry (options, vite) {
   }
 }
 
-// Create a route handler function set up for integration with 
+// Create a route handler function set up for integration with
 // the Vite Dev Server and hot reload of index.html
 function getHandler (scope, options, entry, template, viteDevServer) {
   return async function (req, reply) {

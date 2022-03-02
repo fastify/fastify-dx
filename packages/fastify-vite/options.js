@@ -55,7 +55,7 @@ function processOptions (options) {
   // The root path option can only be set once,
   // so we process it here, in the options factory function
   if (typeof options.root === 'function') {
-    // The root property can be a function that has the same 
+    // The root property can be a function that has the same
     // signature as path.resolve() but with works with ESM's file URLs
     options.root = options.root((...path) => {
       if (path.length && path[0].startsWith('file:')) {

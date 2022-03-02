@@ -1,6 +1,5 @@
 const { on, EventEmitter } = require('events')
 
-const vite = require('vite')
 const FastifyPlugin = require('fastify-plugin')
 
 const processOptions = require('./options')
@@ -20,12 +19,15 @@ class Vite {
       setupProduction.call(this, scope, options)
     }
   }
+
   async ready () {
     setupRouting.call(this, scope, await on('ready', this[kEmitter]))
   }
+
   get (url, routeOptions) {
     return this.route(url, { method: 'GET', ...routeOptions })
   }
+
   post (url, { data, method, ...routeOptions } = {}) {
     return this.route(url, { data, method: 'GET', ...routeOptions })
   }

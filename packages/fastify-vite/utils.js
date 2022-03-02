@@ -1,3 +1,6 @@
+const { writeFile, readFile } = require('fs/promises')
+const { existsSync } = require('fs')
+
 function suppressExperimentalWarnings () {
   // See https://github.com/nodejs/node/issues/30810
   const { emitWarning } = process
@@ -14,5 +17,8 @@ function suppressExperimentalWarnings () {
 }
 
 module.exports = {
+  writeFile,
+  readFile,
+  existsSync,
   suppressExperimentalWarnings,
 }

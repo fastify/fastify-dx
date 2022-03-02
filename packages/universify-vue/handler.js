@@ -9,7 +9,7 @@ function getHandler (fastify, options, render, template) {
       reply.code(500)
       reply.send(e.stack)
     }
-  } 
+  }
 }
 
 function getDevHandler (fastify, options, getRender, getTemplate, viteDevServer) {
