@@ -1,6 +1,6 @@
 # universify
 
-Fastify's DX-oriented CLI for SSR-enabled application development powered by Vite.
+<img width="924" alt="Screen Shot 2022-03-01 at 22 17 27" src="https://user-images.githubusercontent.com/12291/156276225-d36ad7b1-43a8-42f2-b5e5-896672c53919.png">
 
 **Status**: experimental, in active development.
 
