@@ -18,17 +18,9 @@ export async function setup (context, dispatcher) {
   await app.register(FastifySensible)
 
   if (renderer) {
-    console.log('1')
-    try {
     await app.register(FastifyVite, { root, renderer })
-    } catch (err) {
-      console.error(err)
-    }
-    console.log('2')
-    await app.vite.ready() 
+    await app.vite.ready()
   }
-
-  console.log('!/3')
 
   if (typeof init === 'function') {
     const initializer = FastifyPlugin(async function () {
