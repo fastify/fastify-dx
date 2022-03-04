@@ -7,18 +7,34 @@ import FastifyVite from 'fastify-vite'
 import { devLogger } from './core.mjs'
 
 export async function setup (context, dispatcher) {  
-  const { init, renderer, root, dev, server, tenants } = context
+  const {
+    init,
+    renderer,
+    root,
+    dev,
+    server,
+    tenants
+  } = context
 
   const app = Fastify({
     logger: {
       prettyPrint: dev ? devLogger : false,
-    }
+    },
+    ...server
   })
+
+  context.update({ app })
 
   await app.register(FastifySensible)
 
   if (renderer) {
     await app.register(FastifyVite, { root, renderer })
+    if (dispatcher.is('generate')) {
+      await app.vite.build()
+    } else if (dispatcher.is('build')) {
+      await app.vite.build()
+      await dispatcher.exit()
+    }
     await app.vite.ready()
   }
 

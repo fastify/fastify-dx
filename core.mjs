@@ -35,27 +35,26 @@ async function getExitHandler (context) {
 }
 
 export function getDispatcher (context, commands) {
-  const ready = []
-  const immediate = []  
+  let ready
+  let immediate
+  let currentCommand
   for (let cmd of Object.keys(commands)) {
-    if (commands[cmd][kImmediate]) {
-      immediate.push(cmd)
-    } else {
-      ready.push(cmd)
-    }
-  }
-  const getResolver = listeners => async (context) => {
-    context.exit = getExitHandler(context)
-    for (let cmd of listeners) {
-      if (process.argv.includes(kebabCase(cmd))) {
-        await commands[cmd](context)
-        break        
+    if (process.argv.includes(kebabCase(cmd))) {
+      currentCommand = cmd
+      if (commands[cmd][kImmediate]) {
+        ready = cmd
+      } else {
+        immediate = cmd
       }
     }
   }
+  const getResolver = async () => {
+    await commands[cmd](context)
+  }
   return {
-    ready: getResolver(ready),
-    immediate: getResolver(immediate),
+    is: cmd => currentCommand === cmd,
+    ready: () => commands[currentCommand](context),
+    immediate: () => commands[currentCommand](context),
   }
 }
 

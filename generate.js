@@ -1,5 +1,5 @@
 async function getPaths (options) {
-  const { generated } = options
+  const { generate } = options
   const paths = []
   if (typeof options.paths === 'function') {
     await options.paths(fastify, (path) => paths.push(path))

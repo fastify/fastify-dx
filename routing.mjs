@@ -1,20 +1,22 @@
 import { fetch } from 'undici'
 
-export const route = (scope, handler) => (url, routeOptions) => {
-  const preHandler = routeOptions.preHandler || []
-  if (routeOptions.getData) {
-    preHandler.push(getData)
+export function getRouteSetter (scope, handler) {
+  return (url, routeOptions) => {
+    const preHandler = routeOptions.preHandler || []
+    if (routeOptions.getData) {
+      preHandler.push(getData)
+    }
+    if (routeOptions.getPayload) {
+      preHandler.push(routeOptions.getPayload)
+      scope.get(`/-/payload${url}`, getPayloadHandler(scope, routeOptions.getPayload))
+    }
+    scope.route({
+      url,
+      handler,
+      ...routeOptions,
+      preHandler,
+    })
   }
-  if (routeOptions.getPayload) {
-    preHandler.push(routeOptions.getPayload)
-    scope.get(`/-/payload${url}`, getPayloadHandler(scope, routeOptions.getPayload))
-  }
-  scope.route({
-    url,
-    handler,
-    ...routeOptions,
-    preHandler,
-  })
 }
 
 async function getDataHandler (scope, getData) {
