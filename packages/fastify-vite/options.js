@@ -44,7 +44,7 @@ class Options {
         return
       }
       this.distIndex = readFileSync(distIndex, 'utf8')
-      this.distManifest = require(resolve(options.distDir, 'client/ssr-manifest.json'))
+      this.distManifest = require(resolve(this.distDir, 'client/ssr-manifest.json'))
     } else {
       this.distManifest = []
     }
@@ -67,7 +67,7 @@ function processOptions (options) {
   } else if (options.root.startsWith('file:')) {
     // Adjust in case import.meta.url is passed as parameter
     options.root = dirname(fileURLToPath(options.root))
-  } else if (typeof options.root === null) {
+  } else if (options.root === null) {
     // Assume current working directory if unset
     options.root = process.cwd()
   }

@@ -14,14 +14,14 @@ class Vite {
     this[kEmitter] = new EventEmitter()
     this.options = processOptions(options)
     if (this.options.dev) {
-      setupDev.call(this, scope, options)
+      setupDev.call(this, options)
     } else {
-      setupProduction.call(this, scope, options)
+      setupProduction.call(this, options)
     }
   }
 
   async ready () {
-    setupRouting.call(this, scope, await on('ready', this[kEmitter]))
+    setupRouting.call(this, this.scope, await on('ready', this[kEmitter]))
   }
 
   get (url, routeOptions) {
