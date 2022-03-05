@@ -23,9 +23,15 @@ class Options {
   distDir = null
 
   // Overridable internal APIs
-  getEntry = null
-  getHandler = null
-  getRouteSetter = null
+
+  // Set to html.js#compileIndexHtml unless overriden
+  html = null
+  // Set to either <mode>.js#getEntry unless overriden
+  entry = null
+  // Set to either <mode>.js#getHandler unless overriden
+  handler = null
+  // Set to either routing.js#getRouteSetter unless overriden
+  route = null
 
   // Create options based on defaults and immediately
   // compute the distribution bundle settings via update()

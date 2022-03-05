@@ -31,6 +31,7 @@
     "zx": "^4.2.0"
   },
   "dependencies": {
+    "arg": "^5.0.1",
     "fastify": "^3.27.2",
     "fastify-plugin": "^3.0.1",
     "fastify-sensible": "^3.1.2",

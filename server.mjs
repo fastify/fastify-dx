@@ -28,14 +28,22 @@ export async function setup (context, dispatcher) {
   await app.register(FastifySensible)
 
   if (renderer) {
-    await app.register(FastifyVite, { root, renderer })
-    if (dispatcher.is('generate')) {
-      await app.vite.build()
-    } else if (dispatcher.is('build')) {
+    await app.register(FastifyVite, { dev, root, renderer })
+    if (dispatcher.is('generate', 'build')) {
+      app.vite.options.update({ dev: false })
+    }
+    if (dispatcher.is('build')) {
       await app.vite.build()
       await dispatcher.exit()
     }
+    if (dispatcher.is('generate')) {
+      await app.vite.build()
+      await app.vite.generate()
+      await dispatcher.exit()
+    }    
+    await dispatcher('eject', 'build', 'generate')
     await app.vite.ready()
+    await dispatcher('generate')
   }
 
   if (typeof init === 'function') {

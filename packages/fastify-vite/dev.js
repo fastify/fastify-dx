@@ -34,16 +34,18 @@ async function setup (options) {
 
   // In development mode, template is passed as an async function, which is
   // called on every request to ensure the newest index.html version is loaded
-  options.getTemplate ??= async (url) => {
+  options.template ??= async (url) => {
     const indexHtml = await readFile(indexHtmlPath, 'utf8')
     const transformedHtml = await this.devServer.transformIndexHtml(url, indexHtml)
     return await options.compileIndexHtml(transformedHtml)
   }
+  options.entry ??= options.renderer.entry ?? getEntry
+  options.handler ??= options.renderer.handler ?? getHandler
 
-  const loadEntry = await options.getEntryLoader(options, this.devServer)
-  const handler = options.getHandler(this.scope, options, loadEntry, getTemplate, this.devServer)
+  const { routes, render } = await options.entry(options, this.devServer)
+  const handler = options.handler(this.scope, options, render, this.devServer)
 
-  this[kEmitter].emit('ready', { routes: entry.routes, handler })
+  this[kEmitter].emit('ready', { routes, handler })
 }
 
 // Loads the Vite application server entry.
@@ -52,30 +54,32 @@ async function setup (options) {
 // automatically load view files from the views/ folder and
 // provide them in the routes array. The routes array is then used
 // to register an individual Fastify route for each of the views.
-async function getEntryLoader (options, devServer) {
+async function getEntry (options, devServer) {
   const modulePath = resolve(options.root, options.entry.server.replace(/^\/+/, ''))
-  return async () => {
-    const entryModule = await devServer.ssrLoadModule(modulePath)
-    const entry = entryModule.default ?? entryModule
-    return {
-      routes: await entry.routes?.(),
-      // In development mode, render is an async function so it
-      // can always return the freshest version of the render
-      // function exported by the Vite application server entry
-      render: entry.render,
-    }
+  const entryModule = await devServer.ssrLoadModule(modulePath)
+  const entry = entryModule.default ?? entryModule
+  return {
+    routes: await entry.routes?.(),
+    // In development mode, render is an async function so it
+    // can always return the freshest version of the render
+    // function exported by the Vite application server entry
+    async render () {
+      const entryModule = await devServer.ssrLoadModule(modulePath)
+      const { render } = entryModule.default ?? entryModule
+      return render
+    },
   }
 }
 
 // Creates a route handler function set up for integration with
 // the Vite Dev Server and hot reload of index.html
-function getHandler (scope, options, loadEntry, getTemplate, viteDevServer) {
+function getHandler (scope, options, render, viteDevServer) {
   return async function (req, reply) {
     try {
+      render = await render()
       const url = req.raw.url
-      const { render } = await loadEntry()
-      const template = await getTemplate(url)
-      const fragments = await render(fastify, req, reply, url, options)
+      const template = await options.template(url)
+      const fragments = await render(scope, req, reply, url, options)
       reply.type('text/html')
       reply.send(template(req, fragments))
       return reply
@@ -89,6 +93,6 @@ function getHandler (scope, options, loadEntry, getTemplate, viteDevServer) {
 
 module.exports = {
   setup,
-  getEntryLoader,
+  getEntry,
   getHandler,
 }

@@ -9,9 +9,8 @@ const { move } = require('fs-extra')
 const { build: viteBuild, mergeConfig } = require('vite')
 const { join } = require('path')
 
-async function build (options) {
-  const { vite } = options
-  const outDir = vite.build.outDir || 'dist'
+async function build () {
+  const outDir = this.options.vite.build.outDir || 'dist'
   const client = mergeConfig(vite, {
     build: {
       outDir: `${outDir}/client`,
@@ -33,4 +32,4 @@ async function build (options) {
   console.log(`ℹ created builds at ${outDir}/client and ${outDir}/server.`)
 }
 
-module.exports = { build }
+module.exports = build
