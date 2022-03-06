@@ -1,16 +1,14 @@
 #!/usr/bin/env node
 
 import { setup, listen } from './server.mjs'
-import { getContext, getDispatcher } from './core.mjs'
+import { getContext, getCommand } from './core.mjs'
 
 const context = await getContext(process.argv[2])
-const dispatcher = getDispatcher(context, {
-  dev: () => {
-    context.dev = true
-  }
-})
+const command = getCommand()
 
-await dispatcher('dev')
+command('dev', () => {
+  context.dev = true
+})
 
 const app = await setup(context, dispatcher)
 

@@ -19,25 +19,33 @@ export function immediate (command) {
   return command
 }
 
-async function getExitHandler (context) {
+async function exit () {
   try {
-    if (context.app) {
-      await context.app.close()
-    }
+    await this.app?.close()
     setImmediate(() => process.exit(0))
   } catch (error) {
-    console.log(error)
-    if (context.app) {
-      context.app.log.error(error)
-    }
+    this.app?.log.error(error)
     setImmediate(() => process.exit(1))
   }
 }
 
-export function getDispatcher (context, commands) {
-  const dispatcher = async function () {
+export function getCommand () {
+  const argv = arg(process.argv)
+  return (...args) => {
+    let callback
+    let commands
+    if (typeof args[args.length-1] === 'function') {
+      callback = args[args.length-1]
+      commands = args.slice(0, -1)
+    }
     for (const command of commands) {
-
+      if (argv[command]) {
+        if (callback) {
+          callback(argv[command])
+        } else {
+          return argv[command]
+        }
+      }
     }
   }
 }
@@ -45,12 +53,16 @@ export function getDispatcher (context, commands) {
 export async function getContext (filename) {
   const [init, root] = await resolveInit(filename)
   return {
+    exit,
     root,
     tenants: init.tenants,
     init: init.default,
     renderer: init.renderer,
     port: init.port || 3000,
     host: init.host,
+    update (obj) {
+      Object.assign(this, obj)
+    }
   }
 }
 

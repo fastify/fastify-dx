@@ -11,19 +11,19 @@ const { join } = require('path')
 
 async function build () {
   const outDir = this.options.vite.build.outDir || 'dist'
-  const client = mergeConfig(vite, {
+  const client = mergeConfig(this.options.vite, {
     build: {
       outDir: `${outDir}/client`,
       ssrManifest: true,
     },
   })
   const serverOutDir = `${outDir}/server`
-  const server = mergeConfig(vite, {
+  const server = mergeConfig(this.options.vite, {
     build: {
       ssr: true,
       outDir: serverOutDir,
       rollupOptions: {
-        input: join(options.root, options.entry.server),
+        input: join(this.options.root, this.options.entry.server),
       },
     },
   })

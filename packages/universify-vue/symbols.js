@@ -1,3 +1,6 @@
+const kHooks = Symbol('kHooks')
+const kEmitter = Symbol('kEmitter')
+
 const kRoutes = Symbol.for('kRoutes')
 const kData = Symbol.for('kData')
 const kPayload = Symbol.for('kPayload')
@@ -12,6 +15,8 @@ const kFuncValue = Symbol('kFuncValue')
 const kFuncExecuted = Symbol('kFuncExecuted')
 
 module.exports = {
+  kHooks,
+  kEmitter,
   kRoutes,
   kData,
   kPayload,

@@ -6,7 +6,7 @@ import FastifyVite from 'fastify-vite'
 
 import { devLogger } from './core.mjs'
 
-export async function setup (context, dispatcher) {  
+export async function setup (context, command) {  
   const {
     init,
     renderer,
@@ -27,23 +27,29 @@ export async function setup (context, dispatcher) {
 
   await app.register(FastifySensible)
 
+  command('eject', () => {
+    if (renderer) {
+
+    }
+  })
+
   if (renderer) {
     await app.register(FastifyVite, { dev, root, renderer })
-    if (dispatcher.is('generate', 'build')) {
+    command('generate', 'build', () => {
       app.vite.options.update({ dev: false })
-    }
-    if (dispatcher.is('build')) {
+    })
+    await command('build', async () => {
       await app.vite.build()
-      await dispatcher.exit()
+      await context.exit()
     }
-    if (dispatcher.is('generate')) {
+    await command('generate', async () => {
       await app.vite.build()
-      await app.vite.generate()
-      await dispatcher.exit()
-    }    
-    await dispatcher('eject', 'build', 'generate')
+    })
     await app.vite.ready()
-    await dispatcher('generate')
+    await command('generate', async () => {
+      await app.vite.generate()
+      await command.exit()
+    })
   }
 
   if (typeof init === 'function') {

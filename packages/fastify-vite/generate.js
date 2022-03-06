@@ -1,8 +1,11 @@
-const { resolve } = require('path')
+const Fastify = require('fastify')
+const { parse: parsePath } = require('path')
+const matchit = require('matchit')
 const pMap = require('p-map')
 const { parse: parseHTML } = require('node-html-parser')
+const { writeFile, ensureDir, existsSync } = require('./utils')
 
-function worker (iterator, mapper) {
+async function worker (iterator, mapper) {
   try {
     return await pMap(iterator, mapper, { concurrency: 64 })
   } catch (err) {
@@ -41,7 +44,6 @@ async function getURLs (scope, urls, routes) {
   if (typeof urls === 'function') {
     return await urls(scope, url => urls.push(url))
   } else {
-    const urls = []
     for (const route of routes) {
       if (matchit.parse(route.path).every(segment => segment.type === 0)) {
         urls.push(route.path)
@@ -52,58 +54,59 @@ async function getURLs (scope, urls, routes) {
 }
 
 function handleResponse (url, response) {
-  const afterFirstSlash = url.pathname.slice(1)
-  if (afterFirstSlash) {
-    htmlPath = `${name}/index.html`
-    jsonPath = `${name}/index.json`
-  } else {
-    htmlPath = 'index.html'
-    jsonPath = 'index.json'
-  }
+  const name = url.pathname.slice(1)
+  const htmlPath = name ? `${name}/index.html` : 'index.html'
+  const jsonPath = name ? `${name}/index.json` : 'index.json'
   const { html, json } = extractPayload(response.payload, `/${jsonPath}`)
   return [
     [htmlPath, html],
-    [jsonPath, json]
+    [jsonPath, json],
   ]
 }
 
 module.exports = async function generate () {
-  const { distDir, generate } = options
-  const urls = this.options.generate.url
-    ? getURLs(this.scope, generate.urls, this.routes)
-    : [generate.url]
+  const { generate } = this.options
+  const { url, urls } = generate
+    ? getURLs(this.scope, urls ?? [], this.routes)
+    : [url]
   await worker.call(this, urls, async (url) => {
     const response = this.scope.inject({ url })
     const files = await handleResponse(url, response)
-    for (const [path, contents] of files) {
-      const { dir } = parsePath(path)
-      if (!existsSync(dir)) {
-        await ensureDir(dir)
-      }
-      await writeFile(path, contents)
-    }
+    await writeFiles.call(this, files)
   })
   if (this.options.generate.server) {
     await startGenerateServer.call(this)
   }
 }
 
+async function writeFiles (files) {
+  for (const [path, contents] of files) {
+    const { dir } = parsePath(path)
+    if (!existsSync(dir)) {
+      await ensureDir(dir)
+    }
+    await writeFile(path, contents)
+    setImmediate(() => {
+      this.runHook('onGenerate', this.scope, result, this.options.vite.distDir)
+    })
+  }
+}
+
 async function startGenerateServer () {
-  const builder = Fastify({ logger: true })
-  builder.get('*', async (req, reply) => {
+  const generator = Fastify({ logger: true })
+  generator.get('*', async (req, reply) => {
     const path = req.raw.url
     const files = await handleResponse(url, response)
+    this.runHook('onGenerate', this.scope, result, this.options.vite.distDir)
     if (result) {
       reply.code(201)
       reply.send('')
-      this.runHook('onGenerate', this.scope, result, this.options.vite.distDir)
     }
   })
-  builder.listen(port, (err, address) => {
-    if (err) {
-      app.log.error(err)
-      setImmediate(() => process.exit(1))
-    }
-    builder.log.info(`generate server listening on ${address}`)
+  try {
+    await generator.listen(port)
+  } catch (err) {
+    this.scope.log.error(err)
+    setImmediate(() => process.exit(1))
   }
 }
