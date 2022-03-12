@@ -66,20 +66,20 @@ function handleResponse (url, response) {
 
 module.exports = async function generate () {
   const { generate } = this.options
-  const { url, urls } = generate
-    ? getURLs(this.scope, urls ?? [], this.routes)
-    : [url]
+  const urls = generate
+    ? getURLs(this.scope, generate.urls ?? [], this.routes)
+    : [generate.url]
   await worker.call(this, urls, async (url) => {
-    const response = this.scope.inject({ url })
+    const response = await this.scope.inject({ url })
     const files = await handleResponse(url, response)
-    await writeFiles.call(this, files)
+    await writeFiles.call(this, response, files)
   })
-  if (this.options.generate.server) {
-    await startGenerateServer.call(this)
+  if (generate.server.enabled) {
+    await startGenerateServer.call(this, generate.server.port)
   }
 }
 
-async function writeFiles (files) {
+async function writeFiles (response, files) {
   for (const [path, contents] of files) {
     const { dir } = parsePath(path)
     if (!existsSync(dir)) {
@@ -87,18 +87,19 @@ async function writeFiles (files) {
     }
     await writeFile(path, contents)
     setImmediate(() => {
-      this.runHook('onGenerate', this.scope, result, this.options.vite.distDir)
+      this.runHook('onGenerate', this.scope, response, this.options.vite.distDir)
     })
   }
 }
 
-async function startGenerateServer () {
+async function startGenerateServer (port) {
   const generator = Fastify({ logger: true })
   generator.get('*', async (req, reply) => {
-    const path = req.raw.url
-    const files = await handleResponse(url, response)
-    this.runHook('onGenerate', this.scope, result, this.options.vite.distDir)
-    if (result) {
+    const url = req.raw.url
+    const response = await this.scope.inject({ url })
+    if (response) {
+      const files = await handleResponse(url, response)
+      await writeFiles.call(this, response, files)
       reply.code(201)
       reply.send('')
     }

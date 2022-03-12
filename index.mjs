@@ -1,17 +1,27 @@
 #!/usr/bin/env node
 
 import { setup, listen } from './server.mjs'
-import { getContext, getCommand } from './core.mjs'
+import { getCommand, getContext } from './core.mjs'
 
-const context = await getContext(process.argv[2])
+// A simple command runner, will instantly parse 
+// process.argv and allow running a function at any 
+// given point in time if one or more commands are matched
 const command = getCommand()
 
+// A simple object to hold application 
+// context variables, including the app instance itself
+const context = await getContext(process.argv[2])
+
 command('dev', () => {
+  // This setting is passed down to 
+  // fastify-vite to enable Vite's Dev Server
   context.dev = true
 })
 
-const app = await setup(context, dispatcher)
+// Get the Fastify server instance from setup()
+const app = await setup(context, command)
 
-if (!context.init?.generate?.server) {
+// Unless we're running a generate command, start the server
+if (!context.init?.generate? && !context.init?.generate?.server) {
   await listen(app, context)
 }
