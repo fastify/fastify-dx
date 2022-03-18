@@ -9,7 +9,6 @@ const kPayload = Symbol.for('kPayload')
 const kStaticPayload = Symbol.for('kStaticPayload')
 const kGlobal = Symbol.for('kGlobal')
 const kAPI = Symbol.for('kAPI')
-const kFirstRender = Symbol.for('kFirstRender')
 
 const isServer = typeof window === 'undefined'
 const fetch = isServer ? () => {} : window.fetch
@@ -115,6 +114,7 @@ function hydrationDone () {
 }
 
 // To circumvent Vite's warning of an unused import
+// eslint-disable-next-line no-unused-vars
 const _ContextProvider = ContextProvider
 
 export {

@@ -1,3 +1,4 @@
+/* globals $,fs,path,globby */
 
 // See test() for expected behavior
 
@@ -20,7 +21,7 @@ function bump (currentRelease, releaseType, tag) {
   let [
     parsedRelease,
     currentTag,
-    tagVersion
+    tagVersion,
   ] = extractTag(currentRelease)
 
   let bumped
@@ -36,7 +37,7 @@ function bump (currentRelease, releaseType, tag) {
     }
   } else if (releaseType === 'premajor') {
     if (!tag) {
-      throw new Error('Must specify either --alpha or --beta for a new premajor release.') 
+      throw new Error('Must specify either --alpha or --beta for a new premajor release.')
     }
     bumped = `${semver.inc(parsedRelease, 'major')}-${tag}.0`
   } else if (supportedReleaseTypes.includes(releaseType)) {
@@ -59,8 +60,8 @@ async function main () {
 
   for (const examplePackage of await globby('examples/*/package.json')) {
     const pkgInfo = JSON.parse(await fs.readFile(examplePackage, 'utf8'))
-    for (const [dep, version] of Object.entries(pkgInfo.local)) {
-      if (dep.includes('fastify-vite')) {
+    for (const dep of Object.keys(pkgInfo.local)) {
+      if (dep.includes('fastify-vite') || dep.includes('universify')) {
         pkgInfo.local[dep] = `^${newVersion}`
       }
     }
@@ -82,28 +83,28 @@ async function main () {
 }
 
 function test () {
-  check('patch', ({is}) => {
+  check('patch', ({ is }) => {
     is(bump('0.0.1', 'patch')[0], '0.0.2')
   })
-  check('minor', ({is}) => {
+  check('minor', ({ is }) => {
     is(bump('0.0.1', 'minor')[0], '0.1.0')
   })
-  check('major', ({is}) => {
+  check('major', ({ is }) => {
     is(bump('0.0.1', 'major')[0], '1.0.0')
   })
-  check('new premajor', ({is}) => {
+  check('new premajor', ({ is }) => {
     is(bump('0.0.1', 'premajor', 'next')[0], '1.0.0-next.0')
   })
-  check('new premajor', ({is}) => {
+  check('new premajor', ({ is }) => {
     is(bump('0.0.1', 'premajor', 'alpha')[0], '1.0.0-alpha.0')
   })
-  check('premajor increment', ({is}) => {
+  check('premajor increment', ({ is }) => {
     is(bump('1.0.0-next.0', 'premajor')[0], '1.0.0-next.1')
   })
-  check('premajor increment', ({is}) => {
+  check('premajor increment', ({ is }) => {
     is(bump('1.0.0-alpha.0', 'premajor')[0], '1.0.0-alpha.1')
   })
-  check('premajor to major', ({is}) => {
+  check('premajor to major', ({ is }) => {
     is(bump('1.0.0-alpha.0', 'major')[0], '1.0.0')
   })
 }
@@ -119,7 +120,7 @@ function extractTag (version) {
 
 function parseFlags () {
   const dry = process.argv.includes('--dry')
-  const next = process.argv.includes('--next')  
+  const next = process.argv.includes('--next')
   const alpha = process.argv.includes('--alpha')
   const beta = process.argv.includes('--beta')
   return {

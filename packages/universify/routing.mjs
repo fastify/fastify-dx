@@ -4,11 +4,12 @@ export function getRouteSetter (scope, handler) {
   return (url, routeOptions) => {
     const preHandler = routeOptions.preHandler || []
     if (routeOptions.getData) {
-      preHandler.push(getData)
+      preHandler.push(getDataHandler(scope, routeOptions.getData))
     }
     if (routeOptions.getPayload) {
-      preHandler.push(routeOptions.getPayload)
-      scope.get(`/-/payload${url}`, getPayloadHandler(scope, routeOptions.getPayload))
+      const getPayload = getPayloadHandler(scope, routeOptions.getPayload)
+      preHandler.push(getPayload)
+      scope.get(`/-/payload${url}`, getPayload)
     }
     scope.route({
       url,
@@ -21,12 +22,12 @@ export function getRouteSetter (scope, handler) {
 
 async function getDataHandler (scope, getData) {
   return async function (req, reply) {
-    req.data = await getData(
+    req.data = await getData({
       fetch,
       fastify: scope,
       req,
       reply,
-    )
+    })
   }
 }
 

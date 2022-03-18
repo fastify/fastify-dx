@@ -1,6 +1,6 @@
 import { existsSync } from 'fs'
 import { resolve, dirname } from 'path'
-import kebabCase from 'lodash.kebabcase'
+import arg from 'arg'
 
 export async function resolveInit (filename) {
   for (const variant of [filename, `${filename}.mjs`, `${filename}.js`]) {
@@ -34,17 +34,13 @@ export function getCommand () {
   return (...args) => {
     let callback
     let commands
-    if (typeof args[args.length-1] === 'function') {
-      callback = args[args.length-1]
+    if (typeof args[args.length - 1] === 'function') {
+      callback = args[args.length - 1]
       commands = args.slice(0, -1)
     }
     for (const command of commands) {
-      if (argv[command]) {
-        if (callback) {
-          callback(argv[command])
-        } else {
-          return argv[command]
-        }
+      if (argv[command] && callback) {
+        return callback(argv[command])
       }
     }
   }
@@ -62,12 +58,11 @@ export async function getContext (filename) {
     host: init.host,
     update (obj) {
       Object.assign(this, obj)
-    }
+    },
   }
 }
 
 export const devLogger = {
   translateTime: 'HH:MM:ss Z',
-  ignore: 'pid,hostname'
+  ignore: 'pid,hostname',
 }
-

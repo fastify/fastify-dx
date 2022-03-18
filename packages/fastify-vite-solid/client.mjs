@@ -114,6 +114,7 @@ function hydrationDone () {
 }
 
 // To circumvent Vite's warning of an unused import
+// eslint-disable-next-line no-unused-vars
 const _ContextProvider = ContextProvider
 
 export {

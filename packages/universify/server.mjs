@@ -6,21 +6,20 @@ import FastifyVite from 'fastify-vite'
 
 import { devLogger } from './core.mjs'
 
-export async function setup (context, command) {  
+export async function setup (context, command) {
   const {
     init,
     renderer,
     root,
     dev,
     server,
-    tenants
   } = context
 
   const app = Fastify({
     logger: {
       prettyPrint: dev ? devLogger : false,
     },
-    ...server
+    ...server,
   })
 
   context.update({ app })
@@ -41,7 +40,7 @@ export async function setup (context, command) {
     await command('build', async () => {
       await app.vite.build()
       await context.exit()
-    }
+    })
     await command('generate', async () => {
       await app.vite.build()
     })
