@@ -1,9 +1,7 @@
 
-export const hooks = {
-  onRequest (req, _, done) {
-    console.log('Got a request!')
-    done()
-  },
+export function onRequest (req, _, done) {
+  console.log('Got a request!')
+  done()
 }
 
 export const decorateReply = {
