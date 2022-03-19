@@ -34,6 +34,7 @@
     "matchit": "^1.1.0",
     "middie": "^5.2.0",
     "node-html-parser": "^5.0.0",
+    "p-map": "^5.3.0",
     "undici": "^4.9.5",
     "vite": "^2.7.1"
   }

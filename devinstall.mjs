@@ -22,9 +22,11 @@ const dependencies = { ...external }
 
 for (const localDep of Object.keys(local)) {
   for (const [dep, version] of Object.entries(
-    require(path.join(__dirname, 'packages', localDep, 'package.json')).dependencies)
+    require(path.join(__dirname, 'packages', localDep, 'package.json')).dependencies || [])
   ) {
-    dependencies[dep] = version
+    if (!Object.keys(local).includes(dep)) {
+      dependencies[dep] = version
+    }
   }
 }
 
@@ -32,6 +34,7 @@ await createPackageFile(exRoot, dependencies)
 await $`npm install -f`
 
 for (const localDep of Object.keys(local)) {
+  await $`rm -rf ${exRoot}/node_modules/${localDep}`
   await $`cp -r ${__dirname}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
   const changed = (reason) => async (path) => {
     console.log(`ℹ ${reason} ${path}`)

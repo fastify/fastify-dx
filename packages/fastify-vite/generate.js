@@ -1,9 +1,14 @@
 const Fastify = require('fastify')
 const { parse: parsePath } = require('path')
 const matchit = require('matchit')
-const pMap = require('p-map')
+const createRequire = require('module')
+// const pMap = require('p-map')
 const { parse: parseHTML } = require('node-html-parser')
 const { writeFile, ensureDir, existsSync } = require('./utils')
+
+const pMap = (iterator, mapper) => Promise.all(
+  iterator.map(() => mapper())
+)
 
 async function worker (iterator, mapper) {
   try {

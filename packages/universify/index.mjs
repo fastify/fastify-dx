@@ -10,7 +10,7 @@ const command = getCommand()
 
 // A simple object to hold application
 // context variables, including the app instance itself
-const context = await getContext(process.argv[2])
+const context = await getContext(command)
 
 command('dev', () => {
   // This setting is passed down to

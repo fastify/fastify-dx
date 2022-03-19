@@ -1,5 +1,6 @@
 import { existsSync } from 'fs'
 import { resolve, dirname } from 'path'
+import { hooks, methods } from 'fastify-apply/applicable.js'
 import arg from 'arg'
 
 export async function resolveInit (filename) {
@@ -30,8 +31,13 @@ async function exit () {
 }
 
 export function getCommand () {
-  const argv = arg(process.argv)
-  return (...args) => {
+  const argv = arg({
+    '--url': Boolean,    
+    '--server': Boolean,
+    '-s': '--server',
+    '-u': '--url',
+  })
+  const handler = (...args) => {
     let callback
     let commands
     if (typeof args[args.length - 1] === 'function') {
@@ -44,10 +50,23 @@ export function getCommand () {
       }
     }
   }
+  for (const k of Object.keys(argv)) {
+    handler[k] = argv[k]
+  }
+  for (const cmd of ['dev', 'eject', 'generate']) {
+    if (argv._.includes(cmd)) {
+      handler[cmd] = true
+    }
+  }
+  return handler
 }
 
-export async function getContext (filename) {
-  const [init, root] = await resolveInit(filename)
+export async function getContext (argv) {
+  const [init, root] = await resolveInit(argv._[0])
+  const applicable = {}
+  for (const k of [...hooks, ...methods]) {
+    applicable[k] = init[k]
+  }
   return {
     exit,
     root,
@@ -56,6 +75,7 @@ export async function getContext (filename) {
     renderer: init.renderer,
     port: init.port || 3000,
     host: init.host,
+    applicable,
     update (obj) {
       Object.assign(this, obj)
     },
