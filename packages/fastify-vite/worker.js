@@ -6,54 +6,54 @@ async function worker (iterator, mapper) {
   }
 }
 
-const AggregateError = require('aggregate-error');
+const AggregateError = require('aggregate-error')
 
-export default async function pMap(
+export default async function pMap (
   iterable,
   mapper,
   {
     concurrency = Number.POSITIVE_INFINITY,
-    stopOnError = true
-  } = {}
+    stopOnError = true,
+  } = {},
 ) {
   return new Promise((resolve, reject_) => { // eslint-disable-line promise/param-names
     if (iterable[Symbol.iterator] === undefined && iterable[Symbol.asyncIterator] === undefined) {
-      throw new TypeError(`Expected \`input\` to be either an \`Iterable\` or \`AsyncIterable\`, got (${typeof iterable})`);
+      throw new TypeError(`Expected \`input\` to be either an \`Iterable\` or \`AsyncIterable\`, got (${typeof iterable})`)
     }
 
     if (typeof mapper !== 'function') {
-      throw new TypeError('Mapper function is required');
+      throw new TypeError('Mapper function is required')
     }
 
     if (!((Number.isSafeInteger(concurrency) || concurrency === Number.POSITIVE_INFINITY) && concurrency >= 1)) {
-      throw new TypeError(`Expected \`concurrency\` to be an integer from 1 and up or \`Infinity\`, got \`${concurrency}\` (${typeof concurrency})`);
+      throw new TypeError(`Expected \`concurrency\` to be an integer from 1 and up or \`Infinity\`, got \`${concurrency}\` (${typeof concurrency})`)
     }
 
-    const result = [];
-    const errors = [];
-    const skippedIndexesMap = new Map();
-    let isRejected = false;
-    let isResolved = false;
-    let isIterableDone = false;
-    let resolvingCount = 0;
-    let currentIndex = 0;
-    const iterator = iterable[Symbol.iterator] === undefined ? iterable[Symbol.asyncIterator]() : iterable[Symbol.iterator]();
+    const result = []
+    const errors = []
+    const skippedIndexesMap = new Map()
+    let isRejected = false
+    let isResolved = false
+    let isIterableDone = false
+    let resolvingCount = 0
+    let currentIndex = 0
+    const iterator = iterable[Symbol.iterator] === undefined ? iterable[Symbol.asyncIterator]() : iterable[Symbol.iterator]()
 
     const reject = reason => {
-      isRejected = true;
-      isResolved = true;
-      reject_(reason);
-    };
+      isRejected = true
+      isResolved = true
+      reject_(reason)
+    }
 
     const next = async () => {
       if (isResolved) {
-        return;
+        return
       }
 
-      const nextItem = await iterator.next();
+      const nextItem = await iterator.next()
 
-      const index = currentIndex;
-      currentIndex++;
+      const index = currentIndex
+      currentIndex++
 
       // Note: `iterator.next()` can be called many times in parallel.
       // This can cause multiple calls to this `next()` function to
@@ -62,36 +62,36 @@ export default async function pMap(
       // so it runs only one time as the `skippedIndex` logic is
       // non-idempotent.
       if (nextItem.done) {
-        isIterableDone = true;
+        isIterableDone = true
 
         if (resolvingCount === 0 && !isResolved) {
           if (!stopOnError && errors.length > 0) {
-            reject(new AggregateError(errors));
-            return;
+            reject(new AggregateError(errors))
+            return
           }
 
-          isResolved = true;
+          isResolved = true
 
           if (!skippedIndexesMap.size) {
-            resolve(result);
-            return;
+            resolve(result)
+            return
           }
 
-          const pureResult = [];
+          const pureResult = []
 
           // Support multiple `pMapSkip`'s.
           for (const [index, value] of result.entries()) {
             if (skippedIndexesMap.get(index) === pMapSkip) {
-              continue;
+              continue
             }
 
-            pureResult.push(value);
+            pureResult.push(value)
           }
 
-          resolve(pureResult);
+          resolve(pureResult)
         }
 
-        return;
+        return
       }
 
       resolvingCount++;
@@ -99,42 +99,42 @@ export default async function pMap(
       // Intentionally detached
       (async () => {
         try {
-          const element = await nextItem.value;
+          const element = await nextItem.value
 
           if (isResolved) {
-            return;
+            return
           }
 
-          const value = await mapper(element, index);
+          const value = await mapper(element, index)
 
           // Use Map to stage the index of the element.
           if (value === pMapSkip) {
-            skippedIndexesMap.set(index, value);
+            skippedIndexesMap.set(index, value)
           }
 
-          result[index] = value;
+          result[index] = value
 
-          resolvingCount--;
-          await next();
+          resolvingCount--
+          await next()
         } catch (error) {
           if (stopOnError) {
-            reject(error);
+            reject(error)
           } else {
-            errors.push(error);
-            resolvingCount--;
+            errors.push(error)
+            resolvingCount--
 
             // In that case we can't really continue regardless of `stopOnError` state
             // since an iterable is likely to continue throwing after it throws once.
             // If we continue calling `next()` indefinitely we will likely end up
             // in an infinite loop of failed iteration.
             try {
-              await next();
+              await next()
             } catch (error) {
-              reject(error);
+              reject(error)
             }
           }
         }
-      })();
+      })()
     };
 
     // Create the concurrent runners in a detached (non-awaited)
@@ -147,17 +147,16 @@ export default async function pMap(
       for (let index = 0; index < concurrency; index++) {
         try {
           // eslint-disable-next-line no-await-in-loop
-          await next();
+          await next()
         } catch (error) {
-          reject(error);
-          break;
+          reject(error)
+          break
         }
 
         if (isIterableDone || isRejected) {
-          break;
+          break
         }
       }
-    })();
-  });
+    })()
+  })
 }
-

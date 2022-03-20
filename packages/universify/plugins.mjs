@@ -1,34 +1,34 @@
 export default {
   // https://github.com/fastify/fastify-accepts#readme
+  accepts: 'fastify-accepts',
   // https://github.com/fastify/fastify-csrf#readme
+  csrf: 'fastify-csrf',
   // https://github.com/fastify/fastify-cors#readme
+  cors: 'fastify-cors',
   // https://github.com/fastify/fastify-cookie#readme
+  cookie: 'fastify-cookie',
   // https://github.com/fastify/fastify-compress#readme
-  compress: () => importModule('fastify-compress'),
+  compress: 'fastify-compress',
   // https://github.com/fastify/fastify-helmet#readme
+  helmet: 'fastify-helmet',
   // https://github.com/fastify/fastify-jwt
-  jwt: () => importModule('fastify-jwt'),
+  jwt: 'fastify-jwt',
   // https://github.com/fastify/fastify-static
-  static: () => importModule('fastify-static'),
+  static: 'fastify-static',
   // https://github.com/fastify/fastify-postgres
-  postgresql: () => importModule('fastify-postgres'),
+  postgresql: 'fastify-postgres',
   // https://github.com/fastify/fastify-mongodb
-  mongodb: () => importModule('fastify-mongodb'),
+  mongodb: 'fastify-mongodb',
   // https://github.com/fastify/point-of-view
-  templates: () => importModule('point-of-view'),
+  templates: 'point-of-view',
   // https://github.com/fastify/fastify-redis#readme
-  redis: () => importModule('fastify-redis'),
+  redis: 'fastify-redis',
   // https://github.com/fastify/fastify-nextjs
-  nextjs: () => importModule('fastify-nextjs'),
+  nextjs: 'fastify-nextjs',
   // https://github.com/smartiniOnGitHub/fastify-healthcheck
-  health: () => importModule('fastify-healthcheck'),
+  health: 'fastify-healthcheck',
   // https://github.com/fastify/under-pressure
-  pressure: () => importModule('under-pressure'),
+  pressure: 'under-pressure',
   // https://github.com/heply/fastify-bcrypt
-  bcrypt: () => importModule('fastify-bcrypt'),
-}
-
-function importModule (plugin) {
-  const m = await import(plugin)
-  return m.default ?? m
+  bcrypt: 'fastify-bcrypt',
 }

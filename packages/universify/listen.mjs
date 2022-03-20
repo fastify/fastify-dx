@@ -7,7 +7,7 @@ import { getCommand, getContext } from './core.mjs'
 // process.argv and allow running a function at any
 // given point in time if one or more commands are matched
 const command = getCommand()
- 
+
 // A simple object to hold application
 // context variables, including the app instance itself
 const context = await getContext(command)
@@ -17,7 +17,7 @@ command('dev', () => {
   // fastify-vite to enable Vite's Dev Server
   context.dev = true
 })
-  
+
 // Get the Fastify server instance from setup()
 const app = await setup(context, command)
 

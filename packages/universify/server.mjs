@@ -14,7 +14,8 @@ export async function setup (context, command) {
     root,
     dev,
     server,
-    applicable
+    applicable,
+    plugable,
   } = context
 
   const app = Fastify({
@@ -28,6 +29,10 @@ export async function setup (context, command) {
 
   await app.register(FastifySensible)
   await app.register(FastifyApply)
+
+  await Promise.all(Object.entries(pluggable).map(([plugin, settings]) => {
+    return app.register(plugin, settings)
+  })
 
   command('eject', () => {
     if (renderer) {

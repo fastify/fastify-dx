@@ -10,27 +10,27 @@ if (isDev()) {
   registerGlobals()
   watch()
 
-  log({ msg: 'Starting'})
+  log({ msg: 'Starting' })
 
   while (true) {
     node = getNode()
     try {
       await node
     } catch {
-      log({ msg: 'Restarting'})
+      log({ msg: 'Restarting' })
     }
   }
 
   function getNode () {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
-    const listenPath = path.resolve(__dirname, 'test.mjs')    
+    const listenPath = path.resolve(__dirname, 'test.mjs')
     return $`${process.argv[0]} ${listenPath}`
   }
 
   function watch () {
     const watcher = chokidar.watch(['*.mjs', '*.js', '**/.mjs', '*/.js'], {
       ignoreInitial: true,
-      ignored: ['**/node_modules/**']
+      ignored: ['**/node_modules/**'],
     })
     watcher.on('all', () => {
       node.kill()

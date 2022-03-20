@@ -1,11 +1,11 @@
 // Copyright 2021 Google LLC
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     https://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,26 +18,26 @@ import fs from 'fs-extra'
 import * as globbyModule from 'globby'
 import os from 'os'
 import path from 'path'
-import {promisify, inspect} from 'util'
-import {spawn} from 'child_process'
-import {createInterface} from 'readline'
-import {default as nodeFetch} from 'node-fetch'
+import { promisify, inspect } from 'util'
+import { spawn } from 'child_process'
+import { createInterface } from 'readline'
+import { default as nodeFetch } from 'node-fetch'
 import which from 'which'
 import chalk from 'chalk'
 import YAML from 'yaml'
 import minimist from 'minimist'
 import psTreeModule from 'ps-tree'
 
-export {chalk, fs, os, path, YAML, which}
+export { chalk, fs, os, path, YAML, which }
 export const sleep = promisify(setTimeout)
 export const argv = minimist(process.argv.slice(2))
-export const globby = Object.assign(function globby(...args) {
+export const globby = Object.assign(function globby (...args) {
   return globbyModule.globby(...args)
 }, globbyModule)
 export const glob = globby
 const psTree = promisify(psTreeModule)
 
-export function registerGlobals() {
+export function registerGlobals () {
   Object.assign(global, {
     $,
     argv,
@@ -58,12 +58,12 @@ export function registerGlobals() {
   })
 }
 
-export function $(pieces, ...args) {
-  let {verbose, shell, prefix, spawn, maxBuffer = 200 * 1024 * 1024 /* 200 MiB*/} = $
-  let __from = (new Error().stack.split(/^\s*at\s/m)[2]).trim()
-  let cwd = process.cwd()
+export function $ (pieces, ...args) {
+  const { verbose, shell, prefix, spawn, maxBuffer = 200 * 1024 * 1024 /* 200 MiB */ } = $
+  const __from = (new Error().stack.split(/^\s*at\s/m)[2]).trim()
+  const cwd = process.cwd()
 
-  let cmd = pieces[0], i = 0
+  let cmd = pieces[0]; let i = 0
   while (i < args.length) {
     let s
     if (Array.isArray(args[i])) {
@@ -75,7 +75,7 @@ export function $(pieces, ...args) {
   }
 
   let resolve, reject
-  let promise = new ProcessPromise((...args) => [resolve, reject] = args)
+  const promise = new ProcessPromise((...args) => [resolve, reject] = args)
 
   promise._run = () => {
     if (promise.child) return // The _run() called from two places: then() and setTimeout().
@@ -84,7 +84,7 @@ export function $(pieces, ...args) {
     //   printCmd(cmd)
     // }
 
-    let child = spawn(prefix + cmd, {
+    const child = spawn(prefix + cmd, {
       cwd,
       shell: typeof shell === 'string' ? shell : true,
       stdio: [promise._inheritStdin ? 'inherit' : 'pipe', 'pipe', 'pipe'],
@@ -98,7 +98,7 @@ export function $(pieces, ...args) {
       if (signal !== null) {
         message += `\n    signal: ${signal}`
       }
-      let output = new ProcessOutput({
+      const output = new ProcessOutput({
         code,
         signal,
         stdout,
@@ -110,13 +110,13 @@ export function $(pieces, ...args) {
       promise._resolved = true
     })
 
-    let stdout = '', stderr = '', combined = ''
-    let onStdout = data => {
+    let stdout = ''; let stderr = ''; let combined = ''
+    const onStdout = data => {
       if (verbose && !promise._quiet) process.stdout.write(data)
       stdout += data
       combined += data
     }
-    let onStderr = data => {
+    const onStderr = data => {
       if (verbose && !promise._quiet) process.stderr.write(data)
       stderr += data
       combined += data
@@ -140,15 +140,15 @@ try {
 } catch (e) {
 }
 
-export function cd(path) {
+export function cd (path) {
   if ($.verbose) console.log('$', colorize(`cd ${path}`))
   process.chdir(path)
 }
 
-export async function question(query, options) {
-  let completer = undefined
+export async function question (query, options) {
+  let completer
   if (Array.isArray(options?.choices)) {
-    completer = function completer(line) {
+    completer = function completer (line) {
       const completions = options.choices
       const hits = completions.filter((c) => c.startsWith(line))
       return [hits.length ? hits : completions, line]
@@ -167,7 +167,7 @@ export async function question(query, options) {
   }))
 }
 
-export async function fetch(url, init) {
+export async function fetch (url, init) {
   if ($.verbose) {
     if (typeof init !== 'undefined') {
       console.log('$', colorize(`fetch ${url}`), init)
@@ -178,12 +178,12 @@ export async function fetch(url, init) {
   return nodeFetch(url, init)
 }
 
-export function nothrow(promise) {
+export function nothrow (promise) {
   promise._nothrow = true
   return promise
 }
 
-export function quiet(promise) {
+export function quiet (promise) {
   promise._quiet = true
   return promise
 }
@@ -198,36 +198,36 @@ export class ProcessPromise extends Promise {
   _prerun = undefined
   _postrun = undefined
 
-  get stdin() {
+  get stdin () {
     this._inheritStdin = false
     this._run()
     return this.child.stdin
   }
 
-  get stdout() {
+  get stdout () {
     this._inheritStdin = false
     this._run()
     return this.child.stdout
   }
 
-  get stderr() {
+  get stderr () {
     this._inheritStdin = false
     this._run()
     return this.child.stderr
   }
 
-  get exitCode() {
+  get exitCode () {
     return this
       .then(p => p.exitCode)
       .catch(p => p.exitCode)
   }
 
-  then(onfulfilled, onrejected) {
+  then (onfulfilled, onrejected) {
     if (this._run) this._run()
     return super.then(onfulfilled, onrejected)
   }
 
-  pipe(dest) {
+  pipe (dest) {
     if (typeof dest === 'string') {
       throw new Error('The pipe() method does not take strings. Forgot $?')
     }
@@ -246,9 +246,9 @@ export class ProcessPromise extends Promise {
     }
   }
 
-  async kill(signal = 'SIGTERM') {
+  async kill (signal = 'SIGTERM') {
     this.catch(_ => _)
-    let children = await psTree(this.child.pid)
+    const children = await psTree(this.child.pid)
     for (const p of children) {
       try {
         process.kill(p.PID, signal)
@@ -269,7 +269,7 @@ export class ProcessOutput extends Error {
   #stderr = ''
   #combined = ''
 
-  constructor({code, signal, stdout, stderr, combined, message}) {
+  constructor ({ code, signal, stdout, stderr, combined, message }) {
     super(message)
     this.#code = code
     this.#signal = signal
@@ -278,28 +278,28 @@ export class ProcessOutput extends Error {
     this.#combined = combined
   }
 
-  toString() {
+  toString () {
     return this.#combined
   }
 
-  get stdout() {
+  get stdout () {
     return this.#stdout
   }
 
-  get stderr() {
+  get stderr () {
     return this.#stderr
   }
 
-  get exitCode() {
+  get exitCode () {
     return this.#code
   }
 
-  get signal() {
+  get signal () {
     return this.#signal
   }
 
-  [inspect.custom]() {
-    let stringify = (s, c) => s.length === 0 ? '\'\'' : c(inspect(s))
+  [inspect.custom] () {
+    const stringify = (s, c) => s.length === 0 ? '\'\'' : c(inspect(s))
     return `ProcessOutput {
   stdout: ${stringify(this.stdout, chalk.green)},
   stderr: ${stringify(this.stderr, chalk.red)},
@@ -309,7 +309,7 @@ export class ProcessOutput extends Error {
   }
 }
 
-function printCmd(cmd) {
+function printCmd (cmd) {
   if (/\n/.test(cmd)) {
     console.log(cmd
       .split('\n')
@@ -320,25 +320,25 @@ function printCmd(cmd) {
   }
 }
 
-function colorize(cmd) {
+function colorize (cmd) {
   return cmd.replace(/^[\w_.-]+(\s|$)/, substr => {
     return chalk.greenBright(substr)
   })
 }
 
-function substitute(arg) {
+function substitute (arg) {
   if (arg instanceof ProcessOutput) {
     return arg.stdout.replace(/\n$/, '')
   }
   return `${arg}`
 }
 
-function quote(arg) {
+function quote (arg) {
   if (/^[a-z0-9/_.-]+$/i.test(arg) || arg === '') {
     return arg
   }
-  return `$'`
-    + arg
+  return '$\'' +
+    arg
       .replace(/\\/g, '\\\\')
       .replace(/'/g, '\\\'')
       .replace(/\f/g, '\\f')
@@ -346,11 +346,11 @@ function quote(arg) {
       .replace(/\r/g, '\\r')
       .replace(/\t/g, '\\t')
       .replace(/\v/g, '\\v')
-      .replace(/\0/g, '\\0')
-    + `'`
+      .replace(/\0/g, '\\0') +
+    '\''
 }
 
-function exitCodeInfo(exitCode) {
+function exitCodeInfo (exitCode) {
   return {
     2: 'Misuse of shell builtins',
     126: 'Invoked command cannot execute',

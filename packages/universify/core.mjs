@@ -1,7 +1,10 @@
+
 import { existsSync } from 'fs'
 import { resolve, dirname } from 'path'
-import { hooks, methods } from 'fastify-apply/applicable.js'
+
 import arg from 'arg'
+import { hooks, methods } from 'fastify-apply/applicable.js'
+import plugins from './plugins.mjs'
 
 export async function resolveInit (filename) {
   for (const variant of [filename, `${filename}.mjs`, `${filename}.js`]) {
@@ -32,7 +35,7 @@ async function exit () {
 
 export function getCommand () {
   const argv = arg({
-    '--url': Boolean,    
+    '--url': Boolean,
     '--server': Boolean,
     '-s': '--server',
     '-u': '--url',
@@ -67,6 +70,10 @@ export async function getContext (argv) {
   for (const k of [...hooks, ...methods]) {
     applicable[k] = init[k]
   }
+  const plugable = {}
+  for (const k of plugins) {
+    plugable[k] = init[k]
+  }
   return {
     exit,
     root,
@@ -75,6 +82,7 @@ export async function getContext (argv) {
     renderer: init.renderer,
     port: init.port || 3000,
     host: init.host,
+    plugable,
     applicable,
     update (obj) {
       Object.assign(this, obj)

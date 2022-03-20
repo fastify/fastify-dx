@@ -11,14 +11,14 @@ const hooks = [
   'onReady',
   'onClose',
   'onRoute',
-  'onRegister'
+  'onRegister',
 ]
 
 const methods = [
   'addHook',
   'decorate',
   'decorateRequest',
-  'decorateReply'
+  'decorateReply',
 ]
 
 module.exports.hooks = hooks

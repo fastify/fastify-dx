@@ -7,7 +7,7 @@ const { parse: parseHTML } = require('node-html-parser')
 const { writeFile, ensureDir, existsSync } = require('./utils')
 
 const pMap = (iterator, mapper) => Promise.all(
-  iterator.map(() => mapper())
+  iterator.map(() => mapper()),
 )
 
 async function worker (iterator, mapper) {
