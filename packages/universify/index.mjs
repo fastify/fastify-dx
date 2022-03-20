@@ -1,27 +1,55 @@
 #!/usr/bin/env node
 
-import { setup, listen } from './server.mjs'
-import { getCommand, getContext } from './core.mjs'
+import { fileURLToPath } from 'url'
+import { registerGlobals } from './runner.mjs'
+import chokidar from 'chokidar'
 
-// A simple command runner, will instantly parse
-// process.argv and allow running a function at any
-// given point in time if one or more commands are matched
-const command = getCommand()
+if (isDev()) {
+  let node
 
-// A simple object to hold application
-// context variables, including the app instance itself
-const context = await getContext(command)
+  registerGlobals()
+  watch()
 
-command('dev', () => {
-  // This setting is passed down to
-  // fastify-vite to enable Vite's Dev Server
-  context.dev = true
-})
+  log({ msg: 'Starting'})
 
-// Get the Fastify server instance from setup()
-const app = await setup(context, command)
+  while (true) {
+    node = getNode()
+    try {
+      await node
+    } catch {
+      log({ msg: 'Restarting'})
+    }
+  }
 
-// Unless we're running a generate command, start the server
-if (!context.init?.generate?.server) {
-  await listen(app, context)
+  function getNode () {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url))
+    const listenPath = path.resolve(__dirname, 'test.mjs')    
+    return $`${process.argv[0]} ${listenPath}`
+  }
+
+  function watch () {
+    const watcher = chokidar.watch(['*.mjs', '*.js', '**/.mjs', '*/.js'], {
+      ignoreInitial: true,
+      ignored: ['**/node_modules/**']
+    })
+    watcher.on('all', () => {
+      node.kill()
+    })
+  }
+
+  function log ({ msg }) {
+    console.log(JSON.stringify({
+      level: 30,
+      time: new Date().getTime(),
+      pid: process.pid,
+      hostname: os.hostname(),
+      msg,
+    }))
+  }
+}
+
+await import('./test.mjs')
+
+function isDev () {
+  return process.argv.filter(cmd => !cmd.startsWith('-'))[2] === 'dev'
 }

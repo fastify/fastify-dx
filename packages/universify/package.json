@@ -23,6 +23,7 @@
     "fastify-sensible": "^3.1.2",
     "fastify-vite": "^3.0.0-next.2",
     "lodash.kebabcase": "^4.1.1",
-    "pino-pretty": "^7.5.1"
+    "pino-pretty": "^7.5.1",
+    "zx": "^6.0.6"
   }
 }
