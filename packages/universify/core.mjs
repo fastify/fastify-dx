@@ -3,11 +3,12 @@ import { existsSync } from 'fs'
 import { resolve, dirname } from 'path'
 
 import arg from 'arg'
-import { hooks, methods } from 'fastify-apply/applicable.js'
+import { hooks, methods } from 'fastify-apply/applicable.mjs'
 import plugins from './plugins.mjs'
 
 export async function resolveInit (filename) {
   for (const variant of [filename, `${filename}.mjs`, `${filename}.js`]) {
+    console.log('->', process.cwd(), variant)
     const resolvedPath = resolve(process.cwd(), variant)
     if (existsSync(resolvedPath)) {
       const app = await import(resolvedPath)
@@ -53,6 +54,7 @@ export function getCommand () {
       }
     }
   }
+  console.log('argv', argv, process.argv)
   for (const k of Object.keys(argv)) {
     handler[k] = argv[k]
   }
@@ -65,14 +67,18 @@ export function getCommand () {
 }
 
 export async function getContext (argv) {
-  const [init, root] = await resolveInit(argv._[0])
+  const filepath = argv._[0] === 'dev' ? argv._[1] : argv._[0]
+  console.log('argv._', argv._)
+  const [init, root] = await resolveInit(filepath)
   const applicable = {}
   for (const k of [...hooks, ...methods]) {
     applicable[k] = init[k]
   }
   const plugable = {}
-  for (const k of plugins) {
-    plugable[k] = init[k]
+  for (const k of Object.keys(plugins)) {
+    if (init[k]) {
+      plugable[k] = init[k]
+    }
   }
   return {
     exit,

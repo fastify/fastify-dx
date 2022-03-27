@@ -3,7 +3,7 @@
   "name": "api-basic",
   "private": true,
   "scripts": {
-    "dev": "zx ../../devinstall.mjs api-basic -- uni app dev",
+    "dev": "zx ../../devinstall.mjs api-basic -- uni dev app",
     "build": "uni build api",
     "generate": "uni generate api",
     "serve": "uni serve api"

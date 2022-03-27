@@ -54,7 +54,7 @@ class Options {
 
   async updateViteConfig (viteCommand, overrides = {}) {
     const dev = overrides.dev ?? options.dev
-    const mode = dev ? 'development': 'production'
+    const mode = dev ? 'development' : 'production'
     const vite = await resolveConfig({}, viteCommand, mode)
     Object.assign(this, { dev, vite })
   }

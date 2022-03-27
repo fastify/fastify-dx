@@ -8,8 +8,8 @@ async function ensureViteConfig (options) {
     const configPath = join(renderer.path, 'vite', `vite.config.${ext}`)
     if (ext && existsSync(configPath)) {
       await writeFile(
-        join(baseDir, `vite.config.${ext}`), 
-        await readFile(configPath)
+        join(baseDir, `vite.config.${ext}`),
+        await readFile(configPath),
       )
     }
   }

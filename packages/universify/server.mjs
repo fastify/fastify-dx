@@ -30,7 +30,8 @@ export async function setup (context, command) {
   await app.register(FastifySensible)
   await app.register(FastifyApply)
 
-  await Promise.all(Object.entries(pluggable).map(([plugin, settings]) => {
+  await Promise.all(Object.entries(plugable).map(([plugin, settings]) => {
+    console.log(plugin, settings)
     return app.register(plugin, settings)
   }))
 
@@ -47,7 +48,9 @@ export async function setup (context, command) {
     await app.register(initializer)
   }
 
-  await app.vite.commands()
+  if (renderer) {
+    await app.vite.commands()
+  }
 
   return app
 }

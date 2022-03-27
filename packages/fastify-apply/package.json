@@ -12,6 +12,7 @@
   "files": [
     "index.js",
     "applicable.js",
+    "applicable.mjs",
     "README.md"
   ],
   "homepage": "https://github.com/galvez/fastify-apply",

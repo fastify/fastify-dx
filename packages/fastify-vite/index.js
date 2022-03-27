@@ -53,7 +53,7 @@ class Vite {
       })
     }
   }
-  
+
   get (url, routeOptions) {
     return this.route(url, { method: 'GET', ...routeOptions })
   }

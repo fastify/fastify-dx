@@ -130,6 +130,7 @@ export function $ (pieces, ...args) {
   return promise
 }
 
+$.originalQuote = quote
 $.quote = s => s
 $.spawn = spawn
 $.verbose = true

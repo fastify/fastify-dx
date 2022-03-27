@@ -1,7 +1,7 @@
+import fastifyViteVue from 'fastify-vite-vue'
 const viteVue = require('@vitejs/plugin-vue')
 const viteVueJsx = require('@vitejs/plugin-vue-jsx')
 const viteBlueprint = require('vite-plugin-blueprint')
-import fastifyViteVue from 'fastify-vite-vue'
 
 const dev = process.env.NODE_ENV !== 'production'
 

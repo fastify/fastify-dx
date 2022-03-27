@@ -1,4 +1,4 @@
-const hooks = [
+export const hooks = [
   'onRequest',
   'preParsing',
   'preValidation',
@@ -14,14 +14,11 @@ const hooks = [
   'onRegister',
 ]
 
-const methods = [
+export const methods = [
   'addHook',
   'decorate',
   'decorateRequest',
   'decorateReply',
 ]
 
-module.exports = {
-  hooks,
-  methods,
-}
+export default { hooks, methods }
