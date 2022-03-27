@@ -9,12 +9,7 @@ class Options {
   // Prevents ExperimentalWarning messages due to use of undici etc
   suppressExperimentalWarnings = true
 
-  // Vite root app directory, whatever you set here
-  // is also set under `vite.root` so Vite picks it up
-  root = null
-
-  // Any Vite configuration option set here
-  // takes precedence over <root>/vite.config.js
+  // The fastify-vite renderer adapter to use
   renderer = null
 
   // Init bundled distribution settings
@@ -36,15 +31,16 @@ class Options {
   // Create options based on defaults and immediately
   // compute the distribution bundle settings via update()
   constructor (options) {
-    Object.assign(this, options)
     // Dynamically determine bundled distribution settings
-    this.update()
+    this.update(options)
   }
 
   // Update bundled distribution settings according to running mode
-  update () {
+  update (options) {
+    Object.assign(this, options)
+    this.dev ??= process.env.NODE_ENV === 'production'
     if (!this.dev) {
-      this.distDir = resolve(this.root, this.vite.build.outDir)
+      this.distDir = resolve(this.root, options.vite.build.outDir)
       const distIndex = resolve(this.distDir, 'client/index.html')
       if (!existsSync(distIndex)) {
         return
@@ -55,29 +51,19 @@ class Options {
       this.distManifest = []
     }
   }
-}
 
-function processOptions (options) {
-  // The root path option can only be set once,
-  // so we process it here, in the options factory function
-  if (typeof options.root === 'function') {
-    // The root property can be a function that has the same
-    // signature as path.resolve() but with works with ESM's file URLs
-    options.root = options.root((...path) => {
-      if (path.length && path[0].startsWith('file:')) {
-        return resolve(dirname(fileURLToPath(path[0]), ...path.slice(1)))
-      } else {
-        return resolve(...path)
-      }
-    })
-  } else if (options.root.startsWith('file:')) {
-    // Adjust in case import.meta.url is passed as parameter
-    options.root = dirname(fileURLToPath(options.root))
-  } else if (options.root === null) {
-    // Assume current working directory if unset
-    options.root = process.cwd()
+  async updateViteConfig (viteCommand, overrides = {}) {
+    const dev = overrides.dev ?? options.dev
+    const mode = dev ? 'development': 'production'
+    const vite = await resolveConfig({}, viteCommand, mode)
+    Object.assign(this, { dev, vite })
   }
-  return new Options(options)
 }
 
-module.exports = { processOptions }
+async function getOptions (overrides = {}, viteCommand = 'serve') {
+  const options = new Options(overrides)
+  await options.updateViteConfig(viteCommand)
+  return options
+}
+
+module.exports = { Options, getOptions }

@@ -1,4 +1,13 @@
+const { resolve, writeFile, readFile, existsSync } = require('./utils')
+
 const unescapedBacktick = /(?<!\\)`/g
+
+async function ensureIndexHtml (options, indexHtmlPath) {
+  if (!existsSync(indexHtmlPath)) {
+    const baseIndexHtmlPath = resolve(options.renderer.path, 'base', 'index.html')
+    await writeFile(indexHtmlPath, await readFile(baseIndexHtmlPath, 'utf8'))
+  }
+}
 
 function compileIndexHtml (source) {
   const indexHtml = (

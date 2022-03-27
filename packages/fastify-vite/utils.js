@@ -1,3 +1,4 @@
+const { resolve } = require('path')
 const { writeFile, readFile } = require('fs/promises')
 const { existsSync } = require('fs')
 
@@ -17,6 +18,7 @@ function suppressExperimentalWarnings () {
 }
 
 module.exports = {
+  resolve,
   writeFile,
   readFile,
   existsSync,

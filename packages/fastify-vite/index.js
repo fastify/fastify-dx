@@ -8,10 +8,11 @@ const generate = require('./generate')
 const production = require('./production')
 const dev = require('./dev')
 const setupRouting = require('./routing')
-const { kHooks, kEmitter } = require('./symbols')
+const { kScope, kHooks, kEmitter } = require('./symbols')
 
 class Vite {
   constructor (scope, options) {
+    this[kScope] = scope
     this[kEmitter] = new EventEmitter()
     this.options = processOptions(options, options.dev ? dev : production)
   }
@@ -31,6 +32,28 @@ class Vite {
     setupRouting.call(this, await on('ready', this[kEmitter]))
   }
 
+  async commands (exit = true) {
+    if (generate || build) {
+      app.vite.options.update({ dev: false })
+    }
+    if (build) {
+      await this.build()
+      await this.exit()
+    }
+    if (generate) {
+      await this.build()
+    }
+    await this.ready()
+    if (generate) {
+      this.scope.addHook('onReady', async () => {
+        await this.generate()
+        if (exit) {
+          await this.exit()
+        }
+      })
+    }
+  }
+  
   get (url, routeOptions) {
     return this.route(url, { method: 'GET', ...routeOptions })
   }

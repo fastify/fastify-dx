@@ -32,31 +32,10 @@ export async function setup (context, command) {
 
   await Promise.all(Object.entries(pluggable).map(([plugin, settings]) => {
     return app.register(plugin, settings)
-  })
-
-  command('eject', () => {
-    if (renderer) {
-
-    }
-  })
+  }))
 
   if (renderer) {
     await app.register(FastifyVite, { dev, root, renderer })
-    command('generate', 'build', () => {
-      app.vite.options.update({ dev: false })
-    })
-    await command('build', async () => {
-      await app.vite.build()
-      await context.exit()
-    })
-    await command('generate', async () => {
-      await app.vite.build()
-    })
-    await app.vite.ready()
-    await command('generate', async () => {
-      await app.vite.generate()
-      await command.exit()
-    })
   }
 
   await app.apply(applicable)
@@ -67,6 +46,8 @@ export async function setup (context, command) {
     })
     await app.register(initializer)
   }
+
+  await app.vite.commands()
 
   return app
 }

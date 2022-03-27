@@ -10,20 +10,25 @@ if (isDev()) {
   registerGlobals()
   watch()
 
-  log({ msg: 'Starting' })
-
-  while (true) {
+  async function start () {
     node = getNode()
     try {
+      log({ msg: 'Starting' })      
       await node
     } catch {
-      log({ msg: 'Restarting' })
+      // Printed to stderr automatically by zx
     }
+  }
+
+  function restart () {
+    node.catch(() => start())
+    node.kill()
+    log({ msg: 'Restarting' })
   }
 
   function getNode () {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
-    const listenPath = path.resolve(__dirname, 'test.mjs')
+    const listenPath = path.resolve(__dirname, 'listen.mjs')
     return $`${process.argv[0]} ${listenPath}`
   }
 
@@ -48,7 +53,7 @@ if (isDev()) {
   }
 }
 
-await import('./test.mjs')
+await import('./listen.mjs')
 
 function isDev () {
   return process.argv.filter(cmd => !cmd.startsWith('-'))[2] === 'dev'
