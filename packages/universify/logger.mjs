@@ -8,22 +8,27 @@
 import { Writable } from 'stream'
 import colorize from 'colorize'
 
-export const devLogger = new Writable()
+export const devLogger = () => {
+  const writable = new Writable()
 
-devLogger._write = (chunk, encoding, next) => {
-  let json
-  const str = chunk.toString()
-  try {
-    json = JSON.parse(str)
-  } catch {
-    // No JSON
+  writable._write = (chunk, encoding, next) => {
+    console.log('!')
+    let json
+    const str = chunk.toString()
+    try {
+      json = JSON.parse(str)
+    } catch {
+      // No JSON
+    }
+    if (json && levels[json.level]) {
+      console.log(levels[json.level](json))
+    } else {
+      console.log(str)
+    }
+    next()
   }
-  if (json && levels[json.level]) {
-    console.log(levels[json.level](json))
-  } else {
-    console.log(str)
-  }
-  next()
+
+  return writable
 }
 
 // Matches pino.levels

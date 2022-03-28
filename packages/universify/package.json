@@ -10,9 +10,12 @@
     "uni": "./index.mjs"
   },
   "files": [
-    "commands/*",
+    "core.mjs",
     "index.mjs",
-    "utils.mjs",
+    "listen.mjs",
+    "logger.mjs",
+    "plugins.mjs",
+    "zx.mjs",
     "server.mjs"
   ],
   "dependencies": {

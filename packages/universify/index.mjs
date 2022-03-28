@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 import chokidar from 'chokidar'
 import colorize from 'colorize'
 
-import { quiet, registerGlobals } from './runner.mjs'
+import { quiet, registerGlobals } from './zx.mjs'
 import { devLogger } from './logger.mjs'
 
 if (isDev()) {
@@ -19,7 +19,7 @@ if (isDev()) {
   async function start () {
     node = getNode()
     node
-      .pipe(devLogger)
+      .pipe(devLogger())
     try {
       await node
     } catch {
