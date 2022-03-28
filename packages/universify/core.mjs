@@ -3,12 +3,12 @@ import { existsSync } from 'fs'
 import { resolve, dirname } from 'path'
 
 import arg from 'arg'
+
 import { hooks, methods } from 'fastify-apply/applicable.mjs'
 import plugins from './plugins.mjs'
 
 export async function resolveInit (filename) {
   for (const variant of [filename, `${filename}.mjs`, `${filename}.js`]) {
-    console.log('->', process.cwd(), variant)
     const resolvedPath = resolve(process.cwd(), variant)
     if (existsSync(resolvedPath)) {
       const app = await import(resolvedPath)
@@ -49,12 +49,11 @@ export function getCommand () {
       commands = args.slice(0, -1)
     }
     for (const command of commands) {
-      if (argv[command] && callback) {
-        return callback(argv[command])
+      if (handler[command] && callback) {
+        return callback(argv)
       }
     }
   }
-  console.log('argv', argv, process.argv)
   for (const k of Object.keys(argv)) {
     handler[k] = argv[k]
   }
@@ -68,7 +67,6 @@ export function getCommand () {
 
 export async function getContext (argv) {
   const filepath = argv._[0] === 'dev' ? argv._[1] : argv._[0]
-  console.log('argv._', argv._)
   const [init, root] = await resolveInit(filepath)
   const applicable = {}
   for (const k of [...hooks, ...methods]) {
@@ -97,6 +95,9 @@ export async function getContext (argv) {
 }
 
 export const devLogger = {
-  translateTime: 'HH:MM:ss Z',
-  ignore: 'pid,hostname',
+  prettyPrint: {
+    colorize: true,
+    translateTime: 'HH:MM:ss Z',
+    ignore: 'pid,hostname',
+  }
 }

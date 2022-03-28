@@ -52,7 +52,6 @@ for (const localDep of Object.keys(local)) {
   watcher.on('change', changed('M'))
 }
 
-console.log('command', command)
 await $`${command}`
 
 async function createPackageFile (exRoot, dependencies) {

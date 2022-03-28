@@ -3,6 +3,7 @@
 import { fileURLToPath } from 'url'
 import { registerGlobals } from './runner.mjs'
 import chokidar from 'chokidar'
+import colorize from 'colorize'
 
 if (isDev()) {
   let node
@@ -15,7 +16,6 @@ if (isDev()) {
   async function start () {
     node = getNode()
     try {
-      log({ msg: 'Starting' })
       await node
     } catch {
       // Printed to stderr automatically by zx
@@ -25,7 +25,6 @@ if (isDev()) {
   function restart () {
     node.catch(() => start())
     node.kill()
-    log({ msg: 'Restarting' })
   }
 
   function getNode () {
@@ -41,23 +40,19 @@ if (isDev()) {
   }
 
   function watch () {
-    const watcher = chokidar.watch(['*.mjs', '*.js', '**/.mjs', '*/.js'], {
+    const watcher = chokidar.watch(['*.mjs', '*.js', '**/.mjs', '**/.js'], {
       ignoreInitial: true,
       ignored: ['**/node_modules/**'],
     })
-    watcher.on('all', () => {
-      node.kill()
-    })
-  }
-
-  function log ({ msg }) {
-    console.log(JSON.stringify({
-      level: 30,
-      time: new Date().getTime(),
-      pid: process.pid,
-      hostname: os.hostname(),
-      msg,
-    }))
+    const changed = reason => (path) => {
+      console.log()
+      console.log(`${reason} ${path.replace(process.cwd(), '')}`)
+      console.log()
+      restart()
+    }
+    watcher.on('add', changed(colorize.ansify('#green[A]')))
+    watcher.on('unlink', changed(colorize.ansify('#red[D]')))
+    watcher.on('change', changed(colorize.ansify('#yellow[M]')))
   }
 } else {
   await import('./listen.mjs')

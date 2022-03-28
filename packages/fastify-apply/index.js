@@ -11,7 +11,6 @@ function fastifyApply (fastify, options, done) {
       }
       return
     }
-    console.log(`fastify.addHook(${prop}, ${value})`)
     fastify.addHook(prop, value)
   }
 

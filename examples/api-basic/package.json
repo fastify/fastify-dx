@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "fastify": "^3.17.0",
+    "colorize": "^0.1.0",
     "arg": "^5.0.1",
     "fastify-plugin": "^3.0.1",
     "fastify-sensible": "^3.1.2",

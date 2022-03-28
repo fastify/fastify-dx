@@ -31,7 +31,6 @@ export async function setup (context, command) {
   await app.register(FastifyApply)
 
   await Promise.all(Object.entries(plugable).map(([plugin, settings]) => {
-    console.log(plugin, settings)
     return app.register(plugin, settings)
   }))
 
