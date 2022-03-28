@@ -18,12 +18,7 @@ export async function setup (context, command) {
     plugable,
   } = context
 
-  const app = Fastify({
-    logger: {
-      prettyPrint: dev ? devLogger : false,
-    },
-    ...server,
-  })
+  const app = Fastify({ logger: true, ...server })
 
   context.update({ app })
 

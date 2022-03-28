@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
 import { fileURLToPath } from 'url'
-import { registerGlobals } from './runner.mjs'
+
 import chokidar from 'chokidar'
 import colorize from 'colorize'
+
+import { quiet, registerGlobals } from './runner.mjs'
+import { devLogger } from './logger.mjs'
 
 if (isDev()) {
   let node
@@ -15,6 +18,8 @@ if (isDev()) {
 
   async function start () {
     node = getNode()
+    node
+      .pipe(devLogger)
     try {
       await node
     } catch {
@@ -30,13 +35,13 @@ if (isDev()) {
   function getNode () {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const listenPath = path.resolve(__dirname, 'listen.mjs')
-    return $`${
+    return quiet($`${
       process.argv[0]
     } ${
       listenPath
     } ${
       process.argv.slice(2).map(arg => $.originalQuote(arg)).join(' ')
-    }`
+    }`)
   }
 
   function watch () {
