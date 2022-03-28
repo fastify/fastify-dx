@@ -6,7 +6,7 @@ import chokidar from 'chokidar'
 import colorize from 'colorize'
 
 import { quiet, registerGlobals } from './zx.mjs'
-import { devLogger } from './logger.mjs'
+import { startDevLogger } from './logger.mjs'
 
 if (isDev()) {
   let node
@@ -18,8 +18,10 @@ if (isDev()) {
 
   async function start () {
     node = getNode()
-    node
-      .pipe(devLogger())
+
+    startDevLogger(node.stdout)
+    startDevLogger(node.stderr)
+
     try {
       await node
     } catch {

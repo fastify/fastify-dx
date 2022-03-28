@@ -1,6 +1,8 @@
 
+export const port = 4000
+
 export function onRequest (req, _, done) {
-  console.log('Got a request!')
+  req.log.info('Got a request!')
   done()
 }
 

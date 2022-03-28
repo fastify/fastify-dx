@@ -5,30 +5,28 @@
 // in development mode, this just uses a Writable stream
 // to parse and pretty print the output from the Fastify process
 
-import { Writable } from 'stream'
+import readline from 'node:readline'
+import fs from 'fs'
+
+import { on } from 'events'
 import colorize from 'colorize'
 
-export const devLogger = () => {
-  const writable = new Writable()
+export const startDevLogger = async (input) => {
+  const rl = readline.createInterface({ input })
 
-  writable._write = (chunk, encoding, next) => {
-    console.log('!')
+  for await (const [line] of on(rl, 'line')) {
     let json
-    const str = chunk.toString()
     try {
-      json = JSON.parse(str)
+      json = JSON.parse(line)
     } catch {
       // No JSON
     }
     if (json && levels[json.level]) {
       console.log(levels[json.level](json))
     } else {
-      console.log(str)
+      console.log(line)
     }
-    next()
   }
-
-  return writable
 }
 
 // Matches pino.levels
