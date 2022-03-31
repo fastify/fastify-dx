@@ -40,8 +40,8 @@ for (const localDep of Object.keys(local)) {
     console.log(`ℹ ${reason} ${path}`)
     await $`cp -r ${__dirname}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
   }
-  if (localDep === 'universify') {
-    await $`ln -s ${exRoot}/node_modules/${localDep}/index.mjs ${exRoot}/node_modules/.bin/uni`
+  if (localDep === 'fastify-dx') {
+    await $`ln -s ${exRoot}/node_modules/${localDep}/index.mjs ${exRoot}/node_modules/.bin/dx`
   }
   const watcher = chokidar.watch(`${__dirname}/packages/${localDep}`, {
     ignored: [/node_modules/],

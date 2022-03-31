@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* global $,path */
 
 import { fileURLToPath } from 'url'
 

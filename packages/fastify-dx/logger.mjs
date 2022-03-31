@@ -1,8 +1,8 @@
-// This serves as a minimally user-friendly log redactor 
+// This serves as a minimally user-friendly log redactor
 // for Fastify's pino-backed JSON output
 
 // Since there's no need to take special precautions
-// in development mode, this just uses a Writable stream
+// in development mode, this just uses a readline reader
 // to parse and pretty print the output from the Fastify process
 
 import readline from 'node:readline'
@@ -11,7 +11,7 @@ import fs from 'fs'
 import { on } from 'events'
 import colorize from 'colorize'
 
-export const startDevLogger = async (input) => {
+export async function startDevLogger (input) {
   const rl = readline.createInterface({ input })
 
   for await (const [line] of on(rl, 'line')) {

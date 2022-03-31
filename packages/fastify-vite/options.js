@@ -1,6 +1,6 @@
-const { fileURLToPath } = require('url')
 const { existsSync, readFileSync } = require('fs')
-const { resolve, dirname } = require('path')
+const { resolve } = require('path')
+const { resolveConfig } = require('vite')
 
 class Options {
   // Whether or not to enable Vite's Dev Server
@@ -53,7 +53,7 @@ class Options {
   }
 
   async updateViteConfig (viteCommand, overrides = {}) {
-    const dev = overrides.dev ?? options.dev
+    const dev = overrides.dev ?? this.dev
     const mode = dev ? 'development' : 'production'
     const vite = await resolveConfig({}, viteCommand, mode)
     Object.assign(this, { dev, vite })

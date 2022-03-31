@@ -3,7 +3,7 @@
   "name": "api-basic",
   "private": true,
   "scripts": {
-    "dev": "zx ../../devinstall.mjs api-basic -- uni dev app",
+    "dev": "zx ../../devinstall.mjs api-basic -- dx dev app",
     "build": "uni build api",
     "generate": "uni generate api",
     "serve": "uni serve api"
@@ -12,7 +12,7 @@
     "fastify": "^3.17.0"
   },
   "local": {
-    "universify": "^0.0.5",
+    "fastify-dx": "^0.0.1",
     "fastify-apply": "^0.0.3",
     "fastify-vite": "^3.0.0-beta.1",
     "fastify-vite-vue": "^3.0.0-beta.1"

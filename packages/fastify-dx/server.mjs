@@ -5,8 +5,6 @@ import FastifyApply from 'fastify-apply'
 import FastifyPlugin from 'fastify-plugin'
 import FastifyVite from 'fastify-vite'
 
-import { devLogger } from './core.mjs'
-
 export async function setup (context, command) {
   const {
     init,

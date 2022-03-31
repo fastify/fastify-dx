@@ -1,8 +1,6 @@
 const Fastify = require('fastify')
 const { parse: parsePath } = require('path')
 const matchit = require('matchit')
-const createRequire = require('module')
-// const pMap = require('p-map')
 const { parse: parseHTML } = require('node-html-parser')
 const { writeFile, ensureDir, existsSync } = require('./utils')
 

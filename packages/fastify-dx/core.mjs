@@ -99,5 +99,5 @@ export const devLogger = {
     colorize: true,
     translateTime: 'HH:MM:ss Z',
     ignore: 'pid,hostname',
-  }
+  },
 }

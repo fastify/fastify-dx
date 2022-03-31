@@ -49,8 +49,6 @@ function fastifyApply (fastify, options, done) {
     }
   }
 
-  apply.hooks = hooks
-  apply.methods = methods
   fastify.decorate('apply', apply)
   done()
 }
