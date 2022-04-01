@@ -146,7 +146,7 @@ Fastify DX leverages [**`fastify-vite`**]() to integrate seamlessly with [**Vite
 
 `dx build` creates the production bundle (saved to `dist/` by default).
 
-`dx generate` is the same as `dx build` but also prerenders all static routes or predefined routes into the bundle.
+`dx generate` is the same as `dx build` but also prerenders all static routes or predefined routes through configuration.
 
 SSR is a huge topic that we try to cover in these individual guides:
 
