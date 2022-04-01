@@ -189,9 +189,9 @@ Support for other frontend frameworks is also coming!
 
 </h2>
 
-Addressing performance and scalability issues with SSR is one of Fastify DX's main goals. To that end, **multi-threaded SSR** is offered out of the box.
+Addressing performance and scalability issues with SSR is one of Fastify DX's main goals. To that end, **multi-threaded SSR** based on [**Piscina**]() is offered out of the box.
 
-SSR can become a bottleneck under high load, so you also have the ability to **turn off** SSR altogether on a per-request basis and **fallback to CSR** when the server has exhausted its resources.
+SSR can become a bottleneck under high load, so you also have the ability to **turn off** SSR altogether on a per-request basis and **fallback to CSR** when necessary.
 
 </td>
 <td valign="top"><br>
@@ -234,20 +234,20 @@ Support for other frontend frameworks is also coming!
 
 </h2>
 
-Implemented in under 700 lines of code.
+Everything's under 700 lines of code.
 
 For reference, **Nuxt.js** has 15k, **Next.js** has 129k and **Remix** has 16k. 
 
 **Fastify DX** is able to stay small by fully leveraging [Fastify](https://github.com/fastify/fastify) and [fastify-vite](https://github.com/fastify/fastify-vite) for its SSR and frontend functionalities. Both are also small on their own (4.4k and 1.1k).
 
-Its use of [**zx**](https://github.com/google/zx) also helps to simplify a lot of the complexity in the CLI and hot reload setup. Fastify DX doesn't use forking for hot reloading the server.
+Its use of [**zx**](https://github.com/google/zx) also helps to simplify a lot of the complexity in the CLI and hot reload setup. Fastify DX doesn't use forking for hot reloading.
 
 </td>
 <td>
 
 <br>Fastify DX has an **absolutely minimal core**.
 
-`index.mjs` is the CLI entry point, when you run `dx` on the command-line. This is a [`zx`](https://github.com/google/zx)-powered script that will load your application with **hot reload** enabled if you run `dx dev your-app`, or just load `listen.mjs` straight away if booting in production mode — `dx your-app`.
+`index.mjs` is the CLI entry point, when you run `dx` on the command-line. This is a [`zx`](https://github.com/google/zx)-powered script that will load your application with **hot reload** enabled if you run `dx dev your-app`, or just load `listen.mjs` straight away if booting in production mode.
 
 `logger.mjs` is the logger for **development mode**, it collects Fastify logs from the main process and prints them in the most concise and friendly way possible.
 
