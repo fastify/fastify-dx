@@ -151,7 +151,7 @@ Fastify DX leverages [**`fastify-vite`**]() to integrate seamlessly with [**Vite
 SSR is a huge topic that we try to cover in these individual guides:
 
 🗒 [**Effective SSR Development**]()
-🗒 [**Isomorphic Data Fetching**]()
+<br>🗒 [**Isomorphic Data Fetching**]()
 
 </td>
 <td valign="top"><br>
