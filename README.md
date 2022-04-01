@@ -31,13 +31,13 @@ Then start a new project:
 % cd <dir>
 ```
 
-Run with **hot reload** and **friendly logs**:
+**Hot reload** and **friendly logs**:
 
 ```bash
 % dx dev app.mjs
 ```
 
-Run in **production mode**:
+**Production mode**:
 
 ```bash
 % dx app.mjs
