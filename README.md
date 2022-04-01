@@ -144,7 +144,7 @@ export default (app) => {
 
 Fastify DX leverages [**`fastify-vite`**]() to integrate seamlessly with [**Vite**](https://vitejs.dev/) and use it to bundle frontend code and make it available for server-side rendering (SSR). It also includes commands which should be familiar from other frameworks:
 
-`dx build` creates the production bundle (saved to the `dist` folder by default).
+`dx build` creates the production bundle (saved to `dist/` by default).
 
 `dx generate` is the same as `dx build` but also prerenders all static routes or predefined routes into the bundle.
 
