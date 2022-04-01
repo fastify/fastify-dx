@@ -196,7 +196,7 @@ SSR can become a bottleneck under high load, so you also have the ability to **t
 </td>
 <td valign="top"><br>
 
-To achieve maximum SSR performance, enable multi-threaded SSR by exporting `multiThreadedSSR` from your Fastify DX application file:
+To achieve maximum SSR performance, enable multi-threaded SSR by exporting `multiThreadedSSR` from your Fastify DX application:
 
 ```js
 export const multiThreadedSSR = true
@@ -204,7 +204,9 @@ export const multiThreadedSSR = true
 
 Sensible settings are passed under the hood to a **SSR worker pool** based on [**Piscina**](https://github.com/piscinajs/piscina). These settings can be customized if you pass a [configuration object]() instead.
 
-You can easily **disable SSR** and fallback to CSR as well, by leveraging [**`under-pressure`**]() and [**`fastify-vite`**]()'s `req.fallbackToCSR()`. In your Fastify DX application file:
+You can easily **disable SSR** and fallback to CSR as well, by leveraging [**`under-pressure`**]() and [**`fastify-vite`**]()'s `req.fallbackToCSR()`. 
+
+In your Fastify DX application file:
 
 ```js
 export const underPressure = {
