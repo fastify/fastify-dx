@@ -23,8 +23,6 @@
     "arg": "^5.0.1",
     "fastify-plugin": "^3.0.1",
     "fastify-sensible": "^3.1.2",
-    "lodash.kebabcase": "^4.1.1",
-    "pino-pretty": "^7.5.1",
     "zx": "^6.0.6",
     "degit": "2.8.4",
     "fastify-static": "^4.0.1",

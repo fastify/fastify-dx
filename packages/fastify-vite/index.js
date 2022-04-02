@@ -1,20 +1,21 @@
 const { on, EventEmitter } = require('events')
 const FastifyPlugin = require('fastify-plugin')
-const processOptions = require('./options')
+const { getOptions } = require('./options')
 
 const build = require('./build')
 const generate = require('./generate')
-
 const production = require('./production')
 const dev = require('./dev')
-const setupRouting = require('./routing')
+
+const { setupRouting } = require('./routing')
+const { ensureConfigFile } = require('./vite')
 const { kScope, kHooks, kEmitter } = require('./symbols')
 
 class Vite {
   constructor (scope, options) {
     this[kScope] = scope
     this[kEmitter] = new EventEmitter()
-    this.options = processOptions(options, options.dev ? dev : production)
+    this.options = getOptions(options, options.dev ? dev : production)
   }
 
   addHook (hook, handler) {
@@ -34,7 +35,7 @@ class Vite {
 
   async commands (exit = true) {
     if (generate || build) {
-      app.vite.options.update({ dev: false })
+      this.options.update({ dev: false })
     }
     if (build) {
       await this.build()
@@ -77,3 +78,6 @@ function fastifyVite (scope, options, done) {
 }
 
 module.exports = FastifyPlugin(fastifyVite)
+module.exports.default = module.exports
+module.exports.ensureConfigFile = ensureConfigFile
+module.exports.ensureIndexHtml = ensureIndexHtml

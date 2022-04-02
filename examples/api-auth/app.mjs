@@ -9,7 +9,7 @@ export async function onRequest (req, reply) {
 
 export default (app) => {
   app.post('/signup', (req, reply) => {
-    const token = app.jwt.sign({ payload })
+    const token = app.jwt.sign({ payload: req.body })
     reply.send({ token })
   })
   app.get('/', (req, reply) => {

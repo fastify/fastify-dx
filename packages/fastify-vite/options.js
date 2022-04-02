@@ -66,4 +66,5 @@ async function getOptions (overrides = {}, viteCommand = 'serve') {
   return options
 }
 
-module.exports = { Options, getOptions }
+module.exports = { getOptions }
+module.exports.default = module.exports

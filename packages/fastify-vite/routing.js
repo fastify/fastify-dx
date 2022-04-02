@@ -5,10 +5,56 @@ function getRouteSetter (scope, handler) {
   }
 }
 
-module.exports = function (scope, options, { handler, routes }) {
-  options.getRouteSetter ??= getRouteSetter
-  this.route = options.getRouteSetter(scope, options)
+function setupRouting (scope, { handler, routes }) {
+  this.options.getRouteSetter ??= getRouteSetter
+  this.route = this.options.getRouteSetter(scope, this.options)
   for (const route of routes) {
     this.route(route.path, route)
   }
 }
+
+module.exports = { setupRouting }
+
+// import { fetch } from 'undici'
+
+// export function getRouteSetter (scope, handler) {
+//   return (url, routeOptions) => {
+//     const preHandler = routeOptions.preHandler || []
+//     if (routeOptions.getData) {
+//       preHandler.push(getDataHandler(scope, routeOptions.getData))
+//     }
+//     if (routeOptions.getPayload) {
+//       const getPayload = getPayloadHandler(scope, routeOptions.getPayload)
+//       preHandler.push(getPayload)
+//       scope.get(`/-/payload${url}`, getPayload)
+//     }
+//     scope.route({
+//       url,
+//       handler,
+//       ...routeOptions,
+//       preHandler,
+//     })
+//   }
+// }
+
+// async function getDataHandler (scope, getData) {
+//   return async function (req, reply) {
+//     req.data = await getData({
+//       fetch,
+//       fastify: scope,
+//       req,
+//       reply,
+//     })
+//   }
+// }
+
+// function getPayloadHandler (scope, getPayload) {
+//   return async function (req, reply) {
+//     req.payload = await getPayload({
+//       fetch,
+//       app: scope,
+//       req,
+//       reply,
+//     })
+//   }
+// }

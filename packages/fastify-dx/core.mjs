@@ -1,19 +1,21 @@
 
 import Fastify from 'fastify'
+import FastifyPlugin from 'fastify-plugin'
 import FastifySensible from 'fastify-sensible'
 import FastifyApply from 'fastify-apply'
-import FastifyPlugin from 'fastify-plugin'
 import FastifyVite from 'fastify-vite'
 
-export async function setup (context, command) {
+export async function setup (context) {
   const {
+    dev,
+    setup,
     init,
     renderer,
     root,
-    dev,
     server,
     applicable,
     plugable,
+    exit,
   } = context
 
   const app = Fastify({ logger: true, ...server })
@@ -27,9 +29,7 @@ export async function setup (context, command) {
     return app.register(plugin, settings)
   }))
 
-  if (renderer) {
-    await app.register(FastifyVite, { dev, root, renderer })
-  }
+  await app.register(FastifyVite, { dev, root, renderer })
 
   await app.apply(applicable)
 
@@ -41,7 +41,7 @@ export async function setup (context, command) {
   }
 
   if (renderer) {
-    await app.vite.commands()
+
   }
 
   return app
