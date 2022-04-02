@@ -1,5 +1,5 @@
-import { resolve, parse } from 'path'
-import { ensureDir, existsSync, writeFile, readFile } from './utils.mjs'
+const { resolve, parse } = require('path')
+const { ensureDir, existsSync, writeFile, readFile } = require('../utils')
 
 async function eject () {
   const force = process.argv.includes('--force')
@@ -17,5 +17,3 @@ async function eject () {
   }
   setImmediate(() => process.exit(0))
 }
-
-export default eject

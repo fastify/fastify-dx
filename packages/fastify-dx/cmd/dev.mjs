@@ -1,3 +1,5 @@
+/* global $,path */
+
 import readline from 'node:readline'
 import { fileURLToPath } from 'node:url'
 import { on } from 'node:events'
@@ -5,7 +7,7 @@ import { on } from 'node:events'
 import chokidar from 'chokidar'
 import colorize from 'colorize'
 
-import { quiet, registerGlobals } from './zx.mjs'
+import { quiet, registerGlobals } from '../zx.mjs'
 
 let node
 

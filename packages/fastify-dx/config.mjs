@@ -32,6 +32,20 @@ const renderers = {
   solid: () => import('fastify-vite-solid'),
 }
 
+function getRenderer (renderer) {
+  if (!renderer) {
+    renderer = await renderers.vue()
+  } else if (typeof renderer == 'string') {
+    if (renderers[renderer]) {
+      renderer = await renderers[renderer]()
+    } else {
+      app.log.error(`Unknown renderer \`${renderer}\``)
+      await exit()
+    }
+  }
+  return renderer
+}
+
 async function resolveInit (filename) {
   for (const variant of [filename, `${filename}.mjs`, `${filename}.js`]) {
     const resolvedPath = resolve(process.cwd(), variant)
@@ -67,9 +81,11 @@ function getCommands () {
   return argv
 }
 
-export async function getConfig ({ dev, eject, setup, _ }) {
+export async function getConfig () {
+  const { dev, eject, setup, _ } = getCommands()
   const filepath = (dev || eject || setup) ? _[1] : _[0]
   const [init, root] = await resolveInit(filepath)
+  const renderer = await getRenderer(init.renderer)
   const applicable = {}
   for (const k of [...hooks, ...methods]) {
     applicable[k] = init[k]
@@ -86,10 +102,10 @@ export async function getConfig ({ dev, eject, setup, _ }) {
     eject,
     exit,
     root,
+    renderer,
+    init: init.default,
     env: init.env,
     tenants: init.tenants,
-    init: init.default,
-    renderer: init.renderer,
     port: init.port || 3000,
     host: init.host,
     plugable,

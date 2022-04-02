@@ -2,7 +2,7 @@ const Fastify = require('fastify')
 const { parse: parsePath } = require('path')
 const matchit = require('matchit')
 const { parse: parseHTML } = require('node-html-parser')
-const { writeFile, ensureDir, existsSync } = require('./utils')
+const { writeFile, ensureDir, existsSync } = require('../utils')
 
 const pMap = (iterator, mapper) => Promise.all(
   iterator.map(() => mapper()),

@@ -9,9 +9,9 @@ const commands = {
 if (Object.keys(commands).length) {
   for (const cmd of Object.keys(commands)) {
     if (commands[cmd]) {
-      await import(`./${cmd}.mjs`)
+      await import(`./cmd/${cmd}.mjs`)
     }
   }
 } else {
-  await import(`./listen.mjs`)
+  await import('./listen.mjs')
 }

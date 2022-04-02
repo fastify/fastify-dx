@@ -8,7 +8,7 @@ const production = require('./production')
 const dev = require('./dev')
 
 const { setupRouting } = require('./routing')
-const { ensureConfigFile } = require('./vite')
+const { ensureIndexHtml, ensureConfigFile, createStarterView } = require('./vite')
 const { kScope, kHooks, kEmitter } = require('./symbols')
 
 class Vite {
@@ -81,3 +81,4 @@ module.exports = FastifyPlugin(fastifyVite)
 module.exports.default = module.exports
 module.exports.ensureConfigFile = ensureConfigFile
 module.exports.ensureIndexHtml = ensureIndexHtml
+module.exports.createStarterView = createStarterView

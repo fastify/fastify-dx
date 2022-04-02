@@ -2,15 +2,6 @@ const { resolve, writeFile, readFile, existsSync } = require('./utils')
 
 const unescapedBacktick = /(?<!\\)`/g
 
-async function ensureIndexHtml () {
-  const indexHtmlPath = resolve(this.options.root, 'index.html')
-  if (!existsSync(indexHtmlPath)) {
-    const baseIndexHtmlPath = resolve(this.options.renderer.path, 'base', 'index.html')
-    await writeFile(indexHtmlPath, await readFile(baseIndexHtmlPath, 'utf8'))
-  }
-  return indexHtmlPath
-}
-
 function compileIndexHtml (source) {
   const indexHtml = (
     '(function (req, fragments) {\n' +
@@ -28,4 +19,4 @@ function compileIndexHtml (source) {
   return (0, eval)(indexHtml)
 }
 
-module.exports = { ensureIndexHtml, compileIndexHtml }
+module.exports = { compileIndexHtml }
