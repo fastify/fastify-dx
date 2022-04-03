@@ -52,7 +52,11 @@ for (const localDep of Object.keys(local)) {
   watcher.on('change', changed('M'))
 }
 
-await $`${command}`
+try {
+  await $`${command}`
+} finally {
+  setImmediate(() => process.exit(0))
+}
 
 async function createPackageFile (exRoot, dependencies) {
   await fs.writeFile(

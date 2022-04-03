@@ -2,26 +2,38 @@
 
 import {
   ensureConfigFile,
-  ensureIndexHtml,
-  ensureIndexView,
+  // ensureIndexHtml,
+  // ensureIndexView,
 } from 'fastify-vite'
 import { registerGlobals } from '../zx.mjs'
 import { getConfig } from '../config.mjs'
 
 registerGlobals()
 
+const cwd = process.cwd()
 const { root, renderer } = await getConfig()
-const clientRoot = path.join(root, 'client')
 
-await Promise.all([
-  ensureConfigFile(clientRoot, renderer),
-  ensureIndexHtml(clientRoot),
-  ensureIndexView(clientRoot, 'index'),
-  ensureServerFile(),
-])
+let clientRoot = path.join(root, 'client')
 
-await ensurePackageJSON(root)
-await $`npm install`
+if (clientRoot.startsWith(cwd)) {
+  clientRoot = clientRoot.replace(cwd, '')
+}
+
+export default async () => {
+  await Promise.all([
+    ensureConfigFile({
+      configRoot: root,
+      projectRoot: clientRoot,
+      renderer,
+    })
+    // ensureIndexHtml(clientRoot),
+    // ensureIndexView(clientRoot, 'index'),
+    // ensureServerFile(),
+  ])
+
+  await ensurePackageJSON(root)
+  await $`npm install`
+}
 
 async function ensureServerFile (root) {
   const serverPath = path.join(root, 'server.mjs')

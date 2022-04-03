@@ -1,8 +1,7 @@
 const FastifyStatic = require('fastify-static')
 const { resolve } = require('path')
-const { ensureViteConfig } = require('./vite')
-const { ensureIndexHtml } = require('./html')
-const { kEmitter } = require('./symbols')
+const { ensureIndexHtml, ensureViteConfig } = require('../setup')
+const { kEmitter } = require('../symbols')
 
 async function setup (options) {
   // Vite's pesky opinionated constraint of having index.html

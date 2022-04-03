@@ -1,9 +1,9 @@
 const middie = require('middie')
 const { createServer } = require('vite')
 const { resolve } = require('path')
-const { ensureIndexHtml } = require('./html')
-const { kEmitter } = require('./symbols')
-const { readFile } = require('./utils')
+const { ensureIndexHtml } = require('../setup')
+const { kEmitter } = require('../symbols')
+const { readFile } = require('../utils')
 
 async function setup (options) {
   // Vite's pesky opinionated constraint of having index.html

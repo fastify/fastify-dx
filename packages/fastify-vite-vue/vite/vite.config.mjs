@@ -13,29 +13,6 @@ export default {
   plugins: [
     viteVue(),
     viteVueJsx(),
-    viteBlueprint({
-      prefix: '@app/',
-      root: resolve => resolve(fastifyViteVue.path, 'base'),
-      files: [
-        ['entry/client.js', [
-          'entry-client.js',
-          'client/entry.js',
-          'client-entry.js',
-        ]],
-        ['entry/server.js', [
-          'entry-server.js',
-          'server/entry.js',
-          'server-entry.js',
-        ]],
-        ['client.js'],
-        ['client.vue'],
-        ['head.js'],
-        ['error.vue'],
-        ['router.vue'],
-        ['routes.js'],
-        ['index.css'],
-      ],
-    }),
   ],
   // Base build settings, default values
   // for assetsDir and outDir match Vite's defaults

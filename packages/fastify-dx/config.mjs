@@ -49,6 +49,9 @@ async function getRenderer (renderer) {
 }
 
 async function resolveInit (filename) {
+  if (!filename) {
+    return [{}, process.cwd()]
+  }
   for (const variant of [filename, `${filename}.mjs`, `${filename}.js`]) {
     const resolvedPath = resolve(process.cwd(), variant)
     if (existsSync(resolvedPath)) {
@@ -88,6 +91,7 @@ export async function getConfig () {
   const filepath = (dev || eject || setup) ? _[1] : _[0]
   const [init, root] = await resolveInit(filepath)
   const renderer = await getRenderer(init.renderer)
+  console.log('renderer', renderer)
   const applicable = {}
   for (const k of [...hooks, ...methods]) {
     applicable[k] = init[k]

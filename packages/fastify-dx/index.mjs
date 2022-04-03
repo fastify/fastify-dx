@@ -8,7 +8,8 @@ const commands = {
 if (Object.keys(commands).length) {
   for (const cmd of Object.keys(commands)) {
     if (commands[cmd]) {
-      await import(`./cmd/${cmd}.mjs`)
+      const command = await import(`./cmd/${cmd}.mjs`)
+      await command.default()
     }
   }
 } else {

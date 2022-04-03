@@ -2,20 +2,20 @@ const { on, EventEmitter } = require('events')
 const FastifyPlugin = require('fastify-plugin')
 const { getOptions } = require('./options')
 
-const build = require('./build')
-const generate = require('./generate')
-const production = require('./production')
-const dev = require('./dev')
+const build = require('./cmd/build')
+const generate = require('./cmd/generate')
+const production = require('./mode/production')
+const development = require('./mode/development')
 
 const { setupRouting } = require('./routing')
-const { ensureIndexHtml, ensureConfigFile, createStarterView } = require('./vite')
+const { ensureConfigFile, /* ensureIndexHtml, createStarterView */ } = require('./setup')
 const { kScope, kHooks, kEmitter } = require('./symbols')
 
 class Vite {
   constructor (scope, options) {
     this[kScope] = scope
     this[kEmitter] = new EventEmitter()
-    this.options = getOptions(options, options.dev ? dev : production)
+    this.options = getOptions(options, options.dev ? development : production)
   }
 
   addHook (hook, handler) {
@@ -80,5 +80,5 @@ function fastifyVite (scope, options, done) {
 module.exports = FastifyPlugin(fastifyVite)
 module.exports.default = module.exports
 module.exports.ensureConfigFile = ensureConfigFile
-module.exports.ensureIndexHtml = ensureIndexHtml
-module.exports.createStarterView = createStarterView
+// module.exports.ensureIndexHtml = ensureIndexHtml
+// module.exports.createStarterView = createStarterView
