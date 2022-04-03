@@ -1,8 +1,16 @@
-import { ensureConfigFile, ensureIndexHtml, ensureIndexView } from 'fastify-vite'
+/* global $,fs,path */
+
+import {
+  ensureConfigFile,
+  ensureIndexHtml,
+  ensureIndexView,
+} from 'fastify-vite'
 import { registerGlobals } from '../zx.mjs'
+import { getConfig } from '../config.mjs'
 
 registerGlobals()
 
+const { root, renderer } = await getConfig()
 const clientRoot = path.join(root, 'client')
 
 await Promise.all([
@@ -10,7 +18,6 @@ await Promise.all([
   ensureIndexHtml(clientRoot),
   ensureIndexView(clientRoot, 'index'),
   ensureServerFile(),
-  ensureIndexVue(clientRoot),
 ])
 
 await ensurePackageJSON(root)

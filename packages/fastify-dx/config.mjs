@@ -5,6 +5,8 @@ import { resolve, dirname } from 'path'
 import arg from 'arg'
 import { hooks, methods } from 'fastify-apply/applicable.mjs'
 
+import log from './logger.mjs'
+
 // Common Fastify plugins recognizable via a shorthand keyword
 const plugins = {
   accepts: 'fastify-accepts', // https://github.com/fastify/fastify-accepts#readme
@@ -32,14 +34,14 @@ const renderers = {
   solid: () => import('fastify-vite-solid'),
 }
 
-function getRenderer (renderer) {
+async function getRenderer (renderer) {
   if (!renderer) {
     renderer = await renderers.vue()
-  } else if (typeof renderer == 'string') {
+  } else if (typeof renderer === 'string') {
     if (renderers[renderer]) {
       renderer = await renderers[renderer]()
     } else {
-      app.log.error(`Unknown renderer \`${renderer}\``)
+      log.error(`Unknown renderer \`${renderer}\``)
       await exit()
     }
   }
@@ -75,7 +77,7 @@ function getCommands () {
   })
   for (const cmd of ['setup', 'dev', 'eject', 'generate']) {
     if (argv._.includes(cmd)) {
-      argv[cmd]
+      argv[cmd] = true
     }
   }
   return argv

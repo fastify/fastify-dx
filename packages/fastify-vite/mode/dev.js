@@ -8,7 +8,7 @@ const { readFile } = require('./utils')
 async function setup (options) {
   // Vite's pesky opinionated constraint of having index.html
   // as the main entry point for bundling — the file needs to exist
-  const indexHtmlPath = await this.ensureIndexHtml(options)
+  const indexHtmlPath = await ensureIndexHtml(options)
 
   // Ensure there's a Vite configuration file
   // by ejecting the base version provided by the renderer adapter

@@ -1,5 +1,3 @@
-const { resolve, writeFile, readFile, existsSync } = require('./utils')
-
 const unescapedBacktick = /(?<!\\)`/g
 
 function compileIndexHtml (source) {

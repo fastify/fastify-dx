@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* global $,path */
 
 const commands = {
   dev: process.argv[2] === 'dev',

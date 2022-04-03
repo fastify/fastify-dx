@@ -7,14 +7,12 @@ import FastifyVite from 'fastify-vite'
 export async function setup (config) {
   const {
     dev,
-    setup,
     init,
     renderer,
     root,
     server,
     applicable,
     plugable,
-    exit,
   } = config
 
   const app = Fastify({ logger: true, ...server })

@@ -17,3 +17,5 @@ async function eject () {
   }
   setImmediate(() => process.exit(0))
 }
+
+module.exports = eject
