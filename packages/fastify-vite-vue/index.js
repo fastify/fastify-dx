@@ -1,14 +1,8 @@
 const { resolve } = require('path')
+const { createRenderFunction } = require('./render')
 
 module.exports = {
   path: resolve(__dirname),
-  blueprint: [
-    'entry/client.js',
-    'entry/server.js',
-    'client.js',
-    'client.vue',
-    'head.js',
-    'index.html',
-    'routes.js',
-  ],
+  createRenderFunction,
 }
+module.exports.default = module.exports

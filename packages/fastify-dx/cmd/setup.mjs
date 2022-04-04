@@ -25,7 +25,7 @@ export default async () => {
       configRoot: root,
       projectRoot: clientRoot,
       renderer,
-    })
+    }),
     // ensureIndexHtml(clientRoot),
     // ensureIndexView(clientRoot, 'index'),
     // ensureServerFile(),
@@ -35,12 +35,12 @@ export default async () => {
   await $`npm install`
 }
 
-async function ensureServerFile (root) {
-  const serverPath = path.join(root, 'server.mjs')
-  if (!await fs.exists(serverPath)) {
-    await fs.writeFile(serverPath, 'export default ({ app }) => {}\n')
-  }
-}
+// async function ensureServerFile (root) {
+//   const serverPath = path.join(root, 'server.mjs')
+//   if (!await fs.exists(serverPath)) {
+//     await fs.writeFile(serverPath, 'export default ({ app }) => {}\n')
+//   }
+// }
 
 async function ensurePackageJSON (root) {
   const packageJSON = JSON.stringify({

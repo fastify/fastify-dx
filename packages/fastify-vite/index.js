@@ -8,7 +8,7 @@ const production = require('./mode/production')
 const development = require('./mode/development')
 
 const { setupRouting } = require('./routing')
-const { ensureConfigFile, /* ensureIndexHtml, createStarterView */ } = require('./setup')
+const { ensureConfigFile /* ensureIndexHtml, createStarterView */ } = require('./setup')
 const { kScope, kHooks, kEmitter } = require('./symbols')
 
 class Vite {
@@ -26,7 +26,7 @@ class Vite {
 
   async ready () {
     if (this.options.dev) {
-      await dev.setup.call(this, this.options)
+      await development.setup.call(this, this.options)
     } else {
       await production.setup.call(this, this.options)
     }
