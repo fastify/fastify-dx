@@ -2,7 +2,7 @@ const Fastify = require('fastify')
 const { parse: parsePath } = require('path')
 const matchit = require('matchit')
 const { parse: parseHTML } = require('node-html-parser')
-const { writeFile, ensureDir, existsSync } = require('../utils')
+const { write, ensure, exists } = require('../ioutils')
 
 const pMap = (iterator, mapper) => Promise.all(
   iterator.map(() => mapper()),
@@ -85,10 +85,10 @@ module.exports = async function generate () {
 async function writeFiles (response, files) {
   for (const [path, contents] of files) {
     const { dir } = parsePath(path)
-    if (!existsSync(dir)) {
-      await ensureDir(dir)
+    if (!exists(dir)) {
+      await ensure(dir)
     }
-    await writeFile(path, contents)
+    await write(path, contents)
     setImmediate(() => {
       this.runHook('onGenerate', this.scope, response, this.options.vite.distDir)
     })

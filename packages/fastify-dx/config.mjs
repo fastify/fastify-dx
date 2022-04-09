@@ -37,6 +37,7 @@ const renderers = {
 async function getRenderer (renderer) {
   if (!renderer) {
     renderer = await renderers.vue()
+    console.log('renderer', renderer)
   } else if (typeof renderer === 'string') {
     if (renderers[renderer]) {
       renderer = await renderers[renderer]()
@@ -91,7 +92,6 @@ export async function getConfig () {
   const filepath = (dev || eject || setup) ? _[1] : _[0]
   const [init, root] = await resolveInit(filepath)
   const renderer = await getRenderer(init.renderer)
-  console.log('renderer', renderer)
   const applicable = {}
   for (const k of [...hooks, ...methods]) {
     applicable[k] = init[k]

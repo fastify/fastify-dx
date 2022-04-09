@@ -1,50 +1,56 @@
-const { resolve } = require('path')
-const { join, existsSync, writeFile, readFile } = require('./utils')
+const { parse: parsePath } = require('path')
+const { join, walk, ensure, exists, write, read } = require('./ioutils')
 const { js, ts, mjs, cjs } = require('./argv')
+const { stringify } = require('json5')
 
 const kinds = { js, ts, mjs, cjs }
 
-async function ensureStarterView () {
-  const indexViewPath = resolve(this.options.root, 'index.html')
-  if (!existsSync(indexViewPath)) {
-    const baseIndexViewPath = resolve(this.options.renderer.starter)
-    await writeFile(indexViewPath, await readFile(baseIndexViewPath, 'utf8'))
+async function ejectBlueprint (base, { root, renderer, blueprint = 'base' }) {
+  await ensure(join(base, root))
+  const blueprintPath = join(renderer.path, blueprint)
+  if (!renderer.blueprints.includes(blueprint) || !exists(blueprintPath)) {
+    throw new Error(`Blueprint ${blueprint} not registered for this renderer.`)
   }
-  return indexViewPath
-}
-
-async function ensureIndexHtml (options) {
-  const indexHtmlPath = resolve(this.options.root, 'index.html')
-  if (!existsSync(indexHtmlPath)) {
-    const baseIndexHtmlPath = resolve(options.renderer.path, 'base', 'index.html')
-    await writeFile(indexHtmlPath, await readFile(baseIndexHtmlPath, 'utf8'))
-  }
-  return indexHtmlPath
-}
-
-async function ensureConfigFile (config, kind = null) {
-  const { configRoot, renderer } = config
-  if (!kind) {
-    for (const _ of Object.keys(kinds)) {
-      if (kinds[_]) {
-        kind = _
-        break
-      }
+  for await (const { stats, path } of walk(blueprintPath)) {
+    const filePath = join(base, root, path)
+    const { dir: fileDir } = parsePath(filePath)
+    await ensure(fileDir)
+    if (!stats.isDirectory() && !exists(filePath)) {
+      const bfilePath = join(renderer.path, blueprint, path)
+      await write(filePath, await read(bfilePath, 'utf8'))
     }
+  }
+}
+
+async function ensureConfigFile (base, { root, renderer }, kind = null) {
+  if (!kind) {
+    kind = Object.keys(kinds).find(k => kinds[k])
     if (!kind) {
       kind = 'mjs'
     }
   }
-  console.log('kind', kind)
-  const sourcePath = join(renderer.path, 'vite', `vite.config.${kind}`)
-  const targetPath = join(configRoot, `vite.config.${kind}`)
-  if (existsSync(sourcePath) && !existsSync(targetPath)) {
-    await writeFile(targetPath, await readFile(sourcePath))
+  const sourcePath = join(renderer.path, 'config', `vite.config.${kind}`)
+  const targetPath = join(base, `vite.config.${kind}`)
+  if (exists(sourcePath) && !exists(targetPath)) {
+    const generatedConfig = await read(sourcePath, 'utf8')
+    await write(targetPath, appendToConfig(generatedConfig, { root }))
   }
+  return targetPath
+}
+
+function appendToConfig (source, config = {}) {
+  config = stringify(config, null, 2)
+  const replacer = (m) => {
+    return `${m}\n${config.split(/\r?\n/).slice(1, -1).join('\n')}`
+  }
+  return source
+    .replace(/export default defineConfig\(\{/, replacer)
+    .replace(/export default \{/, replacer)
+    .replace(/export default defineConfig\(\{/, replacer)
 }
 
 module.exports = {
-  ensureIndexHtml,
-  ensureStarterView,
   ensureConfigFile,
+  ejectBlueprint,
 }
+module.exports.default = module.exports

@@ -1,18 +1,18 @@
 import { createSSRApp } from 'vue'
 import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
-import { createBeforeEachHandler } from 'fastify-vite-vue/routing'
+import { createBeforeEachHandler } from './core.js'
 
-import baseLayout from '@app/client.vue'
-import loadRoutes from '@app/routes.js'
+import app from './app.vue'
+import routes from './routes.js'
 
 const createHistory = import.meta.env.SSR
   ? createMemoryHistory
   : createWebHistory
 
 export async function createApp (ctx) {
-  const resolvedRoutes = await loadRoutes()
-  const app = createSSRApp(baseLayout)
+  const resolvedRoutes = await routes()
+  const app = createSSRApp(app)
   const head = createHead()
   const router = createRouter({
     history: createHistory(),

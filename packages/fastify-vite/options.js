@@ -33,6 +33,9 @@ class Options {
   constructor (options) {
     // Dynamically determine bundled distribution settings
     this.update(options)
+    if (this.suppressExperimentalWarnings) {
+      suppressExperimentalWarnings()
+    }
   }
 
   // Update bundled distribution settings according to running mode
@@ -68,3 +71,18 @@ async function getOptions (overrides = {}, viteCommand = 'serve') {
 
 module.exports = { getOptions }
 module.exports.default = module.exports
+
+function suppressExperimentalWarnings () {
+  // See https://github.com/nodejs/node/issues/30810
+  const { emitWarning } = process
+
+  process.emitWarning = (warning, ...args) => {
+    if (args[0] === 'ExperimentalWarning') {
+      return
+    }
+    if (args[0] && typeof args[0] === 'object' && args[0].type === 'ExperimentalWarning') {
+      return
+    }
+    return emitWarning(warning, ...args)
+  }
+}

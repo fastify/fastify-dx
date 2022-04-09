@@ -3,7 +3,7 @@ const { createServer } = require('vite')
 const { resolve } = require('path')
 const { ensureIndexHtml } = require('../setup')
 const { kEmitter } = require('../symbols')
-const { readFile } = require('../utils')
+const { read } = require('../ioutils')
 
 async function setup (options) {
   // Vite's pesky opinionated constraint of having index.html
@@ -31,7 +31,7 @@ async function setup (options) {
   // In development mode, template is passed as an async function, which is
   // called on every request to ensure the newest index.html version is loaded
   options.template ??= async (url) => {
-    const indexHtml = await readFile(indexHtmlPath, 'utf8')
+    const indexHtml = await read(indexHtmlPath, 'utf8')
     const transformedHtml = await this.devServer.transformIndexHtml(url, indexHtml)
     return await options.compileIndexHtml(transformedHtml)
   }
