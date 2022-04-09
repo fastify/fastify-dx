@@ -1,59 +1,34 @@
 const { on, EventEmitter } = require('events')
+const { resolveConfig } = require('vite')
 const fp = require('fastify-plugin')
-const { getOptions } = require('./options')
 
-const build = require('./cmd/build')
-const generate = require('./cmd/generate')
-const production = require('./mode/production')
-const development = require('./mode/development')
-
+const { configure } = require('./config')
+const { setup: setupProduction } = require('./mode/production')
+const { setup: setupDevelopment } = require('./mode/development')
 const { setupRouting } = require('./routing')
 const { ensureConfigFile, ejectBlueprint } = require('./setup')
-const { kHooks, kEmitter } = require('./symbols')
+const [kEmitter, kOptions] = ['kEmitter', 'kOptions'].map(Symbol)
 
 class Vite {
   constructor (scope, options) {
     this.scope = scope
-    this.options = options
+    this.setupMode = options.dev ? setupDevelopment : setupProduction
+    this.setupRouting = setupRouting
+    this[kOptions] = options    
     this[kEmitter] = new EventEmitter()    
   }
 
-  addHook (hook, handler) {
-    if (hook in this[kHooks]) {
-      this[kHooks][hook].push(handler)
-    }
-  }
+  // addHook (hook, handler) {
+  //   if (hook in this[kHooks]) {
+  //     this[kHooks][hook].push(handler)
+  //   }
+  // }
 
   async ready () {
-    this.options = await getOptions(this.options)
-    if (this.options.dev) {
-      await development.call(this, this.options)
-    } else {
-      await production.call(this, this.options)
-    }
-    setupRouting.call(this, await on('ready', this[kEmitter]))
-  }
-
-  async commands (exit = true) {
-    if (generate || build) {
-      this.options.update({ dev: false })
-    }
-    if (build) {
-      await this.build()
-      await this.exit()
-    }
-    if (generate) {
-      await this.build()
-    }
-    await this.ready()
-    if (generate) {
-      this.scope.addHook('onReady', async () => {
-        await this.generate()
-        if (exit) {
-          await this.exit()
-        }
-      })
-    }
+    this.config = await configure(this[kOptions])
+    await this.setupMode(this.config)
+    const entry = await on('ready', this[kEmitter])
+    this.setupRouting(entry)
   }
 
   get (url, routeOptions) {
@@ -61,7 +36,7 @@ class Vite {
   }
 
   post (url, { data, method, ...routeOptions } = {}) {
-    return this.route(url, { data, method: 'GET', ...routeOptions })
+    return this.route(url, { data, method: 'POST', ...routeOptions })
   }
 }
 

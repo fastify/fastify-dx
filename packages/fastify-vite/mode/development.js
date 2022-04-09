@@ -46,7 +46,7 @@ async function setup (options) {
 // provide them in the routes array. The routes array is then used
 // to register an individual Fastify route for each of the views.
 async function getEntry (options, devServer) {
-  const modulePath = resolve(options.root, options.entry.server.replace(/^\/+/, ''))
+  const modulePath = resolve(options.root, options.renderer.serverEntryPoint.replace(/^\/+/, ''))
   const entryModule = await devServer.ssrLoadModule(modulePath)
   const entry = entryModule.default ?? entryModule
   return {
@@ -82,4 +82,4 @@ function getHandler (scope, options, render, viteDevServer) {
   }
 }
 
-module.exports = setup
+module.exports = { setup }

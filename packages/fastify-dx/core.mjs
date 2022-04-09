@@ -26,7 +26,7 @@ export async function configure (config) {
     return app.register(plugin, settings)
   }))
 
-  await app.register(FastifyVite, { dev, root, renderer })
+  await app.register(FastifyVite, { dev, configRoot: root, renderer })
 
   await app.apply(applicable)
 
