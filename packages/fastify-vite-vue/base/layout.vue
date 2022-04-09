@@ -1,11 +1,17 @@
 <template>
 	<router-view v-slot="{ Component }">
 	  <Suspense @resolve="hydrationDone">
-	    <component :key="$route.path" :is="Component" />
+	  	<template #default>
+	    	<component :key="$route.path" :is="Component" />
+	    </template>
+	  	<template #fallback>
+	    	<Loader />
+	    </template>
 	  </Suspense>
 	</router-view>
 </template>
 
 <script setup>
-import { hydrationDone } from 'fastify-vite-vue/app'
+import Loader from './loader'
+import { hydrationDone } from '/entry/core'
 </script>
