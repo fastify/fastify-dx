@@ -3,7 +3,6 @@
 import { ensureConfigFile, ejectBlueprint } from 'fastify-vite'
 import { registerGlobals } from '../zx.mjs'
 import { getConfig } from '../config.mjs'
-import logger from '../logger.mjs'
 
 registerGlobals()
 

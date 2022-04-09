@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-import { existsSync } from 'fs'
-import { resolve, dirname } from 'path'
+import { existsSync, lstatSync } from 'fs'
+import { sep, resolve, dirname, parse as parsePath } from 'path'
 import arg from 'arg'
 import { hooks, methods } from 'fastify-apply/applicable.mjs'
-
-import log from './logger.mjs'
+import { error } from './logger.mjs'
 
 // Common Fastify plugins recognizable via a shorthand keyword
 const plugins = {
@@ -37,29 +36,33 @@ const renderers = {
 async function getRenderer (renderer) {
   if (!renderer) {
     renderer = await renderers.vue()
-    console.log('renderer', renderer)
   } else if (typeof renderer === 'string') {
     if (renderers[renderer]) {
       renderer = await renderers[renderer]()
     } else {
-      log.error(`Unknown renderer \`${renderer}\``)
+      error(`Unknown renderer \`${renderer}\``)
       await exit()
     }
   }
   return renderer
 }
 
-async function resolveInit (filename) {
-  if (!filename) {
-    return [{}, process.cwd()]
+async function resolveInit (initPath) {
+  if (!initPath) {
+    return [null, process.cwd()]
   }
-  for (const variant of [filename, `${filename}.mjs`, `${filename}.js`]) {
-    const resolvedPath = resolve(process.cwd(), variant)
-    if (existsSync(resolvedPath)) {
-      const app = await import(resolvedPath)
-      return [app, dirname(resolvedPath)]
+  if (!initPath.startsWith(sep) && !initPath.startsWith('.')) {
+    initPath = resolve(process.cwd(), initPath)
+  }
+  const { name, dir } = parsePath(initPath)
+  for (const variant of [name, `${name}.mjs`, `${name}.js`]) {
+    const filePath = resolve(dir, variant)
+    if (existsSync(filePath) && !lstatSync(filePath).isDirectory()) {
+      const app = await import(filePath)
+      return [app, dir]
     }
   }
+  return [null, process.cwd()]
 }
 
 async function exit () {
@@ -89,17 +92,19 @@ function getCommands () {
 
 export async function getConfig () {
   const { dev, eject, setup, _ } = getCommands()
-  const filepath = (dev || eject || setup) ? _[1] : _[0]
-  const [init, root] = await resolveInit(filepath)
-  const renderer = await getRenderer(init.renderer)
+  const initPath = (dev || eject || setup) ? _[1] : _[0]
+  const [init, root] = await resolveInit(initPath)
+  const renderer = await getRenderer(init?.renderer)
   const applicable = {}
-  for (const k of [...hooks, ...methods]) {
-    applicable[k] = init[k]
-  }
   const plugable = {}
-  for (const k of Object.keys(plugins)) {
-    if (init[k]) {
-      plugable[k] = init[k]
+  if (init) {
+    for (const k of [...hooks, ...methods]) {
+      applicable[k] = init[k]
+    }
+    for (const k of Object.keys(plugins)) {
+      if (init[k]) {
+        plugable[k] = init[k]
+      }
     }
   }
   return {
@@ -109,11 +114,11 @@ export async function getConfig () {
     exit,
     root,
     renderer,
-    init: init.default,
-    env: init.env,
-    tenants: init.tenants,
-    port: init.port || 3000,
-    host: init.host,
+    initPath,
+    init: init?.default,
+    env: init?.env,
+    port: init?.port ?? 3000,
+    host: init?.host,
     plugable,
     applicable,
     update (obj) {

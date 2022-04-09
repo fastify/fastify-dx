@@ -5,36 +5,45 @@ import { fileURLToPath } from 'node:url'
 import chokidar from 'chokidar'
 import colorize from 'colorize'
 
-import { quiet, registerGlobals, startDevLogger } from '../zx.mjs'
-
-let node
+import { quiet, registerGlobals } from '../zx.mjs'
+import { startDevLogger } from '../logger.mjs'
 
 registerGlobals()
-watch()
 
-await start()
+let isRestart = false
+let node
+
+export default async () => {  
+  watch()
+  await start()
+}
 
 async function start () {
   node = getNode()
 
-  startDevLogger(node.stdout)
-  startDevLogger(node.stderr)
+  startDevLogger(node.stdout, 'info')
+  startDevLogger(node.stderr, 'error')
 
   try {
     await node
   } catch {
-    // Printed to stderr automatically by zx
+    if (isRestart) {
+      isRestart = false
+    } else {
+      setImmediate(() => process.exit(1))
+    }
   }
 }
 
 function restart () {
+  isRestart = true
   node.catch(() => start())
   node.kill()
 }
 
 function getNode () {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
-  const listenPath = path.resolve(__dirname, 'listen.mjs')
+  const listenPath = path.resolve(__dirname, '..', 'listen.mjs')
   return quiet($`${
     process.argv[0]
   } ${

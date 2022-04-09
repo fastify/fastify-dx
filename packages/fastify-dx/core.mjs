@@ -4,7 +4,7 @@ import FastifySensible from 'fastify-sensible'
 import FastifyApply from 'fastify-apply'
 import FastifyVite from 'fastify-vite'
 
-export async function setup (config) {
+export async function configure (config) {
   const {
     dev,
     init,
