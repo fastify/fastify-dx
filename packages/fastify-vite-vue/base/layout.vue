@@ -12,6 +12,6 @@
 </template>
 
 <script setup>
-import Loader from './loader'
+import Loader from './loader.vue'
 import { hydrationDone } from '/entry/core'
 </script>

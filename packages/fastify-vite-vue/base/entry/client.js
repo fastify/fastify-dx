@@ -1,5 +1,4 @@
-import '/index.css'
-
+import '../index.css'
 import { createApp } from './app'
 
 createApp().then(async ({ app, router }) => {

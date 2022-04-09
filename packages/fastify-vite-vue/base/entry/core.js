@@ -181,6 +181,37 @@ export async function fetchPayload (route) {
   return response.json()
 }
 
+export function getRoutes (views) {
+  const routes = []
+  for (const [componentPath, view] of Object.entries(views)) {
+    const { default: component, ...viewProps } = view
+    for (const path of flattenPaths(view.route)) {
+      routes.push({ path, componentPath, component, ...viewProps })
+    }
+  }
+  return routes.sort((a, b) => {
+    if (b.path > a.path) {
+      return 1
+    } else if (a.path > b.path) {
+      return -1
+    } else {
+      return 0
+    }
+  })
+}
+
+function flattenPaths (viewPath) {
+  if (!viewPath) {
+    return []
+  }
+  if (typeof viewPath === 'string') {
+    return [viewPath]
+  }
+  if (Array.isArray(viewPath)) {
+    return viewPath
+  }
+  return []
+}
 function usePayloadPath (route) {
   if (window[kStaticPayload]) {
     let { pathname } = Object.assign({}, document.location)

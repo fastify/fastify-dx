@@ -10,12 +10,12 @@
 <script>
 import { computed, onErrorCaptured } from 'vue'
 import { useHead } from '@vueuse/head'
-import { useIsomorphic } from './core.mjs'
+import { useIsomorphic } from './core.js'
 
-import Layout from '/layout.vue'
-import Error from '/error.vue'
+import Layout from '../layout.vue'
+import Error from '../error.vue'
 
-import * as head from '/head.mjs'
+import * as head from '../head.mjs'
 
 export default {
   components: {

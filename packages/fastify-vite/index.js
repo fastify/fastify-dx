@@ -18,15 +18,8 @@ class Vite {
     this[kEmitter] = new EventEmitter()    
   }
 
-  // addHook (hook, handler) {
-  //   if (hook in this[kHooks]) {
-  //     this[kHooks][hook].push(handler)
-  //   }
-  // }
-
   async ready () {
     this.config = await configure(this[kOptions])
-    console.log('this.config', this.config)
     await this.setupMode(this.config)
     const entry = await on('ready', this[kEmitter])
     this.setupRouting(entry)
