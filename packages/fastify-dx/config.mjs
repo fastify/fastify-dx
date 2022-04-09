@@ -83,7 +83,7 @@ function getCommands () {
     '-u': '--url',
   })
   for (const cmd of ['setup', 'dev', 'eject', 'generate']) {
-    if (argv._.includes(cmd)) {
+    if (argv._[0] === cmd) {
       argv[cmd] = true
     }
   }

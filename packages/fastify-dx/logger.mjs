@@ -29,7 +29,7 @@ export function log (line, defaultLevel) {
   if (line[0] === '{') {
     json = JSON.parse(line)
   }
-  if (!json) {
+  if (!json?.level) {
     json = { msg: line, level: levels.values[defaultLevel] }
   }
   console.log(methods[levels.labels[json.level]](json))

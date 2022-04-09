@@ -1,5 +1,4 @@
-const { existsSync, readFileSync } = require('fs')
-const { resolve } = require('path')
+const { resolve, exists, read } = require('./ioutils')
 const { resolveConfig } = require('vite')
 
 class Options {
@@ -32,7 +31,7 @@ class Options {
   // compute the distribution bundle settings via update()
   constructor (options) {
     // Dynamically determine bundled distribution settings
-    this.update(options)
+    this.update(options);
     if (this.suppressExperimentalWarnings) {
       suppressExperimentalWarnings()
     }
@@ -41,25 +40,24 @@ class Options {
   // Update bundled distribution settings according to running mode
   update (options) {
     Object.assign(this, options)
-    this.dev ??= process.env.NODE_ENV === 'production'
-    if (!this.dev) {
-      this.distDir = resolve(this.root, options.vite.build.outDir)
-      const distIndex = resolve(this.distDir, 'client/index.html')
-      if (!existsSync(distIndex)) {
-        return
-      }
-      this.distIndex = readFileSync(distIndex, 'utf8')
-      this.distManifest = require(resolve(this.distDir, 'client/ssr-manifest.json'))
-    } else {
-      this.distManifest = []
-    }
   }
 
   async updateViteConfig (viteCommand, overrides = {}) {
     const dev = overrides.dev ?? this.dev
     const mode = dev ? 'development' : 'production'
     const vite = await resolveConfig({}, viteCommand, mode)
-    Object.assign(this, { dev, vite })
+    Object.assign(this, { dev, vite, root: vite.root })
+    if (!this.dev) {
+      this.distDir = resolve(this.root, this.vite.build.outDir)
+      const distIndex = resolve(this.distDir, 'client/index.html')
+      if (!exists(distIndex)) {
+        return
+      }
+      this.distIndex = await read(distIndex, 'utf8')
+      this.distManifest = require(resolve(this.distDir, 'client/ssr-manifest.json'))
+    } else {
+      this.distManifest = []
+    }
   }
 }
 

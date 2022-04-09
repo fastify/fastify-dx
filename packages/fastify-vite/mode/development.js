@@ -1,18 +1,13 @@
 const middie = require('middie')
 const { createServer } = require('vite')
-const { resolve } = require('path')
 const { ensureIndexHtml } = require('../setup')
 const { kEmitter } = require('../symbols')
-const { read } = require('../ioutils')
+const { join, resolve, read } = require('../ioutils')
 
 async function setup (options) {
   // Vite's pesky opinionated constraint of having index.html
   // as the main entry point for bundling — the file needs to exist
-  const indexHtmlPath = await ensureIndexHtml(options)
-
-  // Ensure there's a Vite configuration file
-  // by ejecting the base version provided by the renderer adapter
-  await this.ensureConfigFile(options)
+  const indexHtmlPath = join(options.root, 'index.html')
 
   // Middie seems to work well for running Vite's development server
   // Unsure if fastify-express is warranted here
@@ -87,8 +82,4 @@ function getHandler (scope, options, render, viteDevServer) {
   }
 }
 
-module.exports = {
-  setup,
-  getEntry,
-  getHandler,
-}
+module.exports = setup

@@ -1,5 +1,5 @@
 const { on, EventEmitter } = require('events')
-const FastifyPlugin = require('fastify-plugin')
+const fp = require('fastify-plugin')
 const { getOptions } = require('./options')
 
 const build = require('./cmd/build')
@@ -9,13 +9,13 @@ const development = require('./mode/development')
 
 const { setupRouting } = require('./routing')
 const { ensureConfigFile, ejectBlueprint } = require('./setup')
-const { kScope, kHooks, kEmitter } = require('./symbols')
+const { kHooks, kEmitter } = require('./symbols')
 
 class Vite {
   constructor (scope, options) {
-    this[kScope] = scope
-    this[kEmitter] = new EventEmitter()
-    this.options = getOptions(options, options.dev ? development : production)
+    this.scope = scope
+    this.options = options
+    this[kEmitter] = new EventEmitter()    
   }
 
   addHook (hook, handler) {
@@ -25,10 +25,11 @@ class Vite {
   }
 
   async ready () {
+    this.options = await getOptions(this.options)
     if (this.options.dev) {
-      await development.setup.call(this, this.options)
+      await development.call(this, this.options)
     } else {
-      await production.setup.call(this, this.options)
+      await production.call(this, this.options)
     }
     setupRouting.call(this, await on('ready', this[kEmitter]))
   }
@@ -62,22 +63,14 @@ class Vite {
   post (url, { data, method, ...routeOptions } = {}) {
     return this.route(url, { data, method: 'GET', ...routeOptions })
   }
-
-  build () {
-    build.call(this)
-  }
-
-  generate () {
-    generate.call(this)
-  }
 }
 
 function fastifyVite (scope, options, done) {
-  scope.decorate('vite', new Vite(options))
+  scope.decorate('vite', new Vite(scope, options))
   done()
 }
 
-module.exports = FastifyPlugin(fastifyVite)
+module.exports = fp(fastifyVite)
 module.exports.ensureConfigFile = ensureConfigFile
 module.exports.ejectBlueprint = ejectBlueprint
 module.exports.default = module.exports
