@@ -1,4 +1,4 @@
-const { resolve, exists, read } = require('./ioutils')
+const { join, resolve, exists, read } = require('./ioutils')
 const { resolveConfig } = require('vite')
 
 class Config {
@@ -14,40 +14,48 @@ class Config {
     indexHtml: null,
     dir: null,
   }  
-  // Prevents ExperimentalWarning messages due to use of undici etc
-  suppressExperimentalWarnings = true
   // The fastify-vite renderer adapter to use
   renderer = null
 }
 
 async function configure (options = {}) {
   const vite = await resolveViteConfig(options)
-  const bundle = await resolveBundleConfig(options)
-  const options = new Config(overrides)
-  return options
+  const bundle = await resolveBundle(options)
+  return Object.assign(new Config(), { ...options, vite, bundle })
 }
 
-async function getBuildCommands ({ renderer, configFile }) {
-  const vite = await resolveConfig({}, 'build', 'production')
-  return [
-    `build --ssrManifest --outDir ${vite.build.outDir}/client`,
-    `vite build --ssr ${renderer.serverEntryPoint} --outDir ${vite.build.outDir}/server`
-  ]
-}
-
-async function resolveBundle () {
-  if (!this.dev) {
-    this.distDir = resolve(this.root, this.vite.build.outDir)
-    const distIndex = resolve(this.distDir, 'client/index.html')
-    if (!exists(distIndex)) {
-      return
+async function resolveViteConfig ({ configRoot }) {
+  for (const ext of ['js', 'mjs', 'ts', 'cjs']) {
+    const configFile = join(configRoot, `vite.config.${ext}`)
+    if (exists(configFile)) {
+      return await resolveConfig({ configFile }, 'build', 'production')
     }
-    this.distIndex = await read(distIndex, 'utf8')
-    this.distManifest = require(resolve(this.distDir, 'client/ssr-manifest.json'))
-  } else {
-    this.distManifest = []
   }
 }
 
-module.exports = { configure, getDist, getBuildCommands }
+async function resolveBundle ({ dev, vite }) {
+  const bundle = {}
+  if (!dev) {
+    bundle.dir = resolve(vite.root, vite.build.outDir)
+    const indexHtmlPath = resolve(bundle.dir, 'client/index.html')
+    if (!exists(indexHtmlPath)) {
+      return
+    }
+    bundle.indexHtml = await read(indexHtmlPath, 'utf8')
+    bundle.manifest = require(resolve(bundle.dir, 'client/ssr-manifest.json'))
+  } else {
+    bundle.manifest = []
+  }
+  return bundle
+}
+
+async function resolveBuildCommands ({ renderer, configFile }) {
+  const vite = await resolveViteConfig(configFile)
+  return [
+    `build --ssrManifest --outDir ${vite.build.outDir}/client`,
+    `build --ssr ${renderer.serverEntryPoint} --outDir ${vite.build.outDir}/server`
+  ]
+}
+
+module.exports = { configure, resolveBundle, resolveBuildCommands }
 module.exports.default = module.exports

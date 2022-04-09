@@ -2,7 +2,7 @@ const { on, EventEmitter } = require('events')
 const { resolveConfig } = require('vite')
 const fp = require('fastify-plugin')
 
-const { configure } = require('./config')
+const { configure, resolveBuildCommands } = require('./config')
 const { setup: setupProduction } = require('./mode/production')
 const { setup: setupDevelopment } = require('./mode/development')
 const { setupRouting } = require('./routing')
@@ -26,6 +26,7 @@ class Vite {
 
   async ready () {
     this.config = await configure(this[kOptions])
+    console.log('this.config', this.config)
     await this.setupMode(this.config)
     const entry = await on('ready', this[kEmitter])
     this.setupRouting(entry)
@@ -48,4 +49,5 @@ function fastifyVite (scope, options, done) {
 module.exports = fp(fastifyVite)
 module.exports.ensureConfigFile = ensureConfigFile
 module.exports.ejectBlueprint = ejectBlueprint
+module.exports.resolveBuildCommands = resolveBuildCommands
 module.exports.default = module.exports
