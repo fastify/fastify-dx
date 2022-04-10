@@ -1,7 +1,6 @@
 const middie = require('middie')
 const { createServer } = require('vite')
 const { compileIndexHtml } = require('../html')
-const { kEmitter } = require('../symbols')
 const { join, resolve, read } = require('../ioutils')
 
 async function setup (options) {
@@ -23,20 +22,21 @@ async function setup (options) {
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
 
+  const _compileIndexHtml = options.renderer.compileIndexHtml ?? compileIndexHtml
+
   // In development mode, template is passed as an async function, which is
   // called on every request to ensure the newest index.html version is loaded
   const getTemplate = async (url) => {
     const indexHtml = await read(indexHtmlPath, 'utf8')
     const transformedHtml = await this.devServer.transformIndexHtml(url, indexHtml)
-    return await compileIndexHtml(transformedHtml)
+    return await _compileIndexHtml(transformedHtml)
   }
-  
-  compileIndexHtml ??= options.renderer.compileIndexHtml
-  getEntry ??= options.renderer.getEntry
-  getHandler ??= options.renderer.getHandler
 
-  const { routes, render } = await getEntry(options, this.devServer)
-  const handler = getHandler(this.scope, options, render, getTemplate, this.devServer)
+  const _getEntry = options.renderer.getEntry ?? getEntry
+  const _getHandler = options.renderer.getHandler ?? getHandler
+
+  const { routes, render } = await _getEntry(options, this.devServer)
+  const handler = _getHandler(this.scope, options, render, getTemplate, this.devServer)
 
   return { routes, handler }
 
@@ -82,7 +82,6 @@ async function setup (options) {
       }
     }
   }
-
 }
 
 module.exports = { setup }

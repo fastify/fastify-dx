@@ -3,7 +3,6 @@ import { on } from 'node:events'
 import readline from 'node:readline'
 import { levels } from 'pino'
 import kleur from 'kleur'
-import JSON5 from 'json5'
 
 // This serves as a minimally user-friendly log redactor
 // for Fastify's pino-backed JSON output.
@@ -22,7 +21,7 @@ export const fatal = (msg) => log(msg, 'fatal')
 const urlIgnorePatterns = [
   /^\/__vite_ping/,
   /^\/@((id)|(vite)|(fs))/,
-  /\.(?:((m|c)?js|ts|vue|jsx|css))$/
+  /\.(?:((m|c)?js|ts|vue|jsx|css))$/,
 ]
 
 // Matches pino.levels

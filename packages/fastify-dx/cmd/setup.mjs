@@ -6,7 +6,6 @@ import { getConfig } from '../config.mjs'
 
 registerGlobals()
 
-const cwd = process.cwd()
 const { root, renderer } = await getConfig()
 
 const fastifyViteConfig = {
@@ -33,7 +32,7 @@ async function ensureServerFile (base) {
 }
 
 async function ensurePackageJSON (root) {
-  const packageJSON = JSON.stringify({
+  const packageJSON = {
     type: 'module',
     name: path.dirname(root),
     version: '0.0.1',
@@ -41,9 +40,18 @@ async function ensurePackageJSON (root) {
     dependencies: {
       'fastify-dx': '^0.0.5',
     },
-  })
+  }
   const packageJSONPath = path.join(root, 'package.json')
   if (!await fs.exists(packageJSONPath)) {
-    await fs.writeFile(packageJSONPath, packageJSON)
+    await fs.writeFile(packageJSONPath, JSON.stringify(packageJSON))
+  } else {
+    const original = JSON.parse(await fs.readFile(packageJSONPath, 'utf8'))
+    if (!original.dependencies) {
+      original.dependencies = {}
+    }
+    for (const [dep, version] of Object.entries(packageJSON.dependencies)) {
+      original.dependencies[dep] = version
+    }
+    await fs.writeFile(packageJSONPath, JSON.stringify(original))
   }
 }

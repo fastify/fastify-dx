@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { existsSync, lstatSync } from 'fs'
-import { sep, resolve, dirname, parse as parsePath } from 'path'
+import { sep, resolve, parse as parsePath } from 'path'
 import arg from 'arg'
 import { hooks, methods } from 'fastify-apply/applicable.mjs'
 import { error } from './logger.mjs'

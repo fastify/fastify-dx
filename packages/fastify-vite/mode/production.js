@@ -1,17 +1,8 @@
 const FastifyStatic = require('fastify-static')
 const { resolve } = require('path')
 const { ensureIndexHtml, ensureViteConfig } = require('../setup')
-const { kEmitter } = require('../symbols')
 
 async function setup (options) {
-  // Vite's pesky opinionated constraint of having index.html
-  // as the main entry point for bundling — the file needs to exist
-  await ensureIndexHtml(options)
-
-  // Ensure there's a Vite configuration file
-  // by ejecting the base version provided by the renderer adapter
-  await ensureViteConfig(options)
-
   // For production you get the distribution version of the render function
   const { assetsDir } = options.vite.build
   // We also register fastify-static to serve all static files
@@ -30,7 +21,7 @@ async function setup (options) {
   const { render, routes } = await options.entry(options)
   const handler = options.handler(this.scope, options, render)
 
-  this[kEmitter].emit('ready', { routes, handler })
+  return { routes, handler }
 }
 
 module.exports = setup

@@ -13,7 +13,8 @@ class Config {
     manifest: null,
     indexHtml: null,
     dir: null,
-  }  
+  }
+
   // The fastify-vite renderer adapter to use
   renderer = null
 }
@@ -53,7 +54,7 @@ async function resolveBuildCommands ({ renderer, configFile }) {
   const vite = await resolveViteConfig(configFile)
   return [
     `build --ssrManifest --outDir ${vite.build.outDir}/client`,
-    `build --ssr ${renderer.serverEntryPoint} --outDir ${vite.build.outDir}/server`
+    `build --ssr ${renderer.serverEntryPoint} --outDir ${vite.build.outDir}/server`,
   ]
 }
 

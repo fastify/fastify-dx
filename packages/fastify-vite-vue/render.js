@@ -4,7 +4,7 @@ const devalue = require('devalue')
 
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, config) {
-    const { renderer, entry, bundle } = config
+    const { renderer, bundle } = config
     const { ctx, app, head, routes, router } = await createApp({
       fastify,
       req,

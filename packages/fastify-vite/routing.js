@@ -1,7 +1,9 @@
 
 function setupRouting ({ handler, routes }) {
-  getRouteSetter ??= this.config.renderer.getRouteSetter
-  this.route = getRouteSetter.call(this)
+  this.route = (
+    getRouteSetter ??
+      this.config.renderer.getRouteSetter
+  ).call(this)
   for (const route of routes) {
     this.route(route.path, route)
   }

@@ -13,7 +13,7 @@ registerGlobals()
 let isRestart = false
 let node
 
-export default async () => {  
+export default async () => {
   watch()
   await start()
 }
