@@ -37,7 +37,7 @@ async function setup (options) {
   const { routes, render } = await getEntry(options, this.devServer)
   const handler = getHandler(this.scope, options, render, getTemplate, this.devServer)
 
-  this[kEmitter].emit('ready', { routes, handler })
+  return { routes, handler }
 
   // Loads the Vite application server entry.
   // getEntry() must produce an object with a render function and

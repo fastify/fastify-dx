@@ -1,4 +1,4 @@
-const { on, EventEmitter } = require('events')
+const { once, EventEmitter } = require('events')
 const { resolveConfig } = require('vite')
 const fp = require('fastify-plugin')
 
@@ -7,7 +7,7 @@ const { setup: setupProduction } = require('./mode/production')
 const { setup: setupDevelopment } = require('./mode/development')
 const { setupRouting } = require('./routing')
 const { ensureConfigFile, ejectBlueprint } = require('./setup')
-const [kEmitter, kOptions] = ['kEmitter', 'kOptions'].map(Symbol)
+const { kEmitter, kOptions } = require('./symbols')
 
 class Vite {
   constructor (scope, options) {
@@ -20,9 +20,7 @@ class Vite {
 
   async ready () {
     this.config = await configure(this[kOptions])
-    await this.setupMode(this.config)
-    const entry = await on('ready', this[kEmitter])
-    this.setupRouting(entry)
+    this.setupRouting(await this.setupMode(this.config))
   }
 
   get (url, routeOptions) {

@@ -1,15 +1,16 @@
 
-function getRouteSetter (scope, handler) {
-  return (url, routeOptions) => {
-    scope.route({ url, handler, ...routeOptions })
-  }
-}
-
-function setupRouting (scope, { handler, routes }) {
-  this.options.getRouteSetter ??= getRouteSetter
-  this.route = this.options.getRouteSetter(scope, this.options)
+function setupRouting ({ handler, routes }) {
+  getRouteSetter ??= this.config.renderer.getRouteSetter
+  this.route = getRouteSetter()
+  console.log('handler', handler)
+  console.log('routes', routes)
   for (const route of routes) {
     this.route(route.path, route)
+  }
+  function getRouteSetter (handler) {
+    return (url, routeOptions) => {
+      this.scope.route({ url, handler, ...routeOptions })
+    }
   }
 }
 
