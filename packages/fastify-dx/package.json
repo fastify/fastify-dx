@@ -19,13 +19,14 @@
     "server.mjs"
   ],
   "dependencies": {
-    "colorize": "^0.1.0",
     "arg": "^5.0.1",
+    "colorize": "^0.1.0",
     "fastify": "^3.27.2",
     "fastify-apply": "^0.0.2",
     "fastify-plugin": "^3.0.1",
     "fastify-sensible": "^3.1.2",
     "fastify-vite": "^3.0.0-next.2",
+    "kleur": "^4.1.4",
     "zx": "^6.0.6"
   }
 }

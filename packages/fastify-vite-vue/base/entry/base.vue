@@ -3,7 +3,7 @@
     <Error :error="error" />
   </template>
   <template v-else>
-    <Router />
+    <Layout />
   </template>
 </template>
 

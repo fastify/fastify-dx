@@ -3,18 +3,18 @@ const { renderHeadToString } = require('@vueuse/head')
 const devalue = require('devalue')
 
 function createRenderFunction (createApp) {
-  return async function render (fastify, req, reply, url, options) {
-    const { entry, distManifest, hydration } = options
+  return async function render (fastify, req, reply, url, config) {
+    const { renderer, entry, bundle } = config
     const { ctx, app, head, routes, router } = await createApp({
       fastify,
       req,
       reply,
-      [hydration.global]: req[hydration.global],
-      [hydration.payload]: req[hydration.payload],
-      [hydration.data]: req[hydration.data],
-      $payloadPath: () => `/-/payload${req.routerPath}`,
-      $api: req.api && req.api.client,
-      $errors: {},
+      global: req.dx?.global,
+      payload: req.dx?.payload,
+      data: req.dx?.data,
+      payloadPath: () => `/-/payload${req.dx.routerPath}`,
+      api: req.api?.client,
+      errors: {},
     })
 
     if (router) {
@@ -24,8 +24,8 @@ function createRenderFunction (createApp) {
 
     const element = await renderToString(app, ctx)
     const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : {}
-    const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
-    const hydrationScript = getHydrationScript(req, app.config.globalProperties, hydration, routes)
+    const preloadLinks = renderPreloadLinks(ctx.modules, bundle.manifest)
+    const hydrationScript = getHydrationScript(req, app.config.globalProperties, routes)
 
     return {
       head: {
@@ -36,7 +36,7 @@ function createRenderFunction (createApp) {
         html: htmlAttrs,
         body: bodyAttrs,
       },
-      entry: entry.client,
+      entry: renderer.clientEntryPoint,
       hydration: hydrationScript,
       element,
     }
@@ -47,12 +47,11 @@ module.exports = {
   createRenderFunction,
 }
 
-function getHydrationScript (req, context, hydration, routes) {
-  const globalData = req[hydration.global]
-  const data = req[hydration.data] || context[hydration.data]
-  const payload = req[hydration.payload] || context[hydration.payload]
-  const api = req.api ? req.api.meta : null
-
+function getHydrationScript (req, context, routes) {
+  const globalData = req.dx?.global
+  const data = req.dx?.data ?? context.data
+  const payload = req.dx?.payload ?? context.payload
+  const api = req.api?.meta
   let hydrationScript = ''
   if (routes || globalData || data || payload || api) {
     hydrationScript += '<script>'

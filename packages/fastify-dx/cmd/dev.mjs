@@ -3,7 +3,7 @@
 import { fileURLToPath } from 'node:url'
 
 import chokidar from 'chokidar'
-import colorize from 'colorize'
+import kleur from 'kleur'
 
 import { quiet, registerGlobals } from '../zx.mjs'
 import { startDevLogger } from '../logger.mjs'
@@ -21,7 +21,7 @@ export default async () => {
 async function start () {
   node = getNode()
 
-  startDevLogger(node.stdout, 'info')
+  startDevLogger(node.stdout, 'debug')
   startDevLogger(node.stderr, 'error')
 
   try {
@@ -64,7 +64,7 @@ function watch () {
     console.log()
     restart()
   }
-  watcher.on('add', changed(colorize.ansify('#green[A]')))
-  watcher.on('unlink', changed(colorize.ansify('#red[D]')))
-  watcher.on('change', changed(colorize.ansify('#yellow[M]')))
+  watcher.on('add', changed(kleur.green('A')))
+  watcher.on('unlink', changed(kleur.red('D')))
+  watcher.on('change', changed(kleur.yellow('M')))
 }

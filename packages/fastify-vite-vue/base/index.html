@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-${head.preload}
-${head.tags}
+${fragments.head?.preload}
+${fragments.head?.tags}
 </head>
 <body>
-${hydration}
-<div id="app">${element}</div>
+${fragments.hydration}
+<div id="app">${fragments.element}</div>
 <script type="module" src="/entry/client.js"></script>
 </body>
 </html>

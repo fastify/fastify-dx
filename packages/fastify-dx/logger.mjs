@@ -1,7 +1,9 @@
+
 import { on } from 'node:events'
 import readline from 'node:readline'
 import { levels } from 'pino'
-import colorize from 'colorize'
+import kleur from 'kleur'
+import JSON5 from 'json5'
 
 // This serves as a minimally user-friendly log redactor
 // for Fastify's pino-backed JSON output.
@@ -20,12 +22,24 @@ export const fatal = (msg) => log(msg, 'fatal')
 // Matches pino.levels
 const methods = {
   // We just use colorize but it's already imported by other dependencies
-  trace: (log) => colorize.ansify(`#magenta[ℹ ${log.msg}]`),
-  debug: (log) => colorize.ansify(`#magenta[ℹ ${log.msg}]`),
-  info: (log) => colorize.ansify(`#cyan[ℹ ${log.msg}]`),
-  warn: (log) => colorize.ansify(`#yellow[ℹ ${log.msg}]`),
-  error: (log) => colorize.ansify(`#red[ℹ ${log.msg}]`),
-  fatal: (log) => colorize.ansify(`#red[ℹ ${log.msg}]`),
+  trace: (log) => kleur.magenta(`ℹ ${log.msg}`),
+  debug: (log) => kleur.magenta(`ℹ ${log.msg}`),
+  info: (log) => {
+    if (log.req) {
+      return kleur.cyan(`ℹ ${log.req.method} ${log.req.url}`)
+    } else {
+      return kleur.cyan(`ℹ ${log.msg}`)
+    }
+  },
+  warn: (log) => kleur.yellow(`ℹ ${log.msg}`),
+  error: (log) => {
+    if (log.stack) {
+      return log.stack.split('\n').map(l => kleur.red(`ℹ ${l}`))
+    } else {
+      return kleur.red(`ℹ ${log.msg}`)
+    }
+  },
+  fatal: (log) => kleur.red(`ℹ ${log.msg}`),
 }
 
 export async function startDevLogger (input, defaultLevel) {
@@ -44,5 +58,10 @@ export function log (line, defaultLevel) {
   if (!json?.level) {
     json = { msg: line, level: levels.values[defaultLevel] }
   }
-  console.log(methods[levels.labels[json.level]](json))
+  const result = methods[levels.labels[json.level]](json)
+  if (Array.isArray(result)) {
+    result.forEach(r => console.log(r))
+  } else {
+    console.log(result)
+  }
 }

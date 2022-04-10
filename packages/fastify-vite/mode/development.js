@@ -1,6 +1,6 @@
 const middie = require('middie')
 const { createServer } = require('vite')
-const { ensureIndexHtml } = require('../setup')
+const { compileIndexHtml } = require('../html')
 const { kEmitter } = require('../symbols')
 const { join, resolve, read } = require('../ioutils')
 
@@ -28,9 +28,10 @@ async function setup (options) {
   const getTemplate = async (url) => {
     const indexHtml = await read(indexHtmlPath, 'utf8')
     const transformedHtml = await this.devServer.transformIndexHtml(url, indexHtml)
-    return await options.compileIndexHtml(transformedHtml)
+    return await compileIndexHtml(transformedHtml)
   }
   
+  compileIndexHtml ??= options.renderer.compileIndexHtml
   getEntry ??= options.renderer.getEntry
   getHandler ??= options.renderer.getHandler
 

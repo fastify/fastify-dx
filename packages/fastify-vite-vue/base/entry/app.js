@@ -3,7 +3,7 @@ import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
 import { createBeforeEachHandler } from './core.js'
 
-import app from './app.vue'
+import base from './base.vue'
 import routes from './routes.js'
 
 const createHistory = import.meta.env.SSR
@@ -12,7 +12,7 @@ const createHistory = import.meta.env.SSR
 
 export async function createApp (ctx) {
   const resolvedRoutes = await routes()
-  const app = createSSRApp(app)
+  const app = createSSRApp(base)
   const head = createHead()
   const router = createRouter({
     history: createHistory(),
