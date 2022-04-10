@@ -19,13 +19,25 @@ export const warn = (msg) => log(msg, 'warn')
 export const error = (msg) => log(msg, 'error')
 export const fatal = (msg) => log(msg, 'fatal')
 
+const urlIgnorePatterns = [
+  /^\/__vite_ping/,
+  /^\/@((id)|(vite)|(fs))/,
+  /\.(?:((m|c)?js|ts|vue|jsx|css))$/
+]
+
 // Matches pino.levels
 const methods = {
   // We just use colorize but it's already imported by other dependencies
   trace: (log) => kleur.magenta(`ℹ ${log.msg}`),
   debug: (log) => kleur.magenta(`ℹ ${log.msg}`),
   info: (log) => {
+    if (log.res) {
+      return
+    }
     if (log.req) {
+      if (urlIgnorePatterns.some(p => p.test(log.req.url))) {
+        return
+      }
       return kleur.cyan(`ℹ ${log.req.method} ${log.req.url}`)
     } else {
       return kleur.cyan(`ℹ ${log.msg}`)
@@ -59,6 +71,9 @@ export function log (line, defaultLevel) {
     json = { msg: line, level: levels.values[defaultLevel] }
   }
   const result = methods[levels.labels[json.level]](json)
+  if (!result) {
+    return
+  }
   if (Array.isArray(result)) {
     result.forEach(r => console.log(r))
   } else {
