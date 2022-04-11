@@ -3,6 +3,7 @@
 const commands = {
   dev: process.argv[2] === 'dev',
   setup: process.argv[2] === 'setup',
+  build: process.argv[2] === 'build',
 }
 
 if (Object.keys(commands).length) {

@@ -25,7 +25,7 @@ async function configure (options = {}) {
   return Object.assign(new Config(), { ...options, vite, bundle })
 }
 
-async function resolveViteConfig ({ configRoot }) {
+async function resolveViteConfig (configRoot) {
   for (const ext of ['js', 'mjs', 'ts', 'cjs']) {
     const configFile = join(configRoot, `vite.config.${ext}`)
     if (exists(configFile)) {
@@ -50,8 +50,8 @@ async function resolveBundle ({ dev, vite }) {
   return bundle
 }
 
-async function resolveBuildCommands ({ renderer, configFile }) {
-  const vite = await resolveViteConfig(configFile)
+async function resolveBuildCommands (configRoot, renderer) {
+  const vite = await resolveViteConfig(configRoot)
   return [
     `build --ssrManifest --outDir ${vite.build.outDir}/client`,
     `build --ssr ${renderer.serverEntryPoint} --outDir ${vite.build.outDir}/server`,
