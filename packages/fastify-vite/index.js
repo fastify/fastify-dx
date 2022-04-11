@@ -1,7 +1,7 @@
-const fp = require('fastify-plugin')
+const FastifyPlugin = require('fastify-plugin')
 
 const { ensureConfigFile, ejectBlueprint } = require('./setup')
-const { configure, resolveBuildCommands } = require('./config')
+const { configure, resolveBuildCommands, viteESModuleSSR } = require('./config')
 const { setup: setupProduction } = require('./mode/production')
 const { setup: setupDevelopment } = require('./mode/development')
 const { setupRouting } = require('./routing')
@@ -34,8 +34,9 @@ function fastifyVite (scope, options, done) {
   done()
 }
 
-module.exports = fp(fastifyVite)
+module.exports = FastifyPlugin(fastifyVite)
 module.exports.ensureConfigFile = ensureConfigFile
 module.exports.ejectBlueprint = ejectBlueprint
 module.exports.resolveBuildCommands = resolveBuildCommands
+module.exports.viteESModuleSSR = viteESModuleSSR
 module.exports.default = module.exports

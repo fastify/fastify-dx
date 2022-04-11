@@ -1,5 +1,5 @@
-const { join, resolve, exists, read } = require('./ioutils')
 const { resolveConfig } = require('vite')
+const { join, resolve, exists, read } = require('./ioutils')
 
 class Config {
   // Whether or not to enable Vite's Dev Server
@@ -20,8 +20,8 @@ class Config {
 }
 
 async function configure (options = {}) {
-  const vite = await resolveViteConfig(options)
-  const bundle = await resolveBundle(options)
+  const vite = await resolveViteConfig(options.configRoot)
+  const bundle = await resolveBundle({ ...options, vite })
   return Object.assign(new Config(), { ...options, vite, bundle })
 }
 
@@ -53,10 +53,25 @@ async function resolveBundle ({ dev, vite }) {
 async function resolveBuildCommands (configRoot, renderer) {
   const vite = await resolveViteConfig(configRoot)
   return [
-    `build --ssrManifest --outDir ${vite.build.outDir}/client`,
-    `build --ssr ${renderer.serverEntryPoint} --outDir ${vite.build.outDir}/server`,
+    ['build', '--outDir', `${vite.build.outDir}/client`, '--ssrManifest'],
+    ['build', '--ssr', renderer.serverEntryPoint, '--outDir', `${vite.build.outDir}/server`],
   ]
 }
 
-module.exports = { configure, resolveBundle, resolveBuildCommands }
+function viteESModuleSSR () {
+  return {
+    name: 'vite-es-module-ssr',
+    config (config, { command }) {
+      if (command === 'build' && config.build?.ssr) {
+        config.build.rollupOptions = {
+          output: {
+            format: 'es',
+          },
+        }
+      }
+    }
+  }
+}
+
+module.exports = { configure, resolveBundle, resolveBuildCommands, viteESModuleSSR }
 module.exports.default = module.exports

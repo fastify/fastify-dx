@@ -6,13 +6,16 @@ const commands = {
   build: process.argv[2] === 'build',
 }
 
-if (Object.keys(commands).length) {
-  for (const cmd of Object.keys(commands)) {
-    if (commands[cmd]) {
-      const command = await import(`./cmd/${cmd}.mjs`)
-      await command.default()
-    }
+let command
+
+for (const cmd of Object.keys(commands)) {
+  if (commands[cmd]) {
+    command = await import(`./cmd/${cmd}.mjs`)
   }
+}
+
+if (command) {
+  await command.default()
 } else {
   await import('./listen.mjs')
 }

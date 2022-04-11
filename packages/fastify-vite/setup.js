@@ -1,9 +1,6 @@
 const { parse: parsePath } = require('path')
 const { join, walk, ensure, exists, write, read } = require('./ioutils')
-const { js, ts, mjs, cjs } = require('./argv')
 const { stringify } = require('json5')
-
-const kinds = { js, ts, mjs, cjs }
 
 async function ejectBlueprint (base, { root, renderer, blueprint = 'base' }) {
   await ensure(join(base, root))
@@ -22,15 +19,9 @@ async function ejectBlueprint (base, { root, renderer, blueprint = 'base' }) {
   }
 }
 
-async function ensureConfigFile (base, { root, renderer }, kind = null) {
-  if (!kind) {
-    kind = Object.keys(kinds).find(k => kinds[k])
-    if (!kind) {
-      kind = 'mjs'
-    }
-  }
-  const sourcePath = join(renderer.path, 'config', `vite.config.${kind}`)
-  const targetPath = join(base, `vite.config.${kind}`)
+async function ensureConfigFile (base, { root, renderer }) {
+  const sourcePath = join(renderer.path, 'config', `vite.config.js`)
+  const targetPath = join(base, `vite.config.js`)
   if (exists(sourcePath) && !exists(targetPath)) {
     const generatedConfig = await read(sourcePath, 'utf8')
     await write(targetPath, appendToConfig(generatedConfig, { root }))

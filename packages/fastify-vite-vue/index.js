@@ -6,11 +6,12 @@ module.exports.path = resolve(__dirname)
 module.exports.serverEntryPoint = '/entry/server.js'
 module.exports.clientEntryPoint = '/entry/client.js'
 module.exports.createRenderFunction = createRenderFunction
+module.exports.getRouteSetter = getRouteSetter
 module.exports.blueprints = ['base']
 module.exports.default = module.exports
 
 function getRouteSetter (scope, handler) {
-  return (url, routeOptions) => {
+  return (url, routeOptions = {}) => {
     const preHandler = routeOptions.preHandler || []
     if (routeOptions.getData) {
       preHandler.push(getDataHandler(scope, routeOptions.getData))
@@ -22,6 +23,7 @@ function getRouteSetter (scope, handler) {
     }
     scope.route({
       url,
+      method: 'GET',
       handler,
       ...routeOptions,
       preHandler,

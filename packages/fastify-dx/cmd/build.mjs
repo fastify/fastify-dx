@@ -1,4 +1,4 @@
-/* global $,fs,path */
+/* global $ */
 
 import { resolveBuildCommands } from 'fastify-vite'
 import { quiet, registerGlobals } from '../zx.mjs'
@@ -11,7 +11,7 @@ const { root, renderer } = await getConfig()
 
 export default async () => {
   for (const cmd of await resolveBuildCommands(root, renderer)) {
-    const viteProcess = quiet($`npx vite ${cmd.split(' ')}`)
+    const viteProcess = quiet($`npx vite ${cmd}`)
     startDevLogger(viteProcess.stdout, 'info')
     startDevLogger(viteProcess.stderr, 'error')
     await viteProcess
