@@ -2,14 +2,15 @@
 import { fileURLToPath } from 'node:url'
 import chokidar from 'chokidar'
 import kleur from 'kleur'
+import { startDevLogger } from '../logger.mjs'
 
-export default async ({ path, $, quiet, startDevLogger }) => {
+export default async ({ path, $, quiet }) => {
   let isRestart = false
   let node
 
   watch()
 
-  await start({ $, quiet, startDevLogger })
+  await start({ $, quiet })
 
   async function start () {
     node = getNode()

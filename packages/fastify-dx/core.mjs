@@ -15,9 +15,6 @@ export async function configure (config) {
     plugable,
   } = config
 
-  console.log('init', init)
-  console.log('root', root)
-
   const app = Fastify({ logger: true, ...server })
 
   config.update({ app })
@@ -35,7 +32,7 @@ export async function configure (config) {
 
   if (typeof init === 'function') {
     const initializer = FastifyPlugin(async function () {
-      await init(app, config)
+      await init({ app, config })
     })
     await app.register(initializer)
   }

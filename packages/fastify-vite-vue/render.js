@@ -43,14 +43,12 @@ function createRenderFunction (createApp) {
   }
 }
 
-module.exports = {
-  createRenderFunction,
-}
+module.exports = { createRenderFunction }
 
 function getHydrationScript (req, context, routes) {
   const globalData = req.global
   const data = req.data ?? context.data
-  const payload = req..payload ?? context.payload
+  const payload = req.payload ?? context.payload
   const api = req.api?.meta
   let hydrationScript = ''
   if (routes || globalData || data || payload || api) {

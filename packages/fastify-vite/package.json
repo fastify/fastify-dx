@@ -3,29 +3,32 @@
     "lint": "eslint . --ext js --fix"
   },
   "bugs": {
-    "url": "https://github.com/terixjs/fastify-vite/issues"
+    "url": "https://github.com/fastify/fastify-vite/issues"
   },
   "bundleDependencies": false,
   "deprecated": false,
   "description": "Fastify plugin to serve Vite SSR applications.",
   "files": [
+    "mode/development.js",
+    "mode/production.js",
     "app.js",
-    "build.js",
-    "client.js",
+    "config.js",
+    "generate.js",
+    "html.js",
     "index.js",
-    "islands.js",
-    "options.js",
-    "static.js"
+    "ioutils.js",
+    "routing.js",
+    "setup.js"
   ],
-  "homepage": "https://github.com/fastify/fastify-vite",
+  "homepage": "https://github.com/fastify/fastify-dx/tree/main/packages/fastify-vite",
   "license": "MIT",
   "main": "index.js",
   "name": "fastify-vite",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fastify/fastify-vite.git"
+    "url": "git+https://github.com/fastify/fastify-dx.git"
   },
-  "version": "3.0.0-next.2",
+  "version": "3.0.0-beta.0",
   "dependencies": {
     "json5": "^2.2.1",
     "fastify": "^3.17.0",
@@ -38,5 +41,6 @@
     "p-map": "^5.3.0",
     "undici": "^4.9.5",
     "vite": "^2.9.1"
-  }
+  },
+  "license": "MIT"
 }

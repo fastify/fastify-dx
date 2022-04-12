@@ -3,43 +3,39 @@
     "lint": "eslint . --ext js --fix"
   },
   "bugs": {
-    "url": "https://github.com/terixjs/fastify-vite/issues"
+    "url": "https://github.com/fastify/fastify-dx/issues"
   },
   "bundleDependencies": false,
   "deprecated": false,
   "description": "Vue renderer for fastify-vite.",
   "files": [
-    "base/client.js",
-    "base/client.vue",
-    "base/entry/client.js",
-    "base/entry/server.js",
-    "base/index.css",
-    "base/head.js",
-    "base/index.html",
-    "base/error.vue",
-    "base/router.vue",
-    "base/routes.js",
-    "app.js",
-    "routing.js",
-    "entry.js",
-    "handler.js",
-    "html.js",
+    "blueprint/entry/app.js",
+    "blueprint/entry/base.vue",
+    "blueprint/entry/client.js",
+    "blueprint/entry/core.js",
+    "blueprint/entry/routes.js",
+    "blueprint/entry/server.js",
+    "blueprint/error.vue",
+    "blueprint/head.js",
+    "blueprint/index.css",
+    "blueprint/index.html",
+    "blueprint/index.vue",
+    "blueprint/layout.vue",
+    "blueprint/loader.vue",
+    "config.mjs",
     "index.js",
-    "options.js",
     "render.js",
-    "server.js",
-    "symbols.js",
-    "vite.js"
+    "routing.js"
   ],
-  "homepage": "https://github.com/terixjs/fastify-vite/tree/main/packages/fastify-vite-vue",
+  "homepage": "https://github.com/fastify/fastify-dx/tree/main/packages/fastify-vite-vue",
   "license": "MIT",
   "main": "index.js",
   "name": "fastify-vite-vue",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/terixjs/fastify-vite.git"
+    "url": "git+https://github.com/fastify/fastify-dx.git"
   },
-  "version": "3.0.0-next.2",
+  "version": "3.0.0-beta.0",
   "dependencies": {
     "@vitejs/plugin-vue": "^2.3.1",
     "@vitejs/plugin-vue-jsx": "^1.3.9",
@@ -47,7 +43,6 @@
     "@vueuse/head": "0.6.0",
     "devalue": "2.0.1",
     "manifetch": "^0.0.3",
-    "vite-plugin-blueprint": "^0.0.4",
     "vue": "^3.2.24",
     "vue-router": "4.0.10"
   }

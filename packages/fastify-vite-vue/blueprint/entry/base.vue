@@ -15,7 +15,7 @@ import { useIsomorphic } from './core.js'
 import Layout from '../layout.vue'
 import Error from '../error.vue'
 
-import * as head from '../head.mjs'
+import * as head from '../head.js'
 
 export default {
   components: {

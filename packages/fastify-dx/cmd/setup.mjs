@@ -1,8 +1,9 @@
 
 import { ensureConfigFile, ejectBlueprint } from 'fastify-vite'
 import { getConfig } from '../config.mjs'
+import { startDevLogger } from '../logger.mjs'
 
-export default async ({ fs, path }) => {
+export default async ({ quiet, $, fs, path }) => {
   const { root, renderer } = await getConfig(null)
 
   const fastifyViteConfig = {
@@ -16,8 +17,16 @@ export default async ({ fs, path }) => {
     ensureServerFile(root),
   ])
 
-  // await ensurePackageJSON(root)
-  // await $`npm install`
+  await ensurePackageJSON(root)
+  let npmInstall
+  try {
+    npmInstall = quiet($`npm install`)
+    startDevLogger(npmInstall.stdout, 'debug')
+    startDevLogger(npmInstall.stderr, 'error')
+    await npmInstall
+  } catch {
+    // Displayed by devLogger
+  }
 
   async function ensureServerFile (base) {
     const serverPath = path.join(base, 'server.mjs')
@@ -33,7 +42,7 @@ export default async ({ fs, path }) => {
       version: '0.0.1',
       description: 'A Fastify DX application.',
       dependencies: {
-        'fastify-dx': '^0.0.5',
+        'fastify-dx': '^0.0.2',
       },
     }
     const packageJSONPath = path.join(root, 'package.json')
@@ -44,10 +53,12 @@ export default async ({ fs, path }) => {
       if (!original.dependencies) {
         original.dependencies = {}
       }
-      for (const [dep, version] of Object.entries(packageJSON.dependencies)) {
-        original.dependencies[dep] = version
+      if (packageJSON.dependencies) {
+        for (const [dep, version] of Object.entries(packageJSON.dependencies)) {
+          original.dependencies[dep] = version
+        }
       }
-      await fs.writeFile(packageJSONPath, JSON.stringify(original))
+      await fs.writeFile(packageJSONPath, JSON.stringify(original, null, 2))
     }
   }
 }

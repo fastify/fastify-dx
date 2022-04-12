@@ -2,9 +2,9 @@ const { parse: parsePath } = require('path')
 const { join, walk, ensure, exists, write, read } = require('./ioutils')
 
 async function ejectBlueprint (base, { root, renderer }) {
-  await ensure(join(base, root))
+  await ensure(root)
   for await (const { stats, path } of walk(join(renderer.path, 'blueprint'))) {
-    const filePath = join(base, root, path)
+    const filePath = join(root, path)
     const { dir: fileDir } = parsePath(filePath)
     await ensure(fileDir)
     if (!stats.isDirectory() && !exists(filePath)) {

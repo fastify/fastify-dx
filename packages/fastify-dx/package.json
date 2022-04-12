@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "fastify-dx",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A work in progress.",
   "scripts": {
     "lint": "eslint . --ext .js,.jsx --fix"
@@ -10,23 +10,29 @@
     "dx": "./index.mjs"
   },
   "files": [
+    "cmd/build.mjs",
+    "cmd/dev.mjs",
+    "cmd/eject.mjs",
+    "cmd/generate.mjs",
+    "cmd/setup.mjs",
+    "config.mjs",
     "core.mjs",
     "index.mjs",
     "listen.mjs",
     "logger.mjs",
-    "plugins.mjs",
-    "zx.mjs",
-    "server.mjs"
+    "zx.mjs"
   ],
   "dependencies": {
+    "esbuild": "0.14.34",
     "arg": "^5.0.1",
-    "colorize": "^0.1.0",
     "fastify": "^3.27.2",
     "fastify-apply": "^0.0.2",
     "fastify-plugin": "^3.0.1",
     "fastify-sensible": "^3.1.2",
-    "fastify-vite": "^3.0.0-next.2",
+    "fastify-vite": "^3.0.0-beta.0",
+    "fastify-vite-vue": "^3.0.0-beta.0",
     "kleur": "^4.1.4",
     "zx": "^6.0.6"
-  }
+  },
+  "license": "MIT"
 }

@@ -1,7 +1,8 @@
 import { resolveBuildCommands } from 'fastify-vite'
 import { getConfig } from '../config.mjs'
+import { startDevLogger } from '../logger.mjs'
 
-export default async ({ $, quiet, startDevLogger }) => {
+export default async ({ $, quiet }) => {
   const { root, renderer } = await getConfig()
   for (const cmd of await resolveBuildCommands(root, renderer)) {
     const viteProcess = quiet($`npx vite ${cmd}`)
@@ -9,6 +10,4 @@ export default async ({ $, quiet, startDevLogger }) => {
     startDevLogger(viteProcess.stderr, 'error')
     await viteProcess
   }
-  // await ensurePackageJSON(root)
-  // await $`npm install`
 }
