@@ -4,7 +4,7 @@ import { configure, listen } from './core.mjs'
 const config = await getConfig()
 
 if (!config.init) {
-  console.error(`No init file found at \`${config.initPath}\`.`)
+  console.error('No server init file found.')
   process.exit(1)
 }
 

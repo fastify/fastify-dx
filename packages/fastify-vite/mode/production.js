@@ -1,20 +1,20 @@
 const { resolve } = require('path')
 const FastifyStatic = require('fastify-static')
-const { read } = require('../ioutils')
 const { compileIndexHtml } = require('../html')
 
 async function setup (options) {
   // For production you get the distribution version of the render function
   const { assetsDir } = options.vite.build
+
   // We also register fastify-static to serve all static files
   // in production (dev server takes of this)
-  // Note: this is just to ensure it works, for a real world
-  // production deployment, you'll want to capture those paths in
-  // Nginx or just serve them from a CDN instead
   await this.scope.register(FastifyStatic, {
     root: resolve(options.bundle.dir, 'client', assetsDir),
     prefix: `/${assetsDir}`,
   })
+  // Note: this is just to ensure it works, for a real world
+  // production deployment, you'll want to capture those paths in
+  // Nginx or just serve them from a CDN instead
 
   const _compileIndexHtml = options.renderer.compileIndexHtml ?? compileIndexHtml
   const _getEntry = options.renderer.getEntry ?? getEntry

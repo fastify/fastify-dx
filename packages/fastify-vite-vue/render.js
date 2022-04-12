@@ -9,9 +9,9 @@ function createRenderFunction (createApp) {
       fastify,
       req,
       reply,
-      global: req.dx?.global,
-      payload: req.dx?.payload,
-      data: req.dx?.data,
+      global: req.global,
+      payload: req.payload,
+      data: req.data,
       payloadPath: () => `/-/payload${req.dx.routerPath}`,
       api: req.api?.client,
       errors: {},
@@ -48,9 +48,9 @@ module.exports = {
 }
 
 function getHydrationScript (req, context, routes) {
-  const globalData = req.dx?.global
-  const data = req.dx?.data ?? context.data
-  const payload = req.dx?.payload ?? context.payload
+  const globalData = req.global
+  const data = req.data ?? context.data
+  const payload = req..payload ?? context.payload
   const api = req.api?.meta
   let hydrationScript = ''
   if (routes || globalData || data || payload || api) {

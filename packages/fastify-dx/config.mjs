@@ -34,7 +34,7 @@ const renderers = {
 }
 
 async function getRenderer (renderer) {
-  if (!renderer) {
+  if (!renderer && renderer !== false) {
     renderer = await renderers.vue()
   } else if (typeof renderer === 'string') {
     if (renderers[renderer]) {
@@ -90,9 +90,15 @@ function getCommands () {
   return argv
 }
 
-export async function getConfig () {
-  const { dev, eject, setup, _ } = getCommands()
-  const initPath = (dev || eject || setup) ? _[1] : _[0]
+export async function getConfig (initPath = 'server') {
+  const { dev, eject, setup, _: args } = getCommands()
+  if (!initPath) {
+    if (dev || eject || setup) {
+      initPath = args[1]
+    } else {
+      initPath = args[0]
+    }
+  }
   const [init, root] = await resolveInit(initPath)
   const renderer = await getRenderer(init?.renderer)
   const applicable = {}
