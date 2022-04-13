@@ -1,4 +1,4 @@
-# Fastify DX
+<img alt="Fastify DX" src="https://user-images.githubusercontent.com/12291/163095704-d1bd8541-ecde-4707-8068-17d2fd725c01.svg">
 
 A minimal full stack framework based on Fastify focused on **Developer eXperience**.
 
