@@ -1,4 +1,4 @@
-# Fastify DX
+<img alt="Fastify DX" src="https://user-images.githubusercontent.com/12291/163095704-d1bd8541-ecde-4707-8068-17d2fd725c01.svg">
 
 A minimal full stack framework based on Fastify focused on **Developer eXperience**.
 
@@ -58,7 +58,7 @@ export const server = {
 
 // Passed to fastify.listen()
 export const port = 8000
-export const address = 'dev.domain.local'
+export const host = 'dev.domain.local'
 
 export default (app) => {
   // Register other routes and plugins as usual
@@ -178,54 +178,6 @@ Support for other frontend frameworks is also coming!
 </tr>
 </table>
 
-
-<table>
-<tr>
-<td width="300px" valign="top">
-
-<h2>
-
-**Scalable**
-
-</h2>
-
-Addressing performance and scalability issues with SSR is one of Fastify DX's main goals. To that end, **multi-threaded SSR** based on [**Piscina**]() is offered out of the box.
-
-SSR can become a bottleneck under high load, so you also have the ability to **turn off** SSR altogether on a per-request basis and **fallback to CSR** when necessary.
-
-</td>
-<td valign="top"><br>
-
-To achieve maximum SSR performance, enable multi-threaded SSR by exporting `multiThreadedSSR` from your Fastify DX application:
-
-```js
-export const multiThreadedSSR = true
-```
-
-Sensible settings are passed under the hood to a **SSR worker pool** based on [**Piscina**](https://github.com/piscinajs/piscina). These settings can be customized if you pass a [configuration object]() instead.
-
-You can easily **disable SSR** and fallback to CSR as well, by leveraging [**`under-pressure`**]() and [**`fastify-vite`**]()'s `req.fallbackToCSR()`. 
-
-In your Fastify DX application file:
-
-```js
-export const underPressure = {
-  maxHeapUsedBytes: 100000000,
-  maxRssBytes: 100000000,
-  pressureHandler: (req, reply) => {
-    req.fallbackToCSR()
-  }
-}
-```
-
-Support for other frontend frameworks is also coming!
-
-</td>
-</tr>
-</table>
-
-
-
 <table>
 <tr>
 <td width="300px" valign="top">
@@ -258,61 +210,6 @@ Its use of [**zx**](https://github.com/google/zx) also helps to simplify a lot o
 `server.mjs` is where the **Fastify** server instance gets sets up, all configurations options loaded and plugins registered. It exports `setup()` and `listen()` functions.
 
 **That's it**. You can also **eject** all of the above into your codebase for maximum customization.
-</td>
-</tr>
-</table>
-
-<table width="100%">
-<tr>
-<td width="300px" valign="top">
-
-<h2>
-
-**Fast**
-
-</h2>
-
-Fastify DX is essentially just Fastify, which has a track record of delivering best-in-class Node.js application server performance. 
-
-</td>
-<td valign="top">
-
-We went ahead and benchmarked a simple SSR application against several competing frameworks to confirm our assumption:
-
-<table width="100%">
-<thead>
-<tr>
-<th width="150px" align="left">Framework</th>
-<th width="130px" align="left">Latency</th>
-<th width="130px" align="left">Req/Sec</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Nuxt.js</td>
-<td>23.56 ms</td>
-<td>416.5</td>
-</tr>
-<tr>
-<td valign="center">Next.js</td>
-<td>23.56 ms</td>
-<td>416.5</td>
-</tr>
-<tr>
-<td valign="center">Remix</td>
-<td>23.56 ms</td>
-<td>416.5</td>
-</tr>
-<tr>
-<td valign="center">Fastify DX</td>
-<td>23.56 ms</td>
-<td>416.5</td>
-</tr>
-</tbody>
-</table>
-
-Check out our benchmark suite [here]().
-
 </td>
 </tr>
 </table>
@@ -350,8 +247,8 @@ These are the basic settings which can be exported from your Fastify DX applicat
 <td>The port the Fastify server will listen on</td>
 </tr>
 <tr>
-<td>address</td>
-<td>The address the Fastify server will bind to</td>
+<td>host</td>
+<td>The host the Fastify server will bind to</td>
 </tr>
 </tbody>
 </table>
@@ -383,15 +280,84 @@ Plugins recognized by Fastify DX through shorthand exportables:
 </thead>
 <tbody>
 <tr>
-<td>jwt</td>
-<td>fastify-jwt</td>
-<td>JWT utils</td>
-</td>
+<td>accepts</td>
+<td>fastify-accepts</td>
+<td>...</td>
+</tr>
+<tr>
+<td>csrf</td>
+<td>fastify-csrf</td>
+<td>...</td>
 </tr>
 <tr>
 <td>cors</td>
 <td>fastify-cors</td>
-<td>Cross-Origin Resource Sharing support</td>
+<td>...</td>
+</tr>
+<tr>
+<td>cookie</td>
+<td>fastify-cookie</td>
+<td>...</td>
+</tr>
+<tr>
+<td>compress</td>
+<td>fastify-compress</td>
+<td>...</td>
+</tr>
+<tr>
+<td>helmet</td>
+<td>fastify-helmet</td>
+<td>...</td>
+</tr>
+<tr>
+<td>jwt</td>
+<td>fastify-jwt</td>
+<td>...</td>
+</tr>
+<tr>
+<td>static</td>
+<td>fastify-static</td>
+<td>...</td>
+</tr>
+<tr>
+<td>postgresql</td>
+<td>fastify-postgres</td>
+<td>...</td>
+</tr>
+<tr>
+<td>mongodb</td>
+<td>fastify-mongodb</td>
+<td>...</td>
+</tr>
+<tr>
+<td>templates</td>
+<td>point-of-view</td>
+<td>...</td>
+</tr>
+<tr>
+<td>redis</td>
+<td>fastify-redis</td>
+<td>...</td>
+</tr>
+<tr>
+<td>nextjs</td>
+<td>fastify-nextjs</td>
+<td>...</td>
+</tr>
+<tr>
+<td>health</td>
+<td>fastify-healthcheck</td>
+<td>...</td>
+</tr>
+<tr>
+<td>pressure</td>
+<td>under-pressure</td>
+<td>...</td>
+</tr>
+<tr>
+<td>bcrypt</td>
+<td>fastify-bcrypt</td>
+<td>...</td>
 </tr>
 </tbody>
 </table>
