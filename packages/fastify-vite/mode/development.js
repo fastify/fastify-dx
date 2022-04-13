@@ -14,7 +14,7 @@ async function setup (options) {
 
   // Create and enable Vite's Dev Server middleware
   const devServerOptions = {
-    viteConfig: options.viteConfig,
+    configFile: options.viteConfig,
     server: {
       middlewareMode: 'ssr',
       ...options.vite.server,

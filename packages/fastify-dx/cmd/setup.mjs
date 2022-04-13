@@ -1,31 +1,71 @@
 
+import { fileURLToPath } from 'url'
+import { setTimeout } from 'timers/promises'
 import { ensureConfigFile, ejectBlueprint } from 'fastify-vite'
 import { getConfig } from '../config.mjs'
-import { startDevLogger } from '../logger.mjs'
+import { startDevLogger, info, warn } from '../logger.mjs'
+import { startSpinner } from 'zx/experimental'
+import kleur from 'kleur'
 
 export default async ({ quiet, $, cd, fs, path }) => {
   const { root, renderer } = await getConfig(null)
+  const localRoot = root.replace(process.cwd(), '.')
+
+  info(`Creating new ${kleur.bold('Fastify DX')} project at ${kleur.bold(localRoot)}`)
+  info('')
+
+  const __dirname = path.dirname(fileURLToPath(import.meta.url))
+  const packageInfo = JSON.parse(
+    await fs.readFile(path.resolve(__dirname, '..', 'package.json'), 'utf8'),
+  )
 
   const fastifyViteConfig = {
     root: path.join(root, 'client'),
     renderer,
   }
 
+  const withInfo = (promise, msg) => {
+    promise.then(() => warn(msg))
+  }
+
   await Promise.all([
-    ensureConfigFile(root, fastifyViteConfig),
-    ejectBlueprint(root, fastifyViteConfig),
-    ensureServerFile(root),
+    withInfo(
+      ensureConfigFile(root, fastifyViteConfig),
+      `Created ${kleur.bold('vite.config.js')} file.`,
+    ),
+    withInfo(
+      ejectBlueprint(root, fastifyViteConfig),
+      `Ejected ${kleur.bold('client boilerplate')} from ${kleur.bold('fastify-vite-vue')}.`,
+    ),
+    withInfo(
+      ensureServerFile(root),
+      `Created ${kleur.bold('server.js')} init file.`,
+    ),
   ])
+
+  await setTimeout(100)
 
   await ensurePackageJSON(root)
   let npmInstall
   try {
-    cd(root)
+    cd(root, false)
+    warn('')
+    warn(`Running ${kleur.bold('npm install')}.`)
+    const stop = startSpinner()
     npmInstall = quiet($`npm install`)
-    startDevLogger(npmInstall.stdout, 'debug')
+    // startDevLogger(npmInstall.stdout, 'warn')
     startDevLogger(npmInstall.stderr, 'error')
     await npmInstall
-  } catch {
+    warn('Installed npm dependencies.')
+    stop()
+    info('')
+    let rootDisplay = localRoot.replace('./', '')
+    if (rootDisplay.length) {
+      rootDisplay = ` ${rootDisplay}`
+    }
+    info(`You're good to go, run ${kleur.bold(`dx dev${rootDisplay}`)} to get started.`)
+  } catch (e) {
+    console.log(e)
     // Displayed by devLogger
   }
 
@@ -43,7 +83,7 @@ export default async ({ quiet, $, cd, fs, path }) => {
       version: '0.0.1',
       description: 'A Fastify DX application.',
       dependencies: {
-        'fastify-dx': '^0.0.6',
+        'fastify-dx': `^${packageInfo.version}`,
       },
     }
     const packageJSONPath = path.join(root, 'package.json')

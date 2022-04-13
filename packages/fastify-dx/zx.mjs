@@ -143,8 +143,8 @@ try {
 } catch (e) {
 }
 
-export function cd (path) {
-  if ($.verbose) console.log('$', colorize(`cd ${path}`))
+export function cd (path, verbose = true) {
+  if ($.verbose && verbose) console.log('$', colorize(`cd ${path}`))
   process.chdir(path)
 }
 

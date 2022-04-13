@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "fastify-dx",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "A work in progress.",
   "scripts": {
     "lint": "eslint . --ext .js,.jsx --fix"
@@ -30,7 +30,7 @@
     "fastify-apply": "^0.0.3",
     "fastify-plugin": "^3.0.1",
     "fastify-sensible": "^3.1.2",
-    "fastify-vite": "^3.0.0-beta.1",
+    "fastify-vite": "^3.0.0-beta.2",
     "fastify-vite-vue": "^3.0.0-beta.1",
     "kleur": "^4.1.4",
     "zx": "^6.0.6"
