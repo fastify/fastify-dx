@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-apply.git"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "devDependencies": {
     "eslint": "^7.22.0",
     "eslint-config-standard": "^16.0.2",

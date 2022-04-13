@@ -8,6 +8,8 @@ class Config {
   configRoot = null
   // Vite's resolved config
   vite = null
+  // Vite's config path
+  viteConfig = null
   // Vite's distribution bundle info
   bundle = {
     manifest: null,
@@ -20,18 +22,22 @@ class Config {
 }
 
 async function configure (options = {}) {
-  const vite = await resolveViteConfig(options.configRoot)
+  const [vite, viteConfig] = await resolveViteConfig(options.configRoot)
   const bundle = await resolveBundle({ ...options, vite })
-  return Object.assign(new Config(), { ...options, vite, bundle })
+  return Object.assign(new Config(), { ...options, vite, viteConfig, bundle })
 }
 
 async function resolveViteConfig (configRoot) {
   for (const ext of ['js', 'mjs', 'ts', 'cjs']) {
     const configFile = join(configRoot, `vite.config.${ext}`)
     if (exists(configFile)) {
-      return await resolveConfig({ configFile }, 'build', 'production')
+      return [
+        await resolveConfig({ configFile }, 'build', 'production'),
+        configFile,
+      ]
     }
   }
+  return [null, null]
 }
 
 async function resolveBundle ({ dev, vite }) {
@@ -51,7 +57,7 @@ async function resolveBundle ({ dev, vite }) {
 }
 
 async function resolveBuildCommands (configRoot, renderer) {
-  const vite = await resolveViteConfig(configRoot)
+  const [vite] = await resolveViteConfig(configRoot)
   return [
     ['build', '--outDir', `${vite.build.outDir}/client`, '--ssrManifest'],
     ['build', '--ssr', renderer.serverEntryPoint, '--outDir', `${vite.build.outDir}/server`],

@@ -2,13 +2,16 @@
 import { fileURLToPath } from 'node:url'
 import chokidar from 'chokidar'
 import kleur from 'kleur'
+import { getConfig } from '../config.mjs'
 import { startDevLogger } from '../logger.mjs'
 
 export default async ({ path, $, quiet }) => {
   let isRestart = false
   let node
 
-  watch()
+  const { root } = await getConfig()
+
+  watch(root)
 
   await start({ $, quiet })
 
@@ -47,14 +50,15 @@ export default async ({ path, $, quiet }) => {
     }`)
   }
 
-  function watch () {
+  function watch (root) {
     const watcher = chokidar.watch(['*.mjs', '*.js', '**/.mjs', '**/.js'], {
       ignoreInitial: true,
       ignored: ['**/node_modules/**'],
+      cwd: root,
     })
     const changed = reason => (path) => {
       console.log()
-      console.log(`${reason} ${path.replace(process.cwd(), '')}`)
+      console.log(`${reason} ${path.replace(root, '')}`)
       console.log()
       restart()
     }

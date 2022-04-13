@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { existsSync, lstatSync } from 'fs'
-import { sep, resolve, parse as parsePath } from 'path'
+import { sep, join, resolve, parse as parsePath } from 'path'
 import arg from 'arg'
 import { hooks, methods } from 'fastify-apply/applicable.mjs'
 import { error } from './logger.mjs'
@@ -52,17 +52,37 @@ async function resolveInit (initPath) {
     return [null, process.cwd()]
   }
   if (!initPath.startsWith(sep) && !initPath.startsWith('.')) {
-    initPath = resolve(process.cwd(), initPath)
+    initPath = join(process.cwd(), initPath)
   }
   const { name, dir } = parsePath(initPath)
-  for (const variant of [name, `${name}.mjs`, `${name}.js`]) {
-    const filePath = resolve(dir, variant)
-    if (existsSync(filePath) && !lstatSync(filePath).isDirectory()) {
+  if (existsSync(initPath)) {
+    let filePathCandidate
+    let filePath
+    if (lstatSync(initPath).isDirectory()) {
+      const name = 'server'
+      for (const variant of [name, `${name}.mjs`, `${name}.js`]) {
+        filePathCandidate = resolve(initPath, variant)
+        if (existsSync(filePathCandidate)) {
+          filePath = filePathCandidate
+        }
+      }
+    }
+    if (lstatSync(filePath).isDirectory()) {
+      return resolveInit(filePath)
+    } else {
       const app = await import(filePath)
-      return [app, dir]
+      return [app, initPath]
+    }
+  } else {
+    for (const variant of [name, `${name}.mjs`, `${name}.js`]) {
+      const filePath = resolve(dir, variant)
+      if (existsSync(filePath)) {
+        const app = await import(filePath)
+        return [app, initPath]
+      }
     }
   }
-  return [null, process.cwd()]
+  return [null, initPath]
 }
 
 async function exit () {
@@ -92,14 +112,13 @@ function getCommands () {
 
 export async function getConfig (initPath = 'server') {
   const { dev, eject, setup, _: args } = getCommands()
-  if (!initPath) {
-    if (dev || eject || setup) {
-      initPath = args[1]
-    } else {
-      initPath = args[0]
-    }
+  if (dev || eject || setup) {
+    initPath = args[1] ?? initPath
+  } else {
+    initPath = args[0]
   }
   const [init, root] = await resolveInit(initPath)
+
   const renderer = await getRenderer(init?.renderer)
   const applicable = {}
   const plugable = {}

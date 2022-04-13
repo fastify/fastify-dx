@@ -3,7 +3,7 @@ import { ensureConfigFile, ejectBlueprint } from 'fastify-vite'
 import { getConfig } from '../config.mjs'
 import { startDevLogger } from '../logger.mjs'
 
-export default async ({ quiet, $, fs, path }) => {
+export default async ({ quiet, $, cd, fs, path }) => {
   const { root, renderer } = await getConfig(null)
 
   const fastifyViteConfig = {
@@ -20,6 +20,7 @@ export default async ({ quiet, $, fs, path }) => {
   await ensurePackageJSON(root)
   let npmInstall
   try {
+    cd(root)
     npmInstall = quiet($`npm install`)
     startDevLogger(npmInstall.stdout, 'debug')
     startDevLogger(npmInstall.stderr, 'error')
@@ -38,16 +39,16 @@ export default async ({ quiet, $, fs, path }) => {
   async function ensurePackageJSON (root) {
     const packageJSON = {
       type: 'module',
-      name: path.dirname(root),
+      name: path.parse(root).base,
       version: '0.0.1',
       description: 'A Fastify DX application.',
       dependencies: {
-        'fastify-dx': '^0.0.2',
+        'fastify-dx': '^0.0.6',
       },
     }
     const packageJSONPath = path.join(root, 'package.json')
     if (!await fs.exists(packageJSONPath)) {
-      await fs.writeFile(packageJSONPath, JSON.stringify(packageJSON))
+      await fs.writeFile(packageJSONPath, JSON.stringify(packageJSON, null, 2))
     } else {
       const original = JSON.parse(await fs.readFile(packageJSONPath, 'utf8'))
       if (!original.dependencies) {
