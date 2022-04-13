@@ -48,7 +48,9 @@ Then start a new project:
 </td>
 <td valign="top"><br>
 
-Fastify DX is incredibly easy to use. Running `dx setup` gets you 4 files: `app.mjs`, `index.vue`, `vite.config.mjs` and `package.json`, with all dependencies automatically installed.
+Fastify DX is incredibly easy to use. 
+
+<img src="https://user-images.githubusercontent.com/12291/163098070-f65f8781-4d28-4b02-9c99-60a48222bc9f.gif">
 
 Your application file — say, `app.mjs`, is where you configure your server settings, plugins and additional routes.
 
