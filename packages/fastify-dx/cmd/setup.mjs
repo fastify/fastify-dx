@@ -11,7 +11,8 @@ export default async ({ quiet, $, cd, fs, path }) => {
   const { root, renderer } = await getConfig(null)
   const localRoot = root.replace(process.cwd(), '.')
 
-  info(`Creating new ${kleur.bold('Fastify DX')} project at ${kleur.bold(localRoot)}`)
+  info('')
+  info(`Welcome to ${kleur.bold('Fastify DX')}!`)
   info('')
 
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -30,22 +31,25 @@ export default async ({ quiet, $, cd, fs, path }) => {
 
   await Promise.all([
     withInfo(
+      ensurePackageJSON(root),
+      `Created ${kleur.bold(`${localRoot}/package.json`)} file ✓`,
+    ),
+    withInfo(
       ensureConfigFile(root, fastifyViteConfig),
-      `Created ${kleur.bold('vite.config.js')} file.`,
+      `Created ${kleur.bold(`${localRoot}/vite.config.js`)} file ✓`,
     ),
     withInfo(
       ejectBlueprint(root, fastifyViteConfig),
-      `Ejected ${kleur.bold('client boilerplate')} from ${kleur.bold('fastify-vite-vue')}.`,
+      `Created ${kleur.bold(`${localRoot}/client/`)} boilerplate ✓`,
     ),
     withInfo(
       ensureServerFile(root),
-      `Created ${kleur.bold('server.js')} init file.`,
+      `Created ${kleur.bold(`${localRoot}/server.js`)} init file ✓`,
     ),
   ])
 
   await setTimeout(100)
 
-  await ensurePackageJSON(root)
   let npmInstall
   try {
     cd(root, false)
@@ -63,7 +67,7 @@ export default async ({ quiet, $, cd, fs, path }) => {
     if (rootDisplay.length) {
       rootDisplay = ` ${rootDisplay}`
     }
-    info(`You're good to go, run ${kleur.bold(`dx dev${rootDisplay}`)} to get started.`)
+    info(`All set, run ${kleur.bold(`dx dev${rootDisplay}`)} to get started.`)
   } catch (e) {
     console.log(e)
     // Displayed by devLogger
