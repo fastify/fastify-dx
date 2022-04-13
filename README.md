@@ -20,13 +20,7 @@ A minimal full stack framework based on Fastify focused on **Developer eXperienc
 
 </h2>
 
-First, install the CLI globally:
-
-```bash
-% npm i dx -g
-```
-
-Then start a new project:
+Start a new project:
 
 ```bash
 % dx setup <dir>
@@ -36,41 +30,27 @@ Then start a new project:
 **Hot reload** and **friendly logs**:
 
 ```bash
-% dx dev app.mjs
+% dx dev <dir>
 ```
 
 **Production mode**:
 
 ```bash
-% dx app.mjs
+% dx <dir>
 ```
 
 </td>
 <td valign="top"><br>
 
-Fastify DX is incredibly easy to use. 
+Fastify DX is incredibly easy to get start with.
 
-<img src="https://user-images.githubusercontent.com/12291/163098070-f65f8781-4d28-4b02-9c99-60a48222bc9f.gif">
+First, install the CLI globally with `npm i dx -g`
 
-Your application file — say, `app.mjs`, is where you configure your server settings, plugins and additional routes.
+<br>
 
-```js
-// Override built-in Fastify(settings)
-export const server = {
-  disableRequestLogging: false,
-}
+<img src="https://user-images.githubusercontent.com/12291/163098799-5c864e80-95b2-421c-b163-e7ba4b2be33c.gif">
 
-// Passed to fastify.listen()
-export const port = 8000
-export const host = 'dev.domain.local'
-
-export default (app) => {
-  // Register other routes and plugins as usual
-  app.get('/', (req, reply) => {
-    reply.send('Hello world!')
-  })
-}
-```
+The `dx setup` command will get you a starting boilerplate with all the files you need and will install all `npm` dependencies.
 
 </td>
 </tr>
@@ -96,6 +76,26 @@ See the full list of recognized exports at the end of this page.
 
 </td>
 <td><br>
+
+The server init file, `server.js`, is where you configure your server settings, plugins and additional routes.
+
+```js
+// Override built-in Fastify(settings)
+export const server = {
+  disableRequestLogging: false,
+}
+
+// Passed to fastify.listen()
+export const port = 8000
+export const host = 'dev.domain.local'
+
+export default (app) => {
+  // Register other routes and plugins as usual
+  app.get('/', (req, reply) => {
+    reply.send('Hello world!')
+  })
+}
+```
 
 More application configuration through exportables. In the example below we configure `fastify-jwt`, the environment settings. We also define a `Reply` [decorator]() and an `onRequest` [hook]().
 
