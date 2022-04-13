@@ -46,9 +46,20 @@ Fastify DX is incredibly easy to get start with.
 
 First, install the CLI globally with `npm i dx -g`
 
-<br>
-
-<img src="https://user-images.githubusercontent.com/12291/163098799-5c864e80-95b2-421c-b163-e7ba4b2be33c.gif">
+```bash
+% dx setup my-app
+ℹ Welcome to Fastify DX!
+ℹ
+ℹ Created ./my-app/package.json file ✓
+ℹ Created ./my-app/vite.config.js file ✓
+ℹ Created ./my-app/server.js init file ✓
+ℹ Created ./my-app/client/ boilerplate ✓
+ℹ
+ℹ Running npm install.
+ℹ Installed npm dependencies.
+ℹ
+ℹ All set, run dx dev my-app to get started.
+```
 
 The `dx setup` command will get you a starting boilerplate with all the files you need and will install all `npm` dependencies.
 
