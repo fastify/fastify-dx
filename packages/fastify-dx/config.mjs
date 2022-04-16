@@ -48,8 +48,8 @@ async function getRenderer (renderer) {
 }
 
 export async function getConfig (initPath) {
-  const { dev, build, eject, setup, _: args } = getCommands()
-  if (dev || build || eject || setup) {
+  const { start, dev, build, eject, setup, _: args } = getCommands()
+  if (start || dev || build || eject || setup) {
     initPath = args[1]
   } else {
     initPath = args[0]
@@ -121,7 +121,7 @@ function getCommands () {
     '-s': '--server',
     '-u': '--url',
   })
-  for (const cmd of ['setup', 'dev', 'eject', 'build', 'generate']) {
+  for (const cmd of ['start', 'dev', 'setup', 'eject', 'build', 'generate']) {
     if (argv._[0] === cmd) {
       argv[cmd] = true
     }
