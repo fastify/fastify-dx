@@ -39,7 +39,7 @@ const methods = {
       }
       return kleur.cyan(`ℹ ${log.req.method} ${log.req.url}`)
     } else {
-      return kleur.cyan(`ℹ ${log.msg}`)
+      return kleur.cyan(`ℹ ${log.msg.replace('[::1]', 'localhost')}`)
     }
   },
   warn: (log) => kleur.yellow(`ℹ ${log.msg}`),
