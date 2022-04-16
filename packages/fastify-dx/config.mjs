@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { existsSync, lstatSync } from 'fs'
-import { sep, join, resolve, parse as parsePath } from 'path'
+import { existsSync } from 'fs'
+import { join, resolve, normalize, win32, isAbsolute } from 'path'
 import arg from 'arg'
 import { hooks, methods } from 'fastify-apply/applicable.mjs'
 import { error } from './logger.mjs'
@@ -47,78 +47,15 @@ async function getRenderer (renderer) {
   return renderer
 }
 
-async function resolveInit (initPath) {
-  if (!initPath) {
-    return [null, process.cwd()]
-  }
-  if (!initPath.startsWith(sep) && !initPath.startsWith('.')) {
-    initPath = join(process.cwd(), initPath)
-  }
-  const { name, dir } = parsePath(initPath)
-  if (existsSync(initPath)) {
-    let filePathCandidate
-    let filePath
-    if (lstatSync(initPath).isDirectory()) {
-      const name = 'server'
-      for (const variant of [name, `${name}.mjs`, `${name}.js`]) {
-        filePathCandidate = resolve(initPath, variant)
-        if (existsSync(filePathCandidate)) {
-          filePath = filePathCandidate
-        }
-      }
-    }
-    if (lstatSync(filePath).isDirectory()) {
-      return resolveInit(filePath)
-    } else {
-      const app = await import(filePath)
-      return [app, initPath]
-    }
-  } else {
-    for (const variant of [name, `${name}.mjs`, `${name}.js`]) {
-      const filePath = resolve(dir, variant)
-      if (existsSync(filePath)) {
-        const app = await import(filePath)
-        return [app, initPath]
-      }
-    }
-  }
-  return [null, initPath]
-}
-
-async function exit () {
-  try {
-    await this.app?.close()
-    setImmediate(() => process.exit(0))
-  } catch (error) {
-    this.app?.log.error(error)
-    setImmediate(() => process.exit(1))
-  }
-}
-
-function getCommands () {
-  const argv = arg({
-    '--url': Boolean,
-    '--server': Boolean,
-    '-s': '--server',
-    '-u': '--url',
-  })
-  for (const cmd of ['setup', 'dev', 'eject', 'generate']) {
-    if (argv._[0] === cmd) {
-      argv[cmd] = true
-    }
-  }
-  return argv
-}
-
-export async function getConfig (initPath = 'server') {
-  const { dev, eject, setup, _: args } = getCommands()
-  if (dev || eject || setup) {
-    initPath = args[1] ?? initPath
+export async function getConfig (initPath) {
+  const { dev, build, eject, setup, _: args } = getCommands()
+  if (dev || build || eject || setup) {
+    initPath = args[1]
   } else {
     initPath = args[0]
   }
-  const [init, root] = await resolveInit(initPath)
-
+  const root = resolveRoot(initPath)
+  const init = await resolveServerInit(root)
   const renderer = await getRenderer(init?.renderer)
   const applicable = {}
   const plugable = {}
@@ -164,5 +101,57 @@ export function suppressExperimentalWarnings () {
       return
     }
     return emitWarning(warning, ...args)
+  }
+}
+
+async function exit () {
+  try {
+    await this.app?.close()
+    setImmediate(() => process.exit(0))
+  } catch (error) {
+    this.app?.log.error(error)
+    setImmediate(() => process.exit(1))
+  }
+}
+
+function getCommands () {
+  const argv = arg({
+    '--url': Boolean,
+    '--server': Boolean,
+    '-s': '--server',
+    '-u': '--url',
+  })
+  for (const cmd of ['setup', 'dev', 'eject', 'build', 'generate']) {
+    if (argv._[0] === cmd) {
+      argv[cmd] = true
+    }
+  }
+  return argv
+}
+
+function resolveRoot (initPath) {
+  if (!initPath) {
+    return process.cwd()
+  }
+  const normalized = process.platform === 'win32'
+    ? win32.normalize(initPath)
+    : normalize(initPath)
+  if (isAbsolute(normalized)) {
+    return normalized
+  } else {
+    return resolve(process.cwd(), initPath)
+  }
+}
+
+async function resolveServerInit (root) {
+  const serverDir = join(root, 'server')
+  if (existsSync(serverDir)) {
+    return resolveServerInit(serverDir)
+  }
+  for (const variant of ['server.js', 'server.mjs']) {
+    const serverInitPath = join(root, variant)
+    if (existsSync(serverInitPath)) {
+      return await import(serverInitPath)
+    }
   }
 }

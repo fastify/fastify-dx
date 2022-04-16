@@ -25,27 +25,35 @@ export default async ({ quiet, $, cd, fs, path }) => {
     renderer,
   }
 
-  const withInfo = (promise, msg) => {
-    promise.then(() => warn(msg))
+  const createIfNotExists = async (filePath, [create, created]) => {
+    filePath = path.join(root, filePath)
+    if (!fs.existsSync(filePath)) {
+      await create(filePath)
+      let fileName = path.parse(filePath).base
+      if (fs.lstatSync(filePath).isDirectory()) {
+        fileName = `${fileName}/`
+      }
+      created(kleur.bold(`${localRoot}/${fileName}`))
+    }
   }
 
   await Promise.all([
-    withInfo(
-      ensurePackageJSON(root),
-      `Created ${kleur.bold(`${localRoot}/package.json`)} file ✓`,
-    ),
-    withInfo(
-      ensureConfigFile(root, fastifyViteConfig),
-      `Created ${kleur.bold(`${localRoot}/vite.config.js`)} file ✓`,
-    ),
-    withInfo(
-      ejectBlueprint(root, fastifyViteConfig),
-      `Created ${kleur.bold(`${localRoot}/client/`)} boilerplate ✓`,
-    ),
-    withInfo(
-      ensureServerFile(root),
-      `Created ${kleur.bold(`${localRoot}/server.js`)} init file ✓`,
-    ),
+    createIfNotExists('package.json', [
+      path => ensurePackageJSON(path),
+      file => warn(`Created ${file} file ✓`),
+    ]),
+    createIfNotExists('vite.config.js', [
+      () => ensureConfigFile(root, fastifyViteConfig),
+      file => warn(`Created ${file} file ✓`),
+    ]),
+    createIfNotExists('client', [
+      () => ejectBlueprint(root, fastifyViteConfig),
+      file => warn(`Created ${file} boilerplate ✓`),
+    ]),
+    createIfNotExists('server.js', [
+      () => ensureServerFile(root),
+      file => warn(`Created ${file} init file ✓`),
+    ]),
   ])
 
   await setTimeout(100)
@@ -74,36 +82,19 @@ export default async ({ quiet, $, cd, fs, path }) => {
   }
 
   async function ensureServerFile (base) {
-    const serverPath = path.join(base, 'server.mjs')
-    if (!await fs.exists(serverPath)) {
-      await fs.writeFile(serverPath, 'export default ({ app }) => {}\n')
-    }
+    const serverPath = path.join(base, 'server.js')
+    await fs.writeFile(serverPath, 'export default ({ app }) => {}\n')
   }
 
-  async function ensurePackageJSON (root) {
+  async function ensurePackageJSON (packageJSONPath) {
     const packageJSON = {
       type: 'module',
-      name: path.parse(root).base,
       version: '0.0.1',
       description: 'A Fastify DX application.',
       dependencies: {
         'fastify-dx': `^${packageInfo.version}`,
       },
     }
-    const packageJSONPath = path.join(root, 'package.json')
-    if (!await fs.exists(packageJSONPath)) {
-      await fs.writeFile(packageJSONPath, JSON.stringify(packageJSON, null, 2))
-    } else {
-      const original = JSON.parse(await fs.readFile(packageJSONPath, 'utf8'))
-      if (!original.dependencies) {
-        original.dependencies = {}
-      }
-      if (packageJSON.dependencies) {
-        for (const [dep, version] of Object.entries(packageJSON.dependencies)) {
-          original.dependencies[dep] = version
-        }
-      }
-      await fs.writeFile(packageJSONPath, JSON.stringify(original, null, 2))
-    }
+    await fs.writeFile(packageJSONPath, JSON.stringify(packageJSON, null, 2))
   }
 }
