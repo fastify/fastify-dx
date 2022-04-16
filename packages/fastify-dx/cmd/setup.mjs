@@ -37,6 +37,8 @@ export default async ({ quiet, $, cd, fs, path }) => {
     }
   }
 
+  await fs.ensureDir(root)
+
   await Promise.all([
     createIfNotExists('package.json', [
       path => ensurePackageJSON(path),
