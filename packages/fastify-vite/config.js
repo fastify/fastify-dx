@@ -19,6 +19,11 @@ class Config {
 
   // The fastify-vite renderer adapter to use
   renderer = null
+  // Overridable renderer adapter settings
+  serverEntryPoint = null
+  clientEntryPoint = null
+  createRenderFunction = null
+  createRouteFunction = null
 }
 
 async function configure (options = {}) {

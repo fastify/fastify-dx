@@ -1,6 +1,6 @@
 const { fetch } = require('undici')
 
-function getRouteSetter (scope, handler) {
+function createRouteFunction (scope, handler) {
   return (url, routeOptions = {}) => {
     const preHandler = routeOptions.preHandler || []
     if (routeOptions.getData) {
@@ -21,7 +21,7 @@ function getRouteSetter (scope, handler) {
   }
 }
 
-module.exports = { getRouteSetter }
+module.exports = { createRouteFunction }
 
 function getDataHandler (scope, getData) {
   return async function (req, reply) {

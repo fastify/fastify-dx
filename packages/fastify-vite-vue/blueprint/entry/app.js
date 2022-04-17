@@ -1,5 +1,6 @@
 import { createSSRApp } from 'vue'
 import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
+import { createPinia } from 'pinia'
 import { createHead } from '@vueuse/head'
 import { createBeforeEachHandler } from './core.js'
 
@@ -21,6 +22,7 @@ export async function createApp (ctx) {
   if (!import.meta.env.SSR) {
     router.beforeEach(createBeforeEachHandler(resolvedRoutes))
   }
+  app.use(createPinia())
   app.use(router)
   app.use(head)
   return { ctx, app, head, router, routes: resolvedRoutes }
