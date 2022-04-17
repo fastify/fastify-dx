@@ -44,7 +44,22 @@
 
 </h2>
 
-Fastify DX is heavily inspired by **[fastify-cli]()**. It allows you get up and running with a Fastify application without worrying about the basic setup of the Fastify server, which is handled for you behind the scenes, still in a fully configurable manner.
+**Fastify DX** is heavily inspired by **[fastify-cli]()**. 
+  
+It allows you get **up and running** with a [Fastify]() application without worrying about the basic setup of the Fastify server, which is handled for you behind the scenes.
+  
+It's also heavily inspired by **[Next.js]()** and **[Nuxt.js]()** — it integrates with **[Vite]()** to **automate bundling**, **server-side render** and **statically generate** your app. 
+  
+Besides **preconfiguring your server**, it has **developer-friendly logs and hot reload**.
+
+<h2>
+
+**The Problems It Solves**
+
+</h2>
+
+**Fastify DX** is heavily inspired by **[fastify-cli]()**. 
+
 
 </td>
 </tr>
