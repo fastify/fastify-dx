@@ -21,6 +21,8 @@
 ### 🗒 [**CSR Fallback**]()
 
 ### 🗒 [**Data and Caching**]()
+  
+### 🗒 [**Internal Architecture**]()
 
 <br>
 
@@ -35,7 +37,9 @@
 ### 🗒 [**Configuration**]()
 
 ### 🗒 [**Commands**]()
-  
+
+### 🗒 [**Ejection**]()
+
 </td>
 <td valign="top">
 <h2>
