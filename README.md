@@ -16,6 +16,8 @@
 
 ### 🗒 [**Basic Features**]()
 
+### 🗒 [**Vue 3 Starter**]()
+
 ### 🗒 [**SSR and SSG**]()
   
 ### 🗒 [**CSR Fallback**]()
