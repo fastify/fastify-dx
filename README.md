@@ -72,9 +72,9 @@ It also aims to **reduce complexity** and **vendor lock-in**, effectively acting
 
 </h2>
 
-Built for [Node.js]() **v16** and above. No other platforms supported.
+Built for [Node.js]() **v16+** — no other platforms supported.
   
-Only the [Vue 3]() adapter is currently **stable** — [React]() and [Solid]() adapters are in the works.
+Only [Vue 3]() support currently **stable** — more coming soon.
 
 Full [TypeScript]() support is planned but not yet available.
 
