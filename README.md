@@ -54,6 +54,8 @@ It's also heavily inspired by **[Next.js]()** and **[Nuxt.js]()** — it support
   
 Besides **preconfiguring your server** with sensible but **overridable defaults**, it has **developer-friendly logs and hot reload**.
 
+<br>
+
 <h2>
 
 **Motivation**
