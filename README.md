@@ -60,7 +60,7 @@ Besides **preconfiguring your server** with sensible but **overridable defaults*
 
 The main problem it tries to solve is enabling **fast application development** with a heightened focus on **Developer Experience** without **compromising on performance and stability**. 
   
-It also aims to **reduce complexity** and **vendor lock-in**, effectively acting as **extremely lightweight glue code** for automating Fastify configuration and integrating **Fastify** and **Vite**, with a **fully ejectable** runtime.
+It also aims to **reduce complexity** and **vendor lock-in**, effectively acting as **extremely lightweight glue code** for automating Fastify configuration and **Vite** integration, with a **fully ejectable** runtime.
 
 <h2>
 
@@ -68,8 +68,9 @@ It also aims to **reduce complexity** and **vendor lock-in**, effectively acting
 
 </h2>
 
-**Fastify DX** is Node v16+ only, no other JavaScript platforms are supported. 
-
+**Fastify DX** is built for [Node.js]() **v16** and above.
+  
+No other JavaScript platforms are supported.
 
 </td>
 </tr>
