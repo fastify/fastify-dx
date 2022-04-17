@@ -38,8 +38,6 @@
 
 ### 🗒 [**Commands**]()
 
-### 🗒 [**Ejection**]()
-
 </td>
 <td valign="top">
 <h2>
