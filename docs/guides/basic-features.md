@@ -1,21 +1,17 @@
 
+# A Tour of Fastify DX
+
 <table>
 <tr>
-<td width="300px" valign="top">
+<td width="400px" valign="top">
 
 <h2>
 
-**Smart**
+**Running Fastify**
 
 </h2>
 
-Fastify DX lets you configure your application through module exports. It will recognize several types of exports, like the ones seen in the previous example. 
-
-It supports everything [**`fastify-apply`**]() supports, making it easy to set Fastify hooks and decorators. It also maps certain exports to plugin registrations, i.e., a `jwt` export will be used to register and define settings for `fastify-jwt`. 
-
-Additionally, an `env` function export will be used to generate `env-schema` settings to setup the environment safely. An instance of `fluent-json-schema` is passed to the function.
-
-See the full list of recognized exports at the end of this page.
+As a replacement ...
 
 </td>
 <td><br>
@@ -39,6 +35,69 @@ export default (app) => {
   })
 }
 ```
+
+</td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<h2>
+
+**Registering Plugins**
+
+</h2>
+
+As a replacement ...
+
+</td>
+<td><br>
+
+The server init file, `server.js`, is where you configure your server settings, plugins and additional routes.
+
+```js
+// Override built-in Fastify(settings)
+export const server = {
+  disableRequestLogging: false,
+}
+
+// Passed to fastify.listen()
+export const port = 8000
+export const host = 'dev.domain.local'
+
+export default (app) => {
+  // Register other routes and plugins as usual
+  app.get('/', (req, reply) => {
+    reply.send('Hello world!')
+  })
+}
+```
+
+</td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<h2>
+
+**Registering Hooks**
+
+</h2>
+
+As a replacement ...
+
+</td>
+<td><br>
+
+The server init file, `server.js`, is where you configure your server settings, plugins and additional routes.
+
 
 More application configuration through exportables. In the example below we configure `fastify-jwt`, the environment settings. We also define a `Reply` [decorator]() and an `onRequest` [hook]().
 
@@ -77,6 +136,49 @@ export default (app) => {
 </td>
 </tr>
 </table>
+
+
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<h2>
+
+**Decorating Fastify**
+
+</h2>
+
+As a replacement ...
+
+</td>
+<td><br>
+
+The server init file, `server.js`, is where you configure your server settings, plugins and additional routes.
+
+```js
+// Override built-in Fastify(settings)
+export const server = {
+  disableRequestLogging: false,
+}
+
+// Passed to fastify.listen()
+export const port = 8000
+export const host = 'dev.domain.local'
+
+export default (app) => {
+  // Register other routes and plugins as usual
+  app.get('/', (req, reply) => {
+    reply.send('Hello world!')
+  })
+}
+```
+
+</td>
+</tr>
+</table>
+
 
 
 <table>
