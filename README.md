@@ -72,9 +72,11 @@ It also aims to **reduce complexity** and **vendor lock-in**, effectively acting
 
 </h2>
 
-**Fastify DX** is built for [Node.js]() **v16** and above.
+Built for [Node.js]() **v16** and above. No other platforms supported.
   
-No other JavaScript platforms are supported.
+Only the [Vue 3]() adapter is currently **stable** — [React]() and [Solid]() adapters are in the works.
+
+Full [TypeScript]() support is planned but not yet available.
 
 </td>
 </tr>
