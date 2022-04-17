@@ -48,17 +48,25 @@
   
 It allows you get **up and running** with a [Fastify]() application without worrying about the basic setup, which is handled for you behind the scenes, in a clean and highly customizable manner.
   
-It's also heavily inspired by **[Next.js]()** and **[Nuxt.js]()** — it employs **convention over configuration** where possible, it integrates with **[Vite]()** to **automate bundling**, **server-side render** and **statically generate** your app. 
+It's also heavily inspired by **[Next.js]()** and **[Nuxt.js]()** — it supports **SSR** and **SSG** out-of-the-box, it employs **convention over configuration** where possible and it **automates bundling** your app in numerous ways.
   
 Besides **preconfiguring your server**, it has **developer-friendly logs and hot reload**.
 
 <h2>
 
-**The Problems It Solves**
+**Motivation**
 
 </h2>
 
-**Fastify DX** is heavily inspired by **[fastify-cli]()**. 
+The main problem it tries to solve is enabling **fast application development** with a heightened focus on **Developer Experience** without **compromising on performance**. Fastify DX aims to be **lightweight glue code** for running **Full Stack** JavaScript applications leveraging state-of-the-art tooling and idioms.
+
+<h2>
+
+**Limitations**
+
+</h2>
+
+**Fastify DX** is Node v16+ only, no other JavaScript platforms are supported. 
 
 
 </td>
