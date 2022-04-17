@@ -66,6 +66,8 @@ The main problem it tries to solve is enabling **fast application development** 
   
 It also aims to **reduce complexity** and **vendor lock-in**, effectively acting as **extremely lightweight glue code** for automating Fastify configuration and **Vite** integration, with a **fully ejectable** runtime.
 
+<br>
+
 <h2>
 
 **Limitations**
