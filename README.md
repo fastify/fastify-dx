@@ -14,17 +14,17 @@
 
 </h2>
 
-### 🗒 [**Basic Features**]()
+### 🗒 [**Basic Features**](https://github.com/fastify/fastify-dx/blob/main/docs/guides/basic-features.md)
 
-### 🗒 [**Vue 3 Starter**]()
+### 🗒 [**Vue 3 Starter**](https://github.com/fastify/fastify-dx/blob/main/docs/guides/vue-3-starter.md)
 
-### 🗒 [**SSR and SSG**]()
+### 🗒 [**SSR and SSG**](https://github.com/fastify/fastify-dx/blob/main/docs/guides/ssr-and-ssg.md)
   
-### 🗒 [**CSR Fallback**]()
+### 🗒 [**CSR Fallback**](https://github.com/fastify/fastify-dx/blob/main/docs/guides/csr-fallback.md)
 
-### 🗒 [**Data and Caching**]()
+### 🗒 [**Data and Caching**](https://github.com/fastify/fastify-dx/blob/main/docs/guides/data-and-caching.md)
   
-### 🗒 [**Internal Architecture**]()
+### 🗒 [**Internal Architecture**](https://github.com/fastify/fastify-dx/blob/main/docs/guides/internal-architecture.md)
 
 <br>
 
@@ -34,11 +34,11 @@
 
 </h2>
 
-### 🗒 [**Conventions**]()
+### 🗒 [**Conventions**](https://github.com/fastify/fastify-dx/blob/main/docs/reference/conventions.md)
 
-### 🗒 [**Configuration**]()
+### 🗒 [**Configuration**](https://github.com/fastify/fastify-dx/blob/main/docs/reference/configuration.md)
 
-### 🗒 [**Commands**]()
+### 🗒 [**Commands**](https://github.com/fastify/fastify-dx/blob/main/docs/reference/commands.md)
 
 </td>
 <td valign="top">
