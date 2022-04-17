@@ -16,6 +16,8 @@
 
 ### 🗒 [**Basic Features**]()
 
+### 🗒 [**Vue 3 Starter**]()
+
 ### 🗒 [**SSR and SSG**]()
   
 ### 🗒 [**CSR Fallback**]()
@@ -54,6 +56,7 @@ It's also heavily inspired by **[Next.js]()** and **[Nuxt.js]()** — it support
   
 Besides **preconfiguring your server** with sensible but **overridable defaults**, it has **developer-friendly logs and hot reload**.
 
+
 <h2>
 
 **Motivation**
@@ -63,6 +66,7 @@ Besides **preconfiguring your server** with sensible but **overridable defaults*
 The main problem it tries to solve is enabling **fast application development** with a heightened focus on **Developer Experience** without **compromising on performance and stability**. 
   
 It also aims to **reduce complexity** and **vendor lock-in**, effectively acting as **extremely lightweight glue code** for automating Fastify configuration and **Vite** integration, with a **fully ejectable** runtime.
+
 
 <h2>
 
