@@ -58,7 +58,9 @@ Besides **preconfiguring your server** with sensible but **overridable defaults*
 
 </h2>
 
-The main problem it tries to solve is enabling **fast application development** with a heightened focus on **Developer Experience** without **compromising on performance and stability**. It aims to be **lightweight glue code** for running **full stack** JavaScript applications.
+The main problem it tries to solve is enabling **fast application development** with a heightened focus on **Developer Experience** without **compromising on performance and stability**. 
+  
+It also aims to **reduce complexity** and **vendor lock-in**, effectively acting as **extremely lightweight glue code** for automating Fastify configuration and integrating **Fastify** and **Vite**, with a **fully ejectable** runtime.
 
 <h2>
 
