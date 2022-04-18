@@ -1,5 +1,8 @@
 {
   "private": "true",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "lint": "eslint . --ext .mjs,.js,.jsx --fix"
   },
