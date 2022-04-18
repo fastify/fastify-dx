@@ -1,0 +1,24 @@
+{
+  "name": "create-dx",
+  "version": "1.0.0",
+  "description": "Create a new application using fastify-dx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-dx.git"
+  },
+  "main": "index.mjs",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "bin": {
+    "create-dx": "index.mjs"
+  }
+}
