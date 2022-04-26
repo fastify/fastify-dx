@@ -41,16 +41,21 @@ export function createBeforeEachHandler (resolvedRoutes) {
     const ctx = useIsomorphic({ params: to.params })
     const {
       hasPayload,
+      getPayload,
       hasData,
       component,
     } = getRouteMeta(to, routeMap, parsedRoutes)
     if (!component) {
       return false
     }
-    if (!!window[kStaticPayload] && hasPayload) {
+    if (getPayload || (!!window[kStaticPayload] && hasPayload)) {
       try {
-        const response = await window.fetch(usePayloadPath(to))
-        ctx.$payload = await response.json()
+        if (typeof getPayload === 'function') {
+          ctx.$payload = await getPayload(ctx)
+        } else {
+          const response = await window.fetch(usePayloadPath(to))
+          ctx.$payload = await response.json()
+        }
       } catch (error) {
         ctx.$errors.getPayload = error
       }
