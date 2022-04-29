@@ -36,8 +36,8 @@ async function setup (options) {
   const _getEntry = options.renderer.getEntry ?? getEntry
   const _getHandler = options.renderer.getHandler ?? getHandler
 
-  const { routes, render } = await _getEntry(options, options.renderer.createRenderFunction, this.devServer)
-  const handler = _getHandler(this.scope, options, render, getTemplate, this.devServer)
+  const { routes, render: getRender } = await _getEntry(options, options.renderer.createRenderFunction, this.devServer)
+  const handler = _getHandler(this.scope, options, getRender, getTemplate, this.devServer)
 
   return { routes, handler }
 
@@ -75,10 +75,10 @@ async function setup (options) {
 
   // Creates a route handler function set up for integration with
   // the Vite Dev Server and hot reload of index.html
-  function getHandler (scope, options, render, getTemplate, viteDevServer) {
+  function getHandler (scope, options, getRender, getTemplate, viteDevServer) {
     return async function (req, reply) {
       try {
-        render = await render()
+        const render = await getRender()
         const url = req.raw.url
         const template = await getTemplate(url)
         const fragments = await render(scope, req, reply, url, options)
