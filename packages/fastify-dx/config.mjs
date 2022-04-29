@@ -33,9 +33,14 @@ const renderers = {
   solid: () => import('fastify-vite-solid'),
 }
 
-async function getRenderer (renderer) {
+async function getRenderer (renderer, root) {
   if (!renderer && renderer !== false) {
-    renderer = await renderers.vue()
+    if (existsSync(join(root, 'renderer.js'))) {
+      const rendererModule = await import(join(root, 'renderer.js'))
+      if (rendererModule.default) {
+        renderer = rendererModule.default
+      }
+    }
   } else if (typeof renderer === 'string') {
     if (renderers[renderer]) {
       renderer = await renderers[renderer]()
@@ -56,7 +61,7 @@ export async function getConfig (initPath) {
   }
   const root = resolveRoot(initPath)
   const init = await resolveServerInit(root)
-  const renderer = await getRenderer(init?.renderer)
+  const renderer = await getRenderer(init?.renderer, root)
   const applicable = {}
   const plugable = {}
   if (init) {
