@@ -36,10 +36,18 @@ async function setup (options) {
   const _getEntry = options.renderer.getEntry ?? getEntry
   const _getHandler = options.renderer.getHandler ?? getHandler
 
-  const { routes, render } = await _getEntry(options, this.devServer)
+  const { routes, render } = processEntry(await _getEntry(options, this.devServer))
   const handler = _getHandler(this.scope, options, render, getTemplate, this.devServer)
 
   return { routes, handler }
+
+  function processEntry (entry) {
+    if (typeof entry === 'function') {
+      return entry(options.renderer.createRenderFunction)
+    } else {
+      return entry
+    }
+  }
 
   // Loads the Vite application server entry.
   // getEntry() must produce an object with a render function and

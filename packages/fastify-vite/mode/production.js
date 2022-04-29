@@ -20,27 +20,35 @@ async function setup (options) {
   const _getEntry = options.renderer.getEntry ?? getEntry
   const _getHandler = options.renderer.getHandler ?? getHandler
 
-  const { routes, render } = await _getEntry(options)
+  const { routes, render } = processEntry(await _getEntry(options))
   const getTemplate = await _compileIndexHtml(options.bundle.indexHtml)
   const handler = _getHandler(this.scope, options, render, getTemplate)
 
   return { routes, handler }
+
+  function processEntry (entry, options) {
+    if (typeof entry === 'function') {
+      return entry(options.renderer.createRenderFunction)
+    } else {
+      return entry
+    }
+  }
+
+  async function getEntry (options) {
+    // Load production template source only once in prod
+    const serverBundle = await import(resolve(options.bundle.dir, 'server/server.js'))
+    const entry = serverBundle.default ?? serverBundle
+    return { routes: await entry.routes?.(), render: entry.render }
+  }
+
+  function getHandler (scope, options, render, getTemplate) {
+    return async function (req, reply) {
+      const url = req.raw.url
+      const fragments = await render(scope, req, reply, url, options)
+      reply.type('text/html')
+      reply.send(getTemplate(req, fragments))
+    }
+  }
 }
 
 module.exports = { setup }
-
-async function getEntry (options) {
-  // Load production template source only once in prod
-  const serverBundle = await import(resolve(options.bundle.dir, 'server/server.js'))
-  const entry = serverBundle.default ?? serverBundle
-  return { routes: await entry.routes?.(), render: entry.render }
-}
-
-function getHandler (scope, options, render, getTemplate) {
-  return async function (req, reply) {
-    const url = req.raw.url
-    const fragments = await render(scope, req, reply, url, options)
-    reply.type('text/html')
-    reply.send(getTemplate(req, fragments))
-  }
-}

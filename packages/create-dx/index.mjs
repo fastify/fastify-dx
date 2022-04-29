@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { execSync } from 'child_process';
+import { execSync } from 'child_process'
 
-const [ , , ...argv ] = process.argv;
+const [, , ...argv] = process.argv
 
-execSync('npx fastify-dx setup ' + argv.join(' '), { stdio: 'inherit' });
+execSync('npx fastify-dx setup ' + argv.join(' '), { stdio: 'inherit' })
