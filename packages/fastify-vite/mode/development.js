@@ -36,18 +36,10 @@ async function setup (options) {
   const _getEntry = options.renderer.getEntry ?? getEntry
   const _getHandler = options.renderer.getHandler ?? getHandler
 
-  const { routes, render } = processEntry(await _getEntry(options, this.devServer))
+  const { routes, render } = await _getEntry(options, options.renderer.createRenderFunction, this.devServer)
   const handler = _getHandler(this.scope, options, render, getTemplate, this.devServer)
 
   return { routes, handler }
-
-  function processEntry (entry) {
-    if (typeof entry === 'function') {
-      return entry(options.renderer.createRenderFunction)
-    } else {
-      return entry
-    }
-  }
 
   // Loads the Vite application server entry.
   // getEntry() must produce an object with a render function and
@@ -55,18 +47,27 @@ async function setup (options) {
   // automatically load view files from the views/ folder and
   // provide them in the routes array. The routes array is then used
   // to register an individual Fastify route for each of the views.
-  async function getEntry (options, devServer) {
+  async function getEntry (options, createRenderFunction, devServer) {
     const modulePath = resolve(options.vite.root, options.renderer.serverEntryPoint.replace(/^\/+/, ''))
     const entryModule = await devServer.ssrLoadModule(modulePath)
-    const entry = entryModule.default ?? entryModule
+    let entry = entryModule.default ?? entryModule
+    if (typeof entry === 'function') {
+      entry = entry(createRenderFunction)
+    }
     return {
-      routes: await entry.routes?.(),
+      routes: typeof entry.routes === 'function'
+        ? await entry.routes?.()
+        : entry.routes,
       // In development mode, render is an async function so it
       // can always return the freshest version of the render
       // function exported by the Vite application server entry
       async render () {
         const entryModule = await devServer.ssrLoadModule(modulePath)
-        const { render } = entryModule.default ?? entryModule
+        let entry = entryModule.default ?? entryModule
+        if (typeof entry === 'function') {
+          entry = entry(createRenderFunction)
+        }
+        const { render } = entry.default ?? entry
         return render
       },
     }
