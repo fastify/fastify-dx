@@ -1,5 +1,5 @@
 const { resolve } = require('path')
-const FastifyStatic = require('fastify-static')
+const FastifyStatic = require('@fastify/static')
 const { compileIndexHtml } = require('../html')
 
 async function setup (options) {

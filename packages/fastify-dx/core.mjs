@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import FastifyPlugin from 'fastify-plugin'
-import FastifySensible from 'fastify-sensible'
+import FastifySensible from '@fastify/sensible'
 import FastifyApply from 'fastify-apply'
 import FastifyVite from 'fastify-vite'
 
