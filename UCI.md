@@ -1,4 +1,4 @@
-# The Universal Component Interface
+# The Universal Route Module API Specification
 
 ...
 
@@ -68,9 +68,7 @@ export function clientOnly (context) {
 
 ## `payload`
 
-Determines the server **data payload** for the component. It must be provided as a function and it must be implemented in way that it can run both on the server prior to **server-side rendering** and through an endpoint that can be fetched prior to **client-side route navigation**.
-
-A `context` object must be passed to the function, providng access to server methods. It must contain references to the Request and Response objects following the convention and semantics of the underlying server used. In the case of Fastify, those would be `req` and `reply`.
+Determines the **server data function** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and through an endpoint that can be fetched prior to **client-side route navigation**.
 
 </td>
 <td width="600px"><br>
@@ -82,7 +80,6 @@ export async function payload (context) {
   return { data }
 }
 ```
-  
 
 </td>
 </tr>
@@ -95,7 +92,7 @@ export async function payload (context) {
 
 ## `data`
 
-Determines the <u>**universal**</u> **data payload** for the component. It must be provided as a function and it must be implemented in way that it can run both on the server prior to **server-side rendering** and on the client prior to **client-side route navigation**.
+Determines the **universal data function** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and on the client prior to **client-side route navigation**, i.e., the same function runs as-is both on the server and on the client.
 
 </td>
 <td width="400px"><br>
