@@ -21,13 +21,15 @@ Framework route components are typically loaded as JavaScript modules, where the
 
 I belive Remix laid substantial groundwork for a generic API specifying several route module core functionalities. This specification builds on top of it, expanding on it and trying to fill in the gaps, and offering some subtle modifications as well.
 
-For a React route component running in an hypothetical framework that implements this specification, here's what it might look like:
-
 
 <table>
 <tr>
 <td width="400px" valign="top">
 
+### An hypothetical React component
+
+For a React route component running in an hypothetical framework that implements this specification, here's what it might look like.
+ 
 At the top, we enable `stream` to determine that this route should  be server-side rendered in streaming mode. 
 
 Then the `loader()` function, which should run both in SSR and CSR route navigation. It is assumed this function received a **route context object**, and in this case, a generic `route` object is also provided by the framework to identify the current route. 
@@ -55,11 +57,11 @@ export async function page ({ data }) {
   }
 }
 
-export default function Route () {
+export default function Route ({ data }) {
   return (
     <>
-      <h1>Route</h1>
-      <p>Route text</p>
+      <h1>{data.title}</h1>
+      <p>{data.body}</p>
     </>
   )
 }
