@@ -163,7 +163,17 @@ export async function action (context) {
 
 ## `page`
 
-...
+Determines HTML tags such as `<title>`, `<meta>` and `<link>`, as well as `<html>` and `<body>` tag attributes. It must be set either with an object or a function that returns an object described by the following TypeScript interface:
+  
+```js
+interface Page {
+  meta: Meta[];
+  link: Link[];
+  title: string;
+  html: object;
+  body: object;
+}
+```
   
 </td>
 <td width="600px"><br>
@@ -172,7 +182,8 @@ export async function action (context) {
 export async function page (context) {
   const title = context.post.title
   return {
-    title,
+    title: 'Page title',
+    html: { lang: 'en' },
     meta: [
       { name: 'twitter:title', content: title }
     ]
@@ -190,7 +201,19 @@ export async function page (context) {
 
 ## `meta`
 
-A shortcut for defining the same `meta` property that can be returned by `page`.
+A shortcut for specifying a list of `Meta` objects, which can also be specified by the `meta` property in the `page` return object. These object simply represent an HTML `<meta>` tag and can be described by the following TypeScript interface:
+  
+```js
+interface Meta {
+  charset?: string;
+  name?: string;
+  content?: string;
+  property?: string;
+  value?: string
+  'http-equiv'?: string; 
+}
+```
+
 
 </td>
 <td width="600px"><br>
