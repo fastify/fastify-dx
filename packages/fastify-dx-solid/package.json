@@ -1,0 +1,6 @@
+{
+  "name": "fastify-dx-solid",
+  "version": "0.0.0",
+  "files": ["index.js"],
+  "license": "MIT"
+}
