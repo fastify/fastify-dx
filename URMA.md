@@ -1,6 +1,6 @@
 # The Universal Route Module API Specification
 
-...
+The late 2020s saw the dawn of the age of the **SSR framework**. Since **server-side rendering** (SSR) is just [too complex and often requires a great deal of preparation](https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/) to get right, specialized frameworks started appearing to meet the inevitable demand for tools that spared developers of the boilerplate work and let them jump straight into their application, without caring for underlying implementation details. 
 
 ## Named Exports: Rendering Options
 
