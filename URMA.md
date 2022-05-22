@@ -234,7 +234,7 @@ export async function handler ({ reply, isServer ) {
 }
 ```
  
-> This function could be used to reimplement `gerServerSideProps()` in Next.js, `useAsyncData()` in Nuxt.js, `load()` in SvelteKit and `loader()` and action()` in Remix.
+> This function could be used to reimplement `gerServerSideProps()` in Next.js, `useAsyncData()` in Nuxt.js, `load()` in SvelteKit and `loader()` and `action()` in Remix.
 
 </td>
 </tr>
