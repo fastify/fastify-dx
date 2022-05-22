@@ -39,11 +39,24 @@ Framework route components are typically loaded as JavaScript modules, where the
 
 I belive Remix laid substantial groundwork for a generic API specifying several route module core functionalities. This specification builds on top of it, expanding on it and trying to fill in the gaps, and offering some subtle modifications as well.
 
-For a React route component, here's how a route module might be defined:
+For a React route component running in an hypothetical framework that implements this specification, here's what it might look like:
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+At the top, we enable `stream` to determine that this route should  be server-side rendered in streaming mode. 
+
+Then the `loader()` function, which should run both in SSR and CSR route navigation. It is assumed this function received a **route context object**, and in this case, a generic `route` object is also provided by the framework to identify the current route. 
+
+The `page()` function runs after `loader()` and has access to the data returned by it via the `data` property. It's used to define the `<title>` of the page and other page-level tags. Finally the route component function is executed, which in this case, has a data property prepopulated by the underlying hypothetical framework.
+
+</td>
+<td width="600px"><br>
 
 ```jsx
 export const stream = true
-export const ssrOnly = true
 
 export async function loader ({ route, loadPageData ) {
   const pageData = await loadPageData(route)
@@ -70,6 +83,9 @@ export default function Route () {
 }
 ```
 
+</td>
+</tr>
+</table>
 
 ## Named Exports: Rendering Options
 
@@ -173,8 +189,14 @@ If the function returns an object, its properties should be merged into the pass
 <td width="600px"><br>
 
 ```js
-export async function handler ({ reply ) {
-  reply.header('X-Custom-Header', 'value')
+export async function handler ({ reply, isServer ) {
+  if (isServer) {
+    // This runs on the server where you have access, 
+    // for instance, to the Fastify Reply object
+    reply.header('X-Custom-Header', 'value')
+  } else {
+    console.log('This should only appear in the browser')
+  }
 }
 ```
 
