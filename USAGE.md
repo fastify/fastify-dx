@@ -1,3 +1,9 @@
+This is the **working draft** proposal for Fastify DX renderer packages usage.
+
+None of those packages are actually usable right now, this page is to help guide the implementation.
+
+<br><br><br>
+
 #### <img width="200px" alt="Fastify DX" src="https://user-images.githubusercontent.com/12291/163095704-d1bd8541-ecde-4707-8068-17d2fd725c01.svg">(alpha)
 
 **Fastify DX** is a **full stack framework** built on top of [**Fastify**](https://fastify.io) and [**Vite**](https://vitejs.org).
