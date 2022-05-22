@@ -2,11 +2,11 @@
 
 **Fastify DX** is a **full stack framework** built on top of [**Fastify**](https://fastify.io) and [**Vite**](https://vitejs.org).
 
-At this point it's a collection of [**fastify-vite**](https://github.com/fastify/fastify-vite) renderer packages for a number of frameworks. 
+In this early stage, it's a collection of [**fastify-vite**](https://github.com/fastify/fastify-vite) renderer packages for a number of frameworks. 
 
-They all following the same specification, the [**Universal Component Interface**]().
+They all follow the same specification, the [**Universal Component Interface**]().
 
-A minimal [`zx`](https://github.com/google/zx)-based CLI is also in the works.
+A minimal [`zx`](https://github.com/google/zx)-based **CLI** for enhanced **developer experience** is also in the works.
 
 ## Install
 
