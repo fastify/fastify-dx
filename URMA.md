@@ -117,9 +117,13 @@ interface RouteContext {
   fetch: () => any
   payload: object | any[]
   data: object | any[]
-  req: FastifyRequest,
-  reply: FastifyReply,
-  server: FastifyInstance,
+  // Convenience accessors
+  query: Record<string, string>
+  params: Record<string, string>
+  // Only available during SSR
+  req?: FastifyRequest,
+  reply?: FastifyReply,
+  server?: FastifyInstance,
 }
 ```
 
