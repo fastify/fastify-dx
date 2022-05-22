@@ -234,12 +234,37 @@ export async function handler ({ reply, isServer ) {
 }
 ```
  
-> This function could be used to reimplement `gerServerSideProps()` in Next.js, `useAsyncData()` in Nuxt.js, `load()` in SvelteKit and `loader()` and `action()` in Remix.
+> This function could be used to reimplement `useAsyncData()` in Nuxt.js.
 
 </td>
 </tr>
 </table>
 
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+## `loader`
+
+Determines the **server data function** for the route. It must be implemented in way that it can run both on the server prior to **server-side rendering** and **through an endpoint that can be fetched** prior to **client-side route navigation**.
+
+</td>
+<td width="600px"><br>
+
+```js
+export async function loader (context) {
+  const url = context.req
+  const data = await context.dataReturningFunction()
+  return { data }
+}
+```
+ 
+> This function could be used to reimplement `gerServerSideProps()` in Next.js,  `load()` in SvelteKit and `loader()` and `action()` in Remix.
+
+</td>
+</tr>
+</table>
 
 <table>
 <tr>
@@ -357,5 +382,7 @@ export async function links (context) {
 </table>
 
 ## Acknowledgements
- 
-...
+
+Special thanks to my employeer, [NearForm](https://nearform.com), for sponsoring this project, and [Matteo Collina](https://github.com/mcollina) and [Simone Busoli](https://github.com/simoneb) for their honest feedback and guidance. Also a big shout out to [Sébastien Chopin](https://github.com/Atinux), [Pooya Parsa](https://github.com/pi0) and [Xin Du](https://github.com/clarkdo) from Nuxt.js — who I learned a lot from.
+
+This specification owes a lot to [Ryan Florence](https://github.com/ryanflorence) and [Michael Jackson](https://github.com/mjackson) for their time spent designing Remix and coming up with an excellent Route Module API for their framework. [Guillermo Rauch](https://github.com/rauchg) and [Tim Neutkens](https://github.com/timneutkens) also need to be ackowledged for their work in Next.js which helped shape up a lot of the developer experience we've come to expect from modern frameworks.
