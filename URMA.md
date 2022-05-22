@@ -21,7 +21,7 @@ All aforementioned frameworks have different answers to these questions. There's
 
 ## Solution
 
-Framework route components are typically loaded as JavaScript modules, where the actual component instance is conventionally exposed through the `default` export. Frameworks can leverage route component JavaScript modules to collect other properties from a route component module, as has been made widely popular by [Next.js](https://nextjs.org/) and its [data fetching function exports](https://nextjs.org/docs/basic-features/data-fetching/overview).
+Framework route components are typically loaded as JavaScript modules, where the actual component instance is conventionally exposed through the `default` export. Frameworks can leverage route component JavaScript modules to collect other properties, as has been made widely popular by [Next.js](https://nextjs.org/) and its [data fetching function exports](https://nextjs.org/docs/basic-features/data-fetching/overview).
 
 I belive Remix laid substantial groundwork for a generic API specifying several route module core functionalities. This specification builds on top of it, expanding on it and trying to fill in the gaps, and offering some subtle modifications as well.
 
