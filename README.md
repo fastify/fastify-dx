@@ -4,7 +4,7 @@
 
 In this early stage, it's a collection of [**fastify-vite**](https://github.com/fastify/fastify-vite) renderer packages for a number of frameworks. 
 
-They all follow the same specification, the [**Universal Component Interface**]().
+They all follow the same specification, the [**Universal Route Module API**]().
 
 A minimal [`zx`](https://github.com/google/zx)-based **CLI** for enhanced **developer experience** is also in the works.
 
@@ -43,8 +43,8 @@ In the snippet above [`degit`]() is used to automate copying from this repostiro
 
 ## Usage
 
-The Fastify DX renderer packages for fastify-vite expand your route components following the [**Universal Component Interface**]() specification. These include a series of **special exports** which can be used to control things like data fetching (both on the client and server), `<head>` tag information and **rendering mode** (SSR or CSR).
+The Fastify DX renderer packages for fastify-vite expand your route component modules following the [**Universal Route Module API**]() specification. These include a series of **special exports** which can be used to control things like data fetching (both on the client and server), `<head>` tag information and **rendering mode** (SSR or CSR).
   
 The starter boilerplates include examples for all supported features.
 
-See the [**Universal Component Interface**]() specification for details.
+See the [**Universal Route Module API**]() specification for details.
