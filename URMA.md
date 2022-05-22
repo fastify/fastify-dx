@@ -31,6 +31,46 @@ The problem this specification tries to solve is how to determine the behaviour 
 - How to implement a **data loading function** for a web page, both for **SSR** and **CSR route navigation**.
 - How to implement **static data payloads** for web pages being **statically generated**.
 
+All aforementioned frameworks have different answers to these questions. There's a great opportunity for standardization in this area that would improve **code portability** across frameworks, help make underlying patterns **more transparent** and let framework authors focus on enhancing developer experience in upward layers where **more value** can be provided.
+
+## Solution
+
+Framework route components are typically loaded as JavaScript modules, where the actual component instance is conventionally exposed through the `default` export. Frameworks can leverage route component JavaScript modules to collect other properties from a route component module, as has been made widely popular by [Next.js](https://nextjs.org/) and its [data fetching function exports](https://nextjs.org/docs/basic-features/data-fetching/overview).
+
+I belive Remix laid substantial groundwork for a generic API specifying several route module core functionalities. This specification builds on top of it, expanding on it and trying to fill in the gaps, and offering some subtle modifications as well.
+
+For a React route component, here's how a route module might be defined:
+
+```jsx
+export const stream = true
+export const ssrOnly = true
+
+export async function loader ({ route, loadPageData ) {
+  const pageData = await loadPageData(route)
+  return pageData
+}
+
+export async function page ({ data }) {
+  return {
+    html: { lang: data.lang },
+    title: data.title,
+    meta: [
+      { name: 'twitter:title', value: data.title }
+    ]
+  }
+}
+
+export default function Route () {
+  return (
+    <>
+      <h1>Route</h1>
+      <p>Route text</p>
+    </>
+  )
+}
+```
+
+
 ## Named Exports: Rendering Options
 
 By default, route modules **should** run universally, both on the server and on the client (with client-side hydration), but it **should** be possible specify different rendering modes or settings for a route module.
