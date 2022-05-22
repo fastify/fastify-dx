@@ -71,6 +71,56 @@ export default function Route ({ data }) {
 </tr>
 </table>
 
+## Route Context Object
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `context`
+
+In the case of **named function exports**, a `context` object must be passed to the function, providing universal access to route information, data and methods. See the TypeScript interface to the right for a minimal implementation.
+ 
+If the route context contains a `data` object, it must be made available during SSR (seamlessly hydrated on first-render) and CSR.
+ 
+It may contain references to the Request and Response objects following the convention and semantics of the underlying server used. In the case of Fastify, those would be `req` and `reply`.
+
+</td>
+<td width="600px"><br>
+
+It must implement at least the following TypeScript interface:
+
+```ts
+interface RouteContext {
+  // Convenience reference to the route URL
+  url: string
+  // Whether or not code is running on the server
+  isServer: boolean
+  // Universally executable `fetch()` function
+  fetch: () => any
+  // Where to store data returned by the loader() function
+  data: object | any[]
+}
+```
+
+Here's the interface planned for **Fastify DX**:
+
+```ts
+interface RouteContext {
+  url: string
+  isServer: boolean
+  fetch: () => any
+  data: object | any[]
+  req: FastifyRequest,
+  reply: FastifyReply,
+  server: FastifyInstance,
+}
+```
+
+</td>
+</tr>
+</table>
+
 ## Named Exports: Rendering Options
 
 By default, route modules **should** run universally, both on the server and on the client (with client-side hydration), but it **should** be possible specify different rendering modes or settings for a route module.
@@ -167,7 +217,7 @@ Determines the universal **route handler** for the component. It must be impleme
   
 It **must** receive a route context object that **should** receive server request and response references during SSR and a client-side router reference during CSR, or hybrid APIs that can work in both environments. 
   
-If the function returns an object, its properties should be merged into the passed route context under a `data` property.
+If the function returns an object, its properties should be merged into the passed route context under a `data` property, which should be seamlessly hydrated on first-render if populated during SSR.
 
 </td>
 <td width="600px"><br>
@@ -183,6 +233,8 @@ export async function handler ({ reply, isServer ) {
   }
 }
 ```
+ 
+> This function could be used to reimplement `gerServerSideProps()` in Next.js, `useAsyncData()` in Nuxt.js, `load()` in SvelteKit and `loader()` and action()` in Remix.
 
 </td>
 </tr>
@@ -195,63 +247,18 @@ export async function handler ({ reply, isServer ) {
 
 ## `payload`
 
-Determines the **static data payload** for the route.
+Determines the **static data payload** for the route. The result of this function should be made available as `payload` in the route context object, and embedded within each page as an inline script after **static generation**.
 
 </td>
 <td width="600px"><br>
 
 ```js
-export async function handler (context) {
-  const url = context.req
-}
-```
-
-</td>
-</tr>
-</table>
-
-
-<table>
-<tr>
-<td width="400px" valign="top">
-
-## `loader`
-
-Determines the **server data function** for the route. It must be implemented in way that it can run both on the server prior to **server-side rendering** and through an endpoint that can be fetched prior to **client-side route navigation**.
-
-</td>
-<td width="600px"><br>
-
-```js
-export async function loader (context) {
-  const url = context.req
-  const data = await context.dataReturningFunction()
-  return { data }
-}
-```
-
-</td>
-</tr>
-</table>
-
-
-<table>
-<tr>
-<td width="400px" valign="top">
-
-## `action`
-
-An alternative to `handler` as a shortcut to exclusively handle HTTP `POST`, `PUT` and `PATCH` requests.
-
-</td>
-<td width="600px"><br>
-
-```js
-export async function action (context) {
+export async function payload (context) {
   // ...
 }
 ```
-  
+ 
+ > This function could be used to reimplement `getStaticProps()` in Next.js.
 
 </td>
 </tr>
@@ -259,6 +266,7 @@ export async function action (context) {
 
 ## Named Exports: Page Metadata
 
+This specification recommends that `<head>` serialization (and other page-level tags) take place indepedently from SSR, for optimal performance and opening the possibility of delivering an application shell for CSR-only rendering. SSR may still yield additional `<link>` preload tags for dynamic component assets, but that should happen isolatedly from the main page metadata so the ability to stream it right away to the client is preserved.
 
 <table width="100%">
 <tr>
@@ -348,7 +356,6 @@ export async function links (context) {
 </tr>
 </table>
 
-
-## The Universal Context
-
-In the case of **named function exports**, a `context` object must be passed to the function, providng access to server methods. It must contain references to the Request and Response objects following the convention and semantics of the underlying server used. In the case of Fastify, those would be `req` and `reply`.
+## Acknowledgements
+ 
+...
