@@ -4,6 +4,10 @@ This document contains the proposed specification for a standard **Route Module 
 
 In some ways it can be considered a superset of it, but there are some key differences. 
 
+## Status
+
+This is a **living document** in its earliest stage — a lot of things might still change as we develop **Fastify DX** and following the feedback of all interested parties (e.g., other framework authors willing to collaborate).
+
 ## Problem
 
 The problem this specification tries to solve is how to determine the behaviour of web pages that can be both **server-side rendered** and (continuosly) **client-side rendered** in an uniform way. It tries to answer these questions:
@@ -20,7 +24,6 @@ All aforementioned frameworks have different answers to these questions. There's
 Framework route components are typically loaded as JavaScript modules, where the actual component instance is conventionally exposed through the `default` export. Frameworks can leverage route component JavaScript modules to collect other properties from a route component module, as has been made widely popular by [Next.js](https://nextjs.org/) and its [data fetching function exports](https://nextjs.org/docs/basic-features/data-fetching/overview).
 
 I belive Remix laid substantial groundwork for a generic API specifying several route module core functionalities. This specification builds on top of it, expanding on it and trying to fill in the gaps, and offering some subtle modifications as well.
-
 
 <table>
 <tr>
@@ -95,9 +98,11 @@ interface RouteContext {
   // Convenience reference to the route URL
   url: string
   // Whether or not code is running on the server
-  isServer: boolean
+  ssr: boolean
   // Universally executable `fetch()` function
   fetch: () => any
+  // Where to store data returned by the payload() function
+  payload: object | any[]
   // Where to store data returned by the loader() function
   data: object | any[]
 }
@@ -108,8 +113,9 @@ Here's the interface planned for **Fastify DX**:
 ```ts
 interface RouteContext {
   url: string
-  isServer: boolean
+  ssr: boolean
   fetch: () => any
+  payload: object | any[]
   data: object | any[]
   req: FastifyRequest,
   reply: FastifyReply,
