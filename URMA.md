@@ -24,8 +24,12 @@ That's where [Fastify DX]() comes in, but instead of reinventing the wheel like 
 
 ## Problem
 
-The problem this specification tries to solve is how to determine the behaviour of web pages that can be both **server-side rendered** and (continuosly) **client-side rendered** in an uniform way.
+The problem this specification tries to solve is how to determine the behaviour of web pages that can be both **server-side rendered** and (continuosly) **client-side rendered** in an uniform way. It tries to answer these questions:
 
+- How to determine the **rendering mode** and **rendering settings** of a web page.
+- How to implement `<head>` tags, HTML `<body>` and `<html>` attributes of a web page, both for **SSR** and **CSR route navigation**.
+- How to implement a **data loading function** for a web page, both for **SSR** and **CSR route navigation**.
+- How to implement **static data payloads** for web pages being **statically generated**.
 
 ## Named Exports: Rendering Options
 
