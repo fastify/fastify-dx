@@ -3,9 +3,7 @@
 
 **Fastify DX** is an upcoming **full stack framework** built on top of [**Fastify**](https://fastify.io) and [**Vite**](https://vitejs.org).
 
-In this early stage, we're working to define a [**Universal Route Module API**]() to follow when implementing support for multiple frameworks.
-
-Support for Vue, React, Svelte and Solid is planned for the first public beta release.
+In this early stage, we're working to define a [**Universal Route Module API**]() to follow when implementing support for multiple frameworks. Support for Vue, React, Svelte and Solid is planned for the first public beta release.
 
 A minimal [`zx`](https://github.com/google/zx)-based **CLI** for enhanced **developer experience** is also in the works.
 
