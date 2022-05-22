@@ -10,22 +10,44 @@ By default, components **should** run universally, both on the server and on the
 <tr>
 <td width="400px" valign="top">
 
-### `serverOnly`
+### `stream`
 
-Determines that the component must only run on the server and no JavaScript code should run on the client, i.e., the client should receive the **static markup** produced by running the component on the server, making it effectively [SSR](https://web.dev/rendering-on-the-web/#server-rendering)-only).
+Determines if **server-side rendering** should take place in **streaming mode** if the underlying framework supports it.
+
+</td>
+<td width="600px"><br>
+
+It must be set with a `boolean`:
+
+```js
+export const stream = true
+```
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `ssrOnly`
+
+Determines that the component must only run on the server and no JavaScript code should run on the client, i.e., the client should receive the **static markup** produced by running the component on the server, making it effectively [SSR](https://web.dev/rendering-on-the-web/#server-rendering)-only). 
+
 </td>
 <td width="600px"><br>
 
 It must be either set with a `boolean`:
 
 ```js
-export const serverOnly = true
+export const ssrOnly = true
 ```
   
 Or with a function that returns a `boolean`:
   
 ```js
-export function serverOnly (context) {
+export function ssrOnly (context) {
   return context.shouldRunOnlyOnTheServer
 }
 ```
@@ -38,7 +60,7 @@ export function serverOnly (context) {
 <tr>
 <td width="400px" valign="top">
 
-### `clientOnly`
+### `csrOnly`
 
 Determines that the compone must only run on the client and no **server-side rendering** is to take splace, i.e., the client should perform rendering entirely on its own ([CSR](https://web.dev/rendering-on-the-web/#client-side-rendering-(csr))-only). It may either be a `boolean` or a function that returns a `boolean`.
 
@@ -46,11 +68,11 @@ Determines that the compone must only run on the client and no **server-side ren
 <td width="600px"><br>
 
 ```js
-export const clientOnly = true
+export const csrOnly = true
 ```
   
 ```js
-export function clientOnly (context) {
+export function csrOnly (context) {
   return context.shouldRunOnlyOnTheClient
 }
 ```
@@ -68,14 +90,18 @@ export function clientOnly (context) {
 
 ## `handler`
 
-Determines the universal **route handler** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and on the client prior to **client-side route navigation** (via **History API**).
+Determines the universal **route handler** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and on the client prior to **client-side route navigation** (via **History API**). 
+  
+It **must** receive a route context object that **should** receive server request and response references during SSR and a client-side router reference during CSR, or hybrid APIs that can work in both environments. 
+  
+If the function returns an object, its properties should be merged into the passed route context under a `data` property.
 
 </td>
 <td width="600px"><br>
 
 ```js
-export async function handler (context) {
-  const url = context.req
+export async function handler ({ reply ) {
+  reply.header('X-Custom-Header', 'value')
 }
 ```
 
