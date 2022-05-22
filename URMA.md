@@ -66,15 +66,59 @@ export function clientOnly (context) {
 <tr>
 <td width="400px" valign="top">
 
-## `payload`
+## `handler`
 
-Determines the **server data function** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and through an endpoint that can be fetched prior to **client-side route navigation**.
+Determines the universal **route handler** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and on the client prior to **client-side route navigation** (via **History API**).
 
 </td>
 <td width="600px"><br>
 
 ```js
-export async function payload (context) {
+export async function handler (context) {
+  const url = context.req
+}
+```
+
+</td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+## `payload`
+
+Determines the **static data payload** for the route.
+
+</td>
+<td width="600px"><br>
+
+```js
+export async function handler (context) {
+  const url = context.req
+}
+```
+
+</td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+## `loader`
+
+Determines the **server data function** for the route. It must be implemented in way that it can run both on the server prior to **server-side rendering** and through an endpoint that can be fetched prior to **client-side route navigation**.
+
+</td>
+<td width="600px"><br>
+
+```js
+export async function loader (context) {
   const url = context.req
   const data = await context.dataReturningFunction()
   return { data }
@@ -90,15 +134,15 @@ export async function payload (context) {
 <tr>
 <td width="400px" valign="top">
 
-## `data`
+## `action`
 
-Determines the **universal data function** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and on the client prior to **client-side route navigation**, i.e., the same function runs as-is both on the server and on the client.
+Determines the ...
 
 </td>
-<td width="400px"><br>
+<td width="600px"><br>
 
 ```js
-export async function data (context) {
+export async function action (context) {
   const url = context.req
   const data = await context.dataReturningFunction()
   return { data }
@@ -110,49 +154,22 @@ export async function data (context) {
 </tr>
 </table>
 
-
-<table>
-<tr>
-<td width="400px" valign="top">
-
-## `hydration`
-
-Determines the server **data payload** for the component. It must be provided as a function and it must be implemented in way that it can run both on the server prior to **server-side rendering** and through an endpoint that can be fetched prior to **client-side route navigation**.
-
-A `context` object must be passed to the function, providng access to server methods. It must contain references to the Request and Response objects following the convention and semantics of the underlying server used. In the case of Fastify, those would be `req` and `reply`.
-
-</td>
-<td width="400px"><br>
-
-```js
-export async function hydration (context) {
-  const url = context.req
-  const data = await context.dataReturningFunction()
-  return { data }
-}
-```
-</td>
-</tr>
-</table>
-
-## Named Exports: Head Tag
+## Named Exports: Page Metadata
 
 
 <table width="100%">
 <tr>
 <td width="400px" valign="top">
 
-## `head`
+## `page`
 
-Determines the server **data payload** for the component. It must be provided as a function and it must be implemented in way that it can run both on the server prior to **server-side rendering** and through an endpoint that can be fetched prior to **client-side route navigation**.
-
-A `context` object must be passed to the function, providng access to server methods. It must contain references to the Request and Response objects following the convention and semantics of the underlying server used. In the case of Fastify, those would be `req` and `reply`.
-
+...
+  
 </td>
-<td width="400px"><br>
+<td width="600px"><br>
 
 ```js
-export async function head (context) {
+export async function page (context) {
   const title = context.post.title
   return {
     title,
@@ -173,10 +190,10 @@ export async function head (context) {
 
 ## `meta`
 
-A shortcut for defining the same `meta` property that can be returned by `head`.
+A shortcut for defining the same `meta` property that can be returned by `page`.
 
 </td>
-<td width="400px"><br>
+<td width="600px"><br>
 
 ```js
 export async function meta (context) {
@@ -196,17 +213,17 @@ export async function meta (context) {
 <tr>
 <td width="400px" valign="top">
 
-## `meta`
+## `links`
 
-A shortcut for defining the same `meta` property that can be returned by `head`.
+A shortcut for defining the same `links` property that can be returned by `page`.
 
 </td>
-<td width="400px"><br>
+<td width="600px"><br>
 
 ```js
-export async function meta (context) {
+export async function links (context) {
   return [
-      { name: 'twitter:title', content: title }
+      { rel: 'stylesheet', href: '... }
     ]
   }
 }
