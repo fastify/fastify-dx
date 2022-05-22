@@ -2,9 +2,9 @@
 
 ...
 
-## Named Exports: Rendering Modes
+## Named Exports: Rendering Options
 
-By default, components **should** run universally, both on the server and on the client (with client-side hydration), but component authors **may** specify different rendering modes for a component.
+By default, route modules **should** run universally, both on the server and on the client (with client-side hydration), but it **should** be possible specify different rendering modes or settings for a route module.
 
 <table>
 <tr>
@@ -67,9 +67,13 @@ Determines that the compone must only run on the client and no **server-side ren
 </td>
 <td width="600px"><br>
 
+It must be either set with a `boolean`:
+
 ```js
 export const csrOnly = true
 ```
+  
+Or with a function that returns a `boolean`:
   
 ```js
 export function csrOnly (context) {
@@ -162,16 +166,14 @@ export async function loader (context) {
 
 ## `action`
 
-Determines the ...
+An alternative to `handler` as a shortcut to exclusively handle HTTP `POST`, `PUT` and `PATCH` requests.
 
 </td>
 <td width="600px"><br>
 
 ```js
 export async function action (context) {
-  const url = context.req
-  const data = await context.dataReturningFunction()
-  return { data }
+  // ...
 }
 ```
   
@@ -227,18 +229,7 @@ export async function page (context) {
 
 ## `meta`
 
-A shortcut for specifying a list of `Meta` objects, which can also be specified by the `meta` property in the `page` return object. These object simply represent an HTML `<meta>` tag and can be described by the following TypeScript interface:
-  
-```js
-interface Meta {
-  charset?: string;
-  name?: string;
-  content?: string;
-  property?: string;
-  value?: string
-  'http-equiv'?: string; 
-}
-```
+A shortcut for specifying a list of `Meta` objects, which can also be specified by the `meta` property in the `page` return object. These `Meta` objects simply represent HTML `<meta>` tags, where each property gets serialized as an attribute.
 
 
 </td>
@@ -264,7 +255,7 @@ export async function meta (context) {
 
 ## `links`
 
-A shortcut for defining the same `links` property that can be returned by `page`.
+A shortcut for specifying a list of `Link` objects, which can also be specified by the `link` property in the `page` return object. These `Link` objects simply represent HTML `<link>` tags, where each property gets serialized as an attribute.
 
 </td>
 <td width="600px"><br>
