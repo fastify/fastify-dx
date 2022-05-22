@@ -371,7 +371,7 @@ export async function meta (context) {
 <tr>
 <td width="400px" valign="top">
 
-## `links`
+## `link`
 
 A shortcut for specifying a list of `Link` objects, which can also be specified by the `link` property in the `page` return object. These `Link` objects simply represent HTML `<link>` tags, where each property gets serialized as an attribute.
 
@@ -379,7 +379,7 @@ A shortcut for specifying a list of `Link` objects, which can also be specified 
 <td width="600px"><br>
 
 ```js
-export async function links (context) {
+export async function link (context) {
   return [
       { rel: 'stylesheet', href: '... }
     ]
