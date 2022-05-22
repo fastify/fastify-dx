@@ -1,6 +1,10 @@
 # The Universal Route Module API Specification
 
-The late 2020s saw the dawn of the age of the **SSR framework**. Since **server-side rendering** (SSR) is just [too complex and often requires a great deal of preparation](https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/) to get right, specialized frameworks started appearing to meet the inevitable demand for tools that spared developers of the boilerplate work and let them jump straight into their application, without caring for underlying implementation details. 
+The late 2020s saw the dawn of the age of the **SSR framework**. Since **server-side rendering** (SSR) is just [too complex and often requires a great deal of preparation](https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/) to get right — starting from the fact that people (to this date!) [still disagree](https://news.ycombinator.com/item?id=31224226) on what SSR actually is<sup>**[1]**</sup>, specialized frameworks started appearing to meet the inevitable demand for tools that spared developers of the boilerplate work and let them jump straight into their application code, without caring for underlying implementation details. 
+
+> **[1]** SSR in this context refers to the server-side rendering **of client-side JavaScript** to produce on the server the same markup that is dynamically rendered by browser, so client-side JavaScript doesn't have to spend time rendering the same fragment twice.
+
+[WIP]
 
 ## Named Exports: Rendering Options
 
