@@ -2,8 +2,6 @@
 
 This document contains the proposed specification for a standard **Route Module API** frameworks could adopt to improve code portability and reduce vendor lock-in. This specification is heavily inspired by Remix's [**Route Module API**](https://remix.run/docs/en/v1/api/conventions#route-module-api). 
 
-In some ways it can be considered a superset of it, but there are some key differences. 
-
 ## Status
 
 This is a **living document** in its earliest stage — a lot of things might still change as we develop **Fastify DX** and following the feedback of all interested parties (e.g., other framework authors willing to collaborate).
