@@ -72,7 +72,7 @@ At the top, we enable `stream` to determine that this route should  be server-si
 
 Then the `getData()` function, which should run both in SSR and CSR route navigation. It is assumed this function received a **route context object**, and in this case, a generic `route` object is also provided by the framework to identify the current route. 
 
-The `page()` function runs after `getData()` and has access to the data returned by it via the `data` property. It's used to define the `<title>` of the page and other page-level tags. Finally the route component function is executed, which in this case, has a data property prepopulated by the underlying hypothetical framework.
+The `getMeta()` function runs after `getData()` and has access to the data returned by it via the `data` property. It's used to define the `<title>` of the page and other page-level tags. Finally the route component function is executed, which in this case, has a data property prepopulated by the underlying hypothetical framework.
 
 </td>
 <td width="600px"><br>
@@ -85,7 +85,7 @@ export async function getData ({ route, loadPageData }) {
   return pageData
 }
 
-export async function page ({ data }) {
+export async function getMeta ({ data }) {
   return {
     html: { lang: data.lang },
     title: data.title,
