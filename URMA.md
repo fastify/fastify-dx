@@ -78,7 +78,7 @@ The `getMeta()` function runs after `getData()` and has access to the data retur
 <td width="600px"><br>
 
 ```jsx
-export const stream = true
+export const streaming = true
 
 export async function getData ({ route, loadPageData }) {
   const pageData = await loadPageData(route)
