@@ -130,35 +130,14 @@ It must implement at least the following TypeScript interface:
 
 ```ts
 interface RouteContext {
-  // Convenience reference to the route URL
-  url: string
-  // Whether or not code is running on the server
-  ssr: boolean
-  // Universally executable `fetch()` function
-  fetch: () => any
-  // Where to store data returned by the payload() function
-  payload: object | any[]
-  // Where to store data returned by the getData() function
-  data: object | any[]
-}
-```
-
-Here's the interface planned for **Fastify DX**:
-
-```ts
-interface RouteContext {
-  url: string
-  ssr: boolean
-  fetch: () => any
-  payload: object | any[]
-  data: object | any[]
-  // Convenience accessors
-  query: Record<string, string>
-  params: Record<string, string>
-  // Only available during SSR
-  req?: FastifyRequest,
-  reply?: FastifyReply,
-  server?: FastifyInstance,
+  readonly url: string
+  readonly static: boolean
+  readonly server: boolean
+  readonly client: boolean
+  fetch: () => Promise<Response>
+  reload: () => Promise<Response>
+  meta?: RouteMeta
+  data?: any
 }
 ```
 
@@ -255,7 +234,7 @@ export function clientOnly (context) {
 <tr>
 <td width="400px" valign="top">
 
-## `beforeEnter()`
+## `onEnter()`
 
 Determines the universal **route handler** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and on the client prior to **client-side route navigation** (via **History API**). 
   
@@ -265,7 +244,7 @@ It **must** receive a route context object that **should** receive server reques
 <td width="600px"><br>
 
 ```js
-export async function beforeEnter ({ reply, isServer }) {
+export async function onEnter ({ reply, isServer }) {
   if (isServer) {
     // This runs on the server where you have access, 
     // for instance, to the Fastify Reply object
