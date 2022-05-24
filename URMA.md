@@ -52,7 +52,7 @@ The problem this specification tries to solve is how to determine the behaviour 
 - How to implement a **data loading function** for a web page, both for **SSR** and **CSR route navigation**.
 - How to implement **static data payloads** for web pages being **statically generated**.
 
-All aforementioned frameworks have different answers to these questions. There's a great opportunity for standardization in this area that would improve **code portability** across frameworks, help make underlying patterns **more transparent** and let framework authors focus on enhancing developer experience in upward layers where **more value** can be provided.
+All existing frameworks have different answers to these questions. There's a great opportunity for standardization in this area that would improve **code portability** across frameworks, help make underlying patterns **more transparent** and let framework authors focus on enhancing developer experience in upward layers where **more value** can be provided.
 
 ## Solution
 
