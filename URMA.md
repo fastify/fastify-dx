@@ -2,8 +2,6 @@
 
 This document contains the proposed specification for a standard **Route Module API** frameworks could adopt to improve code portability and reduce vendor lock-in. This specification is heavily inspired by Remix's [**Route Module API**](https://remix.run/docs/en/v1/api/conventions#route-module-api). 
 
-In some ways it can be considered a superset of it, but there are some key differences. 
-
 ## Status
 
 This is a **living document** in its earliest stage — a lot of things might still change as we develop **Fastify DX** and following the feedback of all interested parties (e.g., other framework authors willing to collaborate).
@@ -52,7 +50,7 @@ The problem this specification tries to solve is how to determine the behaviour 
 - How to implement a **data loading function** for a web page, both for **SSR** and **CSR route navigation**.
 - How to implement **static data payloads** for web pages being **statically generated**.
 
-All aforementioned frameworks have different answers to these questions. There's a great opportunity for standardization in this area that would improve **code portability** across frameworks, help make underlying patterns **more transparent** and let framework authors focus on enhancing developer experience in upward layers where **more value** can be provided.
+All existing frameworks have different answers to these questions. There's a great opportunity for standardization in this area that would improve **code portability** across frameworks, help make underlying patterns **more transparent** and let framework authors focus on enhancing developer experience in upward layers where **more value** can be provided.
 
 ## Solution
 
@@ -130,35 +128,14 @@ It must implement at least the following TypeScript interface:
 
 ```ts
 interface RouteContext {
-  // Convenience reference to the route URL
-  url: string
-  // Whether or not code is running on the server
-  ssr: boolean
-  // Universally executable `fetch()` function
-  fetch: () => any
-  // Where to store data returned by the payload() function
-  payload: object | any[]
-  // Where to store data returned by the getData() function
-  data: object | any[]
-}
-```
-
-Here's the interface planned for **Fastify DX**:
-
-```ts
-interface RouteContext {
-  url: string
-  ssr: boolean
-  fetch: () => any
-  payload: object | any[]
-  data: object | any[]
-  // Convenience accessors
-  query: Record<string, string>
-  params: Record<string, string>
-  // Only available during SSR
-  req?: FastifyRequest,
-  reply?: FastifyReply,
-  server?: FastifyInstance,
+  readonly url: string
+  readonly static: boolean
+  readonly server: boolean
+  readonly client: boolean
+  fetch: () => Promise<Response>
+  reload: () => Promise<Response>
+  meta?: RouteMeta
+  data?: any
 }
 ```
 
@@ -255,7 +232,7 @@ export function clientOnly (context) {
 <tr>
 <td width="400px" valign="top">
 
-## `beforeEnter()`
+## `onEnter()`
 
 Determines the universal **route handler** for the component. It must be implemented in way that it can run both on the server prior to **server-side rendering** and on the client prior to **client-side route navigation** (via **History API**). 
   
@@ -265,7 +242,7 @@ It **must** receive a route context object that **should** receive server reques
 <td width="600px"><br>
 
 ```js
-export async function beforeEnter ({ reply, isServer }) {
+export async function onEnter ({ reply, isServer }) {
   if (isServer) {
     // This runs on the server where you have access, 
     // for instance, to the Fastify Reply object
