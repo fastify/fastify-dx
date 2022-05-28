@@ -4,8 +4,8 @@ import FastifyDXReact from 'fastify-dx-react'
 
 const server = Fastify()
 
-await server.register(FastifyVite, { 
-  root: import.meta.url, 
+await server.register(FastifyVite, {
+  root: import.meta.url,
   renderer: FastifyDXReact,
 })
 

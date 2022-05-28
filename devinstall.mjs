@@ -3,11 +3,11 @@
 /* eslint-disable node/no-path-concat */
 
 const { name: example } = path.parse(process.cwd())
-const exRoot = path.resolve(__dirname, 'examples', example)
+const exRoot = path.resolve(__dirname, 'starters', example)
 const command = process.argv.slice(5)
 
 if (!fs.existsSync(exRoot)) {
-  console.log('Must be called from a directory under examples/.')
+  console.log('Must be called from a directory under starters/.')
   process.exit()
 }
 

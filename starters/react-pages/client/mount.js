@@ -1,9 +1,4 @@
-import '/base.css'
-
-import mount from 'fastify-dx-react/mount'
+import mount from 'fastify-dx-react/mount.js'
 import create from '/base.jsx'
 
-mount(
-  document.querySelector('main'),
-  create(window.route),
-)
+mount('main', create(window.route))

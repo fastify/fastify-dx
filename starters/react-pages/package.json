@@ -8,6 +8,12 @@
     "build:server": "vite build --outDir dist/server --ssr /index.js",
     "lint": "eslint . --ext .js,.jsx --fix"
   },
+  "dependencies": {
+    "fastify-vite": "^3.0.0-beta.22",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
+    "devalue": "^2.0.1"
+  },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
@@ -24,7 +30,7 @@
       "fastify-dx-react": "^0.0.0"
     },
     "external": {
-      "fastify-vite": "^3.0.0-beta.22"      
+      "fastify-vite": "^3.0.0-beta.22"
     }
   }
 }
