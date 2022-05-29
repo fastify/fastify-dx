@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
-    "devinstall": "zx ../../devinstall.mjs react-pages -- node server.js --dev",
+    "devinstall": "zx ../../devinstall.mjs react-vanilla -- node server.js --dev",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr /index.js",
@@ -12,7 +12,10 @@
     "fastify-vite": "^3.0.0-beta.22",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
-    "devalue": "^2.0.1"
+    "jotai": "^1.6.6",
+    "devalue": "^2.0.1",
+    "react": "^18.1.0",
+    "unihead": "^0.0.4"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
@@ -30,7 +33,11 @@
       "fastify-dx-react": "^0.0.0"
     },
     "external": {
-      "fastify-vite": "^3.0.0-beta.22"
+      "fastify-vite": "^3.0.0-beta.22",
+      "react-dom": "^18.1.0",
+      "react-router-dom": "^6.3.0",
+      "jotai": "^1.6.6",
+      "devalue": "^2.0.1"
     }
   }
 }

@@ -1,6 +1,6 @@
 import devalue from 'devalue'
 import { createHtmlTemplateFunction as createTemplate } from 'fastify-vite'
-import { generateHtmlStream, Readable } from './stream.js'
+import { Readable } from './stream.js'
 
 const hydrationTarget = 'window.route'
 
@@ -12,16 +12,19 @@ export function createStreamHtmlFunction (streamer, source, scope, config) {
   const serverOnlyHeadTemplate = createTemplate(serverOnlyHeadSource)
   const postBodyTemplate = createTemplate(postBodySource)
   return (reply, { context, head, stream }) => {
-    const hydration = context.serverOnly
-      ? ''
-      : `<script>${target} = ${devalue(context)}</script>`
-    const readable = generateHtmlStream({
-      head: context.serverOnly
-        ? serverOnlyHeadTemplate({ head, hydration, ...context })
-        : headTemplate({ head, hydration, ...context }),
-      body: streamer(stream),
-      postBody: postBodyTemplate(context),
-    })
-    reply.send(Readable.from(readable))
+    // console.log(stream)
+    // const hydration = context.serverOnly
+    //   ? ''
+    //   : `<script>${target} = ${devalue(context.toJSON())}</script>`
+    // const readable = generateHtmlStream({
+    //   head: context.serverOnly
+    //     ? serverOnlyHeadTemplate({ hydration, ...context, head })
+    //     : headTemplate({ hydration, ...context, head }),
+    //   body: streamer(stream),
+    //   postBody: postBodyTemplate(context),
+    // })
+    streamer(stream).then(readable => reply.raw.pipe(readable))
+    return reply
+    // reply.send(Readable.from(readable))
   }
 }

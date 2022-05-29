@@ -1,31 +1,21 @@
 import React from 'react'
-import { StaticRouter } from 'react-router-dom/server'
-import { useLocation, Route as BaseRoute, Routes, BrowserRouter } from 'react-router-dom'
-import { createFetchWithSuspense } from './supense.js'
-
-const isServer = (
-  typeof process === 'object' ||
-  // For whenever this stack supports Worker runtimes
-  typeof importScripts === 'function'
-)
-
-const BaseRouter = isServer ? StaticRouter : BrowserRouter
+import { useLocation, Route as BaseRoute, Routes } from 'react-router-dom'
+import { createFetchWithSuspense } from './suspense.js'
 
 export function Router ({ routes, ctx }) {
+  console.log(routes, ctx)
   return (
-    <BaseRouter>
-      <Routes>{
-        routes.map(({ path, component: Component }) => {
-          return <BaseRoute key={path} path={path} element={<Component />} />
-          //   <Route
-          //     ctx={ctx}
-          //     fetchWithSuspense={createFetchWithSuspense(path)}
-          //     hasOnEnter={hasOnEnter}
-          //     component={component} />
-          // } />
-        })
-      }</Routes>
-    </BaseRouter>
+    <Routes>{
+      routes.map(({ path, component: Component }) => {
+        return <BaseRoute key={path} path={path} element={<Component />} />
+        //   <Route
+        //     ctx={ctx}
+        //     fetchWithSuspense={createFetchWithSuspense(path)}
+        //     hasOnEnter={hasOnEnter}
+        //     component={component} />
+        // } />
+      })
+    }</Routes>
   )
 }
 
