@@ -1,19 +1,5 @@
-import React from 'react'
+import { createRoutes, hydrateRoutes } from 'fastify-dx-react/routes.js'
 
-export default [
-  {
-    path: '/',
-    component: React.lazy(() => import('/views/index.jsx')),
-    streaming: true,
-  },
-  {
-    path: '/other',
-    component: React.lazy(() => import('/views/other.jsx')),
-    serverOnly: true,
-  },
-  {
-    path: '/client-only',
-    component: React.lazy(() => import('/views/client-only.jsx')),
-    clientOnly: true,
-  },
-]
+export default import.meta.env.SSR
+  ? createRoutes(import.meta.globEager('/pages/**/*.jsx'))
+  : hydrateRoutes(import.meta.glob('/pages/**/*.jsx'))

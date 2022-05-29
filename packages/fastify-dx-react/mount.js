@@ -1,12 +1,15 @@
+import { lazy } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
+import { hydrateRoutes } from './routes.js'
 
-export default function mount (target, create, ctx) {
+export default async function mount (target, { create, routes }) {
   if (typeof target === 'string') {
     target = document.querySelector(target)
   }
-  if (ctx.clientOnly) {
-    createRoot(target).render(create(ctx))
+  routes = await routes
+  if (window.route.clientOnly) {
+    createRoot(target).render(create(routes, window.route))
   } else {
-    hydrateRoot(target, create(ctx))
+    hydrateRoot(target, create(routes, window.route))
   }
 }

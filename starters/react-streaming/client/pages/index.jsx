@@ -23,9 +23,10 @@ export default function Index (props) {
         <input ref={setInput} />
         <button onClick={addItem}>Add</button>
       </div>
-      <p>
-        <Link to="/other">Go to another page</Link>
-      </p>
     </>
   )
 }
+
+// <p>
+//   <Link to="/other">Go to another page</Link>
+// </p>

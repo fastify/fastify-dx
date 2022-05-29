@@ -2,13 +2,12 @@ import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server.mjs'
 import { Provider as StateProvider } from 'jotai'
-
-import routes from './routes.js'
 import { todoList } from './state.js'
 
 const Router = import.meta.env.SSR ? StaticRouter : BrowserRouter
 
-export default function create (ctx, url) {
+export default function create (routes, ctx, url) {
+  console.log('routes', routes)
   return (
     <StateProvider initialValues={[
       [todoList, ctx.data.todoList],

@@ -23,6 +23,10 @@ import devalue from 'devalue'
 
 // The fastify-vite renderer overrides
 export default {
+  async prepareClient ({ routes, ...others }) {
+    routes = await routes
+    return { routes, ...others }
+  },
   createHtmlFunction,
   createRenderFunction,
   createRouteHandler,
@@ -34,17 +38,6 @@ class RouteContext {
     this.server = server
     this.req = req
     this.reply = reply
-    this.styles = {}
-    if (client.styles) {
-      this.styles.link = []
-      for (const style of client.styles) {
-        if (typeof style === 'string') {
-          this.styles.link.push({ rel: 'stylesheet', href: style })
-        } else if (typeof style === 'object') {
-          this.styles.link.push(style)
-        }
-      }
-    }
     this.head = {}
     this.data = route.data
     this.streaming = route.streaming
@@ -84,21 +77,21 @@ export function createHtmlFunction (source, scope, config) {
   const soHeadTemplate = createHtmlTemplateFunction(soHeadSource)
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
-  return function ({ context, body }) {
+  return function ({ routes, context, body }) {
     // Decide which templating functions to use, with and without hydration
     const headTemplate = context.serverOnly ? soHeadTemplate : unHeadTemplate
     const footerTemplate = context.serverOnly ? soFooterTemplate : unFooterTemplate
     // Decide whether or not to include the hydration script
     const hydration = context.serverOnly
       ? ''
-      : `<script>${hydrationTarget} = ${devalue(context.toJSON())}</script>`
-    const head = `${
-      // Include above-the-fold stylesheets
-      new Head(context.styles).render()
-    }${
-      // Render page-level <head> elements
-      new Head(context.head).render()
-    }`
+      : (
+        '<script>\n' +
+        `${hydrationTarget} = ${devalue(context.toJSON())}\n` +
+        `window.routes = ${devalue(routes.toJSON())}\n` +
+        '</script>'
+      )
+    // Render page-level <head> elements
+    const head = new Head(context.head).render()
     // Create readable stream with prepended and appended chunks 
     const readable = Readable.from(generateHtmlStream({
       body: body && (
@@ -118,7 +111,7 @@ export function createHtmlFunction (source, scope, config) {
   }
 }
 
-function createRenderFunction ({ create }) {
+function createRenderFunction ({ routes, create }) {
   // create is exported by client/index.js
   return function (req) {
     req.route.data = {
@@ -129,10 +122,10 @@ function createRenderFunction ({ create }) {
       ],
     }
     // Creates main React component with all the SSR context it needs
-    const app = !req.route.clientOnly && create(req.route, req.url)
+    const app = !req.route.clientOnly && create(routes, req.route, req.url)
     // Perform SSR, i.e., turn app.instance into an HTML fragment
     // The SSR context data is passed along so it can be inlined for hydration
-    return { context: req.route, body: app }
+    return { routes, context: req.route, body: app }
   }
 }
 
