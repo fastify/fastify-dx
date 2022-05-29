@@ -4,6 +4,10 @@ import Head from 'unihead'
 // make it easier to work with renderToPipeableStream()
 import { Readable, PassThrough } from 'node:stream'
 
+// Helpers from the Node.js stream library to
+// make it easier to work with renderToPipeableStream()
+import { onAllReady, onShellReady } from 'fastify-dx-react/readable.js'
+
 // React 18's preferred server-side rendering function,
 // which enables the combination of React.lazy() and Suspense
 import { renderToPipeableStream } from 'react-dom/server'
@@ -66,7 +70,7 @@ export function createRouteHandler (client, scope, config) {
 const hydrationTarget = 'window.route'
 
 // The return value of this function gets registered as reply.html()
-function createHtmlFunction (source, scope, config) {
+export function createHtmlFunction (source, scope, config) {
   // Templating functions for universal rendering (SSR+CSR)
   const [unHeadSource, unFooterSource] = source.split('<!-- element -->')
   const unHeadTemplate = createHtmlTemplateFunction(unHeadSource)
@@ -97,7 +101,14 @@ function createHtmlFunction (source, scope, config) {
     }`
     // Create readable stream with prepended and appended chunks 
     const readable = Readable.from(generateHtmlStream({
-      body: body && (context.streaming ? onShellReady(body) : onAllReady(body)),
+      body: body && (
+        context.streaming
+          // For reasons beyond my understanding, 
+          // renderToPipeableStream() cannot be imported 
+          // from within a library so it's passed along here
+          ? onShellReady(renderToPipeableStream, body) 
+          : onAllReady(renderToPipeableStream, body)
+      ),
       head: headTemplate({ ...context, head, hydration }),
       footer: footerTemplate(context),
     }))
@@ -134,47 +145,6 @@ export async function * generateHtmlStream ({ head, body, footer }) {
     }
   }
   yield footer
-}
-
-// Helper function to get an AsyncIterable (via PassThrough)
-// from the limited stream returned by renderToPipeableStream()
-function onShellReady (app) {
-  const duplex = new PassThrough()
-  return new Promise((resolve, reject) => {
-    try {
-      const pipeable = renderToPipeableStream(app, {
-        onShellReady () {
-          resolve(pipeable.pipe(duplex))
-        },
-        onShellError (error) {
-          reject(error)
-        },
-      })
-    } catch (error) {
-      resolve(error)
-    }
-  })
-}
-
-
-// Helper function to get an AsyncIterable (via PassThrough)
-// from the limited stream returned by renderToPipeableStream()
-function onAllReady (app) {
-  const duplex = new PassThrough()
-  return new Promise((resolve, reject) => {
-    try {
-      const pipeable = renderToPipeableStream(app, {
-        onAllReady () {
-          resolve(pipeable.pipe(duplex))
-        },
-        onError (error) {
-          reject(error)
-        },
-      })
-    } catch (error) {
-      resolve(error)
-    }
-  })
 }
 
 export function createRoute ({ client, handler, errorHandler, route }, scope, config) {

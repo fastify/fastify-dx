@@ -9,4 +9,7 @@ export default {
     viteReact({ jsxRuntime: 'classic' }),
     viteFastify(),
   ],
+  ssr: {
+    external: ['fastify-dx-react'],
+  }
 }
