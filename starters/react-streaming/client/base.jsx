@@ -7,7 +7,6 @@ import { todoList } from './state.js'
 const Router = import.meta.env.SSR ? StaticRouter : BrowserRouter
 
 export default function create (routes, ctx, url) {
-  console.log('routes', routes)
   return (
     <StateProvider initialValues={[
       [todoList, ctx.data.todoList],

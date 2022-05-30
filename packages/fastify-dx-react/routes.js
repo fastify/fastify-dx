@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 
 class Routes extends Array {
-  toJSON() {
+  toJSON () {
     return this.map((route) => {
       return {
         id: route.id,
@@ -31,7 +31,7 @@ export async function createRoutes (from, { param } = { param: /\[(\w+)\]/ }) {
               .replace(/\/index$/, '/'),
             ...routeModule,
           }
-        })
+        }),
     )
   }
   return new Routes(...await Promise.all(promises))
@@ -39,7 +39,7 @@ export async function createRoutes (from, { param } = { param: /\[(\w+)\]/ }) {
 
 function getRouteModuleExports (routeModule) {
   return {
-    // The Route component (default export)    
+    // The Route component (default export)
     component: routeModule.default,
     // Route-level hooks
     getMeta: routeModule.getMeta,

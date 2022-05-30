@@ -1,4 +1,7 @@
-import { createRoutes, hydrateRoutes } from 'fastify-dx-react/routes.js'
+import { 
+  createRoutes, 
+  hydrateRoutes
+} from 'fastify-dx-react/routes'
 
 export default import.meta.env.SSR
   ? createRoutes(import.meta.globEager('/pages/**/*.jsx'))

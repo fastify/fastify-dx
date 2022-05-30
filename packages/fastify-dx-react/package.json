@@ -6,8 +6,18 @@
   "main": "index.js",
   "name": "fastify-dx-react",
   "version": "0.0.0",
-  "files": ["index.js"],
+  "files": [
+    "index.js",
+    "readable.js",
+    "html.js"
+  ],
   "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./routes": "./routes.js",
+    "./mount": "./mount.js",
+    "./router": "./router.jsx"
+  },
   "dependencies": {
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
