@@ -1,5 +1,5 @@
 
-export class RouteContext {
+export default class RouteContext {
   constructor (server, req, reply, route, client) {
     this.server = server
     this.req = req

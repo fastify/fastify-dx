@@ -8,8 +8,10 @@
   "version": "0.0.0",
   "files": [
     "index.js",
-    "readable.js",
-    "html.js"
+    "context.js",
+    "mount.js",
+    "routes.js",
+    "stream.js"
   ],
   "license": "MIT",
   "exports": {

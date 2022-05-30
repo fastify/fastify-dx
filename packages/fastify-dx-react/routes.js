@@ -37,6 +37,14 @@ export async function createRoutes (from, { param } = { param: /\[(\w+)\]/ }) {
   return new Routes(...await Promise.all(promises))
 }
 
+export async function hydrateRoutes (from) {
+  return window.routes.map((route) => {
+    route.loader = memoImport(from[route.id])
+    route.component = lazy(() => route.loader())
+    return route
+  })
+}
+
 function getRouteModuleExports (routeModule) {
   return {
     // The Route component (default export)
@@ -59,14 +67,6 @@ async function getRouteModule (path, routeModule) {
   } else {
     return getRouteModuleExports(routeModule)
   }
-}
-
-export async function hydrateRoutes (from) {
-  return window.routes.map((route) => {
-    route.loader = memoImport(from[route.id])
-    route.component = lazy(() => route.loader())
-    return route
-  })
 }
 
 const kFuncExecuted = Symbol('kFuncExecuted')

@@ -1,5 +1,6 @@
 import Head from 'unihead'
 import { 
+  prepareClient,
   createHtmlFunction,
   createRouteHandler,
   createRoute
@@ -7,10 +8,7 @@ import {
 
 // The fastify-vite renderer overrides
 export default {
-  async prepareClient ({ routes, ...others }) {
-    routes = await routes
-    return { routes, ...others }
-  },
+  prepareClient,
   createHtmlFunction,
   createRenderFunction,
   createRouteHandler,
