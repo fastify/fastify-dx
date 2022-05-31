@@ -16,8 +16,9 @@
   "license": "MIT",
   "exports": {
     ".": "./index.js",
-    "./routes": "./routes.js",
-    "./mount": "./mount.js",
+    "./plugin": "./plugin.cjs",
+    "./routes": "./routes.mjs",
+    "./mount": "./mount.mjs",
     "./router": "./router.jsx"
   },
   "dependencies": {
