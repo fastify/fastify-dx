@@ -101,11 +101,16 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
     },
     // If getData is provided,
     // make sure it runs before the SSR route handler
-    // ...route.getData && {
-    //   async preHandler (req, reply) {
-    //     req.route.data = await route.getData()
-    //   },
-    // },
+    ...route.getData && {
+      async preHandler (req, reply) {
+        console.log('preHandler')
+        try {
+          req.route.data = await route.getData()
+        } catch (err) {
+          console.error(err)
+        }
+      },
+    },
     handler,
     errorHandler,
     ...route,

@@ -18,13 +18,6 @@ export default {
 function createRenderFunction ({ routes, create }) {
   // create is exported by client/index.js
   return function (req) {
-    req.route.data = {
-      todoList: [
-        'Do laundry',
-        'Respond to emails',
-        'Write report',
-      ],
-    }
     // Creates main React component with all the SSR context it needs
     const app = !req.route.clientOnly && create(routes, req.route, req.url)
     // Perform SSR, i.e., turn app.instance into an HTML fragment

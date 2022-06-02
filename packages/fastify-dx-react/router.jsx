@@ -19,7 +19,7 @@ export function Router ({ routes, ctx }) {
   )
 }
 
-function Route ({
+function ManagedRoute ({
   ctx,
   fetchWithSuspense,
   hasGetData,
