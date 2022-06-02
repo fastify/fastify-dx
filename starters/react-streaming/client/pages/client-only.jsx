@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const clientOnly = true
+export const getMeta = () => ({ title: 'Client Only Page' })
 
 export default function ClientOnly () {
 	return (

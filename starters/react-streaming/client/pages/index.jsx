@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useRouteContext } from '/context.jsx'
+import { useRouteContext, useHead } from '/context.jsx'
 
 export function getData () {
   return {
@@ -11,6 +11,16 @@ export function getData () {
     ],
   }
 }
+
+export function onEnter () {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ message: 'Hello from onEnter' })
+    }, 1000)
+  })
+}
+
+export const getMeta = () => ({ title: 'Index Page' })
 
 export default function Index (props) {
   const { data } = useRouteContext()

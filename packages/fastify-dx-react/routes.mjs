@@ -7,6 +7,8 @@ class Routes extends Array {
         id: route.id,
         path: route.path,
         getData: !!route.getData,
+        getMeta: !!route.getMeta,
+        onEnter: !!route.onEnter,
       }
     })
   }
@@ -50,8 +52,9 @@ function getRouteModuleExports (routeModule) {
     // The Route component (default export)
     component: routeModule.default,
     // Route-level hooks
-    getMeta: routeModule.getMeta,
     getData: routeModule.getData,
+    getMeta: routeModule.getMeta,
+    onEnter: routeModule.onEnter,
     // Other Route-level settings
     streaming: routeModule.streaming,
     clientOnly: routeModule.clientOnly,

@@ -1,12 +1,14 @@
-const routeContextInspect = Symbol.for('nodejs.util.inspect.custom');
+const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
-  constructor (server, req, reply, route, client) {
+  constructor (server, req, reply, route) {
+    console.log('route', route)
     this.server = server
     this.req = req
     this.reply = reply
     this.head = {}
     this.data = route.data
+    this.firstRender = true
     this.getData = !!route.getData
     this.onEnter = !!route.onEnter
     this.streaming = route.streaming
@@ -30,9 +32,9 @@ export default class RouteContext {
   toJSON () {
     return {
       data: this.data,
-      static: this.static,
       getData: this.getData,
       onEnter: this.onEnter,
+      firstRender: this.firstRender,
       clientOnly: this.clientOnly,
     }
   }

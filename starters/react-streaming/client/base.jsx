@@ -2,56 +2,71 @@ import React, { createContext, useContext, useEffect, Suspense } from 'react'
 import { useLocation, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server.mjs'
 import { createPath } from 'history'
-import { RouteContext, useRouteContext } from './context.jsx'
+import { RouteContext, HeadContext, useRouteContext, useHead } from './context.jsx'
 
 const isServer = typeof process === 'object'
 const Router = import.meta.env.SSR ? StaticRouter : BrowserRouter
 
-export default function create (routes, ctx, url) {
-  const routeMap = Object.fromEntries(routes.map((route) => {
-    return [route.path, route]
-  }))
+export default function create ({ 
+  head,
+  routes,
+  routeMap,
+  initialRoute,
+  url,
+}) {
+  console.log('head:', head)
   return (
     <Router location={url}>
-      <Suspense>      
-        <Routes>{
-          routes.map(({ path, component: Component }) => {
-            return <Route key={path} path={path} element={
-              <EnhancedRoute serverCtx={ctx} ctx={routeMap[path]}>
-                <Component />
-              </EnhancedRoute>
-            } />
-          })
-        }</Routes>
+      <Suspense>
+        <HeadContext.Provider value={head ?? {}}>
+          <Routes>{
+            routes.map(({ path, component: Component }) => {
+              return <Route key={path} path={path} element={
+                <EnhancedRoute 
+                  head={head} 
+                  initialRoute={initialRoute} 
+                  ctx={routeMap[path]}>
+                  <Component />
+                </EnhancedRoute>
+              } />
+            })
+          }</Routes>
+        </HeadContext.Provider>
       </Suspense>
     </Router>
   )
 }
 
-function EnhancedRoute ({ serverCtx, ctx, children }) {
-  // console.log('serverCtx', serverCtx)
+function EnhancedRoute ({ head, initialRoute, ctx, children }) {
+  console.log('EnhancedRoute')
+  // console.log('initialRoute', initialRoute)
   // console.log('ctx', ctx)
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
   if (isServer) {
+    console.log('returning')
     return (
-      <RouteContext.Provider value={{...ctx, ...serverCtx}}>
+      <RouteContext.Provider value={{...ctx, ...initialRoute}}>
         {children}
       </RouteContext.Provider>
     )
   }
+  // Indicates whether or not this is a first render on the client
+  ctx.firstRender = window.route.firstRender  
   // If running on the client, the server context data
   // is still available, hydrated from window.route
-  ctx.data = window.route.data
+  if (ctx.firstRender) {
+    ctx.data = window.route.data
+    ctx.head = window.route.head
+  }
 
   const location = useLocation()
   const path = createPath(location)
 
-  // Ensure we delete any available hydration
-  // so the next time this route renders client-side, 
-  // it's forced to fetch getData() on the server
+  // When the next route renders client-side, 
+  // force it to execute all URMA hooks again
   useEffect(() => {
-    delete window.route.data
+    window.route.firstRender = false
   }, [location])
 
   // If we have a getData function registered for this route
@@ -69,13 +84,27 @@ function EnhancedRoute ({ serverCtx, ctx, children }) {
       throw status
     }
   }
-  // if (ctx.onEnter) {
-  //   const runOnEnter = async ({ onEnter }) => {
-  //     const updatedCxt = await onEnter(ctx)
-  //     Object.assign(ctx, updatedCxt)
-  //   }
-  //   waitResource(path, ctx.loader().then(runOnEnter))
-  // }
+
+  if (!ctx.firstRender && ctx.getMeta) {
+    const updateHead = async () => {
+      console.log('updateHead()')
+      const { getMeta } = await ctx.loader()
+      head.update(await getMeta(ctx))
+    }
+    console.log('waitResource()')
+    waitResource(path, 'getMeta', updateHead)
+  }
+
+  if (!ctx.firstRender && ctx.onEnter) {
+    const runOnEnter = async ({ onEnter }) => {
+      const updatedData = await onEnter(ctx)
+      if (!ctx.data) {
+        ctx.data = {}
+      }
+      Object.assign(ctx.data, updatedData)
+    }
+    waitResource(path, 'onEnter', () => ctx.loader().then(runOnEnter))
+  }
 
   return (
     <RouteContext.Provider value={ctx}>
@@ -87,13 +116,14 @@ function EnhancedRoute ({ serverCtx, ctx, children }) {
 const fetchMap = new Map()
 const resourceMap = new Map()
 
-function waitResource (path, promise) {
-  let loader
+function waitResource (path, id, promise) {
+  const resourceId = `${path}:${id}`
+  const loader = resourceMap.get(resourceId)
   // When waitFetch() is called the first time inside
   // a component, it'll create the resource object (loader) for
   // tracking its state, but the next time it's called, it'll
   // return the same resource object previously saved
-  if (loader = resourceMap.get(path)) {
+  if (loader) {
     // Handle error, suspended state or return loaded data
     if (loader.error) {
       throw loader.error
@@ -102,26 +132,26 @@ function waitResource (path, promise) {
       throw loader.promise
     }
     // Remove from fetchMap now that we have data
-    resourceMap.delete(path)
+    resourceMap.delete(resourceId)
 
     return loader.result
   } else {
-    loader = {
+    const loader = {
       suspended: true,
       error: null,
       result: null,
       promise: null,
     }
-    loader.promise = promise
+    loader.promise = promise()
       .then((result) => { loader.result = result })
       .catch((loaderError) => { loader.error = loaderError })
       .finally(() => { loader.suspended = false })
 
     // Save the active suspended state to track it
-    resourceMap.set(path, loader)
+    resourceMap.set(resourceId, loader)
 
     // Call again for handling tracked state
-    return waitResource(path)
+    return waitResource(path, id)
   }
 }
 

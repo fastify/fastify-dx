@@ -3,7 +3,6 @@ import { useLocation, Route as BaseRoute, Routes } from 'react-router-dom'
 import { createFetchWithSuspense } from './suspense.js'
 
 export function Router ({ routes, ctx }) {
-  console.log(routes, ctx)
   return (
     <Routes>{
       routes.map(({ path, component: Component }) => {

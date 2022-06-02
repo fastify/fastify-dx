@@ -94,20 +94,38 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
       reply.send(await route.getData())
     })
   }
+  // See https://github.com/fastify/fastify-dx/blob/main/URMA.md
+  const hasURMAHooks = Boolean(
+    route.getData || route.getMeta || route.onEnter
+  )
   scope.get(route.path, {
     onRequest (req, reply, done) {
       req.route = new RouteContext(scope, req, reply, route, client)
       done()
     },
-    // If getData is provided,
-    // make sure it runs before the SSR route handler
-    ...route.getData && {
+    // If either getData or onEnter are provided,
+    // make sure they run before the SSR route handler
+    ...hasURMAHooks && {
       async preHandler (req, reply) {
-        console.log('preHandler')
         try {
-          req.route.data = await route.getData()
+          if (route.getData) {
+            req.route.data = await route.getData(req.route)
+          }
+          if (route.getMeta) {
+            req.route.head = await route.getMeta(req.route)
+          }
+          if (route.onEnter) {
+            if (!req.route.data) {
+              req.route.data = {}
+            }
+            const result = await route.onEnter(req.route)
+            Object.assign(req.route.data, result)
+          }
         } catch (err) {
-          console.error(err)
+          if (config.dev) {
+            console.error(err)
+          }
+          req.route.error = error
         }
       },
     },
