@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useRouteContext, useHead } from '/context.jsx'
+import { useRouteContext } from '/dx:context.jsx'
 
 export function getData () {
   return {

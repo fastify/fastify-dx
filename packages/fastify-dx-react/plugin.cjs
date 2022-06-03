@@ -6,7 +6,13 @@ function viteReactFastifyDX () {
   let prefix = /^\/?dx:/
   let viteProjectRoot
   let virtualRoot = resolve(__dirname, 'virtual')
-  let virtualModules = { mount: 'mount.js', routes: 'routes.js' }
+  let virtualModules = { 
+    'mount': 'mount.js', 
+    'resource': 'resource.js',
+    'context.jsx': 'context.jsx',
+    'router.jsx': 'router.jsx',
+    'routes': 'routes.js',
+  }
 
   function loadVirtualModuleOverride (virtual) {
     if (!virtual) {

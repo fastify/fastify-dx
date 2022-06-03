@@ -10,13 +10,14 @@ export default async function mount (target, { create, routes: routesPromise }) 
   const routeMap = Object.fromEntries(routes.map((route) => {
     return [route.path, route]
   }))
+  const serverRoute = window.route
   const app = create({
     head,
-    initialRoute: window.route,
+    serverRoute,
     routes: window.routes,
     routeMap,
   })
-  if (window.route.clientOnly) {
+  if (serverRoute.clientOnly) {
     createRoot(target).render(app)
   } else {
     hydrateRoot(target, app)

@@ -26,7 +26,7 @@ function createRenderFunction ({ routes, create }) {
     const app = !req.route.clientOnly && create({
       routes,
       routeMap,
-      initialRoute: req.route,
+      serverRoute: req.route,
       url: req.url,
     })
     // Perform SSR, i.e., turn app.instance into an HTML fragment
