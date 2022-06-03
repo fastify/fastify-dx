@@ -1,10 +1,12 @@
+/* global $paramPattern */
+
 import { lazy } from 'react'
 
 export default import.meta.env.SSR
-  ? createRoutes(import.meta.globEager('/pages/**/*.jsx'))
-  : hydrateRoutes(import.meta.glob('/pages/**/*.jsx'))
+  ? createRoutes(import.meta.globEager('$globPattern'))
+  : hydrateRoutes(import.meta.glob('$globPattern'))
 
-async function createRoutes (from, { param } = { param: /\[(\w+)\]/ }) {
+async function createRoutes (from, { param } = { param: $paramPattern }) {
   // Otherwise we get a ReferenceError, but since
   // this function is only ran once, there's no overhead
   class Routes extends Array {
@@ -29,7 +31,7 @@ async function createRoutes (from, { param } = { param: /\[(\w+)\]/ }) {
         .then((routeModule) => {
           return {
             id: path,
-            path: path
+            path: routeModule.path ?? path
               // Remove /pages and .jsx extension
               .slice(6, -4)
               // Replace [id] with :id
