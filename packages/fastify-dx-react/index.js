@@ -16,14 +16,15 @@ import Head from 'unihead'
 
 // Helpers from the Node.js stream library to
 // make it easier to work with renderToPipeableStream()
-import { generateHtmlStream, onAllReady, onShellReady } from './stream.js'
+import { generateHtmlStream, onAllReady, onShellReady } from './server/stream.js'
 
 // Holds the universal route context
-import RouteContext from './context.js'
+import RouteContext from './server/context.js'
 
 export default { 
   prepareClient,
   createHtmlFunction,
+  createRenderFunction,
   createRouteHandler,
   createRoute,
 }
@@ -81,6 +82,26 @@ export function createHtmlFunction (source, scope, config) {
   }
 }
 
+export function createRenderFunction ({ routes, create }) {
+  // create is exported by client/index.js
+  return function (req) {
+    // Create convenience-access routeMap
+    const routeMap = Object.fromEntries(routes.toJSON().map((route) => {
+      return [route.path, route]
+    }))
+    // Creates main React component with all the SSR context it needs
+    const app = !req.route.clientOnly && create({
+      routes,
+      routeMap,
+      serverRoute: req.route,
+      url: req.url,
+    })
+    // Perform SSR, i.e., turn app.instance into an HTML fragment
+    // The SSR context data is passed along so it can be inlined for hydration
+    return { routes, context: req.route, body: app }
+  }
+}
+
 export function createRouteHandler (client, scope, config) {
   return function (req, reply) {
     reply.html(reply.render(req))
@@ -100,7 +121,7 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
   )
   scope.get(route.path, {
     onRequest (req, reply, done) {
-      req.route = new RouteContext(scope, req, reply, route, client)
+      req.route = new RouteContext(scope, req, reply, route)
       done()
     },
     // If either getData or onEnter are provided,

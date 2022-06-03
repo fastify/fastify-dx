@@ -2,7 +2,6 @@ const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
   constructor (server, req, reply, route) {
-    console.log('route', route)
     this.server = server
     this.req = req
     this.reply = reply

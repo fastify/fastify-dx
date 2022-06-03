@@ -7,19 +7,19 @@
   "name": "fastify-dx-react",
   "version": "0.0.0",
   "files": [
+    "virtual/context.jsx",
+    "virtual/mount.js",
+    "virtual/resource.js",
+    "virtual/router.jsx",
+    "virtual/routes.js",
     "index.js",
-    "context.js",
-    "mount.js",
-    "routes.js",
-    "stream.js"
+    "server/context.js",
+    "server/stream.js"
   ],
   "license": "MIT",
   "exports": {
     ".": "./index.js",
-    "./plugin": "./plugin.cjs",
-    "./routes": "./routes.mjs",
-    "./mount": "./mount.mjs",
-    "./router": "./router.jsx"
+    "./plugin": "./plugin.cjs"
   },
   "dependencies": {
     "react": "^18.1.0",
