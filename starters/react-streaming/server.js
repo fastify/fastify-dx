@@ -6,7 +6,8 @@ const server = Fastify()
 
 await server.register(FastifyVite, { 
   root: import.meta.url, 
-  renderer: FastifyDXReact
+  renderer: FastifyDXReact,
+  clientModule: '/client.js',
 })
 
 await server.vite.ready()

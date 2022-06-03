@@ -1,8 +1,8 @@
 import Head from 'unihead/client'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 
-import create from '/base.jsx'
-import routes from 'dx:routes'
+import create from '/dx:base.jsx'
+import routes from '/dx:routes'
 
 mount('main', { create, routes })
 
