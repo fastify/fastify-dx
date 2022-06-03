@@ -10,7 +10,7 @@ import { createHtmlTemplateFunction } from 'fastify-vite'
 // <script> tags, preventing a few types of attack
 import devalue from 'devalue'
 
-// Small SSR-ready library used to generate 
+// Small SSR-ready library used to generate
 // <title>, <meta> and <link> elements
 import Head from 'unihead'
 
@@ -21,7 +21,7 @@ import { generateHtmlStream, onAllReady, onShellReady } from './server/stream.js
 // Holds the universal route context
 import RouteContext from './server/context.js'
 
-export default { 
+export default {
   prepareClient,
   createHtmlFunction,
   createRenderFunction,
@@ -117,7 +117,7 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
   }
   // See https://github.com/fastify/fastify-dx/blob/main/URMA.md
   const hasURMAHooks = Boolean(
-    route.getData || route.getMeta || route.onEnter
+    route.getData || route.getMeta || route.onEnter,
   )
   scope.get(route.path, {
     onRequest (req, reply, done) {
@@ -146,7 +146,7 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
           if (config.dev) {
             console.error(err)
           }
-          req.route.error = error
+          req.route.error = err
         }
       },
     },
@@ -155,4 +155,3 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
     ...route,
   })
 }
-

@@ -1,8 +1,8 @@
-import React, { useEffect, Suspense } from 'react'
+import React, { useEffect } from 'react'
 import { useLocation, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server.mjs'
 import { createPath } from 'history'
-import { RouteContext, HeadContext, useRouteContext } from '/dx:context.jsx'
+import { RouteContext, HeadContext } from '/dx:context.jsx'
 import { waitResource, waitFetch } from '/dx:resource'
 
 const isServer = typeof process === 'object'
@@ -15,9 +15,9 @@ export function EnhancedRouter ({ head, routes, routeMap, serverRoute }) {
       <Routes>{
         routes.map(({ path, component: Component }) => {
           return <Route key={path} path={path} element={
-            <RouteContextProvider 
-              head={head} 
-              serverRoute={serverRoute} 
+            <RouteContextProvider
+              head={head}
+              serverRoute={serverRoute}
               ctx={routeMap[path]}>
               <Component />
             </RouteContextProvider>
@@ -33,13 +33,13 @@ export function RouteContextProvider ({ head, serverRoute, ctx, children }) {
   // functions have already ran through the preHandler hook
   if (isServer) {
     return (
-      <RouteContext.Provider value={{...ctx, ...serverRoute}}>
+      <RouteContext.Provider value={{ ...ctx, ...serverRoute }}>
         {children}
       </RouteContext.Provider>
     )
   }
   // Indicates whether or not this is a first render on the client
-  ctx.firstRender = window.route.firstRender  
+  ctx.firstRender = window.route.firstRender
 
   // If running on the client, the server context data
   // is still available, hydrated from window.route
@@ -51,7 +51,7 @@ export function RouteContextProvider ({ head, serverRoute, ctx, children }) {
   const location = useLocation()
   const path = createPath(location)
 
-  // When the next route renders client-side, 
+  // When the next route renders client-side,
   // force it to execute all URMA hooks again
   useEffect(() => {
     window.route.firstRender = false

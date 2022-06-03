@@ -34,8 +34,8 @@ export function waitResource (path, id, promise) {
 }
 
 export function waitFetch (path) {
-  let loader
-  if (loader = fetchMap.get(path)) {
+  const loader = fetchMap.get(path)
+  if (loader) {
     if (loader.error || loader.data?.statusCode === 500) {
       if (loader.data?.statusCode === 500) {
         throw new Error(loader.data.message)
@@ -49,7 +49,7 @@ export function waitFetch (path) {
 
     return loader.data
   } else {
-    loader = {
+    const loader = {
       suspended: true,
       error: null,
       data: null,

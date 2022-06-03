@@ -78,7 +78,7 @@ async function getRouteModule (path, routeModule) {
 }
 
 function memoImport (func) {
-  // Otherwise we get a ReferenceError, but since this function 
+  // Otherwise we get a ReferenceError, but since this function
   // is only ran once for each route, there's no overhead
   const kFuncExecuted = Symbol('kFuncExecuted')
   const kFuncValue = Symbol('kFuncValue')
