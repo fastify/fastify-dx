@@ -1,6 +1,26 @@
 # fastify-dx-react [![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
+## Quickstart
+
+First install `degit`, then:
+
+```bash
+mkdir project
+cd project
+degit fastify/fastify-dx/starters/react
+npm i
+```
+
+That'll get you a starter boilerplate to work with, with all essentials included.
+
 ## Install
+
+If you're starting a project from scratch, you'll need these packages installed:
+
+```bash
+npm i fastify fastify-vite fastify-dx-react -P
+npm i @vitejs/plugin-react -D
+```
 
 ## Usage
 
@@ -40,7 +60,7 @@ export default {
 }
 ```
 
-### Routing mode
+## Routing mode
 
 By default, routes are loaded from the `<project-root>/pages` folder, where `<project-root>` refers to the `root` setting in `vite.config.js`. The route paths are dynamically inferred from the directory structure, very much like Next.js and Nuxt.js.
 
@@ -70,12 +90,14 @@ export default {
 
 Finally, you also can export a `path` constant from your route modules, in which case its value will be used to **override the dynamically inferred paths from the directory structure**.
 
-### Rendering mode
+## Rendering mode
 
 Following the URMA specification, Fastify DX's route module can be set to be universally rendered (default behavior), server-side rendered in streaming mode, server-side rendered only (client gets no JavaScript) or client rendered only (no rendering takes place on the server).
 
-### Decoupled `<head>`
+## Decoupled `<head>`
 
 
-### Route Module API
+## Data fetching
+
+
 
