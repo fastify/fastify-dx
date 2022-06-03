@@ -94,6 +94,30 @@ Finally, you also can export a `path` constant from your route modules, in which
 
 Following the URMA specification, Fastify DX's route module can be set to be universally rendered (default behavior), server-side rendered in streaming mode, server-side rendered only (client gets no JavaScript) or client rendered only (no rendering takes place on the server).
 
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `serverOnly`
+
+...
+  
+</td>
+<td width="600px"><br>
+
+```ts
+export const serverOnly = true
+  
+export function Index () {
+  return <p>This route won't send any JavaScript down to the client, just the markup</p>
+}
+```
+
+</td>
+</tr>
+</table>
+
 ## Decoupled `<head>`
 
 
