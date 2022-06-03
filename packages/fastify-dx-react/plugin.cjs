@@ -2,11 +2,14 @@ const { readFileSync, existsSync } = require('fs')
 const { dirname, join, resolve } = require('path')
 const { fileURLToPath } = require('url')
 
-function viteReactFastifyDX () {
-  let prefix = /^\/?dx:/
-  let viteProjectRoot
-  let virtualRoot = resolve(__dirname, 'virtual')
-  let virtualModules = { 
+function viteReactFastifyDX (config = {}) {  
+  const prefix = /^\/?dx:/
+  const routing = Object.assign({
+    globPattern: '/pages/**/*.jsx',
+    paramPattern: /\[(\w+)\]/,
+  }, config)
+  const virtualRoot = resolve(__dirname, 'virtual')
+  const virtualModules = { 
     'base.jsx': 'base.jsx',
     'mount': 'mount.js', 
     'resource': 'resource.js',
@@ -14,6 +17,14 @@ function viteReactFastifyDX () {
     'router.jsx': 'router.jsx',
     'routes': 'routes.js',
   }
+  const virtualModuleInserts = {
+    'routes': {
+      $globPattern: routing.globPattern,
+      $paramPattern: routing.paramPattern,
+    }
+  }
+
+  let viteProjectRoot
 
   function loadVirtualModuleOverride (virtual) {
     if (!virtual) {
@@ -29,10 +40,23 @@ function viteReactFastifyDX () {
     if (!virtual) {
       return
     }
+    let code = readFileSync(resolve(virtualRoot, virtualModules[virtual]), 'utf8')
+    if (virtualModuleInserts[virtual]) {
+      for (const [key, value] of Object.entries(virtualModuleInserts[virtual])) {
+        code = code.replace(new RegExp(escapeRegExp(key), 'g'), value)
+      }
+    }
     return {
-      code: readFileSync(resolve(virtualRoot, virtualModules[virtual]), 'utf8'),
+      code,
       map: null,
     }
+  }
+
+  // Thanks to https://github.com/sindresorhus/escape-string-regexp/blob/main/index.js
+  function escapeRegExp (s) {
+    return s
+      .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+      .replace(/-/g, '\\x2d')
   }
 
   return {
