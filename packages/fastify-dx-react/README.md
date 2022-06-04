@@ -101,7 +101,7 @@ Following the URMA specification, Fastify DX's route module can be set to be uni
 ### `streaming`
 
 If a route module exports `streaming` set to `true`, SSR will take place in **streaming mode**. That means if you have components depending on asynchronous resources and `<Suspense>` sections with defined fallback components, they will be streamed right way while the resources finish processing.
-  
+
 </td>
 <td width="600px"><br>
 
@@ -128,6 +128,8 @@ function Message () {
 }
 ```
 
+[See the full example]() in the [starter boilerplate]().
+
 </td>
 </tr>
 </table>
@@ -142,6 +144,8 @@ If a route module exports `serverOnly` set to `true`, only SSR will take place. 
 
 You should use this setting to deliver lighter pages when there's no need to run any code on them, such as statically generated content sites.
 
+This differs from [React Server Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but whose server-only rendering is more granular (available for any route child component) and fully controlled by the React runtime.
+
 </td>
 <td width="600px"><br>
 
@@ -152,6 +156,8 @@ export function Index () {
   return <p>No JavaScript sent to the browser.</p>
 }
 ```
+
+[This example]() is part of the [starter boilerplate]().
 
 </td>
 </tr>
@@ -166,7 +172,9 @@ export function Index () {
 If a route module exports `clientOnly` set to `true`, no SSR will take place, only data fetching and data hydration. The client gets the empty container element (the one that wraps `<!-- element -->` in `index.html`) and all rendering takes place on the client only.
 
 You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
-  
+
+This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but clientserver-only rendering is more granular (available for any route child component) and fully controlled by the React runtime.
+
 </td>
 <td width="600px"><br>
 
@@ -178,6 +186,8 @@ export function Index () {
 }
 ```
 
+[This example]() is part of the [starter boilerplate]().
+
 </td>
 </tr>
 </table>
@@ -186,7 +196,60 @@ export function Index () {
 ## Decoupled `<head>`
 
 
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `getMeta`
+
+</td>
+<td width="600px"><br>
+
+```jsx
+export const clientOnly = true
+  
+export function Index () {
+  return <p>No pre-rendered HTML sent to the browser.</p>
+}
+```
+
+This example is part of the starter boilerplate.
+
+</td>
+</tr>
+</table>
+
+
 ## Data fetching
 
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `clientOnly`
+
+If a route module exports `clientOnly` set to `true`, no SSR will take place, only data fetching and data hydration. The client gets the empty container element (the one that wraps `<!-- element -->` in `index.html`) and all rendering takes place on the client only.
+
+You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
+
+This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but clientserver-only rendering is more granular (available for any route child component) and fully controlled by the React runtime.
+
+</td>
+<td width="600px"><br>
+
+```jsx
+export const clientOnly = true
+  
+export function Index () {
+  return <p>No pre-rendered HTML sent to the browser.</p>
+}
+```
+
+This example is part of the starter boilerplate.
+
+</td>
+</tr>
+</table>
 
 

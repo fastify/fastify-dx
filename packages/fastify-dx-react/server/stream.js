@@ -26,11 +26,13 @@ export function onShellReady (app) {
   return new Promise((resolve, reject) => {
     try {
       const pipeable = renderToPipeableStream(app, {
+        onShellReady () {
+          resolve(pipeable.pipe(duplex))
+        },
         onError (error) {
           reject(error)
         },
       })
-      resolve(pipeable.pipe(duplex))
     } catch (error) {
       resolve(error)
     }
