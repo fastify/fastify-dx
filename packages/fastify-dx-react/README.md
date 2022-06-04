@@ -338,6 +338,9 @@ This example is part of the starter boilerplate.
 </td>
 <td width="600px"><br>
 
+</td>
+</tr>
+</table>
 
 <table>
 <tr>
@@ -347,11 +350,6 @@ This example is part of the starter boilerplate.
 
 </td>
 <td width="600px"><br>
-
-
-</td>
-</tr>
-</table>
 
 
 </td>
