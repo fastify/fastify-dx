@@ -13,9 +13,31 @@ npm i
 
 That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
 
-- [UnoCSS](), which supports all Tailwind utilities and has many other goodies.
-- A [PostCSS](https://vitejs.dev/guide/features.html#postcss) config file — making it easy to add any extra  plugins.
-- A `store.js` file where to export a [`zustand`]() store from, SSR-ready.
+- [UnoCSS](), which supports all Tailwind utilities and has many other goodies. UnoCSS is a innovative and already widely used CSS engine, up to 20x than Tailwind JIT and Windi CSS.
+- [PostCSS](https://vitejs.dev/guide/features.html#postcss), which is actually provided out of the box by Vite, but the boilerplate comes with a config file to speed up adding any extra plugins.
+- [Zustand](), with a global and SSR-ready store hooked into the base component. Use the `store.js` file to define your initial store shape. [More on this later]() in this README.
+
+The full [starter boilerplate]() has the following structure:
+
+```
+├── pages/
+│    ├── client-only.jsx
+│    ├── server-only.jsx
+│    ├── streaming.jsx
+│    ├── input-form.jsx
+│    ├── using-data.jsx
+│    └── using-store.jsx
+├── package.json
+├── index.html
+├── client.js
+├── server.js
+├── postcss.config.cjs
+└── vite.config.js
+```
+
+The files you see highlighted above as removed are provided out of the box by the `fastify-dx-react` Vite plugin. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded as virtual modules so you don't have to. Any of the virtual modules can be overriden by simply placing a file with the same name in your Vite project root. You'll find the detailed rundown of all virtual modules [later in this README]().
+
+See [this blog post]() to learn more about virtual modules. 
 
 ## Install
 
