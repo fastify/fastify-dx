@@ -195,7 +195,9 @@ export function Index () {
 
 ## Decoupled `<head>`
 
-Following the [URMA specification](), Fastify DX renders `<head>` elements independently from the SSR phase. That allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then stream the server-side rendered application body.
+Following the [URMA specification](), Fastify DX renders `<head>` elements independently from the SSR phase. 
+
+This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then stream the server-side rendered application body.
 
 <table>
 <tr>
@@ -231,7 +233,9 @@ export function Index () {
 
 ## Isomorphic data prefetching
 
-Fastify DX implements the `getData()` hook from the URMA specification. This hook is set up in a way that it runs server-side before any SSR takes place, so any data fetched is made available to the route component before it starts rendering. SSR is fundamentally expensive, but more so when it's coupled with server-side data fetching. Fastify DX leverages the [`preHandler`]() route hook to register these functions.
+Fastify DX implements the `getData()` hook from the URMA specification. This hook is set up in a way that it runs server-side before any SSR takes place, so any data fetched is made available to the route component before it starts rendering. 
+
+SSR is fundamentally expensive to, but more so when it's coupled with server-side data fetching. Fastify DX leverages the [`preHandler`]() route hook to register these functions and run them ahead of time.
 
 <table>
 <tr>
