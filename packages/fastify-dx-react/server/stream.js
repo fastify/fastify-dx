@@ -12,6 +12,7 @@ export async function * generateHtmlStream ({ head, body, footer }) {
   yield head
   if (body) {
     for await (const chunk of await body) {
+      console.log('chunk', chunk.toString('utf-8'))
       yield chunk
     }
   }
@@ -25,13 +26,11 @@ export function onShellReady (app) {
   return new Promise((resolve, reject) => {
     try {
       const pipeable = renderToPipeableStream(app, {
-        onShellReady () {
-          resolve(pipeable.pipe(duplex))
-        },
-        onShellError (error) {
+        onError (error) {
           reject(error)
         },
       })
+      resolve(pipeable.pipe(duplex))
     } catch (error) {
       resolve(error)
     }

@@ -98,6 +98,44 @@ Following the URMA specification, Fastify DX's route module can be set to be uni
 <tr>
 <td width="400px" valign="top">
 
+### `streaming`
+
+
+  
+</td>
+<td width="600px"><br>
+
+```jsx
+import React, { Suspense } from 'react'
+
+export const streaming = true
+
+export default function Index () {
+  return (
+    <Suspense fallback={<p>Waiting for content</p>}>
+      <Message />
+    </Suspense>
+  )
+}
+
+function Message () {
+  const message = afterSeconds({
+    id: 'index', 
+    message: 'Delayed by Suspense API',
+    seconds: 5
+  })
+  return <p>{message}</p>
+}
+```
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
 ### `serverOnly`
 
 If a route module exports `serverOnly` set to `true`, only SSR will take place. The client gets the server-side rendered markup without any accompanying JavaScript or data hydration.
@@ -118,7 +156,6 @@ export function Index () {
 </td>
 </tr>
 </table>
-
 
 <table>
 <tr>
