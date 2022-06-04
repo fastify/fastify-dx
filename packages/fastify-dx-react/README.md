@@ -195,12 +195,51 @@ export function Index () {
 
 ## Decoupled `<head>`
 
+Following the [URMA specification](), Fastify DX renders `<head>` elements independently from the SSR phase. That allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then stream the server-side rendered application body.
 
 <table>
 <tr>
 <td width="400px" valign="top">
 
-### `getMeta`
+### `getMeta()`
+
+In order to populate `<head>` elements, export a `getMeta()` function that returns a function matching the format expected by [unihead](https://github.com/galvez/unihead), the underlying library used by Fastify DX.
+
+</td>
+<td width="600px"><br>
+
+```jsx
+export function getMeta () {
+  return {
+    title: 'Route Title',
+    meta: [
+      { name: 'twitter:title', value: 'Route Title' },
+    ]
+  }
+}
+
+export function Index () {
+  return <p>Route with meta tags.</p>
+}
+```
+
+[This example]() is part of the [starter boilerplate]().
+
+</td>
+</tr>
+</table>
+
+## Isomorphic data prefetching
+
+Fastify DX implements the `getData()` hook from the URMA specification. This hook is set up in a way that it runs server-side before any SSR takes place, so any data fetched is made available to the route component before it starts rendering. SSR is fundamentally expensive, but more so when it's coupled with server-side data fetching. Fastify DX leverages the [`preHandler`]() route hook to register these functions.
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `getData()`
+
+If a route module exports a `getData()` function, it's executed 
 
 </td>
 <td width="600px"><br>
@@ -219,28 +258,26 @@ This example is part of the starter boilerplate.
 </tr>
 </table>
 
-
-## Data fetching
-
+## General isomorphic operations
 
 <table>
 <tr>
 <td width="400px" valign="top">
 
-### `clientOnly`
+### `onEnter()`
 
-If a route module exports `clientOnly` set to `true`, no SSR will take place, only data fetching and data hydration. The client gets the empty container element (the one that wraps `<!-- element -->` in `index.html`) and all rendering takes place on the client only.
-
-You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
-
-This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but clientserver-only rendering is more granular (available for any route child component) and fully controlled by the React runtime.
+If a route module exports a `onEnter()` function, it's executed 
 
 </td>
 <td width="600px"><br>
 
 ```jsx
-export const clientOnly = true
-  
+export function onEnter (ctx) {
+  if (ctx.server?.underPressure) {
+    ctx.clientOnly = true
+  }
+}
+
 export function Index () {
   return <p>No pre-rendered HTML sent to the browser.</p>
 }
@@ -251,5 +288,33 @@ This example is part of the starter boilerplate.
 </td>
 </tr>
 </table>
+
+## Route Context
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `useRouteContext()`
+
+</td>
+<td width="600px"><br>
+
+```jsx
+import { useRouteContext } from '/dx:context'
+  
+export function 
+export function Index () {
+  const { data } = useRouteContext()
+  return <p>{data.message}</p>
+}
+```
+
+This example is part of the starter boilerplate.
+
+</td>
+</tr>
+</table>
+
 
 
