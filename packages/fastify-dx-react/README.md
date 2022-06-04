@@ -100,7 +100,7 @@ Following the URMA specification, Fastify DX's route module can be set to be uni
 
 ### `streaming`
 
-
+If a route module exports `streaming` set to `true`, SSR will take place in **streaming mode**. That means if you have components depending on asynchronous resources and `<Suspense>` sections with defined fallback components, they will be streamed right way while the resources finish processing.
   
 </td>
 <td width="600px"><br>
