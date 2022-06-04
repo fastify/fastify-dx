@@ -9,11 +9,11 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
+    "devalue": "^2.0.1",
     "fastify-vite": "^3.0.0-beta.22",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
-    "devalue": "^2.0.1",
     "unihead": "^0.0.6"
   },
   "devDependencies": {
@@ -26,6 +26,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.29.4",
+    "unocss": "^0.37.4",
     "vite-plugin-blueprint": "^0.0.4"
   },
   "devInstall": {

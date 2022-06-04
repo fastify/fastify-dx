@@ -11,7 +11,11 @@ degit fastify/fastify-dx/starters/react
 npm i
 ```
 
-That'll get you a starter boilerplate to work with, with all essentials included.
+That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
+
+- [UnoCSS](), which supports all Tailwind utilities and has many other goodies.
+- A [PostCSS](https://vitejs.dev/guide/features.html#postcss) config file — making it easy to add any extra  plugins.
+- A `store.js` file where to export a [`zustand`]() store from, SSR-ready.
 
 ## Install
 
