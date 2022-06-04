@@ -327,5 +327,89 @@ This example is part of the starter boilerplate.
 </tr>
 </table>
 
+## Virtual Modules
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `/dx:base.jsx`
+
+</td>
+<td width="600px"><br>
 
 
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `/dx:mount`
+
+</td>
+<td width="600px"><br>
+
+
+</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `/dx:routes`
+
+</td>
+<td width="600px"><br>
+
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `/dx:router.jsx`
+
+</td>
+<td width="600px"><br>
+
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `/dx:context.jsx`
+
+</td>
+<td width="600px"><br>
+
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `/dx:resource`
+
+</td>
+<td width="600px"><br>
+
+
+</td>
+</tr>
+</table>
