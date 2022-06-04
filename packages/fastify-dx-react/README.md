@@ -94,29 +94,57 @@ Finally, you also can export a `path` constant from your route modules, in which
 
 Following the URMA specification, Fastify DX's route module can be set to be universally rendered (default behavior), server-side rendered in streaming mode, server-side rendered only (client gets no JavaScript) or client rendered only (no rendering takes place on the server).
 
-
 <table>
 <tr>
 <td width="400px" valign="top">
 
 ### `serverOnly`
 
-...
-  
+If a route module exports `serverOnly` set to `true`, only SSR will take place. The client gets the server-side rendered markup without any accompanying JavaScript or data hydration.
+
+You should use this setting to deliver lighter pages when there's no need to run any code on them, such as statically generated content sites.
+
 </td>
 <td width="600px"><br>
 
-```ts
+```jsx
 export const serverOnly = true
   
 export function Index () {
-  return <p>This route won't send any JavaScript down to the client, just the markup</p>
+  return <p>No JavaScript sent to the browser.</p>
 }
 ```
 
 </td>
 </tr>
 </table>
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `clientOnly`
+
+If a route module exports `clientOnly` set to `true`, no SSR will take place, only data fetching and data hydration. The client gets the empty container element (the one that wraps `<!-- element -->` in `index.html`) and all rendering takes place on the client only.
+
+You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
+  
+</td>
+<td width="600px"><br>
+
+```jsx
+export const clientOnly = true
+  
+export function Index () {
+  return <p>No pre-rendered HTML sent to the browser.</p>
+}
+```
+
+</td>
+</tr>
+</table>
+
 
 ## Decoupled `<head>`
 
