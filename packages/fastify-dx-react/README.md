@@ -13,8 +13,8 @@ npm i
 
 That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
 
-- [UnoCSS](https://github.com/unocss/unocss), which supports all Tailwind utilities through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and many other goodies. UnoCSS is an innovative and already widely used CSS engine, up to 20x than Tailwind JIT and Windi CSS.
-- [Zustand](https://github.com/pmndrs/zustand), with a global and SSR-ready store hooked into the [base component](). Use the `store.js` file to define your initial store shape. Note that this file can be safely removed. [More on this later]() in this README.
+- [UnoCSS](https://github.com/unocss/unocss), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno) . UnoCSS is an innovative and already widely used CSS engine created by [Anthony Fu](https://antfu.me/), up to 20x than Tailwind JIT and Windi CSS.
+- [Zustand](https://github.com/pmndrs/zustand), with a global and SSR-ready store hooked into the [base component](). Zustand is a minimal state management library created by [Daishi Kato](https://blog.axlight.com/). Use the `store.js` file to define your initial store shape. Note that this file can be safely removed. [More on this later]() in this README. 
 
 The full [starter boilerplate]() has the following structure:
 
@@ -412,7 +412,7 @@ mount('main', { create, routes })
 
 ### `/dx:routes`
 
-Fastify DX has code-splitting out of the box. It does that by eagerly loading all route data on the server, and then hydrating any missing metadata on the client.
+Fastify DX has code-splitting out of the box. It does that by eagerly loading all route data on the server, and then hydrating any missing metadata on the client. That's why the routes module default export is conditioned to `import.meta.env.SSR`, and different helper functions are called for each rendering environment.
 
 </td>
 <td width="600px"><br>
