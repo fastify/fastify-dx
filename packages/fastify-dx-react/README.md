@@ -1,42 +1,67 @@
 # fastify-dx-react [![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-## Quickstart
+## Quick Start
 
-First install `degit`, then:
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<br>
+
+Ensure you have Node v16+.
+
+Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
+
+Run `npm install`.
+
+<br>
 
 ```bash
-mkdir project
-cd project
 degit fastify/fastify-dx/starters/react
-npm i
 ```
+<br><sub>Learn about `degit` [here](https://github.com/Rich-Harris/degit).</sub>
 
-That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
+</td>
+<td width="600px"><br>
 
-- [UnoCSS](https://github.com/unocss/unocss), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno) . UnoCSS is an innovative and already widely used CSS engine created by [Anthony Fu](https://antfu.me/), up to 20x than Tailwind JIT and Windi CSS.
-- [Zustand](https://github.com/pmndrs/zustand), with a global and SSR-ready store hooked into the [base component](). Zustand is a minimal state management library created by [Daishi Kato](https://blog.axlight.com/). Use the `store.js` file to define your initial store shape. Note that this file can be safely removed. 
+That will get you a **starter template** with:
+  
+- A minimal [Fastify](https://github.com/fastify/fastify) server.
+- Some dummy API routes.
+- A `pages/` folder with some [demo routes]().
+- All configuration files.
+
+It also includes some _**opinionated**_ essentials:
+
+- [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 200x faster than Tailwind.
+
+- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can populate on the server (via the Route Context [intialization file]()) and expect it to be automatically hydrated on the client. It delivers simple and idiomatic state management, leveraging [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) without compromising React rendering efficiency.
+
+</td>
+</tr>
+</table>
+
 
 The full [starter boilerplate]() has the following structure:
 
 ```
+├── server.js
+├── client.js
+├── context.js
+├── index.html
 ├── pages/
+│    ├── index.jsx
 │    ├── client-only.jsx
 │    ├── server-only.jsx
 │    ├── streaming.jsx
 │    ├── input-form.jsx
 │    ├── using-data.jsx
 │    └── using-store.jsx
-├── package.json
-├── index.html
-├── client.js
-├── server.js
-├── postcss.config.cjs
-└── vite.config.js
+├── vite.config.js
+└── package.json
 ```
 
-The files you see highlighted above as removed are provided out of the box by the `fastify-dx-react` Vite plugin. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded as virtual modules so you don't have to. Any of the virtual modules can be overriden by simply placing a file with the same name in your Vite project root. You'll find the detailed rundown of all virtual modules [later in this README]().
-
-See [this blog post]() to learn more about virtual modules. 
+Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. You'll find the detailed rundown of all virtual modules [later in this README]().
 
 ## Install
 
