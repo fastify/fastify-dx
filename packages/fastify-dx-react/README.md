@@ -12,14 +12,20 @@ Ensure you have Node v16+.
 
 Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
-Run `npm install`.
-
-<br>
+Run `npm install`. If you have `degit`:
 
 ```bash
+mkdir <your-project-dir>
+cd <your-project-dir>
 degit fastify/fastify-dx/starters/react
+npm install
 ```
-<br><sub>Learn about `degit` [here](https://github.com/Rich-Harris/degit).</sub>
+
+`npm run dev` boots the development server.
+  
+`npm run build` creates the production bundle.
+  
+`npm run serve` serves the production bundle.
 
 </td>
 <td width="600px"><br>
@@ -289,11 +295,11 @@ The only way for the React runtime to execute asynchronous operations prior the 
 <tr>
 <td width="400px" valign="top">
 
-### `getData()`
+### `getData(ctx)`
 
 This hook is set up in a way that it runs server-side before any SSR takes place, so any data fetched is made available to the route component before it starts rendering. During first render, any data retrieved on the server is automatically sent to be hydrated on the client so no new requests are made. Then, during client-side navigation (post first-render), a JSON request is fired to an endpoint automatically registered for running the getData() function for that route on the server.
 
-The objet returned by `getData()` gets automatically assigned as `data` in the route context object and is accessible from `getMeta()` and `onEnter()` hooks and also via the `useRouteContext()` hook.
+The objet returned by `getData()` gets automatically assigned as `data` in the [universal route context]() object and is accessible from `getMeta()` and `onEnter()` hooks and also via the `useRouteContext()` hook.
 
 </td>
 <td width="600px"><br>
@@ -301,7 +307,7 @@ The objet returned by `getData()` gets automatically assigned as `data` in the r
 ```jsx
 import { useRouteContext } from '/dx:context'
 
-export function getData () {
+export function getData (ctx) {
   return {
     message: 'Hello from getData!',
   }
@@ -319,15 +325,17 @@ export function Index () {
 </tr>
 </table>
 
-## General isomorphic operations
+## Universal route guard
 
 <table>
 <tr>
 <td width="400px" valign="top">
 
-### `onEnter()`
+### `onEnter(ctx)`
 
-If a route module exports a `onEnter()` function, it's executed 
+If a route module exports a `onEnter()` function, it's executed before the route renders, both in SSR and client-side navigation. That is, the first time a route render on the server, onEnter() runs on the server. Then, since it already ran on the server, it doesn't run again on the client for that first route. But if you navigate to another route on the client using `<Link>`, it runs normally as you'd expect.
+
+It receives the [universal route context]() as first parameter, so you can make changes to `data`, `meta` and `state` if needed.
 
 </td>
 <td width="600px"><br>
@@ -344,7 +352,7 @@ export function Index () {
 }
 ```
 
-This example is part of the starter boilerplate.
+The example demonstrates how to turn off SSR and downgrade to CSR-only, assuming you have a `pressureHandler` configured in [`underpressure`](https://github.com/fastify/under-pressure) to set a `underPressure` flag on your server instance.
 
 </td>
 </tr>
