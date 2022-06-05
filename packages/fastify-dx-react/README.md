@@ -13,22 +13,29 @@ Ensure you have Node v16+.
 Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
 Run `npm install`.
-  
+
 <br>
 
 ```bash
 degit fastify/fastify-dx/starters/react
 ```
-<sub>If you don't have `degit`, [read about it here](https://github.com/Rich-Harris/degit).</sub>
+<br><sub>Learn about `degit` [here](https://github.com/Rich-Harris/degit).</sub>
 
 </td>
 <td width="600px"><br>
 
-That'll get you a **starter template** to work with, with a minimal `server.js` file, all configuration files, a `pages/` folder with some [demo routes]() demonstrating all of the features covered in this `README`, and also some opinionated essentials:
+That will get you a **starter template** with:
+  
+- A minimal [Fastify](https://github.com/fastify/fastify) server.
+- Some dummy API routes.
+- A `pages/` folder with some [demo routes]().
+- All configuration files.
 
-- [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno).
+It also includes some _**opinionated**_ essentials:
 
-- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can populate on the server and expect it to be automatically hydrated on the client. It delivers simple and idiomatic state management.
+- [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 200x faster than Tailwind.
+
+- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can populate on the server (via the Route Context [intialization file]()) and expect it to be automatically hydrated on the client. It delivers simple and idiomatic state management, leveraging [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) without compromising React rendering efficiency.
 
 </td>
 </tr>
