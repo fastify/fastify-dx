@@ -14,7 +14,7 @@ npm i
 That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
 
 - [UnoCSS](https://github.com/unocss/unocss), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno) . UnoCSS is an innovative and already widely used CSS engine created by [Anthony Fu](https://antfu.me/), up to 20x than Tailwind JIT and Windi CSS.
-- [Zustand](https://github.com/pmndrs/zustand), with a global and SSR-ready store hooked into the [base component](). Zustand is a minimal state management library created by [Daishi Kato](https://blog.axlight.com/). Use the `store.js` file to define your initial store shape. Note that this file can be safely removed. [More on this later]() in this README. 
+- [Zustand](https://github.com/pmndrs/zustand), with a global and SSR-ready store hooked into the [base component](). Zustand is a minimal state management library created by [Daishi Kato](https://blog.axlight.com/). Use the `store.js` file to define your initial store shape. Note that this file can be safely removed. 
 
 The full [starter boilerplate]() has the following structure:
 
