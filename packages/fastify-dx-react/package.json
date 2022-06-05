@@ -26,7 +26,8 @@
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "devalue": "^2.0.1",
-    "unihead": "^0.0.6"
+    "unihead": "^0.0.6",
+    "valtio": "^1.6.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",

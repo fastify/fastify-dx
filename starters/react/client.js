@@ -1,4 +1,8 @@
-import create from '/dx:base.jsx'
 import routes from '/dx:routes'
+import create from '/dx:base.jsx'
 
-export default { routes, create }
+export default { 
+  context: import('/dx:context'), 
+  routes,
+  create,
+}

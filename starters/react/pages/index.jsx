@@ -1,39 +1,21 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useRouteContext } from '/dx:context.jsx'
+import { useSnapshot, useRouteContext } from '/dx:app'
 
-export function getData () {
-  return {
-    todoList: [
-      'Do laundry',
-      'Respond to emails',
-      'Write report',
-    ],
-  }
-}
-
-export function onEnter () {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ message: 'Hello from onEnter' })
-    }, 1000)
-  })
-}
-
-export const getMeta = () => ({ title: 'Index Page' })
+export const meta = { title: 'Todo List' }
 
 export default function Index (props) {
-  const { data } = useRouteContext()
-  const [state, updateState] = useState(data.todoList)
+  console.log('!/1')
+  const { state, snapshot } = useRouteContext()
   const [input, setInput] = useState(null)
   const addItem = (value) => {
-    updateState((todoList) => [...todoList, value])
+    state.todoList.push(value)
     input.value = ''
   }
   return (
     <>
       <ul>{
-        state.map((item, i) => {
+        snapshot.todoList.map((item, i) => {
           return <li key={`item-${i}`}>{item}</li>
         })
       }</ul>

@@ -1,15 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import { useLocation, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server.mjs'
 import { createPath } from 'history'
-import { RouteContext, HeadContext } from '/dx:context.jsx'
+import { proxy, useSnapshot } from 'valtio'
 import { waitResource, waitFetch } from '/dx:resource'
 
 const isServer = typeof process === 'object'
 
+export const RouteContext = createContext({})
+export const HeadContext = createContext({})
+
 export const BaseRouter = isServer ? StaticRouter : BrowserRouter
 
-export function EnhancedRouter ({ head, routes, routeMap, serverRoute }) {
+export function useRouteContext () {
+  const routeContext = useContext(RouteContext)
+  if (routeContext.state) {
+    routeContext.snapshot = useSnapshot(routeContext.state)
+  }
+  return routeContext
+}
+
+export function EnhancedRouter ({
+  head,
+  routes,
+  routeMap,
+  ctxHydration
+}) {
   return (
     <HeadContext.Provider value={head}>
       <Routes>{
@@ -17,7 +33,7 @@ export function EnhancedRouter ({ head, routes, routeMap, serverRoute }) {
           return <Route key={path} path={path} element={
             <RouteContextProvider
               head={head}
-              serverRoute={serverRoute}
+              ctxHydration={ctxHydration}
               ctx={routeMap[path]}>
               <Component />
             </RouteContextProvider>
@@ -28,16 +44,23 @@ export function EnhancedRouter ({ head, routes, routeMap, serverRoute }) {
   )
 }
 
-export function RouteContextProvider ({ head, serverRoute, ctx, children }) {
+export function RouteContextProvider ({ head, ctxHydration, ctx, children }) {
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
   if (isServer) {
+    console.log('ctxHydration.state', ctxHydration.state)
     return (
-      <RouteContext.Provider value={{ ...ctx, ...serverRoute }}>
+      <RouteContext.Provider value={{
+        ...ctx, 
+        ...ctxHydration,
+        state: proxy(ctxHydration.state),
+      }}>
         {children}
       </RouteContext.Provider>
     )
   }
+  // Note that on the client, window.route === ctxHydration
+
   // Indicates whether or not this is a first render on the client
   ctx.firstRender = window.route.firstRender
 
@@ -94,7 +117,10 @@ export function RouteContextProvider ({ head, serverRoute, ctx, children }) {
   }
 
   return (
-    <RouteContext.Provider value={ctx}>
+    <RouteContext.Provider value={{
+      ...ctx,
+      state: proxy(ctxHydration.state)
+    }}>
       {children}
     </RouteContext.Provider>
   )

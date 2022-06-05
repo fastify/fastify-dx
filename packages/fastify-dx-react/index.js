@@ -29,9 +29,14 @@ export default {
   createRoute,
 }
 
-export async function prepareClient ({ routes: routesPromise, ...others }) {
+export async function prepareClient ({ 
+  routes: routesPromise, 
+  context: contextPromise,
+  ...others
+}) {
+  const context = await contextPromise
   const resolvedRoutes = await routesPromise
-  return { routes: resolvedRoutes, ...others }
+  return { context, routes: resolvedRoutes, ...others }
 }
 
 // The return value of this function gets registered as reply.html()
@@ -50,6 +55,7 @@ export function createHtmlFunction (source, scope, config) {
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
   return function ({ routes, context, body }) {
+    console.log('context', context)
     // Initialize hydration, which can stay empty if context.serverOnly is true
     let hydration = ''
     // Decide which templating functions to use, with and without hydration
@@ -82,7 +88,7 @@ export function createHtmlFunction (source, scope, config) {
   }
 }
 
-export function createRenderFunction ({ routes, create }) {
+export async function createRenderFunction ({ routes, create }) {
   // create is exported by client/index.js
   return function (req) {
     // Create convenience-access routeMap
@@ -93,7 +99,7 @@ export function createRenderFunction ({ routes, create }) {
     const app = !req.route.clientOnly && create({
       routes,
       routeMap,
-      serverRoute: req.route,
+      ctxHydration: req.route,
       url: req.url,
     })
     // Perform SSR, i.e., turn app.instance into an HTML fragment
@@ -120,10 +126,19 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
   const hasURMAHooks = Boolean(
     route.getData || route.getMeta || route.onEnter,
   )
+  console.log('client', client)
+  console.log('client.context', client.context)
+  RouteContext.extend(client.context)
+
   scope.get(route.path, {
-    onRequest (req, reply, done) {
-      req.route = new RouteContext(scope, req, reply, route)
-      done()
+    async onRequest (req, reply) {
+      req.route = await RouteContext.create(
+        scope, 
+        req, 
+        reply, 
+        route,
+        client.context
+      )
     },
     // If either getData or onEnter are provided,
     // make sure they run before the SSR route handler
