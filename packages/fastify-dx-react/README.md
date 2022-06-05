@@ -13,9 +13,8 @@ npm i
 
 That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
 
-- [UnoCSS](), which supports all Tailwind utilities and has many other goodies. UnoCSS is a innovative and already widely used CSS engine, up to 20x than Tailwind JIT and Windi CSS.
-- [PostCSS](https://vitejs.dev/guide/features.html#postcss), which is actually provided out of the box by Vite, but the boilerplate comes with a config file to speed up adding any extra plugins.
-- [Zustand](), with a global and SSR-ready store hooked into the base component. Use the `store.js` file to define your initial store shape. [More on this later]() in this README.
+- [UnoCSS](https://github.com/unocss/unocss), which supports all Tailwind utilities through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and many other goodies. UnoCSS is an innovative and already widely used CSS engine, up to 20x than Tailwind JIT and Windi CSS.
+- [Zustand](https://github.com/pmndrs/zustand), with a global and SSR-ready store hooked into the [base component](). Use the `store.js` file to define your initial store shape. Note that this file can be safely removed. [More on this later]() in this README.
 
 The full [starter boilerplate]() has the following structure:
 
@@ -361,8 +360,25 @@ This example is part of the starter boilerplate.
 
 ### `/dx:base.jsx`
 
+The `base.jx` virtual import holds your root React component.
+
 </td>
 <td width="600px"><br>
+
+```jsx
+import React, { Suspense } from 'react'
+import { BaseRouter, EnhancedRouter } from '/dx:router.jsx'
+
+export default function Base ({ url, ...routerSettings }) {
+  return (
+    <BaseRouter location={url}>
+      <Suspense>
+        <EnhancedRouter {...routerSettings} />
+      </Suspense>
+    </BaseRouter>
+  )
+}
+```
 
 </td>
 </tr>
@@ -377,6 +393,17 @@ This example is part of the starter boilerplate.
 </td>
 <td width="600px"><br>
 
+```js
+import Head from 'unihead/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
+
+import create from '/dx:base.jsx'
+import routes from '/dx:routes'
+
+mount('main', { create, routes })
+```
+
+[See the full file]() for the `mount()` function definition.
 
 </td>
 </tr>
