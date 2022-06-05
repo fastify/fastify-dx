@@ -24,10 +24,11 @@ degit fastify/fastify-dx/starters/react
 </td>
 <td width="600px"><br>
 
-  That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
+That'll get you a **starter template** to work with, with a minimal `server.js` file, all configuration files, a `pages/` folder with some [demo routes]() demonstrating all of the features covered in this `README`, and also some opinionated essentials:
 
-- [UnoCSS](https://github.com/unocss/unocss), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno) . UnoCSS is an innovative and already widely used CSS engine created by [Anthony Fu](https://antfu.me/), up to 20x than Tailwind JIT and Windi CSS.
-- [Valtio](https://github.com/pmndrs/valtio), with a global and SSR-ready store hooked into the [base component](). Valtio is a minimal state management library created by [Daishi Kato](https://blog.axlight.com/). It uses a Proxy to deliver simple and idiomatic state access and operations.
+- [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno).
+
+- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can populate on the server and expect it to be automatically hydrated on the client. It delivers simple and idiomatic state management.
 
 </td>
 </tr>
@@ -37,6 +38,10 @@ degit fastify/fastify-dx/starters/react
 The full [starter boilerplate]() has the following structure:
 
 ```
+├── server.js
+├── client.js
+├── context.js
+├── index.html
 ├── pages/
 │    ├── index.jsx
 │    ├── client-only.jsx
@@ -45,13 +50,8 @@ The full [starter boilerplate]() has the following structure:
 │    ├── input-form.jsx
 │    ├── using-data.jsx
 │    └── using-store.jsx
-├── package.json
-├── index.html
-├── client.js
-├── context.js
-├── server.js
-├── postcss.config.cjs
-└── vite.config.js
+├── vite.config.js
+└── package.json
 ```
 
 Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. You'll find the detailed rundown of all virtual modules [later in this README]().
