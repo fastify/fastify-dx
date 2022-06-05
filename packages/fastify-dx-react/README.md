@@ -394,9 +394,6 @@ export default function Base ({ url, ...routerSettings }) {
 <td width="600px"><br>
 
 ```js
-import Head from 'unihead/client'
-import { createRoot, hydrateRoot } from 'react-dom/client'
-
 import create from '/dx:base.jsx'
 import routes from '/dx:routes'
 
@@ -415,9 +412,31 @@ mount('main', { create, routes })
 
 ### `/dx:routes`
 
+Fastify DX has code-splitting out of the box. It does that by eagerly loading all route data on the server, and then hydrating any missing metadata on the client.
+
 </td>
 <td width="600px"><br>
 
+```js
+export default import.meta.env.SSR
+  ? createRoutes(import.meta.globEager('$globPattern'))
+  : hydrateRoutes(import.meta.glob('$globPattern'))
+```
+
+See the full file for the `createRoutes()` and `hydrateRoutes()` definitions. If you want to use your own custom routes list, just replace the glob imports with your own routes list:
+
+```js
+const routes = [
+  { 
+    path: '/', 
+    component: () => import('/custom/index.jsx'),
+  }
+]
+
+export default import.meta.env.SSR
+  ? createRoutes(routes)
+  : hydrateRoutes(routes)
+````
 
 </td>
 </tr>
