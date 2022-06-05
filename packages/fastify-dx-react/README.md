@@ -243,11 +243,9 @@ export function Index () {
 </table>
 
 
-## Decoupled `<head>`
+## HTML meta tag management
 
-Following the [URMA specification](), Fastify DX renders `<head>` elements independently from the SSR phase. 
-
-This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then stream the server-side rendered application body.
+Following the [URMA specification](), Fastify DX renders `<head>` elements independently from the SSR phase. This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then stream the server-side rendered application body.
 
 <table>
 <tr>
@@ -255,7 +253,7 @@ This allows you to fetch data for populating the first `<meta>` tags and stream 
 
 ### `getMeta()`
 
-In order to populate `<head>` elements, export a `getMeta()` function that returns a function matching the format expected by [unihead](https://github.com/galvez/unihead), the underlying library used by Fastify DX.
+To populate `<title>`, `<meta>` and `<link>` elements, export a `getMeta()` function that returns an object matching the format expected by [unihead](https://github.com/galvez/unihead), the underlying library used by Fastify DX.
 
 </td>
 <td width="600px"><br>
@@ -356,7 +354,45 @@ This example is part of the starter boilerplate.
 <tr>
 <td width="400px" valign="top">
 
-### `useRouteContext()`
+### Initialization file
+  
+...
+
+</td>
+<td width="600px"><br>
+
+```js
+import ky from 'ky-universal'
+
+export default (ctx) => {
+  if (ctx.server) {
+    ctx.state = ctx.server.db
+  }
+}
+
+export const $fetch = ky.extend({
+  prefixUrl: 'http://localhost:3000'
+})
+
+export async function addTodoListItem ({ state, $fetch }, item) {
+  await $fetch.put('api/todo/items', {
+    body: { item },
+  })
+  state.todoList.push(item)
+}
+```
+
+This example is part of the starter boilerplate.
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### The `useRouteContext()` hook
 
 </td>
 <td width="600px"><br>
@@ -369,6 +405,31 @@ export function Index () {
   const { data } = useRouteContext()
   return <p>{data.message}</p>
 }
+```
+
+This example is part of the starter boilerplate.
+
+</td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### Execution order
+
+</td>
+<td width="600px"><br>
+
+```
+├─ ...()
+│  ├─ ...()
+│  ├─ ...()
+│  ├─ ...()
+│  └─ ...()
+└─ ...()
 ```
 
 This example is part of the starter boilerplate.
