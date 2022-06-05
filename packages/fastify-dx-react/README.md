@@ -254,12 +254,14 @@ Following the [URMA specification](), Fastify DX renders `<head>` elements indep
 ### `getMeta()`
 
 To populate `<title>`, `<meta>` and `<link>` elements, export a `getMeta()` function that returns an object matching the format expected by [unihead](https://github.com/galvez/unihead), the underlying library used by Fastify DX.
+  
+It receives the [route context]() as first parameter and runs after `onEnter()`, `getData()`, allowing you to access any `data` populated by these other functions to generate your tags.
 
 </td>
 <td width="600px"><br>
 
 ```jsx
-export function getMeta () {
+export function getMeta (ctx) {
   return {
     title: 'Route Title',
     meta: [
