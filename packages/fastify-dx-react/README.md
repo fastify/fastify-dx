@@ -47,8 +47,15 @@ It also includes some _**opinionated**_ essentials:
 </tr>
 </table>
 
+## Structure
 
-The full [starter boilerplate]() has the following structure:
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<br>
+
+The [starter template]() looks like this:
 
 ```
 ├── server.js
@@ -66,8 +73,26 @@ The full [starter boilerplate]() has the following structure:
 ├── vite.config.js
 └── package.json
 ```
+  
+</td>
+<td width="600px"><br>
+  
+
+The `server.js` file is your application entry point. It's the file that runs everything. It boots a Fastify server configured with [**fastify-vite**]() and **Fastify DX for React** as a renderer adapter to **fastify-vite**. 
+
+The `client.js` file is your Vite server entry point, it's the file that provides your client bundle (which runs in the Vite-enriched environment) to the plain Node.js environment where Fastify runs. 
+
+> Right now, it's mostly a **boilerplate file** because it must exist but it will also probably never need to be changed. 
+
+It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module]() (must be named `context` and have a dynamic module import so Fastify DX can pick up both its `default` and named exports.
+
+
 
 Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. You'll find the detailed rundown of all virtual modules [later in this README]().
+  
+</td>
+</tr>
+</table>
 
 ## Install
 
