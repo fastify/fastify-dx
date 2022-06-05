@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useSnapshot, useRouteContext } from '/dx:app'
+import { useRouteContext } from '/dx:app.js'
 
-export const meta = { title: 'Todo List' }
+export function getMeta () {
+  return { title: 'Todo List' }
+}
 
 export default function Index (props) {
-  console.log('!/1')
-  const { state, snapshot } = useRouteContext()
+  const {snapshot, state} = useRouteContext()
   const [input, setInput] = useState(null)
   const addItem = (value) => {
     state.todoList.push(value)

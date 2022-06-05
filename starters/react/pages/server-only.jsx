@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const serverOnly = true
 
 export default function ServerOnly () {

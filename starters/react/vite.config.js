@@ -6,7 +6,7 @@ import viteReactFastifyDX from 'fastify-dx-react/plugin'
 export default {
   root: dirname(new URL(import.meta.url).pathname),
   plugins: [
-    viteReact({ jsxRuntime: 'classic' }),
+    viteReact(),
     viteReactFastifyDX(),
   ],
 }

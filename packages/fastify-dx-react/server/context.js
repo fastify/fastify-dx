@@ -16,17 +16,11 @@ const overrideProtected = [
 ]
 
 export default class RouteContext {
-  static async create (server, req, reply, route, context) {
+  static async create (server, req, reply, route, contextInit) {
     const routeContext = new RouteContext(server, req, reply, route)
-    if (context?.default) {
-      console.log('running this')
-      await context.default(routeContext)
+    if (contextInit?.default) {
+      await contextInit.default(routeContext)
     }
-    console.log('routeContext', routeContext)
-    // if (routeContext.state) {
-    //   console.log('runnning this too')
-    //   routeContext.state = proxy(routeContext.state)
-    // }
     return routeContext
   }
   constructor (server, req, reply, route, context) {

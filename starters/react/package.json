@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
-    "devinstall": "zx ../../devinstall.mjs react-vanilla -- node server.js --dev",
+    "devinstall": "zx ../../devinstall.mjs react -- node server.js --dev",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr /client.js",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "fastify-vite": "^3.0.0-beta.22",
+    "ky-universal": "^0.10.1",
     "ohmyfetch": "^0.4.18",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -37,6 +38,7 @@
     },
     "external": {
       "fastify-vite": "^3.0.0-beta.22",
+      "ky-universal": "^0.10.1",
       "ohmyfetch": "^0.4.18"
     }
   }

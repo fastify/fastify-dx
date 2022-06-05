@@ -3,7 +3,7 @@ import Head from 'unihead/client'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 
 import create from '/dx:base.jsx'
-import routesPromise from '/dx:routes'
+import routesPromise from '/dx:routes.js'
 
 mount('main')
 

@@ -3,7 +3,7 @@ import { useLocation, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server.mjs'
 import { createPath } from 'history'
 import { proxy, useSnapshot } from 'valtio'
-import { waitResource, waitFetch } from '/dx:resource'
+import { waitResource, waitFetch } from '/dx:resource.js'
 
 const isServer = typeof process === 'object'
 

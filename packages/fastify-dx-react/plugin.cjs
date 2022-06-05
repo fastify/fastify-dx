@@ -9,17 +9,17 @@ function viteReactFastifyDX (config = {}) {
     paramPattern: /\[(\w+)\]/,
   }, config)
   const virtualRoot = resolve(__dirname, 'virtual')
-  const virtualModules = { 
-    'app': 'app.js',
-    'mount': 'mount.js', 
-    'resource': 'resource.js',
-    'routes': 'routes.js',
-    'base.jsx': 'base.jsx',
-    'context': 'context.js',
-    'router.jsx': 'router.jsx',
-  }
+  const virtualModules = [ 
+    'app.js',
+    'mount.js', 
+    'resource.js',
+    'routes.js',
+    'base.jsx',
+    'context.js',
+    'router.jsx',
+  ]
   const virtualModuleInserts = {
-    'routes': {
+    'routes.js': {
       $globPattern: routing.globPattern,
       $paramPattern: routing.paramPattern,
     }
@@ -28,20 +28,20 @@ function viteReactFastifyDX (config = {}) {
   let viteProjectRoot
 
   function loadVirtualModuleOverride (virtual) {
-    if (!virtual) {
+    if (!virtualModules.includes(virtual)) {
       return
     }
-    const overridePath = resolve(viteProjectRoot, virtualModules[virtual])
+    const overridePath = resolve(viteProjectRoot, virtual)
     if (existsSync(overridePath)) {
       return overridePath
     }
   }
 
   function loadVirtualModule (virtual) {
-    if (!virtual) {
+    if (!virtualModules.includes(virtual)) {
       return
     }
-    let code = readFileSync(resolve(virtualRoot, virtualModules[virtual]), 'utf8')
+    let code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
     if (virtualModuleInserts[virtual]) {
       for (const [key, value] of Object.entries(virtualModuleInserts[virtual])) {
         code = code.replace(new RegExp(escapeRegExp(key), 'g'), value)
@@ -66,6 +66,7 @@ function viteReactFastifyDX (config = {}) {
       if (command === 'build' && config.build?.ssr) {
         config.build.rollupOptions = {
           output: {
+            // file: 'foobar.js',
             format: 'es',
           },
         }
@@ -86,9 +87,7 @@ function viteReactFastifyDX (config = {}) {
     },
     load (id) {
       const [, virtual] = id.split(prefix)
-      if (virtual && virtualModules[virtual]) {
-        return loadVirtualModule(virtual)
-      }
+      return loadVirtualModule(virtual)
     },
   }
 }
