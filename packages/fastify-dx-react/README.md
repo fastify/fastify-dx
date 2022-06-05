@@ -14,12 +14,13 @@ npm i
 That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
 
 - [UnoCSS](https://github.com/unocss/unocss), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno) . UnoCSS is an innovative and already widely used CSS engine created by [Anthony Fu](https://antfu.me/), up to 20x than Tailwind JIT and Windi CSS.
-- [Zustand](https://github.com/pmndrs/zustand), with a global and SSR-ready store hooked into the [base component](). Zustand is a minimal state management library created by [Daishi Kato](https://blog.axlight.com/). Use the `store.js` file to define your initial store shape. Note that this file can be safely removed. 
+- [Valtio](https://github.com/pmndrs/valtio), with a global and SSR-ready store hooked into the [base component](). Valtio is a minimal state management library created by [Daishi Kato](https://blog.axlight.com/). It uses a Proxy to deliver simple and idiomatic state access and operations.
 
 The full [starter boilerplate]() has the following structure:
 
 ```
 ├── pages/
+│    ├── index.jsx
 │    ├── client-only.jsx
 │    ├── server-only.jsx
 │    ├── streaming.jsx
@@ -29,14 +30,13 @@ The full [starter boilerplate]() has the following structure:
 ├── package.json
 ├── index.html
 ├── client.js
+├── context.js
 ├── server.js
 ├── postcss.config.cjs
 └── vite.config.js
 ```
 
-The files you see highlighted above as removed are provided out of the box by the `fastify-dx-react` Vite plugin. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded as virtual modules so you don't have to. Any of the virtual modules can be overriden by simply placing a file with the same name in your Vite project root. You'll find the detailed rundown of all virtual modules [later in this README]().
-
-See [this blog post]() to learn more about virtual modules. 
+Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. You'll find the detailed rundown of all virtual modules [later in this README]().
 
 ## Install
 
