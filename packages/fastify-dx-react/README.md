@@ -1,20 +1,38 @@
 # fastify-dx-react [![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-## Quickstart
+## Quick Start
 
-First install `degit`, then:
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<br>
+
+Ensure you have Node v16+.
+
+Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
+
+Run `npm install`.
+  
+<br>
 
 ```bash
-mkdir project
-cd project
 degit fastify/fastify-dx/starters/react
-npm i
 ```
+<sub>If you don't have `degit`, [read about it here](https://github.com/Rich-Harris/degit).</sub>
 
-That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
+</td>
+<td width="600px"><br>
+
+  That'll get you a starter boilerplate to work with, with all configuration files, a pages/ folder with some demo routes demonstrating all of the features covered in this README, and also some opinionated essentials included:
 
 - [UnoCSS](https://github.com/unocss/unocss), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno) . UnoCSS is an innovative and already widely used CSS engine created by [Anthony Fu](https://antfu.me/), up to 20x than Tailwind JIT and Windi CSS.
 - [Valtio](https://github.com/pmndrs/valtio), with a global and SSR-ready store hooked into the [base component](). Valtio is a minimal state management library created by [Daishi Kato](https://blog.axlight.com/). It uses a Proxy to deliver simple and idiomatic state access and operations.
+
+</td>
+</tr>
+</table>
+
 
 The full [starter boilerplate]() has the following structure:
 
