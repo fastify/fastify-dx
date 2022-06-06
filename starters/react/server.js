@@ -15,7 +15,6 @@ server.decorate('db', {
 await server.register(FastifyVite, { 
   root: import.meta.url, 
   renderer: FastifyDXReact,
-  clientModule: '/client.js',
 })
 
 await server.vite.ready()
