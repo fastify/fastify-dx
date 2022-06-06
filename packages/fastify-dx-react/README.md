@@ -12,7 +12,7 @@ Ensure you have Node v16+.
 
 Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
-Run `npm install`. If you have `degit`:
+Run `npm install`. If you have [`degit`](https://github.com/Rich-Harris/degit):
 
 ```bash
 mkdir <your-project-dir>
@@ -46,6 +46,29 @@ It also includes some _**opinionated**_ essentials:
 </td>
 </tr>
 </table>
+  
+## Install
+  
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<br>
+  
+If you're starting a project from scratch, you'll need these packages installed.
+
+</td>
+<td width="600px" valign="top"><br>
+
+```bash
+npm i fastify fastify-vite fastify-dx-react -P
+npm i @vitejs/plugin-react -D
+```
+
+</td>
+</tr>
+</table>
+
 
 ## Structure
 
@@ -74,6 +97,8 @@ The [starter template]() looks like this:
 └── package.json
 ```
   
+Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. You'll find the detailed rundown of all virtual modules [later in this README]().
+
 </td>
 <td width="600px"><br>
   
@@ -81,27 +106,20 @@ The [starter template]() looks like this:
 The `server.js` file is your application entry point. It's the file that runs everything. It boots a Fastify server configured with [**fastify-vite**]() and **Fastify DX for React** as a renderer adapter to **fastify-vite**. 
 
 The `client.js` file is your Vite server entry point, it's the file that provides your client bundle (which runs in the Vite-enriched environment) to the plain Node.js environment where Fastify runs. 
+  
+The `context.js` file is the universal [route context]() initialization module. Any named exports from this file are attached to the RouteContext class prototype on the server, preventing them from being reassigned on every request. The `default` export from this file, however, runs for every request so you can attach any request-specific data to it.
+  
+The `index.html` file is the root HTML template of the application, which Vite uses as the client bundling entry point. You can expand this file with additional `<meta>` and `<link>` tags if you wish, provided you don't remove any of the placeholders. This files links to `/dx:mount.js`, which is a virtual module provided by Fastify DX. Virtual modules are covered [later in this README]().
+  
+The `pages/` directory contains your route modules, whose paths are dynamically inferred from the directory structure itself. You can change this behavior easily. More on this [later in this README]().
 
 > Right now, it's mostly a **boilerplate file** because it must exist but it will also probably never need to be changed. 
 
 It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module]() (must be named `context` and have a dynamic module import so Fastify DX can pick up both its `default` and named exports.
-
-
-
-Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. You'll find the detailed rundown of all virtual modules [later in this README]().
   
 </td>
 </tr>
 </table>
-
-## Install
-
-If you're starting a project from scratch, you'll need these packages installed:
-
-```bash
-npm i fastify fastify-vite fastify-dx-react -P
-npm i @vitejs/plugin-react -D
-```
 
 ## Usage
 
