@@ -110,7 +110,7 @@ The `client/pages/` directory contains your route modules, whose paths are dynam
 
 The `client/index.js` file is your Vite server entry point, it's the file that provides your client bundle (which runs in the Vite-enriched environment) to the Node.js environment where Fastify runs. 
 
-> <sub>Right now, it's mostly a **boilerplate file** because it must exist but it will also probably never need to be changed.</sub>
+> Right now, it's mostly a **boilerplate file** because it must exist but it will also probably never need to be changed.
 
 It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module]() (must be named `context` and have a dynamic module import so Fastify DX can pick up both its `default` and named exports.
   
