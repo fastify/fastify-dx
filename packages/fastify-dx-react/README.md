@@ -123,7 +123,21 @@ It exports your application's root React component (must be named `create`), the
 
 ## Usage
 
-Basic server setup:
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### Basic server setup
+
+assumes you're following [fastify-vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. But in order to have a flat initial setup, you can manually set `clientModule` as demonstrated by the [starter boilerplate](), which sets `/client.js` as `clientModule`.
+
+
+</td>
+<td width="600px"><br>
+
+The starter template `server.js` file looks like this:
+
 
 ```js
 import Fastify from 'fastify'
@@ -140,8 +154,21 @@ await server.register(FastifyVite, {
 await server.vite.ready()
 await server.listen(3000)
 ```
+  
+</td>
+</tr>
+</table>
+  
+<table>
+<tr>
+<td width="400px" valign="top">
 
-The example above assumes you're following [fastify-vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. But in order to have a flat initial setup, you can manually set `clientModule` as demonstrated by the [starter boilerplate](), which sets `/client.js` as `clientModule`.
+<br>
+  
+### Vite configuration
+
+</td>
+<td width="600px"><br>
 
 Minimal `vite.config.js` file:
 
@@ -159,11 +186,24 @@ export default {
 }
 ```
 
+</td>
+</tr>
+</table>
+
 ## Routing mode
 
 By default, routes are loaded from the `<project-root>/pages` folder, where `<project-root>` refers to the `root` setting in `vite.config.js`. The route paths are dynamically inferred from the directory structure, very much like Next.js and Nuxt.js.
 
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<br>
 Dynamic route parameters follow the [Next.js convention](https://nextjs.org/docs/basic-features/pages#pages-with-dynamic-routes) (`[param]`), but that can be overriden by using the `paramPattern` plugin option. For example, the following configuration switches the param pattern to the [Remix convention](https://remix.run/docs/en/v1/guides/routing#dynamic-segments) (`$param`):
+
+
+</td>
+<td width="600px"><br>
 
 ```js
 // ...
@@ -175,7 +215,22 @@ export default {
 }
 ```
 
+</td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+<br>
+  
 You can also change the glob pattern used to determine where to route modules from. Since this setting is passed to [Vite's glob importers](https://vitejs.dev/guide/features.html#glob-import), the value needs to be a string:
+
+
+</td>
+<td width="600px"><br>
 
 ```js
 // ...
@@ -186,6 +241,10 @@ export default {
   ],
 }
 ```
+
+</td>
+</tr>
+</table>
 
 Finally, you also can export a `path` constant from your route modules, in which case its value will be used to **override the dynamically inferred paths from the directory structure**.
 
