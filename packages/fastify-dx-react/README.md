@@ -10,16 +10,13 @@
 
 Ensure you have Node v16+.
 
-Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
-
-Run `npm install`. If you have [`degit`](https://github.com/Rich-Harris/degit):
+Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react). If you have [`degit`](https://github.com/Rich-Harris/degit), run the following from a new directory:
 
 ```bash
-mkdir <your-project-dir>
-cd <your-project-dir>
 degit fastify/fastify-dx/starters/react
-npm install
 ```
+
+Run `npm install`. 
 
 `npm run dev` boots the development server.
   
