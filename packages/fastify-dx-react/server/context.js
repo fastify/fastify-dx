@@ -1,5 +1,3 @@
-import { proxy } from 'valtio'
-
 const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 const overrideProtected = [
@@ -23,6 +21,7 @@ export default class RouteContext {
     }
     return routeContext
   }
+
   constructor (server, req, reply, route, context) {
     this.server = server
     this.req = req

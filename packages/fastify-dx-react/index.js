@@ -29,8 +29,8 @@ export default {
   createRoute,
 }
 
-export async function prepareClient ({ 
-  routes: routesPromise, 
+export async function prepareClient ({
+  routes: routesPromise,
   context: contextPromise,
   ...others
 }) {
@@ -55,7 +55,6 @@ export function createHtmlFunction (source, scope, config) {
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
   return function ({ routes, context, body }) {
-    console.log('context', context)
     // Initialize hydration, which can stay empty if context.serverOnly is true
     let hydration = ''
     // Decide which templating functions to use, with and without hydration
@@ -116,30 +115,35 @@ export function createRouteHandler (client, scope, config) {
 }
 
 export function createRoute ({ client, handler, errorHandler, route }, scope, config) {
+  const onRequest = async function onRequest (req, reply) {
+    req.route = await RouteContext.create(
+      scope,
+      req,
+      reply,
+      route,
+      client.context,
+    )
+  }
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
-    scope.get(`/-/data${route.path}`, async (req, reply) => {
-      reply.send(await route.getData())
+    scope.get(`/-/data${route.path}`, {
+      onRequest,
+      async handler (req, reply) {
+        reply.send(await route.getData(req.route))
+      },
     })
   }
+
   // See https://github.com/fastify/fastify-dx/blob/main/URMA.md
   const hasURMAHooks = Boolean(
-    route.getData || route.getMeta || route.onEnter,
+    route.getData || route.getMeta || route.onEnter
   )
-  console.log('client', client)
-  console.log('client.context', client.context)
+
+  // Extend with route context initialization module
   RouteContext.extend(client.context)
 
   scope.get(route.path, {
-    async onRequest (req, reply) {
-      req.route = await RouteContext.create(
-        scope, 
-        req, 
-        reply, 
-        route,
-        client.context
-      )
-    },
+    onRequest,
     // If either getData or onEnter are provided,
     // make sure they run before the SSR route handler
     ...hasURMAHooks && {

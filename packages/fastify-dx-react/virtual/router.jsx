@@ -24,7 +24,7 @@ export function EnhancedRouter ({
   head,
   routes,
   routeMap,
-  ctxHydration
+  ctxHydration,
 }) {
   return (
     <HeadContext.Provider value={head}>
@@ -51,7 +51,7 @@ export function RouteContextProvider ({ head, ctxHydration, ctx, children }) {
     console.log('ctxHydration.state', ctxHydration.state)
     return (
       <RouteContext.Provider value={{
-        ...ctx, 
+        ...ctx,
         ...ctxHydration,
         state: proxy(ctxHydration.state),
       }}>
@@ -119,7 +119,7 @@ export function RouteContextProvider ({ head, ctxHydration, ctx, children }) {
   return (
     <RouteContext.Provider value={{
       ...ctx,
-      state: proxy(ctxHydration.state)
+      state: proxy(ctxHydration.state),
     }}>
       {children}
     </RouteContext.Provider>
