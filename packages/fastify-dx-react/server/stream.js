@@ -12,7 +12,6 @@ export async function * generateHtmlStream ({ head, body, footer }) {
   yield head
   if (body) {
     for await (const chunk of await body) {
-      console.log('chunk', chunk.toString('utf-8'))
       yield chunk
     }
   }

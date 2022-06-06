@@ -491,7 +491,7 @@ export const $fetch = ky.extend({
   prefixUrl: 'http://localhost:3000'
 })
 
-export async function addTodoListItem (item) {
+export async function addTodoListItem (state, item) {
   await $fetch.put('api/todo/items', {
     body: { item },
   })

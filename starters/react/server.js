@@ -12,6 +12,16 @@ server.decorate('db', {
   ]
 })
 
+server.put('/api/todo/items', (req, reply) => {
+  server.db.todoList.push(req.body.item)
+  reply.send({ ok: true })
+})
+
+server.delete('/api/todo/items', (req, reply) => {
+  server.db.todoList.splice(req.body.index, 1)
+  reply.send({ ok: true })
+})
+
 await server.register(FastifyVite, { 
   root: import.meta.url, 
   renderer: FastifyDXReact,

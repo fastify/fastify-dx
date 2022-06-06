@@ -48,7 +48,6 @@ export function RouteContextProvider ({ head, ctxHydration, ctx, children }) {
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
   if (isServer) {
-    console.log('ctxHydration.state', ctxHydration.state)
     return (
       <RouteContext.Provider value={{
         ...ctx,
@@ -118,6 +117,7 @@ export function RouteContextProvider ({ head, ctxHydration, ctx, children }) {
 
   return (
     <RouteContext.Provider value={{
+      ...ctxHydration,
       ...ctx,
       state: proxy(ctxHydration.state),
     }}>

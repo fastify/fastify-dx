@@ -32,6 +32,7 @@ async function mount (target) {
 }
 
 async function extendContext (ctx, { default: setter, ...extra }) {
+  console.log('extra', extra)
   Object.assign(ctx, extra)
   if (setter) {
     await setter(ctx)
