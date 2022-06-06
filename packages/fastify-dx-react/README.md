@@ -491,16 +491,11 @@ export const $fetch = ky.extend({
   prefixUrl: 'http://localhost:3000'
 })
 
-export const actions = {
-  // Gets automatically registered as
-  // actions.addTodoList(item), which can 
-  // be retrieved from the useRouteContext() hook
-  addTodoListItem ({ state, $fetch }, item) {
-    await $fetch.put('api/todo/items', {
-      body: { item },
-    })
-    state.todoList.push(item)
-  }
+export async function addTodoListItem (item) {
+  await $fetch.put('api/todo/items', {
+    body: { item },
+  })
+  state.todoList.push(item)
 }
 ```
 
@@ -522,14 +517,12 @@ export const actions = {
 ```jsx
 import { useRouteContext } from '/dx:context'
   
-export function 
 export function Index () {
   const { data } = useRouteContext()
   return <p>{data.message}</p>
 }
 ```
 
-This example is part of the starter boilerplate.
 
 </td>
 </tr>
@@ -546,15 +539,12 @@ This example is part of the starter boilerplate.
 <td width="600px"><br>
 
 ```
-├─ ...()
-│  ├─ ...()
-│  ├─ ...()
-│  ├─ ...()
-│  └─ ...()
-└─ ...()
+├─ Route context initialization module
+│  ├─ getData()
+│  ├─ getMeta()
+│  └─ onEnter()
+└─ YourRoute()
 ```
-
-This example is part of the starter boilerplate.
 
 </td>
 </tr>
