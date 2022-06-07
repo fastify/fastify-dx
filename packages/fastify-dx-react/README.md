@@ -199,7 +199,9 @@ By default, routes are loaded from the `<project-root>/pages` folder, where `<pr
 
 <table>
 <tr>
-<td width="400px" valign="top">
+<td width="400px" valign="top"><br>
+
+### Dynamic parameters
 
 Dynamic route parameters follow the [Next.js convention](https://nextjs.org/docs/basic-features/pages#pages-with-dynamic-routes) (`[param]`), but that can be overriden by using the `paramPattern` plugin option. For example, the following configuration switches the param pattern to the [Remix convention](https://remix.run/docs/en/v1/guides/routing#dynamic-segments) (`$param`):
 
@@ -218,13 +220,13 @@ const plugins = [
 </tr>
 </table>
 
-
 <table>
 <tr>
-<td width="400px" valign="top">
+<td width="400px" valign="top"><br>
+
+### Routes location
 
 You can also change the glob pattern used to determine where to route modules from. Since this setting is passed to [Vite's glob importers](https://vitejs.dev/guide/features.html#glob-import), the value needs to be a string:
-
 
 </td>
 <td width="600px"><br>
@@ -237,13 +239,21 @@ const plugins = [
 ]
 ```
 
+Then your route components:
+
+```jsx
+export const path = '/my-page'
+
+export defaut function MyPage () {
+  return <p>Route with path export</p>
+}
+```
+
 </td>
 </tr>
 </table>
 
-You also can export a `path` constant from your route modules, in which case its value will be used to **override the dynamically inferred paths from the directory structure**.
-
-Finally, you can also provide your own routes. See the section on the `routes.js` virtual module provided by Fastify DX to see how to do this.
+You also can export a `path` constant from your route modules, in which case its value will be used to **override the dynamically inferred paths from the directory structure**. Additionally, **you can provide your own routes**. See the section on the `routes.js` virtual module provided by Fastify DX to see how to do this.
 
 ## Rendering mode
 
