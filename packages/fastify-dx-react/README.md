@@ -52,7 +52,7 @@ It also includes some _**opinionated**_ essentials:
 
 <br>
   
-If you're starting a project from scratch, you'll need these packages installed.
+**If you're starting a project from scratch**, you'll need these packages installed.
 
 </td>
 <td width="600px" valign="top"><br>
@@ -102,9 +102,9 @@ Several internal files are provided as virtual modules by Fastify DX. They are l
 
 The `server.js` file is your application entry point. It's the file that runs everything. It boots a Fastify server configured with [**fastify-vite**](https://github.com/fastify/fastify-vite) and **Fastify DX for React** as a renderer adapter to **fastify-vite**. 
   
-The `client/context.js` file is the universal [route context](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/README.md#route-context) initialization module. Any named exports from this file are attached to the RouteContext class prototype on the server, preventing them from being reassigned on every request. The `default` export from this file, however, runs for every request so you can attach any request-specific data to it.
+The `client/context.js` file is the universal [route context](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/README.md#route-context) initialization module. Any named exports from this file are attached to the `RouteContext` class prototype on the server, preventing them from being reassigned on every request. The `default` export from this file, however, runs for every request so you can attach any request-specific data to it.
   
-The `client/index.html` file is the root HTML template of the application, which Vite uses as the client bundling entry point. 
+The `client/index.html` file is the [root HTML template of the application](https://vitejs.dev/guide/#index-html-and-project-root), which Vite uses as the client bundling entry point. 
 
 > You can expand this file with additional `<meta>` and `<link>` tags if you wish, provided you don't remove any of the placeholders. 
 
@@ -116,7 +116,7 @@ The `client/index.js` file is your Vite server entry point, it's the file that p
 
 > Right now, it's mostly a **boilerplate file** because it must exist but it will also probably never need to be changed.
 
-It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/README.md#initialization-module) (must be named `context` and have a dynamic module import so Fastify DX can pick up both its `default` and named exports.
+It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/README.md#initialization-module) (must be named `context` and have a dynamic module import so Fastify DX can pick up `default` and named exports).
   
 </td>
 </tr>
@@ -128,7 +128,7 @@ It exports your application's root React component (must be named `create`), the
 <tr>
 <td width="400px" valign="top">
 
-### Basic server setup
+### Basic setup
 
 The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react) follows [fastify-vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. 
 
@@ -154,40 +154,27 @@ await server.register(FastifyVite, {
 await server.vite.ready()
 await server.listen(3000)
 ```
-  
-</td>
-</tr>
-</table>
-  
-<table>
-<tr>
-<td width="400px" valign="top">
 
-<br>
-  
-### Vite configuration
-
-</td>
-<td width="600px"><br>
-
-The starter template's `vite.config.js` file:
+The starter template's [`vite.config.js`](https://github.com/fastify/fastify-dx/blob/dev/starters/react/vite.config.js) file:
 
 ```js
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
-
 import viteReact from '@vitejs/plugin-react'
 import viteReactFastifyDX from 'fastify-dx-react/plugin'
+import unocss from 'unocss/vite'
 
 const path = fileURLToPath(import.meta.url)
 
 const root = join(dirname(path), 'client')
-const plugins = [viteReact(), viteReactFastifyDX()]
+const plugins = [
+  viteReact(), 
+  viteReactFastifyDX(), 
+  unocss()
+]
 
 export default { root, plugins }
 ```
 
-Note that you only need to use Fastify DX's Vite plugin, which includes all functionality from the [fastify-vite's Vite plugin]().
+Note that you only need to use Fastify DX's Vite plugin, which includes all functionality from [fastify-vite](https://github.com/fastify/fastify-vite)'s Vite plugin.
 
 </td>
 </tr>
@@ -311,7 +298,7 @@ If a route module exports `serverOnly` set to `true`, only SSR will take place. 
 
 You should use this setting to deliver lighter pages when there's no need to run any code on them, such as statically generated content sites.
 
-This differs from [React Server Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but whose server-only rendering is more granular (available for any route child component) and fully controlled by the React runtime.
+This differs from [React Server Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but whose server-only rendering is more granular (available for any route child component) and fully controlled by React.
 
 </td>
 <td width="600px"><br>
@@ -340,7 +327,7 @@ If a route module exports `clientOnly` set to `true`, no SSR will take place, on
 
 You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
 
-This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but clientserver-only rendering is more granular (available for any route child component) and fully controlled by the React runtime.
+This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but clientserver-only rendering is more granular (available for any route child component) and fully controlled by React.
 
 </td>
 <td width="600px"><br>
