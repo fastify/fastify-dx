@@ -104,7 +104,11 @@ The `server.js` file is your application entry point. It's the file that runs ev
   
 The `client/context.js` file is the universal [route context]() initialization module. Any named exports from this file are attached to the RouteContext class prototype on the server, preventing them from being reassigned on every request. The `default` export from this file, however, runs for every request so you can attach any request-specific data to it.
   
-The `client/index.html` file is the root HTML template of the application, which Vite uses as the client bundling entry point. You can expand this file with additional `<meta>` and `<link>` tags if you wish, provided you don't remove any of the placeholders. This files links to `/dx:mount.js`, which is a virtual module provided by Fastify DX. Virtual modules are covered [later in this README]().
+The `client/index.html` file is the root HTML template of the application, which Vite uses as the client bundling entry point. 
+
+> You can expand this file with additional `<meta>` and `<link>` tags if you wish, provided you don't remove any of the placeholders. 
+
+This files links to `/dx:mount.js`, which is a virtual module provided by Fastify DX. Virtual modules are covered [later in this README]().
   
 The `client/pages/` directory contains your route modules, whose paths are dynamically inferred from the directory structure itself. You can change this behavior easily. More on this [later in this README]().
 
@@ -590,13 +594,6 @@ What you see above is its [full definition](https://github.com/fastify/fastify-d
 </td>
 <td width="600px"><br>
 
-```js
-import create from '/dx:base.jsx'
-import routes from '/dx:routes'
-
-mount('main', { create, routes })
-```
-
 [See the full file](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/mount.js) for the `mount()` function definition.
 
 </td>
@@ -607,7 +604,7 @@ mount('main', { create, routes })
 <tr>
 <td width="400px" valign="top">
 
-### `/dx:routes`
+### `/dx:routes.js`
 
 Fastify DX has code-splitting out of the box. It does that by eagerly loading all route data on the server, and then hydrating any missing metadata on the client. That's why the routes module default export is conditioned to `import.meta.env.SSR`, and different helper functions are called for each rendering environment.
 
