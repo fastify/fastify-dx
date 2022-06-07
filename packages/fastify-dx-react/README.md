@@ -112,7 +112,6 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/r
 ｜          ├── client-only.jsx
 ｜          ├── server-only.jsx
 ｜          ├── streaming.jsx
-｜          ├── input-form.jsx
 ｜          ├── using-data.jsx
 ｜          └── using-store.jsx
 ├── vite.config.js
