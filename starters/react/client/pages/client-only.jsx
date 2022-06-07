@@ -12,7 +12,9 @@ export default function ClientOnly () {
 	return (
 		<>
 			<p>This route is rendered on the client only!</p>
-			<p><Link to="/">Go back to the index</Link></p>
+      <p>
+        <Link to="/">Go back to the index</Link>
+      </p>
 		</>
 	)
 }

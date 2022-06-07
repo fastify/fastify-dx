@@ -11,8 +11,6 @@ export default function Index () {
     <>
       <img src="/assets/logo.svg" />
       <h1>Welcome to Fastify DX for React!</h1>
-      <p>All route examples are the same simple to-do list app, implemented in 
-      different ways.</p>
       <ul className="columns-2">
         <li><Link to="/using-data">/using-data</Link> demonstrates how to 
         leverage the <code>getData()</code> function 

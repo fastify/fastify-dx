@@ -25,8 +25,11 @@ export default function Index (props) {
         <button onClick={() => addItem(input.value)}>Add</button>
       </div>
       <p>
-        <Link to="/client-only">Go to another page</Link>
+        <Link to="/">Go back to the index</Link>
       </p>
+      <p>⁂</p>
+      <p>When you navigate away from this route, any additions to the to-do 
+      list are not lost, because they're bound to the global application state.</p>
     </>
   )
 }
