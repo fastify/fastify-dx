@@ -583,7 +583,7 @@ Then `getData()` runs — which populates the route context's `data` property, a
 
 **Fastify DX** relies on [virtual modules](https://github.com/rollup/plugins/tree/master/packages/virtual) to save your project from having too many boilerplate files. Virtual modules are a [Rollup](https://rollupjs.org/guide/en/) feature exposed and fully supported by [Vite](https://vitejs.dev/). When you see imports that start with `/dx:`, you know a Fastify DX virtual module is being used.
 
-Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:base.jsx` virtual module to provide the React Router shell of your application. If you copy the `base.jsx` file [from the fastify-dx-react package]() and place it your Vite project root, **that copy of the file is used instead**.
+Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:base.jsx` virtual module to provide the React Router shell of your application. If you copy the `base.jsx` file [from the fastify-dx-react package](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/base.jsx) and place it your Vite project root, **that copy of the file is used instead**.
 
 The starter template comes with two virtual modules already ejected and part of the local project — `context.js` and `layout.jsx`, because they **are supposed to be user-provided** anyway. If you absolutely don't need to customize them, you can safely removed them from your copy of the starter template.
 
