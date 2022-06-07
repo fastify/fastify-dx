@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "name": "fastify-dx-react",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1",
   "files": [
     "virtual/base.jsx",
     "virtual/context.js",
