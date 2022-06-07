@@ -558,11 +558,7 @@ export function Index () {
 
 ### Execution order
 
-This graph illustrates the execution order to expect from route context initialization and route module hooks. 
-
-First the `default` function export from `context.js` (if present) is executed. This is where you can manually feed global server data into your application by populating the global Valtio state (the route context's `state` property, which is automatically hydrated on the client.
-
-Then `getData()` runs — which populates the route context's `data` property, and is also automatically hydrated on the client. Then `getMeta()`, which populates the route context's `head` property. Then `onEnter()`, and finally your route component.
+This graph illustrates the execution order to expect from route context initialization.
 
 </td>
 <td width="600px"><br>
@@ -574,6 +570,10 @@ Then `getData()` runs — which populates the route context's `data` property, a
             └─ onEnter() function export
                 └─ Route module
 ```
+
+First the `default` function export from `context.js` (if present) is executed. This is where you can manually feed global server data into your application by populating the global Valtio state (the route context's `state` property, which is automatically hydrated on the client.
+
+Then `getData()` runs — which populates the route context's `data` property, and is also automatically hydrated on the client. Then `getMeta()`, which populates the route context's `head` property. Then `onEnter()`, and finally your route component.
 
 </td>
 </tr>
