@@ -538,7 +538,7 @@ export async function addTodoListItem (state, item) {
 }
 ```
 
-[This example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/context.js) is part of the [starter boilerplate](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
+See the [full example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/context.js) in the starter template.
 
 </td>
 </tr>
