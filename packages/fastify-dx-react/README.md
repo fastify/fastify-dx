@@ -581,33 +581,38 @@ Then `getData()` runs — which populates the route context's `data` property, a
 
 ## Virtual Modules
 
+**Fastify DX** relies on [virtual modules](https://github.com/rollup/plugins/tree/master/packages/virtual) to save your project from having too many boilerplate files. Virtual modules are a [Rollup](https://rollupjs.org/guide/en/) feature exposed and fully supported by [Vite](https://vitejs.dev/). When you see imports that start with `/dx:`, you know a Fastify DX virtual module is being used.
+
+Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:base.jsx` virtual module to provide the React Router shell of your application. If you copy the `base.jsx` file [from the fastify-dx-react package]() and place it your Vite project root, **that copy of the file is used instead**.
+
+The starter template comes with two virtual modules already ejected and part of the local project — `context.js` and `layout.jsx`, because they **are supposed to be user-provided** anyway. If you absolutely don't need to customize them, you can safely removed them from your copy of the starter template.
+
 <table>
 <tr>
 <td width="400px" valign="top">
 
-### `/dx:base.jsx`
+### `/dx:layout.jsx`
 
-The `base.jx` virtual import holds your root React component.
+This is the root layout React component. It's used internally by `/dx:base.jsx` and provided as part of the starter template. You can use this file to add a common layout to all routes, or just use it to add additional, custom context providers.
 
 </td>
 <td width="600px"><br>
 
-```jsx
-import React, { Suspense } from 'react'
-import { BaseRouter, EnhancedRouter } from '/dx:router.jsx'
+The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
 
-export default function Base ({ url, ...routerSettings }) {
+```jsx
+import 'virtual:uno.css'
+import { Suspense } from 'react'
+
+export default function Layout ({ children }) {
   return (
-    <BaseRouter location={url}>
-      <Suspense>
-        <EnhancedRouter {...routerSettings} />
-      </Suspense>
-    </BaseRouter>
+    <Suspense>
+      {children}
+    </Suspense>
   )
 }
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/base.jsx).
 
 </td>
 </tr>
@@ -619,7 +624,7 @@ What you see above is its [full definition](https://github.com/fastify/fastify-d
 
 ### `/dx:routes.js`
 
-Fastify DX has code-splitting out of the box. It does that by eagerly loading all route data on the server, and then hydrating any missing metadata on the client. That's why the routes module default export is conditioned to `import.meta.env.SSR`, and different helper functions are called for each rendering environment.
+Fastify DX has **code-splitting** out of the box. It does that by eagerly loading all route data on the server, and then hydrating any missing metadata on the client. That's why the routes module default export is conditioned to `import.meta.env.SSR`, and different helper functions are called for each rendering environment.
 
 </td>
 <td width="600px"><br>
@@ -670,6 +675,40 @@ See its full definition [here](https://github.com/fastify/fastify-dx/blob/dev/pa
 </tr>
 </table>
 
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `/dx:base.jsx`
+
+The `base.jx` virtual import holds your root React component. This is where the [React Router](https://reactrouter.com/docs/en/v6) root component for your application is also set.
+
+</td>
+<td width="600px"><br>
+
+<b>You'll rarely need to customize this file.</b>
+
+```jsx
+import React, { Suspense } from 'react'
+import { BaseRouter, EnhancedRouter } from '/dx:router.jsx'
+
+export default function Base ({ url, ...routerSettings }) {
+  return (
+    <BaseRouter location={url}>
+      <Suspense>
+        <EnhancedRouter {...routerSettings} />
+      </Suspense>
+    </BaseRouter>
+  )
+}
+```
+
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/base.jsx).
+
+</td>
+</tr>
+</table>
 
 <table>
 <tr>
