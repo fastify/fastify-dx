@@ -1,5 +1,19 @@
 # fastify-dx-react [![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
+**Fastify DX for React** is a renderer adapter for [**fastify-vite**](https://github.com/fastify/fastify-vite).
+
+It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
+
+It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify) and [Vite](https://vitejs.dev/).
+
+[**See the release notes for the 0.0.1 alpha release**]().
+
+> **Contributors welcome!** At this stage this project is mostly a [one-man](https://github.com/sponsors/galvez) show, who's devoting all his free time to its completion. Contributions are extremely welcome, as well as bug reports for any issues you may find. 
+
+In this first alpha release it's still missing a test suite. The same is true for [**fastify-vite**](). 
+
+It'll move into **beta** status when test suites are added to both packages.
+
 ## Quick Start
 
 <table>
