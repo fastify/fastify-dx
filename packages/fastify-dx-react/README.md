@@ -491,9 +491,13 @@ import {
 } from '/dx:router.jsx'
 
 // ...
-const { state, actions } = useRouteContext()
+const { 
+  state, 
+  actions
+} = useRouteContext()
+
 // ...
-await actions.addTodoListItem(state, value)
+actions.addTodoItem(state, value)
 ```
 
 See the [full example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/using-store.jsx) in the starter template.
@@ -521,7 +525,7 @@ export const $fetch = ky.extend({
   prefixUrl: 'http://localhost:3000'
 })
 
-export async function addTodoListItem (state, item) {
+export async function addTodoItem (state, item) {
   await $fetch.put('api/todo/items', {
     body: { item },
   })

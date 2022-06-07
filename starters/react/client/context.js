@@ -11,13 +11,13 @@ export const $fetch = ky.extend({
 })
 
 export const actions = {
-  async addTodoListItem (state, item) {
+  async addTodoItem (state, item) {
     await $fetch.put('api/todo/items', {
       json: { item },
     })
     state.todoList.push(item)
   },
-  async removeTodoListItem (state, index) {
+  async removeTodoItem (state, index) {
     await $fetch.delete('api/todo/items', {
       json: { index },
     })

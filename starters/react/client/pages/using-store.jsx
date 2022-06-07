@@ -10,7 +10,7 @@ export default function Index (props) {
   const {snapshot, state, actions} = useRouteContext()
   const [input, setInput] = useState(null)
   const addItem = async (value) => {
-    await actions.addTodoListItem(state, value)
+    await actions.addTodoItem(state, value)
     input.value = ''
   }
   return (
