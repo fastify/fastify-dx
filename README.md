@@ -16,7 +16,7 @@ In this early stage, we're working to define a [**Universal Route Module API**](
 </td>
 <td><br>
 
-You can already try out the **alpha release** of Fastify DX for React.
+You can already try out the [**alpha release** of Fastify DX for React](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md).
 
 <a href="https://github.com/fastify/fastify-dx/tree/main/packages/fastify-dx-react"><img width="1081" alt="Screen Shot 2022-06-07 at 02 14 16" src="https://user-images.githubusercontent.com/12291/172301052-2c6dc772-24bb-4f0a-bc2e-b2ce14ab6c52.png"></a>
 
