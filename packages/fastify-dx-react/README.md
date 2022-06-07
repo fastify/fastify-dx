@@ -4,7 +4,7 @@
 
 It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
 
-It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/), [React Router]() and [Valtio]().
+It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/), [React Router](https://reactrouter.com/docs/en/v6) and [Valtio](https://github.com/pmndrs/valtio).
 
 [**See the release notes for the 0.0.1 alpha release**]().
 
