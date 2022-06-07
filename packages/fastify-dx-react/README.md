@@ -788,3 +788,11 @@ See its full definition [here](https://github.com/fastify/fastify-dx/blob/dev/pa
 </td>
 </tr>
 </table>
+
+## Meta
+
+Created by [Jonas Galvez](https://github.com/sponsors/galvez), **Engineering Manager** and **Open Sourcerer** at [NearForm](https://nearform.com).
+
+## Sponsors
+
+<a href="https://nearform.com"><img width="200px" src="https://user-images.githubusercontent.com/12291/172310344-594669fd-da4c-466b-a250-a898569dfea3.svg"></a>
