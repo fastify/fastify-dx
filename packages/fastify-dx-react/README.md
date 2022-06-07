@@ -44,7 +44,7 @@ It also includes some _**opinionated**_ essentials:
 </tr>
 </table>
   
-## Install
+## Manual Install
   
 <table>
 <tr>
@@ -67,7 +67,7 @@ npm i @vitejs/plugin-react -D
 </table>
 
 
-## Structure
+## Project Structure
 
 <table>
 <tr>
@@ -228,7 +228,22 @@ const plugins = [
 ]
 ```
 
-Then your route components:
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### View modules
+
+You also can export a `path` constant from your route modules, in which case its value will be used to **override the dynamically inferred paths from the directory structure**. 
+
+Additionally, [**you can provide your own routes**](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-react#dxroutesjs).
+
+</td>
+<td width="600px"><br>
 
 ```jsx
 export const path = '/my-page'
@@ -242,11 +257,9 @@ export defaut function MyPage () {
 </tr>
 </table>
 
-You also can export a `path` constant from your route modules, in which case its value will be used to **override the dynamically inferred paths from the directory structure**. Additionally, **you can provide your own routes**. See the section on the `routes.js` virtual module provided by Fastify DX to see how to do this.
-
 ## Rendering mode
 
-Following the URMA specification, Fastify DX's route module can be set to be universally rendered (default behavior), server-side rendered in streaming mode, server-side rendered only (client gets no JavaScript) or client rendered only (no rendering takes place on the server).
+Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX's route modules can be set for universal rendering (SSR + CSR hydration, the default behavior), SSR in streaming mode, SSR only (client gets no JavaScript) or CSR only (SSR fully disabled).
 
 <table>
 <tr>
@@ -282,7 +295,7 @@ function Message () {
 }
 ```
 
-[See the full example]() in the [starter boilerplate]().
+[See the full example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/streaming.jsx) in the [starter boilerplate](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
 </td>
 </tr>
@@ -311,7 +324,7 @@ export function Index () {
 }
 ```
 
-[This example]() is part of the [starter boilerplate]().
+[This example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/server-only.jsx) is part of the [starter boilerplate](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
 </td>
 </tr>
@@ -327,7 +340,7 @@ If a route module exports `clientOnly` set to `true`, no SSR will take place, on
 
 You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
 
-This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but clientserver-only rendering is more granular (available for any route child component) and fully controlled by React.
+This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but rendering is more granular (available for any route child component) and fully controlled by React.
 
 </td>
 <td width="600px"><br>
@@ -340,16 +353,16 @@ export function Index () {
 }
 ```
 
-[This example]() is part of the [starter boilerplate]().
+[This example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/client-only.jsx) is part of the [starter boilerplate](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
 </td>
 </tr>
 </table>
 
 
-## HTML meta tag management
+## Meta Tags
 
-Following the [URMA specification](), Fastify DX renders `<head>` elements independently from the SSR phase. This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then perform SSR.
+Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX renders `<head>` elements independently from the SSR phase. This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then perform SSR.
 
 <table>
 <tr>
@@ -385,7 +398,7 @@ export function Index () {
 
 ## Isomorphic data prefetching
 
-The only way for the React runtime to execute asynchronous operations prior the rendering of a component is through the Suspense API. Fastify DX implements the `getData()` hook from the URMA specification to solve this problem.
+The only way for the React runtime to execute asynchronous operations prior the rendering of a component is through the Suspense API. Fastify DX implements the `getData()` hook from the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md) to solve this problem.
 
 <table>
 <tr>
