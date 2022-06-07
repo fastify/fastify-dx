@@ -301,7 +301,7 @@ function Message () {
 }
 ```
 
-[See the full example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/streaming.jsx) in the [starter boilerplate](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
+[See the full example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/streaming.jsx) in the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
 </td>
 </tr>
@@ -330,7 +330,7 @@ export function Index () {
 }
 ```
 
-[This example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/server-only.jsx) is part of the [starter boilerplate](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
+[This example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/server-only.jsx) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
 </td>
 </tr>
@@ -359,7 +359,7 @@ export function Index () {
 }
 ```
 
-[This example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/client-only.jsx) is part of the [starter boilerplate](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
+[This example](https://github.com/fastify/fastify-dx/blob/dev/starters/react/client/pages/client-only.jsx) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
 
 </td>
 </tr>
@@ -440,7 +440,7 @@ export function Index () {
 </tr>
 </table>
 
-## Universal route enter handler
+## Universal route enter event
 
 <table>
 <tr>
