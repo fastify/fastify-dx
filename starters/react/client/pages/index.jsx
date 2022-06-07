@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom'
 
+export function getMeta () {
+  return {
+    title: 'Welcome to Fastify DX!'
+  }
+}
+
 export default function Index () {
   return (
     <>
