@@ -4,7 +4,7 @@
 
 It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
 
-It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/), [React Router]() and [Valtio]().
+It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/), [React Router](https://reactrouter.com/docs/en/v6) and [Valtio](https://github.com/pmndrs/valtio).
 
 [**See the release notes for the 0.0.1 alpha release**]().
 
@@ -788,3 +788,11 @@ See its full definition [here](https://github.com/fastify/fastify-dx/blob/dev/pa
 </td>
 </tr>
 </table>
+
+## Meta
+
+Created by [Jonas Galvez](https://github.com/sponsors/galvez), **Engineering Manager** and **Open Sourcerer** at [NearForm](https://nearform.com).
+
+## Sponsors
+
+<a href="https://nearform.com"><img width="200px" src="https://user-images.githubusercontent.com/12291/172310344-594669fd-da4c-466b-a250-a898569dfea3.svg"></a>
