@@ -22,6 +22,7 @@ export default function Index (props) {
   }
   return (
     <>
+      <h2>Todo List — Using Data</h2>
       <ul>{
         todoList.map((item, i) => {
           return <li key={`item-${i}`}>{item}</li>

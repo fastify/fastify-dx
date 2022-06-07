@@ -4,7 +4,7 @@
 
 It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
 
-It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify) and [Vite](https://vitejs.dev/).
+It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/), [React Router]() and [Valtio]().
 
 [**See the release notes for the 0.0.1 alpha release**]().
 
@@ -49,6 +49,8 @@ That will get you a **starter template** with:
 - All configuration files.
 
 It also includes some _**opinionated**_ essentials:
+
+- [**PostCSS Preset Env**](https://www.npmjs.com/package/postcss-preset-env) by [**Jonathan Neal**](), which enables several modern CSS features, such as [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/).
 
 - [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 200x faster than Tailwind.
 
