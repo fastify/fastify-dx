@@ -1,5 +1,6 @@
 :root {
-  --base-color: #f1f1f1;
+  --color-base: #f1f1f1;
+  --color-highlight: #ff80ff;
 }
 html {
   background: #222;
@@ -14,10 +15,13 @@ main {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--base-color);
+  color: var(--color-base);
   margin-top: 60px;
   & a {
-    color: var(--base-color);
+    color: var(--color-highlight);
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid var(--color-highlight);
     &:hover {
       color: #ffde00;
     }
@@ -25,8 +29,24 @@ main {
       color: #eecf00
     }
   }
-  & p, & li {
+  & p {
     font-size: 1.2em;
+  }
+  & ul {
+    columns: 2;
+    & li {
+      &:not(:last-child) { 
+        margin-bottom: 0.5em;
+      }
+      break-inside: avoid;
+      font-size: 1em;
+    }
+  }
+  & code {
+    color: #ffde00;
+    font-weight: bold;
+    font-family: 'Consolas', 'Andale Mono', monospace;
+    font-size: 0.9em;
   }
   & img {
     width: 14em;
