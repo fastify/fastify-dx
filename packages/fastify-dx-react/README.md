@@ -31,6 +31,8 @@ degit fastify/fastify-dx/starters/react
 ```
 
 Run `npm install`. 
+  
+Run `npm run dev`. 
 
 Visit `http://localhost:3000/`.
 
