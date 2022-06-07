@@ -529,7 +529,7 @@ export default (ctx) => {
   // client, exactly once per HTTP request
   ctx.message = 'Universal hello'
   if (ctx.server) {
-    // Place same server data on the
+    // Place some server data on the
     // application's global state
     ctx.state = ctx.server.db
     // It is automatically hydrated on the client
