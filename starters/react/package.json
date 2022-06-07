@@ -12,7 +12,7 @@
   "dependencies": {
     "fastify": "^3.29.0",
     "fastify-vite": "^3.0.0-beta.23",
-    "fastify-dx-react": "^0.0.1-alpha.0",
+    "fastify-dx-react": "^0.0.1",
     "ky-universal": "^0.10.1"
   },
   "devDependencies": {
@@ -34,7 +34,8 @@
       "fastify-dx-react": "^0.0.1-alpha.0"
     },
     "external": {
-      "fastify-vite": "^3.0.0-beta.23"
+      "fastify-vite": "^3.0.0-beta.23",
+      "ky-universal": "^0.10.1"
     }
   }
 }
