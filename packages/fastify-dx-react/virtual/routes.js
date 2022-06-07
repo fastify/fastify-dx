@@ -24,29 +24,49 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
   }
   const importPaths = Object.keys(from)
   const promises = []
-  // Ensure that static routes have precedence over the dynamic ones
-  for (const path of importPaths.sort((a, b) => a > b ? -1 : 1)) {
-    promises.push(
-      getRouteModule(path, from[path])
-        .then((routeModule) => {
-          return {
-            id: path,
-            path: routeModule.path ?? path
-              // Remove /pages and .jsx extension
-              .slice(6, -4)
-              // Replace [id] with :id
-              .replace(param, (_, m) => `:${m}`)
-              // Replace '/index' with '/'
-              .replace(/\/index$/, '/'),
-            ...routeModule,
-          }
-        }),
-    )
+  if (Array.isArray(from)) {
+    for (const routeDef of from) {
+      promises.push(
+        getRouteModule(routeDef.path, routeDef.component)
+          .then((routeModule) => {
+            return {
+              id: routeDef.path,
+              path: routeModule.path,
+              ...routeModule,
+            }
+          })
+      )
+    }
+  } else {
+    // Ensure that static routes have precedence over the dynamic ones
+    for (const path of importPaths.sort((a, b) => a > b ? -1 : 1)) {
+      promises.push(
+        getRouteModule(path, from[path])
+          .then((routeModule) => {
+            return {
+              id: path,
+              path: routeModule.path ?? path
+                // Remove /pages and .jsx extension
+                .slice(6, -4)
+                // Replace [id] with :id
+                .replace(param, (_, m) => `:${m}`)
+                // Replace '/index' with '/'
+                .replace(/\/index$/, '/'),
+              ...routeModule,
+            }
+          })
+      )
+    }
   }
   return new Routes(...await Promise.all(promises))
 }
 
 async function hydrateRoutes (from) {
+  if (Array.isArray(from)) {
+    from = Object.fromEntries(from.map((route) => {
+      return [route.path, route]
+    }))
+  }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
     route.component = lazy(() => route.loader())

@@ -33,7 +33,6 @@ main {
     font-size: 1.2em;
   }
   & ul {
-    columns: 2;
     & li {
       &:not(:last-child) { 
         margin-bottom: 0.5em;

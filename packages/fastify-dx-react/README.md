@@ -617,21 +617,6 @@ What you see above is its [full definition](https://github.com/fastify/fastify-d
 <tr>
 <td width="400px" valign="top">
 
-### `/dx:mount.js`
-
-</td>
-<td width="600px"><br>
-
-[See the full file](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/mount.js) for the `mount()` function definition.
-
-</td>
-</tr>
-</table>
-
-<table>
-<tr>
-<td width="400px" valign="top">
-
 ### `/dx:routes.js`
 
 Fastify DX has code-splitting out of the box. It does that by eagerly loading all route data on the server, and then hydrating any missing metadata on the client. That's why the routes module default export is conditioned to `import.meta.env.SSR`, and different helper functions are called for each rendering environment.
@@ -645,7 +630,9 @@ export default import.meta.env.SSR
   : hydrateRoutes(import.meta.glob('$globPattern'))
 ```
 
-See [the full file](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/base.jsx) for the `createRoutes()` and `hydrateRoutes()` definitions. If you want to use your own custom routes list, just replace the glob imports with your own routes list:
+See [the full file](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/base.jsx) for the `createRoutes()` and `hydrateRoutes()` definitions. 
+
+If you want to use your own custom routes list, you must eject this file as-is and replace the glob imports with your own routes list:
 
 ```js
 const routes = [
@@ -683,6 +670,26 @@ See its full definition [here](https://github.com/fastify/fastify-dx/blob/dev/pa
 </tr>
 </table>
 
+
+<table>
+<tr>
+<td width="400px" valign="top">
+
+### `/dx:mount.js`
+
+This is the file `index.html` links to by default. It sets up the application with an `unihead` instance for head management, the initial route context, and provides the conditional mounting logic to defer to CSR-only if `clientOnly` is enabled.
+
+</td>
+<td width="600px"><br>
+
+<b>You'll rarely need to customize this file.</b>
+
+[See the full file](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/mount.js) for the `mount()` function definition.
+
+</td>
+</tr>
+</table>
+
 <table>
 <tr>
 <td width="400px" valign="top">
@@ -694,7 +701,7 @@ Provides the `waitResource()` and `waitFetch()` data fetching helpers implementi
 </td>
 <td width="600px"><br>
 
-You'll rarely need to customize this file.
+<b>You'll rarely need to customize this file.</b>
 
 See its full definition [here](https://github.com/fastify/fastify-dx/blob/dev/packages/fastify-dx-react/virtual/resource.js).
 
