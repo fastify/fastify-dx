@@ -199,7 +199,7 @@ By default, routes are loaded from the `<project-root>/pages` folder, where `<pr
 
 <table>
 <tr>
-<td width="400px" valign="top"><br>
+<td width="400px" valign="top">
 
 ### Dynamic parameters
 
@@ -222,7 +222,7 @@ const plugins = [
 
 <table>
 <tr>
-<td width="400px" valign="top"><br>
+<td width="400px" valign="top">
 
 ### Routes location
 
