@@ -50,7 +50,7 @@ That will get you a **starter template** with:
 
 It also includes some _**opinionated**_ essentials:
 
-- [**PostCSS Preset Env**](https://www.npmjs.com/package/postcss-preset-env) by [**Jonathan Neal**](), which enables several modern CSS features, such as [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/).
+- [**PostCSS Preset Env**](https://www.npmjs.com/package/postcss-preset-env) by [**Jonathan Neal**](https://github.com/jonathantneal), which enables several modern CSS features, such as [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/).
 
 - [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 200x faster than Tailwind.
 
