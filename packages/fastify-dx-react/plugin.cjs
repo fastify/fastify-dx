@@ -66,7 +66,6 @@ function viteReactFastifyDX (config = {}) {
       if (command === 'build' && config.build?.ssr) {
         config.build.rollupOptions = {
           output: {
-            // file: 'foobar.js',
             format: 'es',
           },
         }
