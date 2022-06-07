@@ -1,15 +1,37 @@
+:root {
+  --base-color: #f1f1f1;
+}
 html {
-  background: #f0e5d3;
-}
-* {
-  font-size: 1.2em;
-  font-family: sans-serif;
-}
-button {
-  margin: 0 0.5em;
+  background: #222;
 }
 main {
-  display: flex;
-  place-items: center;
-  flex-direction: column;
+  width:  800px;
+  margin:  0 auto;
+  padding: 2em;
+  box-shadow: 5px 5px 30px rgba(0,0,0,0.4);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--base-color);
+  margin-top: 60px;
+  & a {
+    color: var(--base-color);
+    &:hover {
+      color: #ffde00;
+    }
+    &:active {
+      color: #eecf00
+    }
+  }
+  & p, & li {
+    font-size: 1.2em;
+  }
+  & img {
+    width: 14em;
+  }
+  & button {
+    margin: 0 0.5em;
+  }
 }

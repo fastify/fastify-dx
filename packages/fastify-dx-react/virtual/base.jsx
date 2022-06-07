@@ -1,3 +1,4 @@
+import 'virtual:uno.css'
 import React, { Suspense } from 'react'
 import { BaseRouter, EnhancedRouter } from '/dx:router.jsx'
 

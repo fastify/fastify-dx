@@ -8,7 +8,7 @@
 
 <br>
 
-Ensure you have Node v16+.
+Ensure you have **Node v16+**.
 
 Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react). If you have [`degit`](https://github.com/Rich-Harris/degit), run the following from a new directory:
 

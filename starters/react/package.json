@@ -29,6 +29,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.29.4",
+    "postcss-preset-env": "^7.7.1",
     "unocss": "^0.37.4",
     "vite-plugin-blueprint": "^0.0.4"
   },
