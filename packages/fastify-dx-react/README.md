@@ -8,7 +8,7 @@ It has an extremely small core (~1k LOC total) and is built on top of [Fastify](
 
 [**See the release notes for the 0.0.1 alpha release**]().
 
-> **Contributors welcome!** At this stage this project is mostly a [one-man](https://github.com/sponsors/galvez) show, who's devoting all his free time to its completion. Contributions are extremely welcome, as well as bug reports for any issues you may find. 
+> At this stage this project is mostly a [**one-man show**](https://github.com/sponsors/galvez), who's devoting all his free time to its completion. Contributions are extremely welcome, as well as bug reports for any issues you may find. 
 
 In this first alpha release it's still missing a test suite. The same is true for [**fastify-vite**](). 
 
