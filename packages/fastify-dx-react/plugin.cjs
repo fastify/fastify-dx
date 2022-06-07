@@ -15,8 +15,9 @@ function viteReactFastifyDX (config = {}) {
     'resource.js',
     'routes.js',
     'base.jsx',
+    'layout.jsx',
     'context.js',
-    'router.jsx',
+    'router.jsx'
   ]
   const virtualModuleInserts = {
     'routes.js': {

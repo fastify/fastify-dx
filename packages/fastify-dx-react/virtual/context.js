@@ -1,4 +1,4 @@
-// This file is intentionally empty.
+// This file serves as a placeholder 
+// if no context.js file is provided
 
-// It just serves as a placeholder if no
-// context.js extension file is provided
+export default () => {}

@@ -16,7 +16,7 @@ export default function Index (props) {
   const {data} = useRouteContext()
   const [todoList, updateTodoList] = useState(data.todoList)
   const [input, setInput] = useState(null)
-  const addItem = async (value) => {
+  const addItem = (value) => {
     updateTodoList(list => [...list, value])
     input.value = ''
   }

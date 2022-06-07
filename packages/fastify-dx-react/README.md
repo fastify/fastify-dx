@@ -132,7 +132,13 @@ It exports your application's root React component (must be named `create`), the
 
 The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react) follows [fastify-vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. 
 
-If you want flat directory setup, where server and client files are mixed together, you can manually set `clientModule` to something else. Note that you'll also need to update `root` in your `vite.config.js` file.
+If you want flat directory setup, where server and client files are mixed together, you can manually set `clientModule` to something else. Note that in this case you'll also need to update `root` in your `vite.config.js` file.
+
+When deploying to production, bear in mind the `client/dist` directory, generated when you run `npm run build`, needs to be included. You'll also want to enable Fastify's built-in logging:
+
+```js
+const server = Fastify({ logger: true })
+```
 
 </td>
 <td width="600px"><br>

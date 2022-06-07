@@ -1,13 +1,12 @@
-import 'virtual:uno.css'
-import React, { Suspense } from 'react'
 import { BaseRouter, EnhancedRouter } from '/dx:router.jsx'
+import Layout from '/dx:layout.jsx'
 
 export default function Base ({ url, ...routerSettings }) {
   return (
     <BaseRouter location={url}>
-      <Suspense>
+      <Layout>
         <EnhancedRouter {...routerSettings} />
-      </Suspense>
+      </Layout>
     </BaseRouter>
   )
 }
