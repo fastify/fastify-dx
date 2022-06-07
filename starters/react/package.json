@@ -10,14 +10,10 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
-    "fastify-vite": "^3.0.0-beta.22",
-    "ky-universal": "^0.10.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-router-dom": "^6.3.0",
-    "devalue": "^2.0.1",
-    "unihead": "^0.0.6",
-    "valtio": "^1.6.1"
+    "fastify": "^3.29.0",
+    "fastify-vite": "^3.0.0-beta.23",
+    "fastify-dx-react": "^0.0.1-alpha.0",
+    "ky-universal": "^0.10.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
@@ -35,11 +31,10 @@
   },
   "devInstall": {
     "local": {
-      "fastify-dx-react": "^0.0.0"
+      "fastify-dx-react": "^0.0.1-alpha.0"
     },
     "external": {
-      "fastify-vite": "^3.0.0-beta.22",
-      "ky-universal": "^0.10.1"
+      "fastify-vite": "^3.0.0-beta.23"
     }
   }
 }

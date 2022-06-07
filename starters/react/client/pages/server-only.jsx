@@ -9,6 +9,9 @@ export default function ServerOnly () {
       <p>
         <Link to="/">Go back to the index</Link>
       </p>
+      <p>⁂</p>
+      <p>When this route is rendered on the server, no JavaScript is sent to the client.</p>
+      <p>See the output of <code>curl http://localhost:3000/server-only</code>.</p>
     </>
   )
 }

@@ -14,4 +14,10 @@ const plugins = [
   unocss()
 ]
 
-export default { root, plugins }
+export default {
+  root,
+  plugins,
+  ssr: {
+    external: ['use-sync-external-store']
+  }
+}

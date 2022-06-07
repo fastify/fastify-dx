@@ -1,3 +1,4 @@
+import logo from '/assets/logo.svg'
 import { Link } from 'react-router-dom'
 
 export function getMeta () {
@@ -9,7 +10,7 @@ export function getMeta () {
 export default function Index () {
   return (
     <>
-      <img src="/assets/logo.svg" />
+      <img src={logo} />
       <h1>Welcome to Fastify DX for React!</h1>
       <ul className="columns-2">
         <li><Link to="/using-data">/using-data</Link> demonstrates how to 
