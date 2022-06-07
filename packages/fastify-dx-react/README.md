@@ -483,8 +483,6 @@ The example demonstrates how to turn off SSR and downgrade to CSR-only, assuming
   
 The starter template includes a sample `context.js` file. This file is optional and can be safely removed. If it's present, Fastify DX automatically loads it and uses it to do any RouteContext extensions or data injections you might need. If you're familiar with [Nuxt.js](https://nuxtjs.org/), you can think of it as a [Nuxt.js plugin](https://nuxtjs.org/docs/directory-structure/plugins/).
 
-This example demonstrates how to use it to set up an universally available (SSR and CSR) `$fetch` function (using [`ky-universal`](https://www.npmjs.com/package/ky-universal)) and also export some store actions. They're all made available by `useRouteContext()`, covered next.
-
 ```jsx
 import { 
   useRouteContext
@@ -504,6 +502,8 @@ See the [full example](https://github.com/fastify/fastify-dx/blob/dev/starters/r
 
 </td>
 <td width="600px"><br>
+
+This example demonstrates how to use it to set up an universally available (SSR and CSR) `$fetch` function (using [`ky-universal`](https://www.npmjs.com/package/ky-universal)) and also export some store actions. They're all made available by `useRouteContext()`, covered next.
 
 ```js
 import ky from 'ky-universal'
