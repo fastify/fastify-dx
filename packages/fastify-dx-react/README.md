@@ -134,7 +134,7 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/r
 
 If you want flat directory setup, where server and client files are mixed together, you can manually set `clientModule` to something else. Note that in this case you'll also need to update `root` in your `vite.config.js` file.
 
-When deploying to production, bear in mind the `client/dist` directory, generated when you run `npm run build`, needs to be included. You'll also want to enable Fastify's built-in logging:
+When deploying to production, bear in mind the `client/dist` directory, generated when you run `npm run build`, needs to be included. You'll also want to enable Fastify's [built-in logging](https://www.fastify.io/docs/latest/Reference/Logging/):
 
 ```js
 const server = Fastify({ logger: true })
