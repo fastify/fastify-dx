@@ -3,8 +3,32 @@
 
 **Fastify DX** is an upcoming **full stack framework** built on top of [**Fastify and Vite**](https://fastify-vite.dev).
 
-In this early stage, we're working to define a [**Universal Route Module API**](https://github.com/fastify/fastify-dx/blob/main/URMA.md) to follow when implementing support for multiple frameworks. Support for Vue, React, Svelte and Solid is planned for the first public beta release.
+In this early stage, we're working to define a [**Universal Route Module API**](https://github.com/fastify/fastify-dx/blob/main/URMA.md) to follow when implementing support for multiple frameworks, and have an initial reference implementation for React.
 
-A minimal [`zx`](https://github.com/google/zx)-based **CLI** for enhanced **developer experience** is also in the works.
+## Packages
+
+<table>
+<tr>
+<td>
+
+### fastify-dx-react<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) 
+ 
+</td>
+<td>
+
+You can already try out the **alpha release** of Fastify DX for React.
+
+It's the reference implementation for the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
+</td>
+</tr>
+</table>  
+
+## Status
+
+Fastify DX is currently in **alpha**.
+
+Right now the focus is on implementing the same API for React, Vue, Solid and Svelte.
+
+A minimal [`zx`](https://github.com/google/zx)-based **CLI** for enhanced **Developer Experience** is planned next.
 
 Subscribe to [**this newsletter**](https://www.getrevue.co/profile/fastify-dx) to hear about the public beta.
