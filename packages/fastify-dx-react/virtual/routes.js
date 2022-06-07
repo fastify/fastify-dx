@@ -31,10 +31,10 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
           .then((routeModule) => {
             return {
               id: routeDef.path,
-              path: routeModule.path,
+              path: routeDef.path ?? routeModule.path,
               ...routeModule,
             }
-          })
+          }),
       )
     }
   } else {
@@ -51,12 +51,12 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
                 // Replace [id] with :id
                 .replace(param, (_, m) => `:${m}`)
                 // Replace '/index' with '/'
-                .replace(/\/index$/, '/'),
+                .replace(/\/index$/, '/')
                 // Remove trailing slashs
-                .replace(/\/+$/, ''),
+                .replace(/.+\/+$/, ''),
               ...routeModule,
             }
-          })
+          }),
       )
     }
   }

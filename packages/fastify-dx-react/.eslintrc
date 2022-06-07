@@ -19,8 +19,9 @@
     'react',
   ],
   rules: {
-    'comma-dangle': ['error', 'always-multiline'],
     'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'comma-dangle': ['error', 'always-multiline'],
     'import/no-absolute-path': 'off',
   },
   settings: {

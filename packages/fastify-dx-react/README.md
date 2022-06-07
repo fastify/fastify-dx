@@ -422,7 +422,7 @@ The objet returned by `getData()` gets automatically assigned as `data` in the [
 <td width="600px"><br>
 
 ```jsx
-import { useRouteContext } from '/dx:context'
+import { useRouteContext } from '/dx:router.jsx'
 
 export function getData (ctx) {
   return {
@@ -538,7 +538,7 @@ It automatically causes the component to be [suspended](https://17.reactjs.org/d
 <td width="600px"><br>
 
 ```jsx
-import { useRouteContext } from '/dx:context.js'
+import { useRouteContext } from '/dx:router.jsx'
   
 export function Index () {
   const { data } = useRouteContext()

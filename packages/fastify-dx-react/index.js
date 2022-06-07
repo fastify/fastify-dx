@@ -136,7 +136,7 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
 
   // See https://github.com/fastify/fastify-dx/blob/main/URMA.md
   const hasURMAHooks = Boolean(
-    route.getData || route.getMeta || route.onEnter
+    route.getData || route.getMeta || route.onEnter,
   )
 
   // Extend with route context initialization module

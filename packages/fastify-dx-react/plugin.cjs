@@ -10,7 +10,6 @@ function viteReactFastifyDX (config = {}) {
   }, config)
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [ 
-    'app.js',
     'mount.js', 
     'resource.js',
     'routes.js',

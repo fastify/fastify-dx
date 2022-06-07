@@ -1,17 +1,18 @@
 const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
-const overrideProtected = [
-  'server',
-  'req',
-  'reply',
-  'head',
-  'data',
-  'firstRender',
-  'getData',
-  'streaming',
-  'clientOnly',
-  'serverOnly',
-]
+// TODO
+// const overrideProtected = [
+//   'server',
+//   'req',
+//   'reply',
+//   'head',
+//   'data',
+//   'firstRender',
+//   'getData',
+//   'streaming',
+//   'clientOnly',
+//   'serverOnly',
+// ]
 
 export default class RouteContext {
   static async create (server, req, reply, route, contextInit) {
