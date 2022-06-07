@@ -28,9 +28,6 @@ export function onShellReady (app) {
         onShellReady () {
           resolve(pipeable.pipe(duplex))
         },
-        onError (error) {
-          reject(error)
-        },
       })
     } catch (error) {
       resolve(error)
@@ -47,9 +44,6 @@ export function onAllReady (app) {
       const pipeable = renderToPipeableStream(app, {
         onAllReady () {
           resolve(pipeable.pipe(duplex))
-        },
-        onError (error) {
-          reject(error)
         },
       })
     } catch (error) {

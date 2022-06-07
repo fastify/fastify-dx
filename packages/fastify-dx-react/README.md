@@ -32,6 +32,8 @@ degit fastify/fastify-dx/starters/react
 
 Run `npm install`. 
 
+Visit `http://localhost:3000/`.
+
 `npm run dev` boots the development server.
   
 `npm run build` creates the production bundle.
