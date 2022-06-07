@@ -34,6 +34,8 @@ Run `npm install`.
 
 Visit `http://localhost:3000/`.
 
+**Available npm scripts:**
+
 `npm run dev` boots the development server.
   
 `npm run build` creates the production bundle.
