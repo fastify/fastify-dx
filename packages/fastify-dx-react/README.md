@@ -30,13 +30,7 @@ Run `npm run dev`.
 
 Visit `http://localhost:3000/`.
 
-**Available npm scripts:**
-
-`npm run dev` boots the development server.
-  
-`npm run build` creates the production bundle.
-  
-`npm run serve` serves the production bundle.
+## What's Included
 
 That will get you a **starter template** with:
   
@@ -49,11 +43,19 @@ It also includes some _**opinionated**_ essentials:
 
 - [**PostCSS Preset Env**](https://www.npmjs.com/package/postcss-preset-env) by [**Jonathan Neal**](https://github.com/jonathantneal), which enables [several modern CSS features](https://preset-env.cssdb.org/), such as [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/).
 
-- [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 200x faster than Tailwind.
+- [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 
 
-- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can populate on the server (via the Route Context [intialization file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#initialization-file)) and expect it to be automatically hydrated on the client. It delivers simple and idiomatic state management, leveraging [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) without compromising React rendering efficiency.
+- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can use anywhere.
 
+
+## Package Scripts
+
+`npm run dev` boots the development server.
   
+`npm run build` creates the production bundle.
+  
+`npm run serve` serves the production bundle.
+
 ## Manual Install
 
 **If you're starting a project from scratch**, you'll need these packages installed.
