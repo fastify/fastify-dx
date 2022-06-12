@@ -8,7 +8,9 @@
 
 If a route module exports a `onEnter()` function, it's executed before the route renders, both in SSR and client-side navigation. That is, the first time a route render on the server, onEnter() runs on the server. Then, since it already ran on the server, it doesn't run again on the client for that first route. But if you navigate to another route on the client using `<Link>`, it runs normally as you'd expect.
 
-It receives the [universal route context](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#route-context) as first parameter, so you can make changes to `data`, `meta` and `state` if needed.
+It receives the [universal route context][route-context] as first parameter, so you can make changes to `data`, `meta` and `state` if needed.
+
+[route-context]: https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-context.md
 
 ```jsx
 export function onEnter (ctx) {
