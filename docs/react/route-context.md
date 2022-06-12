@@ -1,8 +1,8 @@
-## Route Context
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md).**</sub>
 
-<table>
-<tr>
-<td width="400px" valign="top">
+<br>
+
+## Route Context
 
 ### Initialization module
   
@@ -26,9 +26,6 @@ actions.addTodoItem(state, value)
 ```
 
 See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/react/client/pages/using-store.jsx) in the starter template.
-
-</td>
-<td width="600px"><br>
 
 This example demonstrates how to use it to set up an universally available (SSR and CSR) `$fetch` function (using [`ky-universal`](https://www.npmjs.com/package/ky-universal)) and also export some store actions. They're all made available by `useRouteContext()`, covered next.
 
@@ -62,14 +59,6 @@ export async function addTodoItem (state, item) {
 
 See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/react/client/context.js) in the starter template.
 
-</td>
-</tr>
-</table>
-
-<table>
-<tr>
-<td width="400px" valign="top">
-
 ### The `useRouteContext()` hook
 
 This hook can be used in any React component to retrieve a reference to the current route context. It's modelled after the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), with still some rough differences and missing properties in this **alpha release**.
@@ -77,9 +66,6 @@ This hook can be used in any React component to retrieve a reference to the curr
 By default, It includes reference to `data` — which is automatically populated if you use the `getData()` function, and `state` and `snapshot` — which hold references to the global [Valtio](https://github.com/pmndrs/valtio) state proxy and state snapshot object (returned by Valtio's `useSnapshot()`).
 
 It automatically causes the component to be [suspended](https://17.reactjs.org/docs/concurrent-mode-suspense.html) if the `getData()`, `getMeta()` and `onEnter()` functions are asynchronous.
-
-</td>
-<td width="600px"><br>
 
 ```jsx
 import { useRouteContext } from '/dx:router.jsx'
@@ -90,35 +76,18 @@ export function Index () {
 }
 ```
 
-
-</td>
-</tr>
-</table>
-
-
-<table>
-<tr>
-<td width="400px" valign="top">
-
 ### Execution order
 
 This graph illustrates the execution order to expect from route context initialization.
 
-</td>
-<td width="600px"><br>
-
 ```
-├─ context.js default function export
-   └─ getData() function export
-        └─ getMeta() function export
-            └─ onEnter() function export
-                └─ Route module
+context.js default function export
+└─ getData() function export
+   └─ getMeta() function export
+      └─ onEnter() function export
+         └─ Route module
 ```
 
 First the `default` function export from `context.js` (if present) is executed. This is where you can manually feed global server data into your application by populating the global Valtio state (the route context's `state` property, which is automatically hydrated on the client.
 
 Then `getData()` runs — which populates the route context's `data` property, and is also automatically hydrated on the client. Then `getMeta()`, which populates the route context's `head` property. Then `onEnter()`, and finally your route component.
-
-</td>
-</tr>
-</table>
