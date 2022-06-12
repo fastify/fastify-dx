@@ -1,5 +1,6 @@
+Go back to the [index](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md)
 
-### Basic setup
+## Basic setup
 
 The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react) follows [fastify-vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. 
 
@@ -10,9 +11,6 @@ When deploying to production, bear in mind the `client/dist` directory, generate
 ```js
 const server = Fastify({ logger: true })
 ```
-
-</td>
-<td width="600px"><br>
 
 The starter template's `server.js` file:
 
