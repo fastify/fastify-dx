@@ -1,8 +1,8 @@
 # fastify-dx-react [![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-- [**Introduction**]()
-- [**Quick Start**]()
-- [**Package Scripts**]()
+- [**Introduction**](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md#introduction)
+- [**Quick Start**](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md#quick-start)
+- [**Package Scripts**](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md#package-scripts)
 - [**Basic Setup**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/basic-setup.md)
 - [**Project Structure**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/project-structure.md)
 - [**Data Prefetching**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/data-prefetching.md)
