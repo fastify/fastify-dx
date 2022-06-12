@@ -4,13 +4,13 @@ import { StaticRouter } from 'react-router-dom/server.mjs'
 import { createPath } from 'history'
 import { proxy, useSnapshot } from 'valtio'
 import { waitResource, waitFetch } from '/dx:resource.js'
+import DefaultLayout from '/dx:layouts/default.jsx'
 
 const isServer = typeof process === 'object'
 
 export const RouteContext = createContext({})
-export const HeadContext = createContext({})
 
-export const BaseRouter = isServer ? StaticRouter : BrowserRouter
+export const Router = isServer ? StaticRouter : BrowserRouter
 
 export function useRouteContext () {
   const routeContext = useContext(RouteContext)
@@ -20,41 +20,48 @@ export function useRouteContext () {
   return routeContext
 }
 
-export function EnhancedRouter ({
-  head,
+export function DXApp ({
+  url,
   routes,
+  head,
   routeMap,
   ctxHydration,
 }) {
   return (
-    <HeadContext.Provider value={head}>
+    <Router location={url}>
       <Routes>{
-        routes.map(({ path, component: Component }) => {
-          return <Route key={path} path={path} element={
-            <RouteContextProvider
-              head={head}
-              ctxHydration={ctxHydration}
-              ctx={routeMap[path]}>
-              <Component />
-            </RouteContextProvider>
-          } />
-        })
+        routes.map(({ path, component: Component }) =>
+          <Route
+            key={path}
+            path={path}
+            element={
+              <DXRoute
+                head={head}
+                ctxHydration={ctxHydration}
+                ctx={routeMap[path]}>
+                <Component />
+              </DXRoute>
+            } />
+        )
       }</Routes>
-    </HeadContext.Provider>
+    </Router>
   )
 }
 
-export function RouteContextProvider ({ head, ctxHydration, ctx, children }) {
+export function DXRoute ({ head, ctxHydration, ctx, children }) {
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
   if (isServer) {
+    const Layout = ctxHydration.layout ?? DefaultLayout
     return (
       <RouteContext.Provider value={{
         ...ctx,
         ...ctxHydration,
         state: proxy(ctxHydration.state),
       }}>
-        {children}
+        <Layout>
+          {children}
+        </Layout>
       </RouteContext.Provider>
     )
   }
@@ -95,12 +102,23 @@ export function RouteContextProvider ({ head, ctxHydration, ctx, children }) {
     }
   }
 
+  // Note that ctx.loader() at this point will resolve the 
+  // memoized module, so there's barely any overhead
+  let Layout = DefaultLayout
+  if (ctx.layout) {
+    const updateLayout = async () => {
+      const { layout } = await ctx.loader()
+      return layout
+    }
+    Layout = waitResource(path, 'updateLayout', updateLayout)    
+  }
+
   if (!ctx.firstRender && ctx.getMeta) {
-    const updateHead = async () => {
+    const updateMeta = async () => {
       const { getMeta } = await ctx.loader()
       head.update(await getMeta(ctx))
     }
-    waitResource(path, 'getMeta', updateHead)
+    waitResource(path, 'updateMeta', updateMeta)
   }
 
   if (!ctx.firstRender && ctx.onEnter) {
@@ -121,7 +139,9 @@ export function RouteContextProvider ({ head, ctxHydration, ctx, children }) {
       ...ctx,
       state: proxy(ctxHydration.state),
     }}>
-      {children}
+      <Layout>
+        {children}
+      </Layout>
     </RouteContext.Provider>
   )
 }

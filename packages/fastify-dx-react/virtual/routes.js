@@ -15,6 +15,7 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
         return {
           id: route.id,
           path: route.path,
+          layout: !!route.layout,
           getData: !!route.getData,
           getMeta: !!route.getMeta,
           onEnter: !!route.onEnter,
@@ -45,6 +46,7 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
           .then((routeModule) => {
             return {
               id: path,
+              layout: routeModule.layout,
               path: routeModule.path ?? path
                 // Remove /pages and .jsx extension
                 .slice(6, -4)
@@ -65,9 +67,9 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
 
 async function hydrateRoutes (from) {
   if (Array.isArray(from)) {
-    from = Object.fromEntries(from.map((route) => {
-      return [route.path, route]
-    }))
+    from = Object.fromEntries(
+      from.map((route) => [route.path, route])
+    )
   }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
@@ -80,6 +82,8 @@ function getRouteModuleExports (routeModule) {
   return {
     // The Route component (default export)
     component: routeModule.default,
+    // The Layout Route component
+    layout: routeModule.layout,
     // Route-level hooks
     getData: routeModule.getData,
     getMeta: routeModule.getMeta,

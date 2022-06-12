@@ -1,29 +1,21 @@
-const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
-// TODO
-// const overrideProtected = [
-//   'server',
-//   'req',
-//   'reply',
-//   'head',
-//   'data',
-//   'firstRender',
-//   'getData',
-//   'streaming',
-//   'clientOnly',
-//   'serverOnly',
-// ]
+const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
   static async create (server, req, reply, route, contextInit) {
     const routeContext = new RouteContext(server, req, reply, route)
-    if (contextInit?.default) {
-      await contextInit.default(routeContext)
+    if (contextInit) {
+      if (contextInit.state) {
+        routeContext.state = contextInit.state()
+      }
+      if (contextInit.default) {
+        await contextInit.default(routeContext)
+      }
     }
     return routeContext
   }
 
-  constructor (server, req, reply, route, context) {
+  constructor (server, req, reply, route) {
     this.server = server
     this.req = req
     this.reply = reply
@@ -31,6 +23,8 @@ export default class RouteContext {
     this.state = null
     this.data = route.data
     this.firstRender = true
+    this.layout = route.layout
+    this.getMeta = !!route.getMeta
     this.getData = !!route.getData
     this.onEnter = !!route.onEnter
     this.streaming = route.streaming
@@ -40,14 +34,10 @@ export default class RouteContext {
 
   [routeContextInspect] () {
     return {
+      ...this,
+      server: { [routeContextInspect]: () => '[Server]' },
       req: { [routeContextInspect]: () => '[Request]' },
       reply: { [routeContextInspect]: () => '[Reply]' },
-      data: this.data,
-      getData: this.getData,
-      onEnter: this.onEnter,
-      streaming: this.streaming,
-      clientOnly: this.clientOnly,
-      serverOnly: this.serverOnly,
     }
   }
 
@@ -55,6 +45,8 @@ export default class RouteContext {
     return {
       state: this.state,
       data: this.data,
+      layout: !!this.layout,
+      getMeta: this.getMeta,
       getData: this.getData,
       onEnter: this.onEnter,
       firstRender: this.firstRender,
@@ -65,14 +57,9 @@ export default class RouteContext {
 
 RouteContext.extend = function (initial) {
   const { default: _, ...extra } = initial
-  // const setterProxy = new Proxy(initial, {
-  //   get: (ctx, prop) => initial[prop],
-  //   set: (ctx, prop, value) => {
-  //     Object.defineProperty(RouteContext.prototype, prop, value)
-  //     return value
-  //   }
-  // })
   for (const [prop, value] of Object.entries(extra)) {
-    Object.defineProperty(RouteContext.prototype, prop, value)
+    if (prop !== 'data' && prop !== 'state') {
+      Object.defineProperty(RouteContext.prototype, prop, value)
+    }
   }
 }

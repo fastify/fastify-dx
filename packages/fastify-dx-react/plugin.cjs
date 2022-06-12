@@ -13,11 +13,23 @@ function viteReactFastifyDX (config = {}) {
     'mount.js', 
     'resource.js',
     'routes.js',
-    'base.jsx',
-    'layout.jsx',
+    'create.jsx',
+    'root.jsx',
+    'layouts/',
     'context.js',
     'router.jsx'
   ]
+  virtualModules.includes = function (virtual) {
+    if (!virtual) {
+      return false
+    }
+    for (const entry of this) {
+      if (virtual.startsWith(entry)) {
+        return true
+      }
+    }
+    return false
+  }
   const virtualModuleInserts = {
     'routes.js': {
       $globPattern: routing.globPattern,
