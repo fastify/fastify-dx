@@ -2,7 +2,7 @@
 
 <br>
 
-## Routing mode
+## Routing Configuration
 
 By default, routes are loaded from the `<project-root>/pages` folder, where `<project-root>` refers to the `root` setting in `vite.config.js`. The route paths are dynamically inferred from the directory structure, very much like Next.js and Nuxt.js.
 
