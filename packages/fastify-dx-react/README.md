@@ -24,6 +24,14 @@ Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/d
 degit fastify/fastify-dx/starters/react
 ```
 
+> **If you're starting a project from scratch**, you'll need these packages installed.
+>
+> ```bash
+> npm i fastify fastify-vite fastify-dx-react -P
+> npm i @vitejs/plugin-react -D
+> ```
+
+
 Run `npm install`. 
   
 Run `npm run dev`. 
@@ -56,14 +64,17 @@ It also includes some _**opinionated**_ essentials:
   
 `npm run serve` serves the production bundle.
 
-## Manual Install
+## Usage Guides
 
-**If you're starting a project from scratch**, you'll need these packages installed.
 
-```bash
-npm i fastify fastify-vite fastify-dx-react -P
-npm i @vitejs/plugin-react -D
-```
+- ### [**Basic Setup**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/basic-setup.md)
+- ### [**Project Structure**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/project-structure.md)
+- ### [**Data Prefetching**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/data-prefetching.md)
+- ### [**Rendering Modes**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/rendering-modes.md)
+- ### [**Routing Configuration**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/routing-config.md)
+- ### [**The Route Context**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-context.md)
+- ### [**Route Enter Event**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-enter.md)
+- ### [**Virtual Modules**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/virtual-modules.md)
 
 ## Meta
 
