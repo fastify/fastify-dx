@@ -1,4 +1,4 @@
-<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md).**</sub>
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md).**</sub>
 
 <br>
 
@@ -10,7 +10,7 @@ If a route module exports a `onEnter()` function, it's executed before the route
 
 It receives the [universal route context][route-context] as first parameter, so you can make changes to `data`, `meta` and `state` if needed.
 
-[route-context]: https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-context.md
+[route-context]: https://github.com/fastify/fastify-dx/blob/main/docs/react/route-context.md
 
 ```jsx
 export function onEnter (ctx) {

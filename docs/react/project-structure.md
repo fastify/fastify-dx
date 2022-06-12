@@ -1,5 +1,5 @@
 
-<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md).**</sub>
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md).**</sub>
 
 <br>
 
@@ -28,13 +28,13 @@ Several internal files are provided as virtual modules by Fastify DX. They are l
 
 In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. Find the detailed rundown of all virtual modules [here][virtual-modules].
 
-[virtual-modules]: https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/virtual-modules.md
+[virtual-modules]: https://github.com/fastify/fastify-dx/blob/main/docs/react/virtual-modules.md
 
 The `server.js` file is your application entry point. It's the file that runs everything. It boots a Fastify server configured with [**fastify-vite**](https://github.com/fastify/fastify-vite) and **Fastify DX for React** as a renderer adapter to **fastify-vite**. 
   
 The `client/context.js` file is the universal [route context][route-context] initialization module. Any named exports from this file are attached to the `RouteContext` class prototype on the server, preventing them from being reassigned on every request. The `default` export from this file, however, runs for every request so you can attach any request-specific data to it.
 
-[route-context]: https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-context.md
+[route-context]: https://github.com/fastify/fastify-dx/blob/main/docs/react/route-context.md
   
 The `client/index.html` file is the [root HTML template of the application](https://vitejs.dev/guide/#index-html-and-project-root), which Vite uses as the client bundling entry point. 
 
@@ -46,10 +46,10 @@ Virtual modules are covered [here][virtual-modules].
   
 The `client/pages/` directory contains your route modules, whose paths are dynamically inferred from the directory structure itself. You can change this behavior easily. More on this [here][routing-config].
 
-[routing-config]: https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/routing-config.md
+[routing-config]: https://github.com/fastify/fastify-dx/blob/main/docs/react/routing-config.md
 
 The `client/index.js` file is your Vite server entry point, it's the file that provides your client bundle (which runs in the Vite-enriched environment) to the Node.js environment where Fastify runs. 
 
 > Right now, it's mostly a **boilerplate file** because it must exist but it will also probably never need to be changed.
 
-It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-context.md#initialization-module) (must be named `context` and have a dynamic module import so Fastify DX can pick up `default` and named exports).
+It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module](https://github.com/fastify/fastify-dx/blob/main/docs/react/route-context.md#initialization-module) (must be named `context` and have a dynamic module import so Fastify DX can pick up `default` and named exports).
