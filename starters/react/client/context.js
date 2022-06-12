@@ -3,7 +3,6 @@ import ky from 'ky-universal'
 export default (ctx) => {
   if (ctx.server) {
     ctx.state.todoList = ctx.server.db.todoList
-    console.log('ctx.state', ctx.state)
   }
 }
 

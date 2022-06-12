@@ -24,7 +24,6 @@ async function mount (target) {
     routes: window.routes,
     routeMap,
   })
-  console.log('ctxHydration->', ctxHydration)
   if (ctxHydration.clientOnly) {
     createRoot(target).render(app)
   } else {
@@ -42,7 +41,6 @@ async function extendContext (ctx, {
 }) {
   Object.assign(ctx, extra)
   if (setter) {
-    console.log('WTF man')
     await setter(ctx)
   }
   return ctx
