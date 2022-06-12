@@ -1,4 +1,6 @@
-Go back to the [index](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md)
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/flat-docs/packages/fastify-dx-react/README.md).**</sub>
+
+<br>
 
 ## Basic setup
 
