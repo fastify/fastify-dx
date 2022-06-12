@@ -1,5 +1,19 @@
 # fastify-dx-react [![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
+- [**Introduction**]()
+- [**Quick Start**]()
+- [**Package Scripts**]()
+- [**Basic Setup**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/basic-setup.md)
+- [**Project Structure**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/project-structure.md)
+- [**Data Prefetching**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/data-prefetching.md)
+- [**Rendering Modes**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/rendering-modes.md)
+- [**Routing Configuration**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/routing-config.md)
+- [**The Route Context**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-context.md)
+- [**Route Enter Event**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-enter.md)
+- [**Virtual Modules**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/virtual-modules.md)
+
+## Introduction
+
 **Fastify DX for React** is a renderer adapter for [**fastify-vite**](https://github.com/fastify/fastify-vite).
 
 It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
@@ -63,18 +77,6 @@ It also includes some _**opinionated**_ essentials:
 `npm run build` creates the production bundle.
   
 `npm run serve` serves the production bundle.
-
-## Usage Guides
-
-
-- ### [**Basic Setup**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/basic-setup.md)
-- ### [**Project Structure**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/project-structure.md)
-- ### [**Data Prefetching**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/data-prefetching.md)
-- ### [**Rendering Modes**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/rendering-modes.md)
-- ### [**Routing Configuration**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/routing-config.md)
-- ### [**The Route Context**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-context.md)
-- ### [**Route Enter Event**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-enter.md)
-- ### [**Virtual Modules**](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/virtual-modules.md)
 
 ## Meta
 
