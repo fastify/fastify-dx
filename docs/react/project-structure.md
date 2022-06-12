@@ -24,7 +24,9 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/r
 └── package.json
 ```
   
-Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. Find the detailed rundown of all virtual modules [here][virtual-modules].
+Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. 
+
+In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. Find the detailed rundown of all virtual modules [here][virtual-modules].
 
 [virtual-modules]: https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/virtual-modules.md
 
