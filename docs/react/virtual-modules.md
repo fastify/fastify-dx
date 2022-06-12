@@ -67,7 +67,9 @@ See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/p
 
 ### `/dx:base.jsx`
 
-The `base.jx` virtual import holds your root React component. This is where the [React Router](https://reactrouter.com/docs/en/v6) root component for your application is also set.
+The `base.jx` virtual import holds your root React component. 
+
+This is where the [React Router](https://reactrouter.com/docs/en/v6) root component for your application is also set.
 
 <b>You'll rarely need to customize this file.</b>
 
