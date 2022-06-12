@@ -42,10 +42,12 @@ This files links to `/dx:mount.js`, which is a virtual module provided by Fastif
 
 Virtual modules are covered [here][virtual-modules].
   
-The `client/pages/` directory contains your route modules, whose paths are dynamically inferred from the directory structure itself. You can change this behavior easily. More on this [later in this README](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#routing-mode).
+The `client/pages/` directory contains your route modules, whose paths are dynamically inferred from the directory structure itself. You can change this behavior easily. More on this [here][routing-config].
+
+[routing-config]: https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/routing-config.md
 
 The `client/index.js` file is your Vite server entry point, it's the file that provides your client bundle (which runs in the Vite-enriched environment) to the Node.js environment where Fastify runs. 
 
 > Right now, it's mostly a **boilerplate file** because it must exist but it will also probably never need to be changed.
 
-It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#initialization-module) (must be named `context` and have a dynamic module import so Fastify DX can pick up `default` and named exports).
+It exports your application's root React component (must be named `create`), the application routes (must be named `routes`) and the universal route context [initialization module](https://github.com/fastify/fastify-dx/blob/flat-docs/docs/react/route-context.md#initialization-module) (must be named `context` and have a dynamic module import so Fastify DX can pick up `default` and named exports).
