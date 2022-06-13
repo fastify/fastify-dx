@@ -4,7 +4,7 @@ import { useRouteContext } from '/dx:router.jsx'
 export { default as layout } from '/dx:layouts/auth.jsx'
 
 export function getMeta () {
-  return { title: 'Using Auth' }
+  return { title: 'Using Custom Layout' }
 }
 
 export default function Index (props) {
@@ -16,7 +16,7 @@ export default function Index (props) {
   }
   return (
     <>
-      <h2>Todo List — Using Store</h2>
+      <h2>Todo List — Using Custom Layout</h2>
       <ul>{
         snapshot.todoList.map((item, i) => {
           return <li key={`item-${i}`}>{item}</li>

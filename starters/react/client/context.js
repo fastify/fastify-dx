@@ -18,7 +18,7 @@ export const state = () => ({
 })
 
 export const actions = {
-  authenticated (state) {
+  authenticate (state) {
     state.user.authenticated = true
   },
   async addTodoItem (state, item) {
