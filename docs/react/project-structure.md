@@ -12,6 +12,7 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/r
 ├── client/
 ｜    ├── index.js
 ｜    ├── context.js
+｜    ├── root.jsx
 ｜    ├── index.html
 ｜    ├── layouts/
 ｜    ｜    ├── default.jsx

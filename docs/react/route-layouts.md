@@ -4,19 +4,21 @@
 
 ## Route Layouts
 
-Fastify DX will automatically load layouts from the `layouts/` folder. By default, `/dx:layouts/default.jsx` is used — that is, if a project is missing a `layouts/defaults.jsx` file, the one provided by Fastify DX is used instead. See the section on [Virtual Modules](https://github.com/fastify/fastify-dx/blob/main/docs/react/virtual-modules.md) to learn more about this.
+Fastify DX will automatically load layouts from the `layouts/` folder. By default, `/dx:layouts/default.jsx` is used — that is, if a project is missing a `layouts/defaults.jsx` file, the one provided by Fastify DX is used instead. 
+
+See the section on [Virtual Modules](https://github.com/fastify/fastify-dx/blob/main/docs/react/virtual-modules.md) to learn more about this.
 
 You assign a layout to a route by exporting `layout`. 
 
 See [`pages/using-auth.jsx`](https://github.com/fastify/fastify-dx/blob/main/starters/react/pages/using-auth.jsx) in the starter template:
 
-```
+```js
 export const layout = 'auth'
 ```
 
 That'll will cause the route to be wrapped in the layout component exported by [`layouts/auth.jsx`](https://github.com/fastify/fastify-dx/blob/main/starters/react/layouts/auth.jsx):
 
-```
+```jsx
 import { Suspense } from 'react'
 import { useRouteContext } from '/dx:core.jsx'
 
