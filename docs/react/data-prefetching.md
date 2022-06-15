@@ -13,7 +13,7 @@ This hook is set up in a way that it runs server-side before any SSR takes place
 The objet returned by `getData()` gets automatically assigned as `data` in the [universal route context](https://github.com/fastify/fastify-dx/blob/main/docs/react/route-context.md) object and is accessible from `getMeta()` and `onEnter()` hooks and also via the `useRouteContext()` hook.
 
 ```jsx
-import { useRouteContext } from '/dx:router.jsx'
+import { useRouteContext } from '/dx:core.jsx'
 
 export function getData (ctx) {
   return {

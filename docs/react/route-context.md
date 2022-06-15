@@ -13,7 +13,7 @@ The starter template includes a sample `context.js` file. This file is optional 
 ```jsx
 import { 
   useRouteContext
-} from '/dx:router.jsx'
+} from '/dx:core.jsx'
 
 // ...
 const { 
@@ -68,7 +68,7 @@ By default, It includes reference to `data` — which is automatically populated
 It automatically causes the component to be [suspended](https://17.reactjs.org/docs/concurrent-mode-suspense.html) if the `getData()`, `getMeta()` and `onEnter()` functions are asynchronous.
 
 ```jsx
-import { useRouteContext } from '/dx:router.jsx'
+import { useRouteContext } from '/dx:core.jsx'
   
 export function Index () {
   const { data } = useRouteContext()
