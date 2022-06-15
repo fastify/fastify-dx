@@ -113,7 +113,7 @@ export default Object.fromEntries(
 )
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/create.jsx).
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/layouts.js).
 
 ### `/dx:mount.js`
 
