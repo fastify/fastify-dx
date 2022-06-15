@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRouteContext } from '/dx:router.jsx'
-export { default as layout } from '/dx:layouts/auth.jsx'
+
+export const layout = 'auth'
 
 export function getMeta () {
   return { title: 'Using Custom Layout' }
@@ -30,8 +31,9 @@ export default function Index (props) {
         <Link to="/">Go back to the index</Link>
       </p>
       <p>⁂</p>
-      <p>When you navigate away from this route, any additions to the to-do 
-      list are not lost, because they're bound to the global application state.</p>
+      <p>This example is exactly the same as <Link to="/using-store">/using-store</Link>,
+      except it's wrapped in a custom layout which blocks it until 
+      <code>user.authenticated</code> is <code>true</code> in the global state.</p>
     </>
   )
 }

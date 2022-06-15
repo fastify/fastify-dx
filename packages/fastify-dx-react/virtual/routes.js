@@ -15,7 +15,7 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
         return {
           id: route.id,
           path: route.path,
-          layout: !!route.layout,
+          layout: route.layout,
           getData: !!route.getData,
           getMeta: !!route.getMeta,
           onEnter: !!route.onEnter,

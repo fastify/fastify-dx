@@ -1,16 +1,15 @@
-import React, { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { useLocation, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server.mjs'
 import { createPath } from 'history'
 import { proxy, useSnapshot } from 'valtio'
 import { waitResource, waitFetch } from '/dx:resource.js'
-import DefaultLayout from '/dx:layouts/default.jsx'
+import layouts from '/dx:layouts.js'
 
 const isServer = typeof process === 'object'
 
-export const RouteContext = createContext({})
-
 export const Router = isServer ? StaticRouter : BrowserRouter
+export const RouteContext = createContext({})
 
 export function useRouteContext () {
   const routeContext = useContext(RouteContext)
@@ -52,7 +51,7 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
   if (isServer) {
-    const Layout = ctxHydration.layout ?? DefaultLayout
+    const Layout = layouts[ctxHydration.layout ?? 'default']
     return (
       <RouteContext.Provider value={{
         ...ctx,
@@ -104,14 +103,6 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
 
   // Note that ctx.loader() at this point will resolve the 
   // memoized module, so there's barely any overhead
-  let Layout = DefaultLayout
-  if (ctx.layout) {
-    const updateLayout = async () => {
-      const { layout } = await ctx.loader()
-      return layout
-    }
-    Layout = waitResource(path, 'updateLayout', updateLayout)    
-  }
 
   if (!ctx.firstRender && ctx.getMeta) {
     const updateMeta = async () => {
@@ -132,6 +123,9 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
     }
     waitResource(path, 'onEnter', runOnEnter)
   }
+
+  console.log('ctx.layout', ctx.layout)
+  const Layout = layouts[ctx.layout ?? 'default']
 
   return (
     <RouteContext.Provider value={{

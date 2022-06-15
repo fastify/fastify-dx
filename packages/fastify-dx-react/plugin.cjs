@@ -13,6 +13,7 @@ function viteReactFastifyDX (config = {}) {
     'mount.js', 
     'resource.js',
     'routes.js',
+    'layouts.js',
     'create.jsx',
     'root.jsx',
     'layouts/',

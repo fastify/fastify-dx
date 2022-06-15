@@ -21,6 +21,8 @@ export default function Index () {
         automated <a href="https://github.com/pmndrs/valtio">Valtio</a> store 
         to retrieve server data for a route and maintain it in a global 
         state even after navigating to another route.</li>
+        <li><Link to="/using-auth">/using-auth</Link> demonstrates how to 
+        wrap a route in a custom layout component.</li>
         <li><Link to="/client-only">/client-only</Link> demonstrates how to set 
         up a route for rendering on the client only (disables SSR).</li>
         <li><Link to="/server-only">/server-only</Link> demonstrates how to set 

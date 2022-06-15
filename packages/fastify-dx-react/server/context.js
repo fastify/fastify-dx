@@ -45,7 +45,7 @@ export default class RouteContext {
     return {
       state: this.state,
       data: this.data,
-      layout: !!this.layout,
+      layout: this.layout,
       getMeta: this.getMeta,
       getData: this.getData,
       onEnter: this.onEnter,
