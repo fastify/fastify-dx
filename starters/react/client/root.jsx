@@ -1,6 +1,6 @@
 import 'virtual:uno.css'
 import { Suspense } from 'react'
-import { DXApp } from '/dx:router.jsx'
+import { DXApp } from '/dx:core.jsx'
 
 export default function Root ({ url, serverInit }) {
   return (

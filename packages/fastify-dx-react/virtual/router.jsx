@@ -40,7 +40,7 @@ export function DXApp ({
                 ctx={routeMap[path]}>
                 <Component />
               </DXRoute>
-            } />
+            } />,
         )
       }</Routes>
     </Router>
@@ -101,7 +101,7 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
     }
   }
 
-  // Note that ctx.loader() at this point will resolve the 
+  // Note that ctx.loader() at this point will resolve the
   // memoized module, so there's barely any overhead
 
   if (!ctx.firstRender && ctx.getMeta) {
@@ -124,7 +124,6 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
     waitResource(path, 'onEnter', runOnEnter)
   }
 
-  console.log('ctx.layout', ctx.layout)
   const Layout = layouts[ctx.layout ?? 'default']
 
   return (

@@ -15,7 +15,7 @@ async function mount (target) {
   const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await routesPromise
   const routeMap = Object.fromEntries(
-    resolvedRoutes.map((route) => [route.path, route])
+    resolvedRoutes.map((route) => [route.path, route]),
   )
 
   const app = create({
@@ -31,11 +31,11 @@ async function mount (target) {
   }
 }
 
-async function extendContext (ctx, { 
+async function extendContext (ctx, {
   // The route context initialization function
-  default: setter, 
+  default: setter,
   // We destructure state here just to discard it from extra
-  state, 
+  state,
   // Other named exports from context.js
   ...extra
 }) {

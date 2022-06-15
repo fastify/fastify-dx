@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { useRouteContext } from '/dx:router.jsx'
+import { useRouteContext } from '/dx:core.jsx'
 
 export default function Auth ({ children }) {
   const { actions, state, snapshot } = useRouteContext()

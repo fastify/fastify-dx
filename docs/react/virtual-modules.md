@@ -7,28 +7,31 @@
 
 **Fastify DX** relies on [virtual modules](https://github.com/rollup/plugins/tree/master/packages/virtual) to save your project from having too many boilerplate files. Virtual modules are a [Rollup](https://rollupjs.org/guide/en/) feature exposed and fully supported by [Vite](https://vitejs.dev/). When you see imports that start with `/dx:`, you know a Fastify DX virtual module is being used.
 
-Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:base.jsx` virtual module to provide the React Router shell of your application. If you copy the `base.jsx` file [from the fastify-dx-react package](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/base.jsx) and place it your Vite project root, **that copy of the file is used instead**.
+Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:root.jsx` virtual module to provide the React Router shell of your application. If you copy the `root.jsx` file [from the fastify-dx-react package](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/root.jsx) and place it your Vite project root, **that copy of the file is used instead**. In fact, the starter template already comes with a custom `root.jsx` of its own to include UnoCSS.
 
-The starter template comes with two virtual modules already ejected and part of the local project — `context.js` and `layout.jsx`, because they **are supposed to be user-provided** anyway. If you absolutely don't need to customize them, you can safely removed them from your copy of the starter template.
+Aside from `root.jsx`, the starter template comes with two other virtual modules already ejected and part of the local project — `context.js` and `layouts/default.jsx`. If you don't need to customize them, you can safely removed them from your project.
 
-### `/dx:layout.jsx`
+### `/dx:root.jsx`
 
-This is the root layout React component. It's used internally by `/dx:base.jsx` and provided as part of the starter template. You can use this file to add a common layout to all routes, or just use it to add additional, custom context providers.
+This is the root React component. It's used internally by `/dx:create.jsx` and provided as part of the starter template. You can use this file to add a common layout to all routes, or just use it to add additional, custom context providers.
 
 The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
 
 ```jsx
 import 'virtual:uno.css'
 import { Suspense } from 'react'
+import { DXApp } from '/dx:core.jsx'
 
-export default function Layout ({ children }) {
+export default function Root ({ url, serverInit }) {
   return (
     <Suspense>
-      {children}
+      <DXApp url={url} {...serverInit} />
     </Suspense>
   )
 }
 ```
+
+Note that a top-level `<Suspense>` wrapper is necessary because Fastify DX has code-splitting enabled at the route-level. You can opt out of code-splitting by providing your own `routes.js` file, but that's very unlikely to be ever required for any reason.
 
 ### `/dx:routes.js`
 
@@ -40,7 +43,7 @@ export default import.meta.env.SSR
   : hydrateRoutes(import.meta.glob('$globPattern'))
 ```
 
-See [the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/base.jsx) for the `createRoutes()` and `hydrateRoutes()` definitions. 
+See [the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/routes.js) for the `createRoutes()` and `hydrateRoutes()` definitions. 
 
 If you want to use your own custom routes list, you must eject this file as-is and replace the glob imports with your own routes list:
 
@@ -57,38 +60,60 @@ export default import.meta.env.SSR
   : hydrateRoutes(routes)
 ````
 
-### `/dx:router.jsx`
+### `/dx:core.jsx`
 
-Implements the `BaseRouter` and `EnhancedRouter` components, both used by `base.jsx`, and also the `useRouteContext()` hook.
+Implements `useRouteContext()`, `DXApp` and `DXRoute`. 
 
-You'll want to customize this file if you want to set up your own [React Router](https://reactrouter.com/docs/en/v6) routes component layout to leverage [nested routing](https://reactrouter.com/docs/en/v6/getting-started/concepts#nested-routes).
+`DXApp` is imported by `root.jsx` and encapsulates Fastify DX's route component API.
 
-See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/router.jsx).
+> React Router's [nested routes](https://reactrouter.com/docs/en/v6/getting-started/concepts#nested-routes) aren't supported yet.
 
-### `/dx:base.jsx`
+See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/core.jsx).
 
-The `base.jx` virtual import holds your root React component. 
+### `/dx:create.jsx`
 
-This is where the [React Router](https://reactrouter.com/docs/en/v6) root component for your application is also set.
+This virtual module creates your root React component. 
+
+This is where `root.jsx` is imported.
 
 <b>You'll rarely need to customize this file.</b>
 
 ```jsx
-import React, { Suspense } from 'react'
-import { BaseRouter, EnhancedRouter } from '/dx:router.jsx'
+import Root from '/dx:root.jsx'
 
-export default function Base ({ url, ...routerSettings }) {
+export default function create ({ url, ...serverInit }) {
   return (
-    <BaseRouter location={url}>
-      <Suspense>
-        <EnhancedRouter {...routerSettings} />
-      </Suspense>
-    </BaseRouter>
+    <Root url={url} serverInit={serverInit} />
   )
 }
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/base.jsx).
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/create.jsx).
+
+### `/dx:layouts.js`
+
+This is responsible for loading **layout components**. It's used internally by `/dx:core.jsx`. If a project has no `layouts/default.jsx` file, the default one from Fastify DX is used. This virtual module works in conjunction with the `/dx:layouts/` virtual module which provides exports from the `/layouts` folder.
+
+<b>You'll rarely need to customize this file.</b>
+
+```jsx
+import { lazy } from 'react'
+
+const DefaultLayout = () => import('/dx:layouts/default.jsx')
+
+const appLayouts = import.meta.glob('/layouts/*.jsx')
+
+appLayouts['/layouts/default.jsx'] ??= DefaultLayout
+
+export default Object.fromEntries(
+  Object.keys(appLayouts).map((path) => {
+    const name = path.slice(9, -4)
+    return [name, lazy(appLayouts[path])]
+  })
+)
+```
+
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/create.jsx).
 
 ### `/dx:mount.js`
 
@@ -100,7 +125,7 @@ This is the file `index.html` links to by default. It sets up the application wi
 
 ### `/dx:resource.js`
 
-Provides the `waitResource()` and `waitFetch()` data fetching helpers implementing the [Suspense API](https://17.reactjs.org/docs/concurrent-mode-suspense.html). They're used by `/dx:router.jsx`.
+Provides the `waitResource()` and `waitFetch()` data fetching helpers implementing the [Suspense API](https://17.reactjs.org/docs/concurrent-mode-suspense.html). They're used by `/dx:core.jsx`.
 
 <b>You'll rarely need to customize this file.</b>
 

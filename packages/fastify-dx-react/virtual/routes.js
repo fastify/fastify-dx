@@ -68,7 +68,7 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
 async function hydrateRoutes (from) {
   if (Array.isArray(from)) {
     from = Object.fromEntries(
-      from.map((route) => [route.path, route])
+      from.map((route) => [route.path, route]),
     )
   }
   return window.routes.map((route) => {

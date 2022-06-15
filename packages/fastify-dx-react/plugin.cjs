@@ -18,7 +18,7 @@ function viteReactFastifyDX (config = {}) {
     'root.jsx',
     'layouts/',
     'context.js',
-    'router.jsx'
+    'core.jsx'
   ]
   virtualModules.includes = function (virtual) {
     if (!virtual) {
