@@ -42,3 +42,5 @@ Created by [Jonas Galvez](https://github.com/sponsors/galvez), **Engineering Man
 ## Sponsors
 
 <a href="https://nearform.com"><img width="200px" src="https://user-images.githubusercontent.com/12291/172310344-594669fd-da4c-466b-a250-a898569dfea3.svg"></a>
+
+Also [**Duc-Thien Bui**](https://github.com/aecea) and [**Tom Preston-Werner**](https://github.com/mojombo) [via GitHub Sponsors](https://github.com/sponsors/galvez). _Thank you!_
