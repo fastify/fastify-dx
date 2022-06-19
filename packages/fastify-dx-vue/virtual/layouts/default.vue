@@ -1,12 +1,10 @@
-// This file serves as a placeholder
-// if no layout.jsx file is provided
+<template>
+  <div class="layout">
+    <slot></slot>
+  </div>
+</template>
 
-import { Suspense } from 'react'
-
-export default function Layout ({ children }) {
-  return (
-    <Suspense>
-      {children}
-    </Suspense>
-  )
-}
+<script>
+// This file serves as a placeholder if no 
+// layouts/default.vue file is provided
+</script>

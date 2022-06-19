@@ -1,25 +1,27 @@
-import { Suspense } from 'react'
-import { useRouteContext } from '/dx:core.jsx'
-
-export default function Auth ({ children }) {
-  const { actions, state, snapshot } = useRouteContext()
-  const authenticate = () => actions.authenticate(state)
-  return (
-    <Suspense>
-      {snapshot.user.authenticated
-        ? children
-        : <Login onClick={() => authenticate()} /> }
-    </Suspense>
-  )
-}
-
-function Login ({ onClick }) {
-  return (
-    <>
+<template>
+  <div class="contents">
+    <template v-if="!state.user.authenticated">
       <p>This route needs authentication.</p>
-      <button onClick={onClick}>
+      <button @click="authenticate">
         Click this button to authenticate.
       </button>
-    </>
-  )
+    </template>
+    <slot v-else></slot>
+  </div>
+</template>
+
+<script>
+// This file serves as a placeholder if no 
+// layouts/default.vue file is provided
+import { useRouteContext } from '/dx:core.jsx'
+
+export default {
+  setup () {
+    const { actions, state } = useRouteContext()
+    return {
+      state,
+      authenticate: () => actions.authenticate(state)
+    }
+  }
 }
+</script>

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import { useRouteContext } from '/dx:core.js'
 
 export function getMeta () {
@@ -29,6 +30,7 @@ export function getMeta () {
 export default {
   setup () {
     const inputValue = ref(null)
+    console.log('useRouteContext()', useRouteContext())
     const { state, actions } = useRouteContext()
     const addItem = async (value) => {
       await actions.addTodoItem(state, value)

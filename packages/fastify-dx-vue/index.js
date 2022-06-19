@@ -57,7 +57,7 @@ export function createHtmlFunction (source, scope, config) {
   const soHeadTemplate = createHtmlTemplateFunction(soHeadSource)
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
-  return function ({ routes, context, body }) {
+  return function ({ routes, context, body, stream }) {
     // Initialize hydration, which can stay empty if context.serverOnly is true
     let hydration = ''
     // Decide which templating functions to use, with and without hydration
@@ -77,6 +77,7 @@ export function createHtmlFunction (source, scope, config) {
     // Create readable stream with prepended and appended chunks
     const readable = Readable.from(generateHtmlStream({
       body,
+      stream,
       head: headTemplate({ ...context, head, hydration }),
       footer: footerTemplate(context),
     }))
@@ -93,6 +94,7 @@ export async function createRenderFunction ({ routes, create }) {
     const routeMap = Object.fromEntries(routes.toJSON().map((route) => {
       return [route.path, route]
     }))
+    let stream = null
     let body = null
     // Creates main Vue component with all the SSR context it needs
     if (!req.route.clientOnly) {
@@ -102,14 +104,15 @@ export async function createRenderFunction ({ routes, create }) {
         ctxHydration: req.route,
         url: req.url,
       })
-      body = req.route.streaming
-        ? renderToString(app.instance, app.ctx)
-        : renderToNodeStream(app.instance, app.ctx)
+      if (req.route.streaming) {
+        stream = renderToNodeStream(app.instance, app.ctx)
+      } else {
+        body = renderToString(app.instance, app.ctx)
+      }
     }
     // Perform SSR, i.e., turn app.instance into an HTML fragment
     // The SSR context data is passed along so it can be inlined for hydration
-    console.log('req.route', req.route)
-    return { routes, context: req.route, body }
+    return { routes, context: req.route, body, stream }
   }
 }
 

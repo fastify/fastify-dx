@@ -1,9 +1,10 @@
-import { Suspense } from 'react'
+<template>
+  <div class="contents">
+    <slot></slot>
+  </div>
+</template>
 
-export default function Default ({ children }) {
-  return (
-    <Suspense>
-      {children}
-    </Suspense>
-  )
-}
+<script>
+// This file serves as a placeholder if no 
+// layouts/default.vue file is provided
+</script>

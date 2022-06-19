@@ -13,7 +13,7 @@ function viteVueFastifyDX (config = {}) {
     'mount.js', 
     'resource.js',
     'routes.js',
-    'layouts.js',
+    'layout.vue',
     'create.js',
     'root.vue',
     'layouts/',
@@ -74,7 +74,7 @@ function viteVueFastifyDX (config = {}) {
   }
 
   return {
-    name: 'vite-plugin-react-fastify-dx',
+    name: 'vite-plugin-vue-fastify-dx',
     config (config, { command }) {
       if (command === 'build' && config.build?.ssr) {
         config.build.rollupOptions = {

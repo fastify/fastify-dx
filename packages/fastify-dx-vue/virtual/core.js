@@ -1,37 +1,71 @@
-import { inject } from 'vue'
+import {
+  inject
+} from 'vue'
+
 import { 
-  useRoute,
+  useRoute, 
   createRouter, 
   createMemoryHistory, 
-  createWebHistory
+  createWebHistory 
 } from 'vue-router'
+
 // import layouts from '/dx:layouts.js'
-// 
-const isServer = typeof process === 'object'
 
-export const createHistory = isServer
-  ? createMemoryHistory
-  : createWebHistory
-
-// export const RouteContext = createContext({})
+export const isServer = typeof process === 'object'
+export const createHistory = isServer ? createMemoryHistory : createWebHistory
+export const serverRouteContext = Symbol('serverRouteContext')
 
 export function useRouteContext () {
   if (isServer) {
-    const ctxHydration = inject('ctxHydration')
-    console.log('ctxHydration', ctxHydration)
-    return ctxHydration
+    return inject(serverRouteContext)
   } else {
-    const route = useRoute()
-    return route.meta
+    return useRoute().meta[serverRouteContext]
   }
 }
 
-  // url,
-  // routes,
-  // head,
-  // routeMap,
-  // ctxHydration,
-
+export function createBeforeEachHandler ({ state, routeMap, ctxHydration, head }) {
+  return async function beforeCreate (to) {
+    // The client-side route context
+    const ctx = routeMap[to.matched[0].path]
+    // Indicates whether or not this is a first render on the client
+    ctx.firstRender = ctxHydration.firstRender
+    // If it is, take server context data from hydration and return immediately
+    if (ctx.firstRender) {
+      ctx.data = ctxHydration.data
+      ctx.head = ctxHydration.head
+      // Ensure this block doesn't run again during client-side navigation
+      ctxHydration.firstRender = false
+      to.meta = ctx
+      return
+    }
+    // Make state available to the client route context
+    ctx.state = ctxHydration.state
+    // If we have a getData function registered for this route
+    if (ctx.getData) {
+      try {
+        ctx.data = await jsonDataFetch(to.fullPath)
+      } catch (error) {
+        ctx.error = error
+      }
+    }
+    // Note that ctx.loader() at this point will resolve the
+    // memoized module, so there's barely any overhead
+    const { getMeta, onEnter } = await ctx.loader()
+    if (ctx.getMeta) {
+      head.update(await getMeta(ctx))
+    }
+    if (ctx.onEnter) {
+      const updatedData = await onEnter(ctx)
+      if (updatedData) {
+        if (!ctx.data) {
+          ctx.data = {}
+        }
+        Object.assign(ctx.data, updatedData)
+      }
+    }
+    to.meta[serverRouteContext] = ctx
+  }
+}
 
 export async function jsonDataFetch (path) {
   const response = await fetch(`/-/data${path}`)
@@ -49,70 +83,4 @@ export async function jsonDataFetch (path) {
     throw error
   }
   return data
-}
-
-export function createBeforeEachHandler ({
-  head, 
-  ctxHydration, 
-  routeMap,
-}) {
-  // ctx, 
-  return (to, from) => {
-    // Note that on the client, window.route === ctxHydration
-
-    // Indicates whether or not this is a first render on the client
-    ctx.firstRender = window.route.firstRender
-
-    // If running on the client, the server context data
-    // is still available from the window.route hydration
-    if (ctx.firstRender) {
-      ctx.data = window.route.data
-      ctx.head = window.route.head
-      // Clear hydration so all URMA hooks 
-      // start running client-side
-      window.route.firstRender = false
-    }
-
-    const ctx = routeMap[to.matched[0].path]
-    to.meta.layout = ctx.layout
- 
-    // If we have a getData function registered for this route
-    if (!ctx.data && ctx.getData) {
-      // try {
-      //   const { pathname, search } = location
-      //   // If not, fetch data from the JSON endpoint
-      //   ctx.data = waitFetch(`${pathname}${search}`)
-      // } catch (status) {
-      //   // If it's an actual error...
-      //   if (status instanceof Error) {
-      //     ctx.error = status
-      //   }
-      //   // If it's just a promise (suspended state)
-      //   throw status
-      // }
-    }
-
-    // Note that ctx.loader() at this point will resolve the
-    // memoized module, so there's barely any overhead
-
-    if (!ctx.firstRender && ctx.getMeta) {
-      // const updateMeta = async () => {
-      //   const { getMeta } = await ctx.loader()
-      //   head.update(await getMeta(ctx))
-      // }
-      // waitResource(path, 'updateMeta', updateMeta)
-    }
-
-    if (!ctx.firstRender && ctx.onEnter) {
-      // const runOnEnter = async () => {
-      //   const { onEnter } = await ctx.loader()
-      //   const updatedData = await onEnter(ctx)
-      //   if (!ctx.data) {
-      //     ctx.data = {}
-      //   }
-      //   Object.assign(ctx.data, updatedData)
-      // }
-      // waitResource(path, 'onEnter', runOnEnter)
-    }
-  }
 }

@@ -1,11 +1,11 @@
 import Head from 'unihead/client'
 import create from '/dx:create.js'
 import routesPromise from '/dx:routes.js'
+import * as context from '/dx:context.js'
 
 mount('main')
 
 async function mount (target) {
-  const context = await import('/dx:context.js')
   const ctxHydration = await extendContext(window.route, context)
   const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await routesPromise

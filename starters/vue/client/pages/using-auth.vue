@@ -31,7 +31,7 @@ export function getMeta () {
 
 export default {
   setup () {
-    const {snapshot, state, actions} = useRouteContext()
+    const {state, actions} = useRouteContext()
     const [input, setInput] = useState(null)
     const addItem = async (value) => {
       await actions.addTodoItem(state, value)
