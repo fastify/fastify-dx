@@ -1,6 +1,0 @@
-{
-  "name": "fastify-dx-vue",
-  "version": "0.0.0",
-  "files": ["index.js"],
-  "license": "MIT"
-}
