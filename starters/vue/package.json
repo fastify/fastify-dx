@@ -35,7 +35,8 @@
     },
     "external": {
       "fastify-vite": "^3.0.0-beta.23",
-      "ky-universal": "^0.10.1"
+      "ky-universal": "^0.10.1",
+      "@vueuse/core": "^8.7.4"
     }
   }
 }

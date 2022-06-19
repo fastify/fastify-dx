@@ -1,13 +1,5 @@
-import {
-  inject
-} from 'vue'
-
-import { 
-  useRoute, 
-  createRouter, 
-  createMemoryHistory, 
-  createWebHistory 
-} from 'vue-router'
+import { inject } from 'vue'
+import { useRoute, createMemoryHistory, createWebHistory } from 'vue-router'
 
 export const isServer = typeof process === 'object'
 export const createHistory = isServer ? createMemoryHistory : createWebHistory
@@ -24,7 +16,7 @@ export function useRouteContext () {
 export function createBeforeEachHandler ({
   routeMap,
   ctxHydration,
-  head
+  head,
 }) {
   return async function beforeCreate (to) {
     // The client-side route context
@@ -83,7 +75,7 @@ export async function jsonDataFetch (path) {
     error = err
   }
   if (data?.statusCode === 500) {
-    throw new Error(loader.data.message)
+    throw new Error(data.message)
   }
   if (error) {
     throw error
