@@ -30,10 +30,9 @@ export function getMeta () {
 export default {
   setup () {
     const inputValue = ref(null)
-    console.log('useRouteContext()', useRouteContext())
     const { state, actions } = useRouteContext()
-    const addItem = async (value) => {
-      await actions.addTodoItem(state, value)
+    const addItem = async () => {
+      await actions.addTodoItem(state, inputValue.value)
       inputValue.value = ''
     }
     return { state, inputValue, addItem }

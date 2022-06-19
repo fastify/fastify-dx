@@ -4,10 +4,13 @@
 
 <script>
 export default {
-	async setup () {
-	  const message = await afterSeconds({
-	  	message: 'Delay with Suspense API',
-	  	seconds: 5
+	props: {
+		secs: Number,
+	},
+	async setup (props) {
+		const message = await afterSeconds({
+	  	message: 'Delayed as an asynchronous component',
+	  	seconds: props.secs
 	  })
 		return { message }
 	}

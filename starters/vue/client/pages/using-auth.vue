@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import { useRouteContext } from '/dx:core.js'
 
 export const layout = 'auth'
@@ -31,13 +32,13 @@ export function getMeta () {
 
 export default {
   setup () {
+    const inputValue = ref(null)
     const {state, actions} = useRouteContext()
-    const [input, setInput] = useState(null)
-    const addItem = async (value) => {
-      await actions.addTodoItem(state, value)
-      input.value = ''
+    const addItem = async () => {
+      await actions.addTodoItem(state, inputValue.value)
+      inputValue.value = ''
     }
-    return { state, addItem }
+    return { state, inputValue, addItem }
   }
 }
 </script>

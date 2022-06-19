@@ -1,10 +1,7 @@
 <template>
-	<Suspense>
-		<Message />
-		<template #fallback>
-			<p>Waiting for content</p>
-		</template>
-	</Suspense>
+	<Message :secs="2" />
+	<Message :secs="4" />
+	<Message :secs="6" />
 </template>
 
 <script>

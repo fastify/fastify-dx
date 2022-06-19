@@ -9,8 +9,6 @@ import {
   createWebHistory 
 } from 'vue-router'
 
-// import layouts from '/dx:layouts.js'
-
 export const isServer = typeof process === 'object'
 export const createHistory = isServer ? createMemoryHistory : createWebHistory
 export const serverRouteContext = Symbol('serverRouteContext')
@@ -23,23 +21,31 @@ export function useRouteContext () {
   }
 }
 
-export function createBeforeEachHandler ({ state, routeMap, ctxHydration, head }) {
+export function createBeforeEachHandler ({
+  routeMap,
+  ctxHydration,
+  head
+}) {
   return async function beforeCreate (to) {
     // The client-side route context
     const ctx = routeMap[to.matched[0].path]
     // Indicates whether or not this is a first render on the client
     ctx.firstRender = ctxHydration.firstRender
+
+    ctx.state = ctxHydration.state
+    ctx.actions = ctxHydration.actions
+    ctx.layout ??= 'default'
+
     // If it is, take server context data from hydration and return immediately
     if (ctx.firstRender) {
       ctx.data = ctxHydration.data
       ctx.head = ctxHydration.head
       // Ensure this block doesn't run again during client-side navigation
       ctxHydration.firstRender = false
-      to.meta = ctx
+      to.meta[serverRouteContext] = ctx
       return
     }
-    // Make state available to the client route context
-    ctx.state = ctxHydration.state
+
     // If we have a getData function registered for this route
     if (ctx.getData) {
       try {

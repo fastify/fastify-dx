@@ -18,6 +18,7 @@ export default async function create (ctx) {
   const history = createHistory()
   const router = createRouter({ history, routes })
   
+  ctxHydration.layout ??= 'default'
   ctxHydration.state = reactive(ctxHydration.state)
 
   if (isServer) {

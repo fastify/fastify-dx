@@ -1,6 +1,6 @@
 <template>
-  <div class="contents">
-    <slot></slot>
+  <div class="layout">
+    <slot />
   </div>
 </template>
 

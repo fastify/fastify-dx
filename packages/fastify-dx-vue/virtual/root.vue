@@ -1,21 +1,19 @@
+<script setup>
+import Layout from '/dx:layout.vue'
+import { useRouteContext } from '/dx:core.js'
+
+const { layout } = useRouteContext()
+</script>
+
 <template>
   <router-view v-slot="{ Component }">
-    <suspense>
-      <Layout v-model="$route.layout">
+    <Suspense>
+      <Layout :name="layout">
         <component
           :is="Component"
           :key="$route.path"
         />
       </Layout>
-    </suspense>
+    </Suspense>
   </router-view>
 </template>
-
-<script>
-import 'uno.css'
-import Layout from '/dx:layout.vue'
-
-export default { 
-  components: { Layout },
-}
-</script>

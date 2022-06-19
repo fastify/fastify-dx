@@ -10,7 +10,6 @@ export async function * generateHtmlStream ({ head, body, stream, footer }) {
     yield body
   }
   if (stream) {
-    console.log('Streaming!')
     for await (const chunk of await stream) {
       yield chunk
     }
