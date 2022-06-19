@@ -12,6 +12,7 @@
   "dependencies": {
     "fastify-vite": "^3.0.0-beta.23",
     "ky-universal": "^0.10.1",
+    "@vueuse/core": "^8.7.4",
     "@vue/server-renderer": "^3.2.33",
     "devalue": "^2.0.1",
     "vue-router": "^4.0.15",

@@ -38,10 +38,9 @@ export function getData ({ server }) {
 
 export default {
   setup () {
-    const routeContext = useRouteContext()
-    console.log('->routeContext->', routeContext)
+    const { data } = useRouteContext()
     const inputValue = ref(null)
-    const todoList = reactive(routeContext.data.todoList)
+    const todoList = reactive(data.todoList)
     const addItem = () => {
       todoList.push(inputValue.value)
       inputValue.value = ''

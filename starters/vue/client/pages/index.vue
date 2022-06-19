@@ -6,7 +6,7 @@
     leverage the <code>getData()</code> function 
     and <code>useRouteContext()</code> to retrieve server data for a route.</li>
     <li><router-link to="/using-store">/using-store</router-link> demonstrates how to 
-    retrieve server data and maintain it in the global state (automatically hydrated).</li>
+    retrieve server data and maintain it in the global state.</li>
     <li><router-link to="/using-auth">/using-auth</router-link> demonstrates how to 
     wrap a route in a custom layout component.</li>
     <li><router-link to="/client-only">/client-only</router-link> demonstrates how to set 

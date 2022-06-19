@@ -9,8 +9,8 @@ const path = fileURLToPath(import.meta.url)
 
 const root = join(dirname(path), 'client')
 const plugins = [
-  unocss(),
   viteVue(), 
+  unocss(),
   viteVueFastifyDX(),
 ]
 

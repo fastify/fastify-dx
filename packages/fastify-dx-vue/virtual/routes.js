@@ -71,7 +71,6 @@ async function hydrateRoutes (from) {
   }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
-    console.log('from[route.id]', from[route.id])
     route.component = from[route.id]
     return route
   })
