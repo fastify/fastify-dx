@@ -2,7 +2,7 @@
   <h2>Todo List — Using Data</h2>
   <ul>
     <li 
-      v-for="(item, i) in state.todoList"
+      v-for="(item, i) in todoList"
       :key="`item-${i}`">
       {{ item }}
     </li>
@@ -12,17 +12,18 @@
     <button @click="addItem">Add</button>
   </div>
   <p>
-    <Link to="/">Go back to the index</Link>
+    <router-link to="/">Go back to the index</router-link>
   </p>
   <p>⁂</p>
   <p>When you navigate away from this route, any additions to the to-do 
   list will be lost, because they're bound to this route component only.</p>
-  <p>See the <Link to="/using-store">/using-store</Link> example to learn 
+  <p>See the <router-link to="/using-store">/using-store</router-link> example to learn 
   how to use the application global state for it.
   </p>
 </template>
 
 <script>
+import { ref, reactive } from 'vue'
 import { useRouteContext } from '/dx:core.js'
 
 export function getMeta () {
@@ -37,10 +38,15 @@ export function getData ({ server }) {
 
 export default {
   setup () {
-    const {data} = useRouteContext()
-    const addItem = async (value) => {
+    const routeContext = useRouteContext()
+    console.log('->routeContext->', routeContext)
+    const inputValue = ref(null)
+    const todoList = reactive(routeContext.data.todoList)
+    const addItem = () => {
+      todoList.push(inputValue.value)
+      inputValue.value = ''
     }
-    return { data, addItem }
+    return { inputValue, todoList, addItem }
   }
 }
 </script>

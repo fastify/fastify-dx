@@ -12,13 +12,14 @@ async function mount (target) {
   const routeMap = Object.fromEntries(
     resolvedRoutes.map((route) => [route.path, route]),
   )
-  const { instance: app } = await create({
+  const { instance, router } = await create({
     head,
     ctxHydration,
     routes: window.routes,
     routeMap,
   })
-  app.mount(target)
+  await router.isReady()
+  instance.mount(target)
 }
 
 async function extendContext (ctx, {

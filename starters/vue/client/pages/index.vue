@@ -1,7 +1,5 @@
 <template>
-  <div>
   <h1>Welcome to Fastify DX for Vue!</h1>
-  <!--
   <p><img :src="logo" /></p>
   <ul class="columns-2">
     <li><router-link to="/using-data">/using-data</router-link> demonstrates how to 
@@ -21,8 +19,6 @@
     <li><router-link to="/streaming">/streaming</router-link> demonstrates how to set 
     up a route for SSR in streaming mode.</li>
   </ul>
--->
-  </div>
 </template>
 
 <script setup>

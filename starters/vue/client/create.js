@@ -6,7 +6,7 @@ import root from '/dx:root.vue'
 const isServer = import.meta.env.SSR
 
 export default async function create (ctx) {
-  const { url, routes, ctxHydration, routeMap } = ctx
+  const { url, routes, head, ctxHydration, routeMap } = ctx
 
   const instance = ctxHydration.clientOnly
     ? createApp(root)
@@ -20,6 +20,7 @@ export default async function create (ctx) {
     instance.provide('ctxHydration', ctxHydration)
   } else {
     router.beforeEach(async (to) => {
+      console.log('wtf')
       // The client-side route context
       const ctx = routeMap[to.matched[0].path]
 
@@ -42,11 +43,31 @@ export default async function create (ctx) {
           // If not, fetch data from the JSON endpoint
           ctx.data = await jsonDataFetch(to.fullPath)
         } catch (error) {
+          console.error(error)
           ctx.error = error
         }
       }
 
-      to.meta.ctxHydration = ctxHydration
+      // Note that ctx.loader() at this point will resolve the
+      // memoized module, so there's barely any overhead
+
+      if (!ctx.firstRender && ctx.getMeta) {
+        const { getMeta } = await ctx.loader()
+        head.update(await getMeta(ctx))
+      }
+
+      if (!ctx.firstRender && ctx.onEnter) {
+        const { onEnter } = await ctx.loader()
+        const updatedData = await onEnter(ctx)
+        if (updatedData) {
+          if (!ctx.data) {
+            ctx.data = {}
+          }
+          Object.assign(ctx.data, updatedData)
+        }
+      }
+
+      to.meta = ctx
     })
   }
 

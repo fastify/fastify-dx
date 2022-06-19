@@ -1,16 +1,9 @@
 <template>
-  <div>
-  <!--router-view v-slot="{ Component }">
+  <router-view v-slot="{ Component }">
     <suspense>
-      <div class="layout">
-        <component
-          :is="Component"
-          :key="$route.path" />
-      </div>
+      <component :is="Component"  />
     </suspense>
-  </router-view-->
-  <p>hello</p>
-  </div>
+  </router-view>
 </template>
 
 <script>

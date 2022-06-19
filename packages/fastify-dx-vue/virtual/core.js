@@ -1,4 +1,10 @@
-import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
+import { inject } from 'vue'
+import { 
+  useRoute,
+  createRouter, 
+  createMemoryHistory, 
+  createWebHistory
+} from 'vue-router'
 // import layouts from '/dx:layouts.js'
 // 
 const isServer = typeof process === 'object'
@@ -10,11 +16,14 @@ export const createHistory = isServer
 // export const RouteContext = createContext({})
 
 export function useRouteContext () {
-  // const routeContext = useContext(RouteContext)
-  // if (routeContext.state) {
-  //   routeContext.snapshot = useSnapshot(routeContext.state)
-  // }
-  // return routeContext
+  if (isServer) {
+    const ctxHydration = inject('ctxHydration')
+    console.log('ctxHydration', ctxHydration)
+    return ctxHydration
+  } else {
+    const route = useRoute()
+    return route.meta
+  }
 }
 
   // url,
@@ -22,6 +31,25 @@ export function useRouteContext () {
   // head,
   // routeMap,
   // ctxHydration,
+
+
+export async function jsonDataFetch (path) {
+  const response = await fetch(`/-/data${path}`)
+  let data
+  let error
+  try {
+    data = await response.json()
+  } catch (err) {
+    error = err
+  }
+  if (data?.statusCode === 500) {
+    throw new Error(loader.data.message)
+  }
+  if (error) {
+    throw error
+  }
+  return data
+}
 
 export function createBeforeEachHandler ({
   head, 
@@ -36,14 +64,17 @@ export function createBeforeEachHandler ({
     ctx.firstRender = window.route.firstRender
 
     // If running on the client, the server context data
-    // is still available, hydrated from window.route
+    // is still available from the window.route hydration
     if (ctx.firstRender) {
       ctx.data = window.route.data
       ctx.head = window.route.head
+      // Clear hydration so all URMA hooks 
+      // start running client-side
+      window.route.firstRender = false
     }
 
-    const ctx = routeMap[to.path]
-    to.meta.layout = ctx.layout   
+    const ctx = routeMap[to.matched[0].path]
+    to.meta.layout = ctx.layout
  
     // If we have a getData function registered for this route
     if (!ctx.data && ctx.getData) {
