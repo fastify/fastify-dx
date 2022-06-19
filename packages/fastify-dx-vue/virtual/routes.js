@@ -1,7 +1,5 @@
 /* global $paramPattern */
 
-import { lazy } from 'react'
-
 export default import.meta.env.SSR
   ? createRoutes(import.meta.globEager('$globPattern'))
   : hydrateRoutes(import.meta.glob('$globPattern'))
@@ -73,7 +71,8 @@ async function hydrateRoutes (from) {
   }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
-    route.component = lazy(() => route.loader())
+    console.log('from[route.id]', from[route.id])
+    route.component = from[route.id]
     return route
   })
 }

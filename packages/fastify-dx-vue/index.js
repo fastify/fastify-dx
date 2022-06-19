@@ -6,6 +6,9 @@ import { Readable } from 'stream'
 // and returns a function with the generated code
 import { createHtmlTemplateFunction } from 'fastify-vite'
 
+// Vue 3's SSR functions
+import { renderToString, renderToNodeStream } from '@vue/server-renderer'
+
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
 import devalue from 'devalue'
@@ -16,7 +19,7 @@ import Head from 'unihead'
 
 // Helpers from the Node.js stream library to
 // make it easier to work with renderToPipeableStream()
-import { generateHtmlStream, onAllReady, onShellReady } from './server/stream.js'
+import { generateHtmlStream } from './server/stream.js'
 
 // Holds the universal route context
 import RouteContext from './server/context.js'
@@ -54,7 +57,7 @@ export function createHtmlFunction (source, scope, config) {
   const soHeadTemplate = createHtmlTemplateFunction(soHeadSource)
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
-  return function ({ routes, context, body }) {
+  return function ({ routes, context, body, stream }) {
     // Initialize hydration, which can stay empty if context.serverOnly is true
     let hydration = ''
     // Decide which templating functions to use, with and without hydration
@@ -73,11 +76,8 @@ export function createHtmlFunction (source, scope, config) {
     const head = new Head(context.head).render()
     // Create readable stream with prepended and appended chunks
     const readable = Readable.from(generateHtmlStream({
-      body: body && (
-        context.streaming
-          ? onShellReady(body)
-          : onAllReady(body)
-      ),
+      body,
+      stream,
       head: headTemplate({ ...context, head, hydration }),
       footer: footerTemplate(context),
     }))
@@ -89,27 +89,36 @@ export function createHtmlFunction (source, scope, config) {
 
 export async function createRenderFunction ({ routes, create }) {
   // create is exported by client/index.js
-  return function (req) {
+  return async function (req) {
     // Create convenience-access routeMap
     const routeMap = Object.fromEntries(routes.toJSON().map((route) => {
       return [route.path, route]
     }))
-    // Creates main React component with all the SSR context it needs
-    const app = !req.route.clientOnly && create({
-      routes,
-      routeMap,
-      ctxHydration: req.route,
-      url: req.url,
-    })
+    let stream = null
+    let body = null
+    // Creates main Vue component with all the SSR context it needs
+    if (!req.route.clientOnly) {
+      const app = await create({
+        routes,
+        routeMap,
+        ctxHydration: req.route,
+        url: req.url,
+      })
+      if (req.route.streaming) {
+        stream = renderToNodeStream(app.instance, app.ctx)
+      } else {
+        body = renderToString(app.instance, app.ctx)
+      }
+    }
     // Perform SSR, i.e., turn app.instance into an HTML fragment
     // The SSR context data is passed along so it can be inlined for hydration
-    return { routes, context: req.route, body: app }
+    return { routes, context: req.route, body, stream }
   }
 }
 
 export function createRouteHandler (client, scope, config) {
-  return function (req, reply) {
-    reply.html(reply.render(req))
+  return async function (req, reply) {
+    reply.html(await reply.render(req))
     return reply
   }
 }

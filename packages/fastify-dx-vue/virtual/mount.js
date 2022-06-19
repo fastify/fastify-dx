@@ -1,34 +1,25 @@
 import Head from 'unihead/client'
-import { createRoot, hydrateRoot } from 'react-dom/client'
-
-import create from '/dx:create.jsx'
+import create from '/dx:create.js'
 import routesPromise from '/dx:routes.js'
+import * as context from '/dx:context.js'
 
 mount('main')
 
 async function mount (target) {
-  if (typeof target === 'string') {
-    target = document.querySelector(target)
-  }
-  const context = await import('/dx:context.js')
   const ctxHydration = await extendContext(window.route, context)
   const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await routesPromise
   const routeMap = Object.fromEntries(
     resolvedRoutes.map((route) => [route.path, route]),
   )
-
-  const app = create({
+  const { instance, router } = await create({
     head,
     ctxHydration,
     routes: window.routes,
     routeMap,
   })
-  if (ctxHydration.clientOnly) {
-    createRoot(target).render(app)
-  } else {
-    hydrateRoot(target, app)
-  }
+  await router.isReady()
+  instance.mount(target)
 }
 
 async function extendContext (ctx, {
