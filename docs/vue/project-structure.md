@@ -34,7 +34,7 @@ In this case, placing a file with the same name as the registered virtual module
 
 [virtual-modules]: https://github.com/fastify/fastify-dx/blob/main/docs/vue/virtual-modules.md
 
-The `server.js` file is your application entry point. It's the file that runs everything. It boots a Fastify server configured with [**fastify-vite**](https://github.com/fastify/fastify-vite) and **Fastify DX for React** as a renderer adapter to **fastify-vite**. 
+The `server.js` file is your application entry point. It's the file that runs everything. It boots a Fastify server configured with [**fastify-vite**](https://github.com/fastify/fastify-vite) and **Fastify DX for Vue** as a renderer adapter to **fastify-vite**. 
 
 The `client/index.js` file is your Vite server entry point, it's the file that provides your client bundle (which runs in the Vite-enriched environment) to the Node.js environment where Fastify runs. 
 
@@ -54,7 +54,7 @@ The `client/pages/` directory contains your route modules, whose paths are dynam
 
 [routing-config]: https://github.com/fastify/fastify-dx/blob/main/docs/vue/routing-config.md
 
-The `client/layouts/` directory contains your route layout modules, which can be associated to any route. By default, `layouts/default.jsx` is used, but if you don't need to do any modifications on that file, you can safely removed as it's provided by Fastify DX in that case. The starter template also comes with `layouts/auth.jsx`, to demonstrate a more advanced use of layouts.
+The `client/layouts/` directory contains your route layout modules, which can be associated to any route. By default, `layouts/default.vue` is used, but if you don't need to do any modifications on that file, you can safely removed as it's provided by Fastify DX in that case. The starter template also comes with `layouts/auth.vue`, to demonstrate a more advanced use of layouts.
 
 [routing-config]: https://github.com/fastify/fastify-dx/blob/main/docs/vue/routing-config.md
 
