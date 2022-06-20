@@ -8,8 +8,8 @@
 import { defineAsyncComponent, inject } from 'vue'
 import { routeLayout } from '/dx:core.js'
 
-const DefaultLayout = () => import('/dx:layouts/default.vue')
-const appLayouts = import.meta.glob('/layouts/*.vue')
+import * as DefaultLayout from '/dx:layouts/default.vue'
+const appLayouts = import.meta.globEager('/layouts/*.vue')
 
 appLayouts['/layouts/default.vue'] ??= DefaultLayout
 
@@ -20,7 +20,7 @@ export default {
   components: Object.fromEntries(
     Object.keys(appLayouts).map((path) => {
       const name = path.slice(9, -4)
-      return [name, defineAsyncComponent(appLayouts[path])]
+      return [name, appLayouts[path].default]
     })
   )
 }

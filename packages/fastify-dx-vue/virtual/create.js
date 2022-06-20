@@ -7,14 +7,14 @@ import {
   routeLayout,
   createBeforeEachHandler,
 } from '/dx:core.js'
-import root from '/dx:root.vue'
+import * as root from '/dx:root.vue'
 
 export default async function create (ctx) {
   const { routes, ctxHydration } = ctx
 
   const instance = ctxHydration.clientOnly
-    ? createApp(root)
-    : createSSRApp(root)
+    ? createApp(root.default)
+    : createSSRApp(root.default)
 
   const history = createHistory()
   const router = createRouter({ history, routes })
@@ -30,6 +30,10 @@ export default async function create (ctx) {
   }
 
   instance.use(router)
+
+  if (root.configure) {
+    await root.configure(instance)
+  }
 
   if (ctx.url) {
     router.push(ctx.url)
