@@ -12,7 +12,7 @@ It receives the [universal route context][route-context] as first parameter, so 
 
 [route-context]: https://github.com/fastify/fastify-dx/blob/main/docs/vue/route-context.md
 
-```vue
+```html
 <template>
   <p>No pre-rendered HTML sent to the browser.</p>
 </template>
