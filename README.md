@@ -11,7 +11,7 @@ In this early stage, we're working to define a [**Universal Route Module API**](
 <tr>
 <td width="200px" valign="top">
 
-### [fastify-dx-react](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-react)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) 
+### [fastify-dx-react](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-dx-react)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) 
  
 </td>
 <td width="500px"><br>
@@ -27,7 +27,7 @@ Try out the [**alpha release** of Fastify DX for React](https://github.com/fasti
 <tr>
 <td width="200px" valign="top">
 
-### [fastify-dx-vue](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-vue)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-vue.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-vue) 
+### [fastify-dx-vue](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-dx-vue)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-vue.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-vue) 
  
 </td>
 <td width="500px"><br>
