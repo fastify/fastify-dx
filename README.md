@@ -14,16 +14,30 @@ In this early stage, we're working to define a [**Universal Route Module API**](
 ### [fastify-dx-react](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-react)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) 
  
 </td>
-<td><br>
+<td width="500px"><br>
 
-You can already try out the [**alpha release** of Fastify DX for React](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md).
+Try out the [**alpha release** of Fastify DX for React](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md).
 
-<a href="https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md"><img width="1081" alt="Screen Shot 2022-06-07 at 02 14 16" src="https://user-images.githubusercontent.com/12291/172301052-2c6dc772-24bb-4f0a-bc2e-b2ce14ab6c52.png"></a>
+</td>
+</tr>
+</table>
 
-It's the reference implementation for the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
+
+<table>
+<tr>
+<td width="200px" valign="top">
+
+### [fastify-dx-vue](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-vue)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-vue.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-vue) 
+ 
+</td>
+<td width="500px"><br>
+
+Try out the [**alpha release** of Fastify DX for Vue](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md).
+
 </td>
 </tr>
 </table>  
+
 
 ## Status
 
