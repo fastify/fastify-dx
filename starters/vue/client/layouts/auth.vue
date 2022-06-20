@@ -2,7 +2,7 @@
   <div class="contents">
     <template v-if="!state.user.authenticated">
       <p>This route needs authentication.</p>
-      <button @click="authenticate">
+      <button @click="actions.authenticate(state)">
         Click this button to authenticate.
       </button>
     </template>
@@ -10,16 +10,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { useRouteContext } from '/dx:core.js'
-
-export default {
-  setup () {
-    const { actions, state } = useRouteContext()
-    return {
-      state,
-      authenticate: () => actions.authenticate(state)
-    }
-  }
-}
+const { actions, state } = useRouteContext()
 </script>
