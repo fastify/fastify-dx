@@ -4,6 +4,7 @@ import { useRoute, createMemoryHistory, createWebHistory } from 'vue-router'
 export const isServer = typeof process === 'object'
 export const createHistory = isServer ? createMemoryHistory : createWebHistory
 export const serverRouteContext = Symbol('serverRouteContext')
+export const routeLayout = Symbol('routeLayout')
 
 export function useRouteContext () {
   if (isServer) {
@@ -13,11 +14,7 @@ export function useRouteContext () {
   }
 }
 
-export function createBeforeEachHandler ({
-  routeMap,
-  ctxHydration,
-  head,
-}) {
+export function createBeforeEachHandler ({ routeMap, ctxHydration, head }, layout) {
   return async function beforeCreate (to) {
     // The client-side route context
     const ctx = routeMap[to.matched[0].path]
@@ -26,7 +23,9 @@ export function createBeforeEachHandler ({
 
     ctx.state = ctxHydration.state
     ctx.actions = ctxHydration.actions
-    ctx.layout ??= 'default'
+
+    // Update layoutRef
+    layout.value = ctx.layout ?? 'default'
 
     // If it is, take server context data from hydration and return immediately
     if (ctx.firstRender) {

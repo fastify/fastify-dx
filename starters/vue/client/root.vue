@@ -4,15 +4,12 @@ import 'uno.css'
 
 <script setup>
 import Layout from '/dx:layout.vue'
-import { useRouteContext } from '/dx:core.js'
-
-const { layout } = useRouteContext()
 </script>
 
 <template>
   <router-view v-slot="{ Component }">
     <Suspense>
-      <Layout :name="layout">
+      <Layout>
         <component
           :is="Component"
           :key="$route.path"

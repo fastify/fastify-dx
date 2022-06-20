@@ -1,9 +1,10 @@
-import { createApp, createSSRApp, reactive } from 'vue'
+import { createApp, createSSRApp, reactive, ref } from 'vue'
 import { createRouter } from 'vue-router'
 import {
   isServer,
   createHistory,
   serverRouteContext,
+  routeLayout,
   createBeforeEachHandler,
 } from '/dx:core.js'
 import root from '/dx:root.vue'
@@ -17,14 +18,15 @@ export default async function create (ctx) {
 
   const history = createHistory()
   const router = createRouter({ history, routes })
+  const layoutRef = ref(ctxHydration.layout ?? 'default')
 
-  ctxHydration.layout ??= 'default'
+  instance.provide(routeLayout, layoutRef)
   ctxHydration.state = reactive(ctxHydration.state)
 
   if (isServer) {
     instance.provide(serverRouteContext, ctxHydration)
   } else {
-    router.beforeEach(createBeforeEachHandler(ctx))
+    router.beforeEach(createBeforeEachHandler(ctx, layoutRef))
   }
 
   instance.use(router)
