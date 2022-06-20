@@ -1,27 +1,27 @@
-# fastify-dx-react [![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
+# fastify-dx-vue [![NPM version](https://img.shields.io/npm/v/fastify-dx-vue.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-vue) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-- [**Introduction**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#introduction)
-- [**Quick Start**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#quick-start)
-- [**Package Scripts**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#package-scripts)
-- [**Basic Setup**](https://github.com/fastify/fastify-dx/blob/main/docs/react/basic-setup.md)
-- [**Project Structure**](https://github.com/fastify/fastify-dx/blob/main/docs/react/project-structure.md)
-- [**Rendering Modes**](https://github.com/fastify/fastify-dx/blob/main/docs/react/rendering-modes.md)
-- [**Routing Configuration**](https://github.com/fastify/fastify-dx/blob/main/docs/react/routing-config.md)
-- [**Data Prefetching**](https://github.com/fastify/fastify-dx/blob/main/docs/react/data-prefetching.md)
-- [**Route Layouts**](https://github.com/fastify/fastify-dx/blob/main/docs/react/route-layouts.md)
-- [**Route Context**](https://github.com/fastify/fastify-dx/blob/main/docs/react/route-context.md)
-- [**Route Enter Event**](https://github.com/fastify/fastify-dx/blob/main/docs/react/route-enter.md)
-- [**Virtual Modules**](https://github.com/fastify/fastify-dx/blob/main/docs/react/virtual-modules.md)
+- [**Introduction**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md#introduction)
+- [**Quick Start**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md#quick-start)
+- [**Package Scripts**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md#package-scripts)
+- [**Basic Setup**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/basic-setup.md)
+- [**Project Structure**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/project-structure.md)
+- [**Rendering Modes**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/rendering-modes.md)
+- [**Routing Configuration**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/routing-config.md)
+- [**Data Prefetching**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/data-prefetching.md)
+- [**Route Layouts**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/route-layouts.md)
+- [**Route Context**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/route-context.md)
+- [**Route Enter Event**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/route-enter.md)
+- [**Virtual Modules**](https://github.com/fastify/fastify-dx/blob/main/docs/vue/virtual-modules.md)
 
 ## Introduction
 
-**Fastify DX for React** is a renderer adapter for [**fastify-vite**](https://github.com/fastify/fastify-vite).
+**Fastify DX for Vue** is a renderer adapter for [**fastify-vite**](https://github.com/fastify/fastify-vite).
 
-It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
+It is a **fast**, **lightweight** alternative to Nuxt.js packed with **Developer Experience** features.
 
-It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/), [React Router](https://reactrouter.com/docs/en/v6) and [Valtio](https://github.com/pmndrs/valtio).
+It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/) and [Vue Router](https://router.vuejs.org/).
 
-[**See the release notes for the 0.0.1 alpha release**](https://github.com/fastify/fastify-dx/releases/tag/v0.0.1).
+[**See the release notes for the 0.0.1 alpha release**](https://github.com/fastify/fastify-dx/releases/tag/vue-v0.0.1).
 
 > At this stage this project is mostly a [**one-man show**](https://github.com/sponsors/galvez), who's devoting all his free time to its completion. Contributions are extremely welcome, as well as bug reports for any issues you may find. 
 
@@ -33,17 +33,17 @@ It'll move into **beta** status when test suites are added to both packages.
 
 Ensure you have **Node v16+**.
 
-Make a copy of [**starters/react**](https://github.com/fastify/fastify-dx/tree/dev/starters/react). If you have [`degit`](https://github.com/Rich-Harris/degit), run the following from a new directory:
+Make a copy of [**starters/vue**](https://github.com/fastify/fastify-dx/tree/dev/starters/vue). If you have [`degit`](https://github.com/Rich-Harris/degit), run the following from a new directory:
 
 ```bash
-degit fastify/fastify-dx/starters/react
+degit fastify/fastify-dx/starters/vue
 ```
 
 > **If you're starting a project from scratch**, you'll need these packages installed.
 >
 > ```bash
-> npm i fastify fastify-vite fastify-dx-react -P
-> npm i @vitejs/plugin-react -D
+> npm i fastify fastify-vite fastify-dx-vue -P
+> npm i @vitejs/plugin-vue -D
 > ```
 
 
@@ -59,7 +59,7 @@ That will get you a **starter template** with:
   
 - A minimal [Fastify](https://github.com/fastify/fastify) server.
 - Some dummy API routes.
-- A `pages/` folder with some [demo routes](https://github.com/fastify/fastify-dx/tree/dev/starters/react/client/pages).
+- A `pages/` folder with some [demo routes](https://github.com/fastify/fastify-dx/tree/dev/starters/vue/client/pages).
 - All configuration files.
 
 It also includes some _**opinionated**_ essentials:
@@ -68,8 +68,7 @@ It also includes some _**opinionated**_ essentials:
 
 - [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 
 
-- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can use anywhere.
-
+- [**VueUse**](https://vueuse.org/) by [**Anthony Fu**](https://antfu.me/), which provides an extremely rich set of utilities — they're not included in the project build unless explicitly imported and used.
 
 ## Package Scripts
 
