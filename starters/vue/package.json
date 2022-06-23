@@ -4,7 +4,7 @@
     "dev": "node server.js --dev",
     "build": "npm run build:client && npm run build:server",
     "serve": "node server.js",
-    "devinstall": "zx ../../devinstall.mjs react -- node server.js --dev",
+    "devinstall": "zx ../../devinstall.mjs vue -- node server.js --dev",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr /index.js",
     "lint": "eslint . --ext .js,.jsx --fix"

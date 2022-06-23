@@ -1,23 +1,21 @@
 <script>
-import 'uno.css'
+import { proxy } from 'sveltio'
 import { Router, Route } from 'svelte-routing'
-import DXRoute from '/core/route.svelte'
+import DXRoute from '/dx:route.svelte'
 
 export let url = null
-export let head
-export let routes
-export let routeMap
-export let ctxHydration
+export let payload
+
+let state = proxy(payload.serverRoute.state)
 </script>
 
 <Router url="{url}">
-  {#each routes as { path, component }}
+  {#each payload.routes as { path, component }}
     <Route path="{path}" let:location>
       <DXRoute 
         location={location}
-        head={head}
-        ctx={routeMap[path]}
-        ctxHydration={ctxHydration}
+        state={state}
+        payload={payload}
         component={component} />
     </Route>
   {/each}

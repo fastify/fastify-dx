@@ -11,7 +11,7 @@ import logo from '/assets/logo.svg'
 import { Link } from 'svelte-routing'
 </script>
 
-<img src={logo} />
+<img src={logo} alt="Fastify DX" />
 <h1>Welcome to Fastify DX for Svelte!</h1>
 <ul class="columns-2">
   <li><Link to="/using-data">/using-data</Link> demonstrates how to 

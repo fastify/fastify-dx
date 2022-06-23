@@ -103,10 +103,12 @@ export async function createRenderFunction ({ routes, Root }) {
     }))
     // Creates main React component with all the SSR context it needs
     const app = !req.route.clientOnly && Root.render({
-      routes,
-      routeMap,
-      ctxHydration: req.route,
       url: req.url,
+      payload: {
+        routes,
+        routeMap,
+        serverRoute: req.route,
+      },
     })
     // Perform SSR, i.e., turn app.instance into an HTML fragment
     // The SSR context data is passed along so it can be inlined for hydration

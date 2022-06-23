@@ -9,7 +9,7 @@ async function mount (target) {
     target = document.querySelector(target)
   }
   const context = await import('/dx:context.js')
-  const ctxHydration = await extendContext(window.route, context)
+  const serverRoute = await extendContext(window.route, context)
   const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await routesPromise
   const routeMap = Object.fromEntries(
@@ -18,12 +18,14 @@ async function mount (target) {
   new Root({
     target: document.querySelector('main'),
     props: {
-      head,
-      ctxHydration,
-      routes: window.routes,
-      routeMap,
+      payload: {
+        head,
+        serverRoute,
+        routes: window.routes,
+        routeMap,
+      },
     },
-    hydrate: !ctxHydration.clientOnly,
+    hydrate: !serverRoute.clientOnly,
   })
 }
 

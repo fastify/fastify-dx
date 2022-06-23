@@ -5,24 +5,19 @@ import { Router, Route } from 'svelte-routing'
 import DXRoute from '/dx:route.svelte'
 
 export let url = null
-export let head
-export let routes
-export let routeMap
-export let ctxHydration
+export let payload
 
-const isServer = typeof process !== 'undefined'
-const state = proxy(ctxHydration.state)
+let state = proxy(payload.serverRoute.state)
 </script>
 
 <Router url="{url}">
-  {#each routes as { path, component }}
+  {#each payload.routes as { path, component }}
     <Route path="{path}" let:location>
     	<DXRoute 
+        path={path}
     	  location={location}
-    		head={head}
-        state={state}
-    		ctx={routeMap[path]}
-    		ctxHydration={ctxHydration}
+    		state={state}
+        payload={payload}
     		component={component} />
     </Route>
   {/each}
