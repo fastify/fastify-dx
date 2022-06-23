@@ -6,7 +6,7 @@ export default (ctx) => {
   }
 }
 
-export const _fetch = ky.extend({
+export const $fetch = ky.extend({
   prefixUrl: 'http://localhost:3000'
 })
 
@@ -22,13 +22,13 @@ export const actions = {
     state.user.authenticated = true
   },
   async addTodoItem (state, item) {
-    await _fetch.put('api/todo/items', {
+    await $fetch.put('api/todo/items', {
       json: { item },
     })
     state.todoList.push(item)
   },
   async removeTodoItem (state, index) {
-    await _fetch.delete('api/todo/items', {
+    await $fetch.delete('api/todo/items', {
       json: { index },
     })
     state.todoList.splice(index, 1)

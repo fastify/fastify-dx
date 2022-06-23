@@ -2,16 +2,27 @@
 export let getMeta = () => {
   return { title: 'Todo List — Using Store' }
 }
+
+export let layout = 'auth'
 </script>
 
 <script>
-import { Link } from 'react-router-dom'
-import { useRouteContext } from '/dx:core.jsx'
+import { Link } from 'svelte-routing'
+import { useRouteContext } from '/dx:core.js'
+
+let value = null
+
+const { snapshot, state, actions } = useRouteContext()
+
+const addItem = async () => {
+  await actions.addTodoItem(state, value)
+  value = ''
+}
 </script>
 
 <h2>Todo List — Using Store</h2>
 <ul>
-  {#each $todoList as item, i}
+  {#each $snapshot.todoList as item, i}
     <li>{item}</li>
   {/each}
   </ul>

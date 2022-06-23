@@ -108,7 +108,6 @@ export async function createRenderFunction ({ routes, Root }) {
       ctxHydration: req.route,
       url: req.url,
     })
-    console.log('app', app)
     // Perform SSR, i.e., turn app.instance into an HTML fragment
     // The SSR context data is passed along so it can be inlined for hydration
     return { routes, context: req.route, app }

@@ -14,6 +14,7 @@
     "ky-universal": "^0.10.1",
     "svelte-routing": "^1.6.0",
     "svelte-loadable": "^2.0.1",
+    "sveltio": "^1.0.5",
     "devalue": "^2.0.1",
     "unihead": "^0.0.6"
   },

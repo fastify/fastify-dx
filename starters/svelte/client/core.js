@@ -1,9 +1,12 @@
 import { getContext } from 'svelte'
+import { useSnapshot } from 'sveltio'
 
 export const routeContext = Symbol('routeContext')
 
 export function useRouteContext () {
-  return getContext(routeContext).routeContext
+  const ctx = getContext(routeContext).routeContext
+  ctx.snapshot = useSnapshot(ctx.state)
+  return ctx
 }
 
 export async function jsonDataFetch (path) {
