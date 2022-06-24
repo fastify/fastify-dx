@@ -11,45 +11,35 @@ Fastify DX virtual modules are **fully ejectable**. For instance, the starter te
 
 Aside from `root.vue`, the starter template comes with two other virtual modules already ejected and part of the local project — `context.js` and `layouts/default.vue`. If you don't need to customize them, you can safely removed them from your project.
 
-### `/dx:root.vue`
+### `/dx:root.svelte`
 
-This is the root Vue component. It's used internally by `/dx:create.js` and provided as part of the starter template. You can use this file to add a common layout to all routes, and also to extend your Vue app by exporting a `configure()` function. For example, Fastify DX for Vue comes with a SSR-safe, global state based on a simple `reactive()` object — but if you want to use Pinia, you could set it up as follows:
+This is the root Vue component. It's used internally by `/dx:create.js` and provided as part of the starter template. You can use this file to add a common layout to all routes. The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
 
-```js
-import { createPinia } from 'pinia'
-
-export function configure (app) {
-  const pinia = createPinia()
-  app.use(pinia)
-}
-```
-
-> Alternatively, you could eject the full `create.js` virtual module where `app` is fully defined.
-
-The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
-
-```vue
+```svelte
 <script>
 import 'uno.css'
+import { proxy } from 'sveltio'
+import { Router, Route } from 'svelte-routing'
+import DXRoute from '/dx:route.svelte'
+
+export let url = null
+export let payload
+
+let state = proxy(payload.serverRoute.state)
 </script>
 
-<script setup>
-import Layout from '/dx:layout.vue'
-</script>
-
-<template>
-  <router-view v-slot="{ Component }">
-    <Suspense>
-      <Layout>
-        <component
-          :is="Component"
-          :key="$route.path"
-        />
-      </Layout>
-    </Suspense>
-  </router-view>
-</template>
-
+<Router url="{url}">
+  {#each payload.routes as { path, component }}
+    <Route path="{path}" let:location>
+      <DXRoute 
+        path={path}
+        location={location}
+        state={state}
+        payload={payload}
+        component={component} />
+    </Route>
+  {/each}
+</Router>
 ```
 
 Note that a top-level `<Suspense>` wrapper is necessary because Fastify DX has code-splitting enabled at the route-level. You can opt out of code-splitting by providing your own `routes.js` file, but that's very unlikely to be ever required for any reason.
