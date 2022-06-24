@@ -18,7 +18,7 @@ export const layout = 'auth'
 
 That'll will cause the route to be wrapped in the layout component exported by [`layouts/auth.svelte`](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/layouts/auth.svelte):
 
-```svelte
+```html
 <script>
 import { useRouteContext } from '/dx:core.js'
 const { snapshot, actions, state } = useRouteContext()

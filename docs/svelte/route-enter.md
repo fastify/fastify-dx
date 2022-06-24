@@ -12,7 +12,7 @@ It receives the [universal route context][route-context] as first parameter, so 
 
 [route-context]: https://github.com/fastify/fastify-dx/blob/main/docs/svelte/route-context.md
 
-```svelte
+```html
 <script context="module">
 export function onEnter (ctx) {
   if (ctx.server?.underPressure) {

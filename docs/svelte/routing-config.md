@@ -38,7 +38,7 @@ You also can export a `path` constant from your route modules, in which case its
 
 Additionally, [**you can provide your own routes**](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-svelte#dxroutesjs).
 
-```svelte
+```html
 <script context="module">
 export const path = '/my-page'
 </script>

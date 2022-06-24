@@ -12,7 +12,7 @@ If a route module exports `serverOnly` set to `true`, only SSR will take place. 
 
 You should use this setting to deliver lighter pages when there's no need to run any code on them, such as statically generated content sites.
 
-```svelte
+```html
 <script context="module">
 export const serverOnly = true
 </script>
@@ -28,7 +28,7 @@ If a route module exports `clientOnly` set to `true`, no SSR will take place, on
 
 You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
 
-```svelte
+```html
 <script context="module">
 export const clientOnly = true
 </script>

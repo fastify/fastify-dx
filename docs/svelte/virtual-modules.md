@@ -15,7 +15,7 @@ Aside from `root.vue`, the starter template comes with two other virtual modules
 
 This is the root Vue component. It's used internally by `/dx:create.js` and provided as part of the starter template. You can use this file to add a common layout to all routes. The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
 
-```svelte
+```html
 <script>
 import 'uno.css'
 import { proxy } from 'sveltio'
@@ -138,7 +138,7 @@ This is responsible for loading **layout components**. It's part of `route.svelt
 
 <b>You'll rarely need to customize this file.</b>
 
-```svelte
+```html
 
 ```
 

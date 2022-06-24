@@ -4,7 +4,7 @@
 
 ## Basic setup
 
-The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/svelte) follows [fastify-vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. 
+The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/svelte) follows [fastify-vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting.
 
 If you want flat directory setup, where server and client files are mixed together, you can manually set `clientModule` to something else. Note that in this case you'll also need to update `root` in your `vite.config.js` file.
 
@@ -71,7 +71,7 @@ Fastify DX picks up exports from route modules to determine route behavior and f
 
 To add those exports, you must use `<script context="module">` (Svelte-specific syntax) which determines the script that runs in the general module namespace for a Svelte component. So in Fastify DX Svelte applications, it's commonplace to have two code blocks, a regular one and another with `context` set to `module`:
 
-```svelte
+```html
 <script context="module">
 export function getData () {
   return { message: 'Hello from getData!' }
