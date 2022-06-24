@@ -9,20 +9,20 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/s
 ```
 ├── server.js
 ├── client/
-｜    ├── index.js
-｜    ├── context.js
-｜    ├── root.svelte
-｜    ├── index.html
-｜    ├── layouts/
-｜    ｜    ├── default.svelte
-｜    ｜    └── auth.svelte
-｜    └── pages/
-｜          ├── index.svelte
-｜          ├── client-only.svelte
-｜          ├── server-only.svelte
-｜          ├── streaming.svelte
-｜          ├── using-data.svelte
-｜          └── using-store.svelte
+│    ├── index.js
+│    ├── context.js
+│    ├── root.svelte
+│    ├── index.html
+│    ├── layouts/
+│    │    ├── default.svelte
+│    │    └── auth.svelte
+│    └── pages/
+│          ├── index.svelte
+│          ├── client-only.svelte
+│          ├── server-only.svelte
+│          ├── streaming.svelte
+│          ├── using-data.svelte
+│          └── using-store.svelte
 ├── vite.config.js
 └── package.json
 ```

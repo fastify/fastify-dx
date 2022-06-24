@@ -10,20 +10,20 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/v
 ```
 ├── server.js
 ├── client/
-｜    ├── index.js
-｜    ├── context.js
-｜    ├── root.vue
-｜    ├── index.html
-｜    ├── layouts/
-｜    ｜    ├── default.vue
-｜    ｜    └── auth.vue
-｜    └── pages/
-｜          ├── index.vue
-｜          ├── client-only.vue
-｜          ├── server-only.vue
-｜          ├── streaming.vue
-｜          ├── using-data.vue
-｜          └── using-store.vue
+│    ├── index.js
+│    ├── context.js
+│    ├── root.vue
+│    ├── index.html
+│    ├── layouts/
+│    │    ├── default.vue
+│    │    └── auth.vue
+│    └── pages/
+│          ├── index.vue
+│          ├── client-only.vue
+│          ├── server-only.vue
+│          ├── streaming.vue
+│          ├── using-data.vue
+│          └── using-store.vue
 ├── vite.config.js
 └── package.json
 ```
