@@ -14,12 +14,8 @@ To populate `<title>`, `<meta>` and `<link>` elements, export a `getMeta()` func
   
 It receives the [route context](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md#route-context) as first parameter and runs after `getData()`, allowing you to access any `data` populated by these other functions to generate your tags.
 
-```vue
-<template>
-  <p>Route with meta tags.</p>
-</template>
-
-<script>
+```html
+<script context="module">
 export function getMeta (ctx) {
   return {
     title: 'Route Title',
@@ -29,4 +25,6 @@ export function getMeta (ctx) {
   }
 }
 </script>
+
+<p>Route with meta tags.</p>
 ```

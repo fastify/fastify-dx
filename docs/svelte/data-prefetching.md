@@ -14,7 +14,7 @@ The objet returned by `getData()` gets automatically assigned as `data` in the [
 
 ```html
 <script context="module">
-export let getData = (ctx) => {
+export function getData (ctx) {
   return {
     message: 'Hello from getData!',
   }
