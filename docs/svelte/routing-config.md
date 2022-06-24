@@ -14,7 +14,7 @@ Dynamic route parameters follow the [Next.js convention](https://nextjs.org/docs
 // ...
 const plugins = [
   // ...
-  viteVueFastifyDX({ paramPattern: /\$(\w+)/ }),
+  viteSvelteFastifyDX({ paramPattern: /\$(\w+)/ }),
 ]
 ```
 
@@ -28,7 +28,7 @@ Since this setting is passed to [Vite's glob importers](https://vitejs.dev/guide
 // ...
 const plugins = [
   // ...
-  viteVueFastifyDX({ globPattern: '/views/**/*.vue' }),
+  viteSvelteFastifyDX({ globPattern: '/views/**/*.svelte' }),
 ]
 ```
 
@@ -38,12 +38,10 @@ You also can export a `path` constant from your route modules, in which case its
 
 Additionally, [**you can provide your own routes**](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-svelte#dxroutesjs).
 
-```jsx
-<template>
-  <p>Route with path export</p>
-</template>
-
-<script>
+```svelte
+<script context="module">
 export const path = '/my-page'
 </script>
+
+<p>Route with path export</p>
 ```

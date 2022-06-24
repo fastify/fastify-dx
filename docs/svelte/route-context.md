@@ -67,15 +67,13 @@ By default, It includes reference to `data` — which is automatically populated
 
 It automatically causes the component to be suspended if the `getData()`, `getMeta()` and `onEnter()` functions are asynchronous.
 
-```vue
-<template>
-  <p>{data.message}</p>
-</template>
-
-<script setup>
+```svelte
+<script>
 import { useRouteContext } from '/dx:core.js'
 const { data } = useRouteContext()
 </script>
+
+<p>{data.message}</p>
 ```
 
 ### Execution order
