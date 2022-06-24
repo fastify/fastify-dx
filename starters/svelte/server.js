@@ -9,7 +9,7 @@ server.decorate('db', {
     'Do laundry',
     'Respond to emails',
     'Write report',
-  ]
+  ],
 })
 
 server.put('/api/todo/items', (req, reply) => {

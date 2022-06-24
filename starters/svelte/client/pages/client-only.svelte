@@ -2,9 +2,9 @@
 export const clientOnly = true
 
 export function getMeta () { 
-	return {
-		title: 'Client Only Page'
-	}
+  return {
+    title: 'Client Only Page',
+  }
 }
 </script>
 

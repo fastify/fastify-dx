@@ -7,7 +7,7 @@ export default (ctx) => {
 }
 
 export const $fetch = ky.extend({
-  prefixUrl: 'http://localhost:3000'
+  prefixUrl: 'http://localhost:3000',
 })
 
 export const state = () => ({
@@ -32,5 +32,5 @@ export const actions = {
       json: { index },
     })
     state.todoList.splice(index, 1)
-  }
+  },
 }

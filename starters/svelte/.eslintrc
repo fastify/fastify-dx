@@ -4,28 +4,18 @@
     requireConfigFile: false,
     ecmaVersion: 2021,
     sourceType: 'module',
-    babelOptions: {
-      presets: ['@babel/preset-react'],
-   },
-    ecmaFeatures: {
-      jsx: true,
-    },
   },
-  extends: [
-    'plugin:react/recommended',
-    'standard',
-  ],
   plugins: [
-    'react',
+    'svelte3'
+  ],
+  overrides: [
+    {
+      files: ['*.svelte'],
+      processor: 'svelte3/svelte3'
+    }
   ],
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
-    'react/prop-types': 'off',
     'import/no-absolute-path': 'off',
-  },
-  settings: {
-    react: {
-      version: '18.0',
-    },
   },
 }

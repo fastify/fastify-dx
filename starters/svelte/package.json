@@ -7,38 +7,34 @@
     "devinstall": "zx ../../devinstall.mjs svelte -- node server.js --dev",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr /index.js",
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "lint": "eslint . --ext .js,.svelte --fix"
   },
   "dependencies": {
+    "fastify-dx-svelte": "^0.0.1-pre",
     "fastify-vite": "^3.0.0-beta.23",
-    "ky-universal": "^0.10.1",
-    "svelte-routing": "^1.6.0",
-    "svelte-loadable": "^2.0.1",
-    "sveltio": "^1.0.5",
-    "devalue": "^2.0.1",
-    "unihead": "^0.0.6"
+    "ky": "^0.31.0",
+    "ky-universal": "^0.10.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
-    "@babel/preset-react": "^7.16.0",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.49",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.2",
+    "eslint": "^8.18.0",
+    "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-svelte3": "^4.0.0",
     "postcss-preset-env": "^7.7.1",
-    "unocss": "^0.37.4",
-    "vite-plugin-blueprint": "^0.0.4"
+    "unocss": "^0.37.4"
   },
   "devInstall": {
     "local": {
-      "fastify-dx-svelte": "^0.0.1-alpha.0"
+      "fastify-dx-svelte": "^0.0.1"
     },
     "external": {
       "fastify-vite": "^3.0.0-beta.23",
-      "ky-universal": "^0.10.1"
+      "ky-universal": "^0.10.1",
+      "ky": "^0.31.0"
     }
   }
 }

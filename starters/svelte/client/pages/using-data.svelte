@@ -5,7 +5,7 @@ export let getMeta = () => {
 
 export let getData = ({ server }) => {
 	return {
-		todoList: server.db.todoList
+		todoList: server.db.todoList,
 	}
 }
 </script>

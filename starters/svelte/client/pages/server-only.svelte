@@ -1,9 +1,15 @@
-<script>
-import { Link } from 'svelte-routing'
-</script>
-
 <script context="module">
 export const serverOnly = true
+
+export function getMeta () { 
+  return {
+    title: 'Server Only Page',
+  }
+}
+</script>
+
+<script>
+import { Link } from 'svelte-routing'
 </script>
 
 <p>This route is rendered on the server only!</p>

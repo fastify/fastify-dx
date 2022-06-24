@@ -1,7 +1,7 @@
 <script context="module">
 export let getMeta = () => {
   return {
-    title: 'Welcome to Fastify DX!'
+    title: 'Welcome to Fastify DX!',
   }
 }
 </script>

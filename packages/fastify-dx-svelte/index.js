@@ -124,7 +124,6 @@ export function createRouteHandler (client, scope, config) {
 }
 
 export function createRoute ({ client, handler, errorHandler, route }, scope, config) {
-  console.log('route', route)
   const onRequest = async function onRequest (req, reply) {
     req.route = await RouteContext.create(
       scope,

@@ -14,7 +14,7 @@ const plugins = [
   viteSvelte({
     compilerOptions: {
       hydratable: true,
-    }
+    },
   }),
   viteSvelteFastifyDX(),
 ]
