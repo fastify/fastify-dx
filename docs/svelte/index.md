@@ -17,7 +17,7 @@
 
 **Fastify DX for Svelte** is a renderer adapter for [**fastify-vite**](https://github.com/fastify/fastify-vite).
 
-It lets you run and SSR (server-side render) **Vue 3 applications built with Vite** on [Fastify](https://fastify.io/), with a minimal and transparent **server-first approach** — everything starts with `server.js`, your actual Fastify server). 
+It lets you run and SSR (server-side render) **Svelte applications built with Vite** on [Fastify](https://fastify.io/), with a minimal and transparent **server-first approach** — everything starts with `server.js`, your actual Fastify server). 
 
 It also provides a set of built-in utilities for ease of development and managing a universal JavaScript context (SSR to CSR), very much like **Nuxt.js**, **Next.js** and **Remix**. All **Fastify DX** framework adapters implement the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md) and have almost the same API, with only minimal differences due to specific framework APIs or idioms.
 
@@ -25,7 +25,7 @@ It is a **fast**, **lightweight** alternative to Nuxt.js packed with **Developer
 
 It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/), [Valtio](https://github.com/pmndrs/valtio) and [Svelte Routing](https://github.com/EmilTholin/svelte-routing).
 
-[**See the release notes for the 0.0.1 alpha release**](https://github.com/fastify/fastify-dx/releases/tag/vue-v0.0.1).
+[**See the release notes for the 0.0.1 alpha release**](https://github.com/fastify/fastify-dx/releases/tag/svelte-v0.0.1).
 
 > At this stage this project is mostly a [**one-man show**](https://github.com/sponsors/galvez), who's devoting all his free time to its completion. Contributions are extremely welcome, as well as bug reports for any issues you may find. 
 
@@ -72,7 +72,7 @@ It also includes some _**opinionated**_ essentials:
 
 - [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 
 
-- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can use anywhere. Svelte support is provided via [Sveltio](https://github.com/wobsoriano/sveltio) by [Robert Soriano](https://robsoriano.com/).
+- [**Valtio**](https://github.com/pmndrs/valtio) by [**Daishi Kato**](https://blog.axlight.com/), with a global and SSR-ready store which you can use anywhere. <br>Svelte support is provided via [Sveltio](https://github.com/wobsoriano/sveltio) by [Robert Soriano](https://robsoriano.com/).
 
 
 ## Package Scripts
