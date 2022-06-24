@@ -33,15 +33,10 @@ This example demonstrates how to use it to set up an universally available (SSR 
 import ky from 'ky-universal'
 
 export default (ctx) => {
-  // This runs both on the server and on the 
-  // client, exactly once per HTTP request
-  ctx.message = 'Universal hello'
   if (ctx.server) {
-    // Place some server data on the
-    // application's global state
-    ctx.state = ctx.server.db
-    // It is automatically hydrated on the client
-    // So no need to any additional assignments here
+    // Populate state.todoList on the server
+    ctx.state.todoList = ctx.server.db.todoList
+    // It'll get automatically serialized to the client on first render!
   }
 }
 
@@ -49,11 +44,18 @@ export const $fetch = ky.extend({
   prefixUrl: 'http://localhost:3000'
 })
 
-export async function addTodoItem (state, item) {
-  await $fetch.put('api/todo/items', {
-    body: { item },
-  })
-  state.todoList.push(item)
+// Must be a function so each request can have its own state
+export const state = () => ({
+  todoList: null,
+})
+
+export const actions = {
+  async addTodoItem (state, item) {
+    await $fetch.put('api/todo/items', {
+      json: { item },
+    })
+    state.todoList.push(item)
+  },
 }
 ```
 
