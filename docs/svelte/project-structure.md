@@ -20,7 +20,6 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/s
 │          ├── index.svelte
 │          ├── client-only.svelte
 │          ├── server-only.svelte
-│          ├── streaming.svelte
 │          ├── using-data.svelte
 │          └── using-store.svelte
 ├── vite.config.js
