@@ -36,7 +36,7 @@ const plugins = [
 
 You also can export a `path` constant from your route modules, in which case its value will be used to **override the dynamically inferred paths from the directory structure**. 
 
-Additionally, [**you can provide your own routes**](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-vue#dxroutesjs).
+Additionally, [**you can provide your own routes**](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-svelte#dxroutesjs).
 
 ```jsx
 <template>

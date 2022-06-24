@@ -1,4 +1,4 @@
-# fastify-dx-vue [![NPM version](https://img.shields.io/npm/v/fastify-dx-vue.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-vue) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
+# fastify-dx-svelte [![NPM version](https://img.shields.io/npm/v/fastify-dx-svelte.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-svelte) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
 - [**Introduction**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md#introduction)
 - [**Quick Start**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md#quick-start)
