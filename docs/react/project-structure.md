@@ -10,20 +10,20 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/r
 ```
 ├── server.js
 ├── client/
-｜    ├── index.js
-｜    ├── context.js
-｜    ├── root.jsx
-｜    ├── index.html
-｜    ├── layouts/
-｜    ｜    ├── default.jsx
-｜    ｜    └── auth.jsx
-｜    └── pages/
-｜          ├── index.jsx
-｜          ├── client-only.jsx
-｜          ├── server-only.jsx
-｜          ├── streaming.jsx
-｜          ├── using-data.jsx
-｜          └── using-store.jsx
+│    ├── index.js
+│    ├── context.js
+│    ├── root.jsx
+│    ├── index.html
+│    ├── layouts/
+│    │    ├── default.jsx
+│    │    └── auth.jsx
+│    └── pages/
+│          ├── index.jsx
+│          ├── client-only.jsx
+│          ├── server-only.jsx
+│          ├── streaming.jsx
+│          ├── using-data.jsx
+│          └── using-store.jsx
 ├── vite.config.js
 └── package.json
 ```
