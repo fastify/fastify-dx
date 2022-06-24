@@ -7,6 +7,8 @@ In this early stage, we're working to define a [**Universal Route Module API**](
 
 ## Packages
 
+**Currently only Fastify v3 is supported — v4 support is already in the works.**
+
 <table>
 <tr>
 <td width="200px" valign="top">
