@@ -28,6 +28,4 @@ import { Link } from 'svelte-routing'
   up a route for rendering on the client only (disables SSR).</li>
   <li><Link to="/server-only">/server-only</Link> demonstrates how to set 
   up a route for rendering on the server only (sends no JavaScript).</li>
-  <li><Link to="/streaming">/streaming</Link> demonstrates how to set 
-  up a route for SSR in streaming mode.</li>
 </ul>

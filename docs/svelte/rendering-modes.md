@@ -1,36 +1,10 @@
-
-<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md).**</sub>
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md).**</sub>
 
 <br>
 
 # Rendering modes
 
-Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX's route modules can be set for universal rendering (SSR + CSR hydration, the default behavior), SSR in streaming mode, SSR only (client gets no JavaScript) or CSR only (SSR fully disabled).
-
-## `streaming`
-
-If a route module exports `streaming` set to `true`, SSR will take place in **streaming mode**. That means the result of all server-side rendering gets streamed as it takes place, even if you have asynchronous Vue components. Note that differently from React, Vue **will not** stream a Suspense block's `#fallback` template.
-
-```vue
-<template>
-  <Message :secs="2" />
-  <Message :secs="4" />
-  <Message :secs="6" />
-</template>
-
-<script>
-import Message from '/components/Message.vue'
-
-export const streaming = true
-
-export default {
-  components: { Message },
-}
-</script>
-```
-
-[See the full example](https://github.com/fastify/fastify-dx/blob/main/starters/vue/client/pages/streaming.vue) in the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/vue).
-
+Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX's route modules can be set for universal rendering (SSR + CSR hydration, the default behavior), SSR in streaming mode, SSR only (client gets no JavaScript) or CSR only (SSR fully disabled). Fastify DX for Svelte supports all of these modes minus streaming, which is currently not yet supported by Svelte itself.
 
 ## `serverOnly`
 
@@ -48,7 +22,7 @@ export const serverOnly = true
 </script>
 ```
 
-[This example](https://github.com/fastify/fastify-dx/blob/main/starters/vue/client/pages/server-only.vue) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/vue).
+[This example](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/client/pages/server-only.svelte) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/svelte).
 
 ## `clientOnly`
 
@@ -66,4 +40,4 @@ export const clientOnly = true
 </script>
 ```
 
-[This example](https://github.com/fastify/fastify-dx/blob/main/starters/vue/client/pages/client-only.vue) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/vue).
+[This example](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/client/pages/client-only.svelte) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/svelte).

@@ -1,4 +1,4 @@
-<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md).**</sub>
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md).**</sub>
 
 <br>
 
@@ -25,7 +25,7 @@ const {
 actions.addTodoItem(state, value)
 ```
 
-See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/vue/client/pages/using-store.vue) in the starter template.
+See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/client/pages/using-store.vue) in the starter template.
 
 This example demonstrates how to use it to set up an universally available (SSR and CSR) `$fetch` function (using [`ky-universal`](https://www.npmjs.com/package/ky-universal)) and also export some store actions. They're all made available by `useRouteContext()`, covered next.
 
@@ -57,7 +57,7 @@ export async function addTodoItem (state, item) {
 }
 ```
 
-See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/vue/client/context.js) in the starter template.
+See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/client/context.js) in the starter template.
 
 ### The `useRouteContext()` hook
 

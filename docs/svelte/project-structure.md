@@ -1,11 +1,10 @@
-
-<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md).**</sub>
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md).**</sub>
 
 <br>
 
 ## Project Structure
 
-The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/vue) looks like this:
+The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/svelte) looks like this:
 
 ```
 ├── server.js

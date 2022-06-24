@@ -1,5 +1,4 @@
-
-<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md).**</sub>
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md).**</sub>
 
 <br>
 
@@ -7,13 +6,13 @@
 
 **Fastify DX** relies on [virtual modules](https://github.com/rollup/plugins/tree/master/packages/virtual) to save your project from having too many boilerplate files. Virtual modules are a [Rollup](https://rollupjs.org/guide/en/) feature exposed and fully supported by [Vite](https://vitejs.dev/). When you see imports that start with `/dx:`, you know a Fastify DX virtual module is being used.
 
-Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:root.vue` virtual module to provide the Vue shell of your application. If you copy the `root.vue` file [from the fastify-dx-vue package](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/virtual/root.vue) and place it your Vite project root, **that copy of the file is used instead**. In fact, the starter template already comes with a custom `root.vue` of its own to include UnoCSS.
+Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:root.svelte` virtual module to provide the Svelte shell of your application. If you copy the `root.vue` file [from the fastify-dx-svelte package](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/root.vue) and place it your Vite project root, **that copy of the file is used instead**. In fact, the starter template already comes with a custom `root.vue` of its own to include UnoCSS.
 
 Aside from `root.vue`, the starter template comes with two other virtual modules already ejected and part of the local project — `context.js` and `layouts/default.vue`. If you don't need to customize them, you can safely removed them from your project.
 
 ### `/dx:root.vue`
 
-This is the root Vue component. It's used internally by `/dx:create.js` and provided as part of the starter template. You can use this file to add a common layout to all routes, and also to extend your Vue app by exporting a `configure()` function. For example, Fastify DX for Vue comes with a SSR-safe, global state based on a simple `reactive()` object — but if you want to use Pinia, you could set it up as follows:
+This is the root Svelte component. It's used internally by `/dx:create.js` and provided as part of the starter template. You can use this file to add a common layout to all routes, and also to extend your Vue app by exporting a `configure()` function. For example, Fastify DX for Vue comes with a SSR-safe, global state based on a simple `reactive()` object — but if you want to use Pinia, you could set it up as follows:
 
 ```js
 import { createPinia } from 'pinia'
@@ -64,7 +63,7 @@ export default import.meta.env.SSR
   : hydrateRoutes(import.meta.glob('$globPattern'))
 ```
 
-See [the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/virtual/routes.js) for the `createRoutes()` and `hydrateRoutes()` definitions. 
+See [the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/routes.js) for the `createRoutes()` and `hydrateRoutes()` definitions. 
 
 If you want to use your own custom routes list, you must eject this file as-is and replace the glob imports with your own routes list:
 
@@ -89,7 +88,7 @@ Implements `useRouteContext()` and `createBeforeEachHandler()`, used by `core.js
 
 > Vue Router's [nested routes](https://router.vuejs.org/guide/essentials/nested-routes.html) aren't supported yet.
 
-See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/virtual/core.js).
+See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/core.js).
 
 ### `/dx:create.js`
 
@@ -142,7 +141,7 @@ export default async function create (ctx) {
 }
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/virtual/create.js).
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/create.js).
 
 ### `/dx:layout.vue`
 
@@ -180,7 +179,7 @@ export default {
 </script>
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/virtual/layout.vue).
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/layout.vue).
 
 ### `/dx:mount.js`
 
@@ -188,4 +187,4 @@ This is the file `index.html` links to by default. It sets up the application wi
 
 <b>You'll rarely need to customize this file.</b>
 
-[See the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/virtual/mount.js) for the `mount()` function definition.
+[See the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/mount.js) for the `mount()` function definition.
