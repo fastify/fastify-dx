@@ -179,11 +179,23 @@ This is responsible for loading **layout components**. It's part of `route.svelt
 
 <b>You'll rarely need to customize this file.</b>
 
-```html
+```js
+import DefaultLayout from '/dx:layouts/default.svelte'
+
+const appLayouts = import.meta.globEager('/layouts/*.svelte')
+
+appLayouts['/layouts/default.svelte'] ??= DefaultLayout
+
+export default Object.fromEntries(
+  Object.keys(appLayouts).map((path) => {
+    const name = path.slice(9, -7)
+    return [name, appLayouts[path]]
+  }),
+)
 
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/layout.svelte).
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/layouts.js).
 
 ### `/dx:mount.js`
 
