@@ -1,4 +1,4 @@
-<su<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md).**</sub>
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md).**</sub>
 
 <br>
 
@@ -64,3 +64,24 @@ Note that you only need to use Fastify DX's Vite plugin, which includes all func
 </td>
 </tr>
 </table>
+
+### Route exports
+
+Fastify DX picks up exports from route modules to determine route behavior and functionality, as per the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md). 
+
+To add those exports, you must use `<script context="module">` (Svelte-specific syntax) which determines the script that runs in the general module namespace for a Svelte component. So in Fastify DX Svelte applications, it's commonplace to have two code blocks, a regular one and another with `context` set to `module`:
+
+```svelte
+<script context="module">
+export function getData () {
+  return { message: 'Hello from getData!' }
+}
+<script>
+
+<script>
+import { useRouteContext } = '/dx:core.js'
+const { data } = useRouteContext()
+</script>
+
+<p>{data.message}</p>
+```

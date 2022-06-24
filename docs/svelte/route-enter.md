@@ -12,18 +12,16 @@ It receives the [universal route context][route-context] as first parameter, so 
 
 [route-context]: https://github.com/fastify/fastify-dx/blob/main/docs/svelte/route-context.md
 
-```html
-<template>
-  <p>No pre-rendered HTML sent to the browser.</p>
-</template>
-
-<script>
+```svelte
+<script context="module">
 export function onEnter (ctx) {
   if (ctx.server?.underPressure) {
     ctx.clientOnly = true
   }
 }
 </script>
+
+<p>No pre-rendered HTML sent to the browser.</p>
 ```
 
 The example demonstrates how to turn off SSR and downgrade to CSR-only, assuming you have a `pressureHandler` configured in [`underpressure`](https://github.com/fastify/under-pressure) to set a `underPressure` flag on your server instance.

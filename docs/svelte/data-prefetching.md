@@ -12,25 +12,19 @@ This hook is set up in a way that it runs server-side before any SSR takes place
 
 The objet returned by `getData()` gets automatically assigned as `data` in the [universal route context](https://github.com/fastify/fastify-dx/blob/main/docs/svelte/route-context.md) object and is accessible from `getMeta()` and `onEnter()` hooks and also via the `useRouteContext()` hook.
 
-```vue
-<template>
-  <p>{data.message}</p>
-</template>
-
-<script>
-import { useRouteContext } from '/dx:core.js'
-
-export function getData (ctx) {
+```svelte
+<script context="module">
+export let getData = (ctx) => {
   return {
     message: 'Hello from getData!',
   }
 }
-
-export default {
-  setup () {
-    const { data } = useRouteContext()
-    return { data }
-  }
-}
 </script>
+
+<script>
+import { useRouteContext } from '/dx:core.js'
+const { data } = useRouteContext()
+</script>
+
+<p>{data.message}</p>
 ```
