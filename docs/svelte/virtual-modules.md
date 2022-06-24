@@ -7,13 +7,13 @@
 
 **Fastify DX** relies on [virtual modules](https://github.com/rollup/plugins/tree/master/packages/virtual) to save your project from having too many boilerplate files. Virtual modules are a [Rollup](https://rollupjs.org/guide/en/) feature exposed and fully supported by [Vite](https://vitejs.dev/). When you see imports that start with `/dx:`, you know a Fastify DX virtual module is being used.
 
-Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:root.vue` virtual module to provide the Vue shell of your application. If you copy the `root.vue` file [from the fastify-dx-svelte package](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/root.vue) and place it your Vite project root, **that copy of the file is used instead**. In fact, the starter template already comes with a custom `root.vue` of its own to include UnoCSS.
+Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:root.svelte` virtual module to provide the Vue shell of your application. If you copy the `root.svelte` file [from the fastify-dx-svelte package](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/root.svelte) and place it your Vite project root, **that copy of the file is used instead**. In fact, the starter template already comes with a custom `root.svelte` of its own to include UnoCSS.
 
-Aside from `root.vue`, the starter template comes with two other virtual modules already ejected and part of the local project — `context.js` and `layouts/default.vue`. If you don't need to customize them, you can safely removed them from your project.
+Aside from `root.svelte`, the starter template comes with two other virtual modules already ejected and part of the local project — `context.js` and `layouts/default.svelte`. If you don't need to customize them, you can safely removed them from your project.
 
 ### `/dx:root.svelte`
 
-This is the root Vue component. It's used internally by `/dx:create.js` and provided as part of the starter template. You can use this file to add a common layout to all routes. The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
+This is the root Svelte component. It's provided as part of the starter template. You can use this file to add a common layout to all routes. The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
 
 ```html
 <script>
@@ -42,6 +42,101 @@ let state = proxy(payload.serverRoute.state)
 </Router>
 ```
 
+### `/dx:route.svelte`
+
+This is used by `root.svelte` to enhance your route modules with the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
+
+<b>You'll rarely need to customize this file.</b>
+
+```html
+<script>
+import { setContext } from 'svelte'
+import Loadable from 'svelte-loadable'
+import { routeContext, jsonDataFetch } from '/dx:core.js'
+import layouts from '/dx:layouts.js'
+
+const isServer = import.meta.env.SSR
+
+setContext(routeContext, {
+  get routeContext () {
+    return ctx
+  }
+})
+
+export let path
+export let component
+export let payload
+export let state
+export let location
+
+let ctx = payload.routeMap[path]
+
+ctx.state = state
+ctx.actions = payload.serverRoute.actions  
+
+if (isServer) {
+  ctx.layout = payload.serverRoute.layout ?? 'default'
+  ctx.data = payload.serverRoute.data
+  ctx.state = state
+}
+
+async function setup () {
+  if (payload.serverRoute.firstRender) {
+    ctx.data = payload.serverRoute.data
+    ctx.layout = payload.serverRoute.layout ?? 'default'
+    payload.serverRoute.firstRender = false
+    return
+  }
+  ctx.layout = ctx.layout ?? 'default'
+  const { getMeta, getData, onEnter } = await ctx.loader()
+  if (getData) {
+    try {
+      const fullPath = `${location.pathname}${location.search}`
+      const updatedData = await jsonDataFetch(fullPath)
+      if (!ctx.data) {
+        ctx.data = {}
+      }
+      if (updatedData) {
+        Object.assign(ctx.data, updatedData)
+      }
+      ctx.error = null
+    } catch (error) {
+      ctx.error = error
+    }
+  }
+  if (getMeta) {
+    const updatedMeta = await getMeta(ctx)
+    if (updatedMeta) {
+      payload.head.update(updatedMeta)
+    }
+  }
+  if (onEnter) {
+    const updatedData = await onEnter(ctx)
+    if (updatedData) {
+      Object.assign(ctx.data, updatedData)
+    }
+  }
+}
+
+let setupClientRouteContext = !isServer && setup()
+</script>
+
+{#if isServer}
+  <svelte:component this={layouts[ctx.layout].default}>
+    <svelte:component this={component} />
+  </svelte:component>
+{:else}
+{#await setupClientRouteContext}{:then}
+  <svelte:component this={layouts[ctx.layout].default}>
+    <Loadable loader={component} />
+  </svelte:component>
+{/await}
+{/if}
+```
+
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/route.svelte).
+
+
 ### `/dx:routes.js`
 
 Fastify DX has **code-splitting** out of the box. It does that by eagerly loading all route data on the server, and then hydrating any missing metadata on the client. That's why the routes module default export is conditioned to `import.meta.env.SSR`, and different helper functions are called for each rendering environment.
@@ -60,7 +155,7 @@ If you want to use your own custom routes list, you must eject this file as-is a
 const routes = [
   { 
     path: '/', 
-    component: () => import('/custom/index.vue'),
+    component: () => import('/custom/index.svelte'),
   }
 ]
 
@@ -69,72 +164,18 @@ export default import.meta.env.SSR
   : hydrateRoutes(routes)
 ````
 
+**Nested routes aren't supported yet.**
+
+
 ### `/dx:core.js`
 
-Implements `useRouteContext()` and `createBeforeEachHandler()`, used by `core.js`.
-
-`DXApp` is imported by `root.vue` and encapsulates Fastify DX's route component API.
-
-> Vue Router's [nested routes](https://router.vuejs.org/guide/essentials/nested-routes.html) aren't supported yet.
+Implements `useRouteContext()`.
 
 See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/core.js).
 
-### `/dx:create.js`
-
-This virtual module creates your root Vue component. 
-
-This is where `root.vue` is imported.
-
-<b>You'll rarely need to customize this file.</b>
-
-```js
-import { createApp, createSSRApp, reactive, ref } from 'vue'
-import { createRouter } from 'vue-router'
-import {
-  isServer,
-  createHistory,
-  serverRouteContext,
-  routeLayout,
-  createBeforeEachHandler,
-} from '/dx:core.js'
-import root from '/dx:root.vue'
-
-export default async function create (ctx) {
-  const { routes, ctxHydration } = ctx
-
-  const instance = ctxHydration.clientOnly
-    ? createApp(root)
-    : createSSRApp(root)
-
-  const history = createHistory()
-  const router = createRouter({ history, routes })
-  const layoutRef = ref(ctxHydration.layout ?? 'default')
-
-  instance.provide(routeLayout, layoutRef)
-  ctxHydration.state = reactive(ctxHydration.state)
-
-  if (isServer) {
-    instance.provide(serverRouteContext, ctxHydration)
-  } else {
-    router.beforeEach(createBeforeEachHandler(ctx, layoutRef))
-  }
-
-  instance.use(router)
-
-  if (ctx.url) {
-    router.push(ctx.url)
-    await router.isReady()
-  }
-
-  return { instance, ctx, router }
-}
-```
-
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/create.js).
-
 ### `/dx:layouts.js`
 
-This is responsible for loading **layout components**. It's part of `route.svelte` by default. If a project has no `layouts/default.vue` file, the default one from Fastify DX is used. This virtual module works in conjunction with the `/dx:layouts/` virtual module which provides exports from the `/layouts` folder.
+This is responsible for loading **layout components**. It's part of `route.svelte` by default. If a project has no `layouts/default.svelte` file, the default one from Fastify DX is used. This virtual module works in conjunction with the `/dx:layouts/` virtual module which provides exports from the `/layouts` folder.
 
 <b>You'll rarely need to customize this file.</b>
 
@@ -142,7 +183,7 @@ This is responsible for loading **layout components**. It's part of `route.svelt
 
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/layout.vue).
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/virtual/layout.svelte).
 
 ### `/dx:mount.js`
 
