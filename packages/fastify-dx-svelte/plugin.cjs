@@ -11,7 +11,6 @@ function viteSvelteFastifyDX (config = {}) {
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [ 
     'mount.js', 
-    'resource.js',
     'routes.js',
     'layouts.js',
     'root.svelte',

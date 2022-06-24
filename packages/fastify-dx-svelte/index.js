@@ -84,7 +84,7 @@ export function createHtmlFunction (source, scope, config) {
         ...context, 
         style,
         head, 
-        hydration
+        hydration,
       }),
       footer: footerTemplate(context),
     }))

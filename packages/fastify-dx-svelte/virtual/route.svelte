@@ -9,7 +9,7 @@ const isServer = import.meta.env.SSR
 setContext(routeContext, {
   get routeContext () {
     return ctx
-  }
+  },
 })
 
 export let path

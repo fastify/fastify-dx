@@ -1,19 +1,19 @@
 {
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "lint": "eslint . --ext .js,.svelte --fix"
   },
   "type": "module",
   "main": "index.js",
   "name": "fastify-dx-svelte",
-  "version": "0.0.1",
+  "version": "0.0.1-pre",
   "files": [
     "virtual/root.svelte",
+    "virtual/route.svelte",
     "virtual/layouts.js",
-    "virtual/layouts/default.jsx",
+    "virtual/layouts/default.svelte",
     "virtual/context.js",
     "virtual/mount.js",
-    "virtual/resource.js",
-    "virtual/core.jsx",
+    "virtual/core.js",
     "virtual/routes.js",
     "index.js",
     "plugin.cjs",
@@ -26,14 +26,15 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
-    "svelte-routing": "^1.6.0",
-    "svelte-loadable": "^2.0.1",
-    "sveltio": "^1.0.5",
     "devalue": "^2.0.1",
+    "svelte-loadable": "^2.0.1",
+    "svelte-routing": "^1.6.0",
+    "sveltio": "^1.0.5",
     "unihead": "^0.0.6"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
+    "@babel/eslint-parser": "^7.18.2",
+    "eslint": "^8.18.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
