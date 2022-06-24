@@ -12,14 +12,12 @@ If a route module exports `serverOnly` set to `true`, only SSR will take place. 
 
 You should use this setting to deliver lighter pages when there's no need to run any code on them, such as statically generated content sites.
 
-```vue
-<template>
-  <p>This route is rendered on the server only!</p>
-</template>
-
-<script>
+```svelte
+<script context="module">
 export const serverOnly = true
 </script>
+
+<p>This route is rendered on the server only!</p>
 ```
 
 [This example](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/client/pages/server-only.svelte) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/svelte).
@@ -30,14 +28,12 @@ If a route module exports `clientOnly` set to `true`, no SSR will take place, on
 
 You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
 
-```vue
-<template>
-  <p>This route is rendered on the client only!</p>
-</template>
-
-<script>
+```svelte
+<script context="module">
 export const clientOnly = true
 </script>
+
+<p>This route is rendered on the client only!</p>
 ```
 
 [This example](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/client/pages/client-only.svelte) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/svelte).
