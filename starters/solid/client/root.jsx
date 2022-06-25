@@ -1,6 +1,10 @@
 import 'uno.css'
-import { createContext, useContext, createSignal } from 'solid-js'
+import { createContext, useContext, createSignal, children } from 'solid-js'
+import { isServer, Suspense } from 'solid-js/web'
 import { Router, Routes, Route } from 'solid-app-router'
+
+const Fragment = props => <>{children(() => props.children)}</>
+const Async = isServer ? Fragment : Suspense
 
 export default function Root (props) {
   return (
@@ -9,7 +13,9 @@ export default function Root (props) {
         // eslint-disable-next-line solid/prefer-for
         props.payload.routes.map((route) => {
           return <Route path={route.path} element={
-            <route.component />
+            <Async>
+              <route.component />
+            </Async>
           } />
         })
       }</Routes>
