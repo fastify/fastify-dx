@@ -1,6 +1,46 @@
 {
+  "scripts": {
+    "lint": "eslint . --ext .js,.jsx --fix"
+  },
+  "type": "module",
+  "main": "index.js",
   "name": "fastify-dx-solid",
-  "version": "0.0.0",
-  "files": ["index.js"],
-  "license": "MIT"
+  "version": "0.0.1-pre",
+  "files": [
+    "virtual/create.jsx",
+    "virtual/root.jsx",
+    "virtual/layouts.js",
+    "virtual/layouts/default.jsx",
+    "virtual/context.js",
+    "virtual/mount.js",
+    "virtual/resource.js",
+    "virtual/core.jsx",
+    "virtual/routes.js",
+    "index.js",
+    "plugin.cjs",
+    "server/context.js",
+    "server/stream.js"
+  ],
+  "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin.cjs"
+  },
+  "dependencies": {
+    "solid-js": "^1.4.4",
+    "solid-app-router": "^0.4.1",
+    "devalue": "^2.0.1",
+    "unihead": "^0.0.6",
+    "valtio": "^1.6.1"
+  },
+  "devDependencies": {
+    "vite-plugin-solid": "^2.2.6",
+    "@babel/eslint-parser": "^7.16.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-solid": "^0.4.7"
+  }
 }
