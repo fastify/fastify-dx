@@ -35,6 +35,9 @@ await server.listen(3000)
 The starter template's [`vite.config.js`](https://github.com/fastify/fastify-dx/blob/main/starters/vue/vite.config.js) file:
 
 ```js
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
 import viteVue from '@vitejs/plugin-vue'
 import viteVueFastifyDX from 'fastify-dx-vue/plugin'
 import unocss from 'unocss/vite'
