@@ -29,4 +29,4 @@ await server.register(FastifyVite, {
 
 await server.vite.ready()
 
-await server.listen(3000)
+await server.listen({ port: 3000 })
