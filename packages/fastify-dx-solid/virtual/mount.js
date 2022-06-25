@@ -18,10 +18,12 @@ async function mount (target) {
     resolvedRoutes.map((route) => [route.path, route]),
   )
   const app = create({
-    head,
-    ctxHydration,
-    routes: window.routes,
-    routeMap,
+    payload: {
+      head,
+      ctxHydration,
+      routes: window.routes,
+      routeMap,
+    },
   })
   if (ctxHydration.clientOnly) {
     render(app, target)
