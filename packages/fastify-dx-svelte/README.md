@@ -17,7 +17,7 @@
 
 **Fastify DX for Svelte** is a renderer adapter for [**fastify-vite**](https://github.com/fastify/fastify-vite).
 
-It lets you run and SSR (server-side render) **Svelte applications built with Vite** on [Fastify](https://fastify.io/), with a minimal and transparent **server-first approach** — everything starts with `server.js`, your actual Fastify server). 
+It lets you run and SSR (server-side render) **Svelte applications built with Vite** on [Fastify](https://fastify.io/), with a minimal and transparent **server-first approach** — everything starts with `server.js`, your actual Fastify server. 
 
 It also provides a set of built-in utilities for ease of development and managing a universal JavaScript context (SSR to CSR), very much like **Nuxt.js**, **Next.js** and **Remix**. All **Fastify DX** framework adapters implement the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md) and have almost the same API, with only minimal differences due to specific framework APIs or idioms.
 
