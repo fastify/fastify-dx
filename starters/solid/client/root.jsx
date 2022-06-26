@@ -6,7 +6,7 @@ import DXRoute from '/dx:route.jsx'
 
 export default function Root (props) {
   return (
-    <Router>
+    <Router url={props.url}>
       <Routes>{
         // eslint-disable-next-line solid/prefer-for
         props.payload.routes.map(route =>

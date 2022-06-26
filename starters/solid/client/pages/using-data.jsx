@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js'
-import { Link } from 'svelte-app-router'
+import { Link } from 'solid-app-router'
 import { useRouteContext } from '/dx:core.js'
 
 export function getMeta () {
@@ -13,7 +13,6 @@ export function getData ({ server }) {
 }
 
 export default function UsingData (props) {
-  console.log('!')
   let input
   const {data} = useRouteContext()
   const [todoList, updateTodoList] = createSignal(data.todoList)
@@ -24,13 +23,13 @@ export default function UsingData (props) {
   return (
     <>
       <h2>Todo List — Using Data</h2>
-      <ul>{
-        todoList.map((item, i) => {
-          return <li key={`item-${i}`}>{item}</li>
-        })
-      }</ul>
+      <ul>
+        <For each={todoList()}>{(item, i) =>
+          <li>{item}</li>
+        }</For>
+      </ul>
       <div>
-        <input ref={setInput} />
+        <input ref={input} />
         <button onClick={() => addItem(input.value)}>Add</button>
       </div>
       <p>
