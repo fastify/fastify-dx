@@ -15,8 +15,8 @@ import devalue from 'devalue'
 import Head from 'unihead'
 
 // SSR functions from Solid
-import { 
-  renderToStream, 
+import {
+  // renderToStream, 
   renderToStringAsync, 
   generateHydrationScript
 } from 'solid-js/web'
@@ -36,13 +36,14 @@ export default {
 }
 
 export async function prepareClient ({
+  renderToStream,
   routes: routesPromise,
   context: contextPromise,
   ...others
 }) {
   const context = await contextPromise
   const resolvedRoutes = await routesPromise
-  return { context, routes: resolvedRoutes, ...others }
+  return { renderToStream, context, routes: resolvedRoutes, ...others }
 }
 
 // The return value of this function gets registered as reply.html()
@@ -91,7 +92,7 @@ export function createHtmlFunction (source, scope, config) {
   }
 }
 
-export async function createRenderFunction ({ routes, create }) {
+export async function createRenderFunction ({ renderToStream, routes, create }) {
   // Convenience-access routeMap
   const routeMap = Object.fromEntries(
     routes.toJSON().map(route => [route.path, route])
