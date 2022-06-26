@@ -3,8 +3,15 @@ import { createResource } from 'solid-js'
 export const streaming = true
 
 export default function Streaming () {
-  const [message] = createResource(afterSeconds)	
-	return <Suspense><Message message={message()} /></Suspense>
+  const [message] = createResource(() => afterSeconds({
+  	message: 'Delayed by Resource API',
+  	seconds: 5,
+  }))	
+	return (
+		<Suspense fallback={<p>Waiting for content</p>}>
+			<Message message={message()} />
+		</Suspense>
+	)
 }
 
 function Message (props) {
@@ -13,10 +20,10 @@ function Message (props) {
 	)
 }
 
-function afterSeconds () {
+function afterSeconds ({ message, seconds }) {
 	return new Promise((resolve) => {
     setTimeout(() => {
-    	resolve('Hello')
-    }, 5 * 1000)
+    	resolve(message)
+    }, seconds * 1000)
   })
 }

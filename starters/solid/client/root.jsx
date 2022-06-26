@@ -1,9 +1,12 @@
 import 'uno.css'
-import { createContext, useContext, createSignal, children } from 'solid-js'
-import { isServer, Suspense } from 'solid-js/web'
+import { sharedConfig, createContext, useContext, createSignal, children } from 'solid-js'
+import { Suspense, isServer } from 'solid-js/web'
 import { createMutable } from 'solid-js/store'
 import { Router, Routes, Route } from 'solid-app-router'
 import DXRoute from '/dx:route.jsx'
+
+// TODO Figure out why this is necessary and how safe it is
+sharedConfig.context = { suspense: {} }
 
 export default function Root (props) {
   const state = createMutable(props.payload.serverRoute.state)
