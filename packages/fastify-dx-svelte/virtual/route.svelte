@@ -75,7 +75,7 @@ let setupClientRouteContext = !isServer && setup()
     <svelte:component this={component} />
   </svelte:component>
 {:else}
-{#await setupClientRouteContext}{:then}
+{#await setupClientRouteContext then}
   <svelte:component this={layouts[ctx.layout].default}>
     <Loadable loader={component} />
   </svelte:component>
