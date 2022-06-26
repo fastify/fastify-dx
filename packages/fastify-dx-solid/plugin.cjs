@@ -18,6 +18,7 @@ function viteSolidFastifyDX (config = {}) {
     'root.jsx',
     'layouts/',
     'context.js',
+    'route.jsx',
     'core.jsx'
   ]
   virtualModules.includes = function (virtual) {

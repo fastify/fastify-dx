@@ -26,7 +26,8 @@ async function mount (target) {
     },
   })
   if (serverRoute.clientOnly) {
-    render(() => app, target)
+    console.log('!')
+    render(app, target)
   } else {
     hydrate(() => app, target)
   }

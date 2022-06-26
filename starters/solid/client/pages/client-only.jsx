@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'solid-app-router'
 
 export const clientOnly = true
 
@@ -13,7 +13,7 @@ export default function ClientOnly () {
     <>
       <p>This route is rendered on the client only!</p>
       <p>
-        <Link to="/">Go back to the index</Link>
+        <Link href="/">Go back to the index</Link>
       </p>
       <p>⁂</p>
       <p>When this route is rendered on the server, no SSR takes place.</p>

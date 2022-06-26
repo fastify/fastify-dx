@@ -13,10 +13,10 @@ export default function Index () {
       <img src={logo} alt="Fastify DX" />
       <h1>Welcome to Fastify DX for Solid!</h1>
       <ul class="columns-2">
-        <li><Link href="/">aaa</Link> demonstrates how to 
+        <li><Link href="/using-data">/using-data</Link> demonstrates how to 
         leverage the <code>getData()</code> function 
         and <code>useRouteContext()</code> to retrieve server data for a route.</li>
-        <li><Link href="/using-store">\/using-store</Link> demonstrates how to 
+        <li><Link href="/using-store">/using-store</Link> demonstrates how to 
         leverage the 
         automated <a href="https://github.com/pmndrs/valtio">Valtio</a> store 
         to retrieve server data for a route and maintain it in a global 

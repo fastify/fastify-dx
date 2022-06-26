@@ -1,13 +1,19 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'solid-app-router'
 
 export const serverOnly = true
+
+export function getMeta () { 
+  return {
+    title: 'Server Only Page'
+  }
+}
 
 export default function ServerOnly () {
   return (
     <>
       <p>This route is rendered on the server only!</p>
       <p>
-        <Link to="/">Go back to the index</Link>
+        <Link href="/">Go back to the index</Link>
       </p>
       <p>⁂</p>
       <p>When this route is rendered on the server, no JavaScript is sent to the client.</p>
