@@ -1,15 +1,14 @@
-import { Suspense } from 'react'
-import { useRouteContext } from '/dx:core.jsx'
+import { useRouteContext } from '/dx:core.js'
 
 export default function Auth ({ children }) {
-  const { actions, state, snapshot } = useRouteContext()
+  const { actions, state } = useRouteContext()
   const authenticate = () => actions.authenticate(state)
   return (
-    <Suspense>
-      {snapshot.user.authenticated
+    <div class="contents">
+      {state.user.authenticated
         ? children
         : <Login onClick={() => authenticate()} /> }
-    </Suspense>
+    </div>
   )
 }
 

@@ -1,6 +1,8 @@
 import { Link } from 'solid-app-router'
 import { useRouteContext } from '/dx:core.js'
 
+export const layout = 'auth'
+
 export function getMeta () {
   return { title: 'Todo List — Using Store' }
 }

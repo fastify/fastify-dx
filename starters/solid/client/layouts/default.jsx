@@ -1,9 +1,5 @@
-import { Suspense } from 'react'
-
 export default function Default ({ children }) {
   return (
-    <Suspense>
-      {children}
-    </Suspense>
+    <div class="contents">{children}</div>
   )
 }
