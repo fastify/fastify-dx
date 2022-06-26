@@ -16,7 +16,6 @@ export default function DXRoute (props) {
   }
 
   async function setup () {
-  	console.log('location', location)
     if (props.payload.serverRoute.firstRender) {
       ctx.data = props.payload.serverRoute.data
       ctx.layout = props.payload.serverRoute.layout ?? 'default'
@@ -28,9 +27,7 @@ export default function DXRoute (props) {
     if (getData) {
       try {
         const fullPath = `${location.pathname}${location.search}`
-        console.log('fullPath', fullPath)
         const updatedData = await jsonDataFetch(fullPath)
-        console.log('updatedData', updatedData)
         if (!ctx.data) {
           ctx.data = {}
         }

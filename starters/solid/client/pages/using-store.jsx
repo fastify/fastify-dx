@@ -1,36 +1,28 @@
 import { createSignal } from 'solid-js'
-import { Link } from 'svelte-app-router'
+import { Link } from 'solid-app-router'
 import { useRouteContext } from '/dx:core.js'
 
 export function getMeta () {
-  return { title: 'Todo List — Using Data' }
+  return { title: 'Todo List — Using Store' }
 }
 
-export function getData ({ server }) {
-	return {
-		todoList: server.db.todoList
-	}
-}
-
-export default function UsingData (props) {
-  console.log('!')
+export default function UsingStore (props) {
   let input
-  const {data} = useRouteContext()
-  const [todoList, updateTodoList] = createSignal(data.todoList)
+  const {state, actions} = useRouteContext()
   const addItem = (value) => {
-    updateTodoList(list => [...list, value])
+    actions.addTodoItem(state, value)
     input.value = ''
   }
   return (
     <>
-      <h2>Todo List — Using Data</h2>
-      <ul>{
-        todoList.map((item, i) => {
-          return <li key={`item-${i}`}>{item}</li>
-        })
-      }</ul>
+      <h2>Todo List — Using Store</h2>
+      <ul>
+        <For each={state.todoList}>{(item, i) =>
+          <li>{item}</li>
+        }</For>
+      </ul>
       <div>
-        <input ref={setInput} />
+        <input ref={input} />
         <button onClick={() => addItem(input.value)}>Add</button>
       </div>
       <p>
