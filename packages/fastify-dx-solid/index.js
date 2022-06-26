@@ -110,6 +110,7 @@ export async function createRenderFunction ({ routes, create }) {
         },
       })
       if (req.route.streaming) {
+        console.log('streaming enabled')
         const duplex = new PassThrough()
         renderToStream(app).pipe(duplex)
         stream = duplex

@@ -17,10 +17,7 @@ export default function Index () {
         leverage the <code>getData()</code> function 
         and <code>useRouteContext()</code> to retrieve server data for a route.</li>
         <li><Link href="/using-store">/using-store</Link> demonstrates how to 
-        leverage the 
-        automated <a href="https://github.com/pmndrs/valtio">Valtio</a> store 
-        to retrieve server data for a route and maintain it in a global 
-        state even after navigating to another route.</li>
+        retrieve server data and maintain it in the global state.</li>
         <li><Link href="/using-auth">/using-auth</Link> demonstrates how to 
         wrap a route in a custom layout component.</li>
         <li><Link href="/client-only">/client-only</Link> demonstrates how to set 
