@@ -6,7 +6,7 @@ import routes from '/dx:routes.js'
 import * as context from '/dx:context.js'
 
 export default {
-  // Solid requires renderToStream to be imported
+  // Solid requires SSR functions to be imported
   // from the same module environment where all
   // application-level code runs
   renderToStream,
