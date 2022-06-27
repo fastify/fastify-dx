@@ -10,17 +10,15 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
+    "fastify-dx-solid": "^0.0.1",
     "fastify-vite": "^3.0.0-beta.23",
     "ky-universal": "^0.10.1",
-    "solid-js": "^1.4.4",
-    "solid-app-router": "^0.4.1",
-    "devalue": "^2.0.1",
-    "unihead": "^0.0.6",
-    "valtio": "^1.6.1"
+    "ky": "^0.31.0"
   },
   "devDependencies": {
     "vite-plugin-solid": "^2.2.6",
     "@babel/eslint-parser": "^7.16.0",
+    "babel-preset-solid": "^1.4.4",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -36,7 +34,8 @@
     },
     "external": {
       "fastify-vite": "^3.0.0-beta.23",
-      "ky-universal": "^0.10.1"
+      "ky-universal": "^0.10.1",
+      "ky": "^0.31.0"
     }
   }
 }

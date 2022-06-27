@@ -4,10 +4,10 @@ import { useRouteContext } from '/dx:core.js'
 export const layout = 'auth'
 
 export function getMeta () {
-  return { title: 'Todo List — Using Store' }
+  return { title: 'Todo List — Using Custom Layout' }
 }
 
-export default function UsingStore (props) {
+export default function UsingCustomLayout (props) {
   let input
   const {state, actions} = useRouteContext()
   const addItem = (value) => {
@@ -16,7 +16,7 @@ export default function UsingStore (props) {
   }
   return (
     <>
-      <h2>Todo List — Using Store</h2>
+      <h2>Todo List — Using Custom Layout</h2>
       <ul>
         <For each={state.todoList}>{(item, i) =>
           <li>{item}</li>
@@ -31,10 +31,7 @@ export default function UsingStore (props) {
       </p>
       <p>⁂</p>
       <p>When you navigate away from this route, any additions to the to-do 
-      list will be lost, because they're bound to this route component only.</p>
-      <p>See the <Link href="/using-store">/using-store</Link> example to learn 
-      how to use the application global state for it.
-      </p>
+      list are not lost, because they're bound to the global application state.</p>
     </>
   )
 }

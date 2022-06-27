@@ -1,12 +1,8 @@
-// This file serves as a placeholder
-// if no layout.jsx file is provided
+import { children } from 'solid-js'
 
-import { Suspense } from 'react'
-
-export default function Layout ({ children }) {
+export default function Default (props) {
+  const c = children(() => props.children)
   return (
-    <Suspense>
-      {children}
-    </Suspense>
+    <div class="contents">{c()}</div>
   )
 }

@@ -59,14 +59,9 @@ export function createHtmlFunction (source, scope, config) {
   const hydrationScript = generateHydrationScript()
   // This function gets registered as reply.html()
   return function ({ routes, context, stream, body }) {
-    // Initialize hydration, which can stay empty if context.serverOnly is true
-    let hydration = ''
     // Decide which templating functions to use, with and without hydration
     const headTemplate = context.serverOnly ? soHeadTemplate : unHeadTemplate
     const footerTemplate = context.serverOnly ? soFooterTemplate : unFooterTemplate
-    // Decide whether or not to include the hydration script
-    if (!context.serverOnly) {
-    }
     // Render page-level <head> elements
     const head = new Head(context.head).render()
     // Create readable stream with prepended and appended chunks
@@ -76,14 +71,15 @@ export function createHtmlFunction (source, scope, config) {
       head: headTemplate({ ...context, head, hydrationScript }),
       footer: () => footerTemplate({
         ...context,
+        // Decide whether or not to include the hydration script
         ...!context.serverOnly && {
           hydration: (
             '<script>\n' +
             `window.route = ${devalue(context.toJSON())}\n` +
             `window.routes = ${devalue(routes.toJSON())}\n` +
             '</script>'
-          )
-        }
+          ),
+        },
       }),
     }))
     // Send out header and readable stream with full response
@@ -93,14 +89,14 @@ export function createHtmlFunction (source, scope, config) {
 }
 
 export async function createRenderFunction ({
-  renderToStringAsync,  
+  renderToStringAsync,
   renderToStream,
   routes,
-  create
+  create,
 }) {
   // Convenience-access routeMap
   const routeMap = Object.fromEntries(
-    routes.toJSON().map(route => [route.path, route])
+    routes.toJSON().map(route => [route.path, route]),
   )
   return async function (req) {
     let stream = null
@@ -116,7 +112,6 @@ export async function createRenderFunction ({
         },
       })
       if (req.route.streaming) {
-        console.log('streaming enabled')
         const duplex = new PassThrough()
         renderToStream(app).pipe(duplex)
         stream = duplex
@@ -126,9 +121,9 @@ export async function createRenderFunction ({
     }
     // Perform SSR, i.e., turn app.instance into an HTML fragment
     // The SSR context data is passed along so it can be inlined for hydration
-    return { 
-      routes, 
-      context: req.route, 
+    return {
+      routes,
+      context: req.route,
       stream,
       body,
     }

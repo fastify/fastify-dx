@@ -1,6 +1,6 @@
-import { createContext, createSignal, createResource, children } from 'solid-js'
+import { createResource } from 'solid-js'
 import { isServer, Suspense } from 'solid-js/web'
-import { Router, Routes, Route, useLocation } from 'solid-app-router'
+import { useLocation } from 'solid-app-router'
 import { RouteContext, jsonDataFetch } from '/dx:core.js'
 import layouts from '/dx:layouts.js'
 
@@ -9,7 +9,7 @@ export default function DXRoute (props) {
   const location = useLocation()
 
   ctx.state = props.state
-  ctx.actions = props.payload.serverRoute.actions  
+  ctx.actions = props.payload.serverRoute.actions
 
   if (isServer) {
     ctx.layout = props.payload.serverRoute.layout ?? 'default'
@@ -18,7 +18,7 @@ export default function DXRoute (props) {
 
   async function setup () {
     if (props.payload.serverRoute.firstRender) {
-      // ctx.hydration = props.payload.serverRoute.hydration
+      // ctx.hydration = payload.serverRoute.hydration
       ctx.data = props.payload.serverRoute.data
       ctx.layout = props.payload.serverRoute.layout ?? 'default'
       props.payload.serverRoute.firstRender = false
@@ -69,7 +69,7 @@ export default function DXRoute (props) {
     const [routeContext] = createResource(setup)
     element = (
       <Suspense>
-        {!routeContext.loading && 
+        {!routeContext.loading &&
           <RouteContext.Provider value={routeContext()}>
             <Layout id={routeContext().layout}>
               <props.component />
