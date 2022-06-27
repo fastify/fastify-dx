@@ -10,5 +10,5 @@ export async function * generateHtmlStream ({ head, body, stream, footer }) {
       yield chunk
     }
   }
-  yield footer
+  yield footer()
 }

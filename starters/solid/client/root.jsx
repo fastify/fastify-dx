@@ -5,11 +5,9 @@ import { createMutable } from 'solid-js/store'
 import { Router, Routes, Route } from 'solid-app-router'
 import DXRoute from '/dx:route.jsx'
 
-// TODO Figure out why this is necessary and how safe it is
-sharedConfig.context = { suspense: {} }
-
 export default function Root (props) {
-  const state = createMutable(props.payload.serverRoute.state)
+  props.payload.serverRoute.state = createMutable(props.payload.serverRoute.state)
+  const state = props.payload.serverRoute.state
   return (
     <Router url={props.url}>
       <Routes>{

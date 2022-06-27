@@ -14,12 +14,8 @@ import devalue from 'devalue'
 // <title>, <meta> and <link> elements
 import Head from 'unihead'
 
-// SSR functions from Solid
-import {
-  // renderToStream, 
-  renderToStringAsync, 
-  generateHydrationScript
-} from 'solid-js/web'
+// Hydration script helper from Solid
+import { generateHydrationScript } from 'solid-js/web'
 
 // Helper to build a stream from multiple fragments
 import { generateHtmlStream } from './server/stream.js'
@@ -70,12 +66,6 @@ export function createHtmlFunction (source, scope, config) {
     const footerTemplate = context.serverOnly ? soFooterTemplate : unFooterTemplate
     // Decide whether or not to include the hydration script
     if (!context.serverOnly) {
-      hydration = (
-        '<script>\n' +
-        `window.route = ${devalue(context.toJSON())}\n` +
-        `window.routes = ${devalue(routes.toJSON())}\n` +
-        '</script>'
-      )
     }
     // Render page-level <head> elements
     const head = new Head(context.head).render()
@@ -83,8 +73,18 @@ export function createHtmlFunction (source, scope, config) {
     const readable = Readable.from(generateHtmlStream({
       stream,
       body,
-      head: headTemplate({ ...context, head, hydration, hydrationScript }),
-      footer: footerTemplate(context),
+      head: headTemplate({ ...context, head, hydrationScript }),
+      footer: () => footerTemplate({
+        ...context,
+        ...!context.serverOnly && {
+          hydration: (
+            '<script>\n' +
+            `window.route = ${devalue(context.toJSON())}\n` +
+            `window.routes = ${devalue(routes.toJSON())}\n` +
+            '</script>'
+          )
+        }
+      }),
     }))
     // Send out header and readable stream with full response
     this.type('text/html')
@@ -92,7 +92,12 @@ export function createHtmlFunction (source, scope, config) {
   }
 }
 
-export async function createRenderFunction ({ renderToStream, routes, create }) {
+export async function createRenderFunction ({
+  renderToStringAsync,  
+  renderToStream,
+  routes,
+  create
+}) {
   // Convenience-access routeMap
   const routeMap = Object.fromEntries(
     routes.toJSON().map(route => [route.path, route])

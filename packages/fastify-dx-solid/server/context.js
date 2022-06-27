@@ -22,6 +22,7 @@ export default class RouteContext {
     this.head = {}
     this.state = null
     this.data = route.data
+    this.hydration = {}
     this.firstRender = true
     this.layout = route.layout
     this.getMeta = !!route.getMeta
@@ -45,6 +46,7 @@ export default class RouteContext {
     return {
       state: this.state,
       data: this.data,
+      hydration: this.hydration,
       layout: this.layout,
       getMeta: this.getMeta,
       getData: this.getData,

@@ -11,6 +11,7 @@ export const $fetch = ky.extend({
 })
 
 export const state = () => ({
+  message: null,
   user: {
     authenticated: false,
   },
