@@ -1,5 +1,4 @@
-
-<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md).**</sub>
+<sub>**Go back to the [index](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-solid/README.md).**</sub>
 
 <br>
 
@@ -11,35 +10,12 @@ Fastify DX virtual modules are **fully ejectable**. For instance, the starter te
 
 Aside from `root.svelte`, the starter template comes with two other virtual modules already ejected and part of the local project — `context.js` and `layouts/default.svelte`. If you don't need to customize them, you can safely removed them from your project.
 
-### `/dx:root.svelte`
+### `/dx:root.jsx`
 
-This is the root Svelte component. It's provided as part of the starter template. You can use this file to add a common layout to all routes. The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
+This is the root Solid component. It's provided as part of the starter template. You can use this file to add a common layout to all routes. The version provided as part of the starter template includes [UnoCSS](https://github.com/unocss/unocss)'s own virtual module import, necessary to enable its CSS engine.
 
-```html
-<script>
-import 'uno.css'
-import { proxy } from 'sveltio'
-import { Router, Route } from 'svelte-routing'
-import DXRoute from '/dx:route.svelte'
+```jsx
 
-export let url = null
-export let payload
-
-let state = proxy(payload.serverRoute.state)
-</script>
-
-<Router url="{url}">
-  {#each payload.routes as { path, component }}
-    <Route path="{path}" let:location>
-      <DXRoute 
-        path={path}
-        location={location}
-        state={state}
-        payload={payload}
-        component={component} />
-    </Route>
-  {/each}
-</Router>
 ```
 
 ### `/dx:route.svelte`
