@@ -56,6 +56,20 @@ Try out the [**alpha release** of Fastify DX for Svelte](https://github.com/fast
 </tr>
 </table>  
 
+<table>
+<tr>
+<td width="200px" valign="top">
+
+### [fastify-dx-solid](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-dx-solid)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-solid.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-solid) 
+ 
+</td>
+<td width="500px"><br>
+
+Try out the [**alpha release** of Fastify DX for Solid](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-solid/README.md).
+
+</td>
+</tr>
+</table>  
 
 
 ## Status
