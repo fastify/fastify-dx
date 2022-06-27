@@ -10,7 +10,7 @@ If a route module exports a `onEnter()` function, it's executed before the route
 
 It receives the [universal route context][route-context] as first parameter, so you can make changes to `data`, `meta` and `state` if needed.
 
-[route-context]: https://github.com/fastify/fastify-dx/blob/main/docs/svelte/route-context.md
+[route-context]: https://github.com/fastify/fastify-dx/blob/main/docs/solid/route-context.md
 
 ```html
 <script context="module">

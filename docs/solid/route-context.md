@@ -25,7 +25,7 @@ const {
 actions.addTodoItem(state, value)
 ```
 
-See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/client/pages/using-store.vue) in the starter template.
+See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/solid/client/pages/using-store.vue) in the starter template.
 
 This example demonstrates how to use it to set up an universally available (SSR and CSR) `$fetch` function (using [`ky-universal`](https://www.npmjs.com/package/ky-universal)) and also export some store actions. They're all made available by `useRouteContext()`, covered next.
 
@@ -59,7 +59,7 @@ export const actions = {
 }
 ```
 
-See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/svelte/client/context.js) in the starter template.
+See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/solid/client/context.js) in the starter template.
 
 ### The `useRouteContext()` hook
 
@@ -69,13 +69,13 @@ By default, It includes reference to `data` — which is automatically populated
 
 It automatically causes the component to be suspended if the `getData()`, `getMeta()` and `onEnter()` functions are asynchronous.
 
-```html
-<script>
+```jsx
 import { useRouteContext } from '/dx:core.js'
-const { data } = useRouteContext()
-</script>
 
-<p>{data.message}</p>
+export default function Route (props) {
+  const { data } = useRouteContext()
+  return <p>{data.message}</p>
+}
 ```
 
 ### Execution order

@@ -19,13 +19,13 @@ The starter template's `server.js` file:
 ```js
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import FastifyDXSvelte from 'fastify-dx-solid'
+import FastifyDXSolid from 'fastify-dx-solid'
 
 const server = Fastify()
 
 await server.register(FastifyVite, { 
   root: import.meta.url, 
-  renderer: FastifyDXSvelte,
+  renderer: FastifyDXSolid,
 })
 
 await server.vite.ready()
