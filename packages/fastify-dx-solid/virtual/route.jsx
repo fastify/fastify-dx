@@ -69,13 +69,13 @@ export default function DXRoute (props) {
     const [routeContext] = createResource(setup)
     element = (
       <Suspense>
-        {!routeContext.loading &&
+        {!routeContext.loading && (
           <RouteContext.Provider value={routeContext()}>
             <Layout id={routeContext().layout}>
               <props.component />
             </Layout>
           </RouteContext.Provider>
-        }
+        )}
       </Suspense>
     )
   }
@@ -83,6 +83,12 @@ export default function DXRoute (props) {
 }
 
 function Layout (props) {
-  const Component = layouts[props.id].default
-  return <Component>{props.children}</Component>
+  console.log(layouts)
+  if (layouts && layouts.length > 0) {
+    const Component = layouts[props.id].default
+    return <Component>{props.children}</Component>
+  } else {
+    const Component = layouts.default
+    return <Component>{props.children}</Component>
+  }
 }
