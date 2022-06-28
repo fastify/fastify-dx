@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "devalue": "^2.0.1",
+    "fastify-vite": "3.0.0-beta.23",
     "solid-app-router": "^0.4.1",
     "solid-js": "^1.4.4",
     "unihead": "^0.0.6"
