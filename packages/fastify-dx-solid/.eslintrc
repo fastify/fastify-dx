@@ -1,0 +1,21 @@
+{
+  parser: '@babel/eslint-parser',
+  parserOptions: {
+    babelOptions: {
+      presets: ['babel-preset-solid'],
+    },
+    requireConfigFile: false,
+    ecmaVersion: 2021,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },    
+  },
+  plugins: ['solid'],
+  extends: ['plugin:solid/recommended', 'standard'],
+  rules: {
+    'solid/reactivity': 'off',
+    'comma-dangle': ['error', 'always-multiline'],
+    'import/no-absolute-path': 'off',
+  },
+}
