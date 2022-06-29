@@ -1,5 +1,5 @@
 <template>
-  <h1>Welcome to Fastify DX for Vue!</h1>
+  <h1>{{ message }}</h1>
   <p><img :src="logo" /></p>
   <ul class="columns-2">
     <li><router-link to="/using-data">/using-data</router-link> demonstrates how to 
@@ -19,7 +19,17 @@
 </template>
 
 <script setup>
+import { isServer, useRouteContext } from '/dx:core.js'
 import logo from '/assets/logo.svg'
+
+const { state } = useRouteContext()
+
+if (isServer) {
+  // State is automatically hydrated on the client
+  state.message = 'Welcome to Fastify DX for Vue!'
+}
+
+const message = state.message
 </script>
 
 <script>
