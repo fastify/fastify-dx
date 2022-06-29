@@ -20,8 +20,12 @@ export default async function create (ctx) {
   const router = createRouter({ history, routes })
   const layoutRef = ref(ctxHydration.layout ?? 'default')
 
+  instance.config.globalProperties.$isServer = isServer
+  
   instance.provide(routeLayout, layoutRef)
-  ctxHydration.state = reactive(ctxHydration.state)
+  if (!isServer) {
+    ctxHydration.state = reactive(ctxHydration.state)
+  }
 
   if (isServer) {
     instance.provide(serverRouteContext, ctxHydration)

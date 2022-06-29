@@ -12,7 +12,15 @@ import Layout from '/dx:layout.vue'
 
 <template>
   <router-view v-slot="{ Component }">
-    <Suspense>
+    <template v-if="$isServer">
+      <Layout>
+        <component
+          :is="Component"
+          :key="$route.path"
+        />
+      </Layout>
+    </template>
+    <Suspense v-else>
       <Layout>
         <component
           :is="Component"
