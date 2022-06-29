@@ -92,12 +92,12 @@ export function createHtmlFunction (source, scope, config) {
 }
 
 export async function createRenderFunction ({ routes, create }) {
+  // Create convenience-access routeMap
+  const routeMap = Object.fromEntries(routes.toJSON().map((route) => {
+    return [route.path, route]
+  }))
   // create is exported by client/index.js
   return async function (req) {
-    // Create convenience-access routeMap
-    const routeMap = Object.fromEntries(routes.toJSON().map((route) => {
-      return [route.path, route]
-    }))
     let stream = null
     let body = null
     // Creates main Vue component with all the SSR context it needs
