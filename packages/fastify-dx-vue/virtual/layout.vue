@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { defineAsyncComponent, inject } from 'vue'
+import { inject } from 'vue'
 import { routeLayout } from '/dx:core.js'
 
 import * as DefaultLayout from '/dx:layouts/default.vue'
