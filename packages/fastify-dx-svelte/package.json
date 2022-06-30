@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "name": "fastify-dx-svelte",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "files": [
     "virtual/root.svelte",
     "virtual/route.svelte",
