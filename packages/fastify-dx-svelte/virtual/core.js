@@ -1,6 +1,7 @@
 import { getContext } from 'svelte'
 import { useSnapshot } from 'sveltio'
 
+export const isServer = import.meta.env.SSR
 export const routeContext = Symbol('routeContext')
 
 export function useRouteContext () {

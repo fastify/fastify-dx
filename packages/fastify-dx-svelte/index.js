@@ -55,20 +55,9 @@ export function createHtmlFunction (source, scope, config) {
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
   return function ({ routes, context, app }) {
-    // Initialize hydration, which can stay empty if context.serverOnly is true
-    let hydration = ''
     // Decide which templating functions to use, with and without hydration
     const headTemplate = context.serverOnly ? soHeadTemplate : unHeadTemplate
     const footerTemplate = context.serverOnly ? soFooterTemplate : unFooterTemplate
-    // Decide whether or not to include the hydration script
-    if (!context.serverOnly) {
-      hydration = (
-        '<script>\n' +
-        `window.route = ${devalue(context.toJSON())}\n` +
-        `window.routes = ${devalue(routes.toJSON())}\n` +
-        '</script>'
-      )
-    }
     // Render page-level <head> elements
     const head = new Head(context.head).render()
     const style = (
@@ -86,7 +75,18 @@ export function createHtmlFunction (source, scope, config) {
         head, 
         hydration,
       }),
-      footer: footerTemplate(context),
+      footer: () => footerTemplate({
+        ...context,
+        // Decide whether or not to include the hydration script
+        ...!context.serverOnly && {
+          hydration: (
+            '<script>\n' +
+            `window.route = ${devalue(context.toJSON())}\n` +
+            `window.routes = ${devalue(routes.toJSON())}\n` +
+            '</script>'
+          )
+        }        
+      }),
     }))
     // Send out header and readable stream with full response
     this.type('text/html')
