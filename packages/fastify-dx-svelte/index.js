@@ -55,8 +55,6 @@ export function createHtmlFunction (source, scope, config) {
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
   return function ({ routes, context, app }) {
-    // Initialize hydration, which can stay empty if context.serverOnly is true
-    let hydration = ''
     // Decide which templating functions to use, with and without hydration
     const headTemplate = context.serverOnly ? soHeadTemplate : unHeadTemplate
     const footerTemplate = context.serverOnly ? soFooterTemplate : unFooterTemplate
