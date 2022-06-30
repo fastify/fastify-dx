@@ -1,5 +1,6 @@
 import logo from '/assets/logo.svg'
 import { Link } from 'react-router-dom'
+import { isServer, useRouteContext } from '/dx:core.jsx'
 
 export function getMeta () {
   return {
@@ -8,10 +9,15 @@ export function getMeta () {
 }
 
 export default function Index () {
+  const { snapshot, state } = useRouteContext()
+  if (isServer) {
+    // State is automatically hydrated on the client
+    state.message = 'Welcome to Fastify DX for React!'
+  }
   return (
     <>
       <img src={logo} />
-      <h1>Welcome to Fastify DX for React!</h1>
+      <h1>{snapshot.message}</h1>
       <ul className="columns-2">
         <li><Link to="/using-data">/using-data</Link> demonstrates how to 
         leverage the <code>getData()</code> function 
