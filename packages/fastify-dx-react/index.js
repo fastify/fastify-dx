@@ -67,7 +67,7 @@ export function createHtmlFunction (source, scope, config) {
           ? onShellReady(body)
           : onAllReady(body)
       ),
-      head: headTemplate({ ...context, head, hydration }),
+      head: headTemplate({ ...context, head }),
       footer: () => footerTemplate({
         ...context,
         // Decide whether or not to include the hydration script
