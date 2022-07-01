@@ -6,14 +6,14 @@ export const streaming = true
 export default function Streaming () {
   const {state} = useRouteContext()
   const [message] = createResource(async () => {
-    if (state.message) {
-      return state.message
+    if (state.delayedMessage) {
+      return state.delayedMessage
     }
     const message = await afterSeconds({
       message: 'Delayed by Resource API',
       seconds: 5,
     })
-    state.message = message
+    state.delayedMessage = message
     return message
   })
   return (

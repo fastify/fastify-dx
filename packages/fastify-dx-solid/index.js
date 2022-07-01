@@ -1,5 +1,9 @@
 // Used to send a readable stream to reply.send()
-import { Readable, PassThrough } from 'stream'
+import { Readable } from 'stream'
+
+// Helper to make the stream returned renderToPipeableStream()
+// behave like an event emitter and facilitate error handling in Fastify
+import Minipass from 'minipass'
 
 // fastify-vite's minimal HTML templating function,
 // which extracts interpolation variables from comments
@@ -32,14 +36,13 @@ export default {
 }
 
 export async function prepareClient ({
-  renderToStream,
   routes: routesPromise,
   context: contextPromise,
   ...others
 }) {
   const context = await contextPromise
   const resolvedRoutes = await routesPromise
-  return { renderToStream, context, routes: resolvedRoutes, ...others }
+  return { context, routes: resolvedRoutes, ...others }
 }
 
 // The return value of this function gets registered as reply.html()
@@ -89,7 +92,7 @@ export function createHtmlFunction (source, scope, config) {
 }
 
 export async function createRenderFunction ({
-  renderToStringAsync,
+  renderToString,
   renderToStream,
   routes,
   create,
@@ -112,11 +115,11 @@ export async function createRenderFunction ({
         },
       })
       if (req.route.streaming) {
-        const duplex = new PassThrough()
+        const duplex = new Minipass()
         renderToStream(app).pipe(duplex)
         stream = duplex
       } else {
-        body = await renderToStringAsync(app)
+        body = await renderToString(app)
       }
     }
     // Perform SSR, i.e., turn app.instance into an HTML fragment
