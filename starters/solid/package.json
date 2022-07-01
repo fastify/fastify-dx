@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
-    "fastify-dx-solid": "^0.0.1",
+    "fastify-dx-solid": "^0.0.2",
     "fastify-vite": "^3.0.0-beta.23",
     "ky-universal": "^0.10.1",
     "ky": "^0.31.0"
