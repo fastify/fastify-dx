@@ -32,14 +32,13 @@ export default {
 }
 
 export async function prepareClient ({
-  renderToStream,
   routes: routesPromise,
   context: contextPromise,
   ...others
 }) {
   const context = await contextPromise
   const resolvedRoutes = await routesPromise
-  return { renderToStream, context, routes: resolvedRoutes, ...others }
+  return { context, routes: resolvedRoutes, ...others }
 }
 
 // The return value of this function gets registered as reply.html()
@@ -89,7 +88,7 @@ export function createHtmlFunction (source, scope, config) {
 }
 
 export async function createRenderFunction ({
-  renderToStringAsync,
+  renderToString,
   renderToStream,
   routes,
   create,
@@ -116,7 +115,7 @@ export async function createRenderFunction ({
         renderToStream(app).pipe(duplex)
         stream = duplex
       } else {
-        body = await renderToStringAsync(app)
+        body = await renderToString(app)
       }
     }
     // Perform SSR, i.e., turn app.instance into an HTML fragment
