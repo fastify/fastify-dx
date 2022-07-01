@@ -1,5 +1,9 @@
 // Used to send a readable stream to reply.send()
-import { Readable, PassThrough } from 'stream'
+import { Readable } from 'stream'
+
+// Helper to make the stream returned renderToPipeableStream()
+// behave like an event emitter and facilitate error handling in Fastify
+import Minipass from 'minipass'
 
 // fastify-vite's minimal HTML templating function,
 // which extracts interpolation variables from comments
@@ -111,7 +115,7 @@ export async function createRenderFunction ({
         },
       })
       if (req.route.streaming) {
-        const duplex = new PassThrough()
+        const duplex = new Minipass()
         renderToStream(app).pipe(duplex)
         stream = duplex
       } else {
