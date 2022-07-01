@@ -1,7 +1,7 @@
 
-// Helper from the Node.js stream library to
-// make it easier to work with renderToPipeableStream()
-import { PassThrough } from 'stream'
+// Helper to make the stream returned renderToPipeableStream()
+// behave like an event emitter and facilitate error handling in Fastify
+import Minipass from 'minipass'
 
 // React 18's preferred server-side rendering function,
 // which enables the combination of React.lazy() and Suspense
@@ -15,13 +15,13 @@ export async function * generateHtmlStream ({ head, body, footer }) {
       yield chunk
     }
   }
-  yield footer
+  yield footer()
 }
 
 // Helper function to get an AsyncIterable (via PassThrough)
 // from the renderToPipeableStream() onShellReady event
 export function onShellReady (app) {
-  const duplex = new PassThrough()
+  const duplex = new Minipass()
   return new Promise((resolve, reject) => {
     try {
       const pipeable = renderToPipeableStream(app, {
@@ -35,10 +35,10 @@ export function onShellReady (app) {
   })
 }
 
-// Helper function to get an AsyncIterable (via PassThrough)
+// Helper function to get an AsyncIterable (via Minipass)
 // from the renderToPipeableStream() onAllReady event
 export function onAllReady (app) {
-  const duplex = new PassThrough()
+  const duplex = new Minipass()
   return new Promise((resolve, reject) => {
     try {
       const pipeable = renderToPipeableStream(app, {

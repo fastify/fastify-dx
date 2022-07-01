@@ -6,15 +6,16 @@ import { proxy, useSnapshot } from 'valtio'
 import { waitResource, waitFetch } from '/dx:resource.js'
 import layouts from '/dx:layouts.js'
 
-const isServer = typeof process === 'object'
-
+export const isServer = import.meta.env.SSR
 export const Router = isServer ? StaticRouter : BrowserRouter
 export const RouteContext = createContext({})
 
 export function useRouteContext () {
   const routeContext = useContext(RouteContext)
   if (routeContext.state) {
-    routeContext.snapshot = useSnapshot(routeContext.state)
+    routeContext.snapshot = isServer
+      ? routeContext.state
+      : useSnapshot(routeContext.state)
   }
   return routeContext
 }
@@ -56,7 +57,9 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
       <RouteContext.Provider value={{
         ...ctx,
         ...ctxHydration,
-        state: proxy(ctxHydration.state),
+        state: isServer
+          ? ctxHydration.state
+          : proxy(ctxHydration.state),
       }}>
         <Layout>
           {children}
@@ -130,7 +133,9 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
     <RouteContext.Provider value={{
       ...ctxHydration,
       ...ctx,
-      state: proxy(ctxHydration.state),
+      state: isServer
+        ? ctxHydration.state
+        : proxy(ctxHydration.state),
     }}>
       <Layout>
         {children}
