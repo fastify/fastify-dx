@@ -1,5 +1,8 @@
 import { createContext, useContext } from 'solid-js'
 
+// Solid already exports isServer, but this
+// is for consistency with the other implementations
+export const isServer = import.meta.env.SSR
 export const RouteContext = createContext()
 
 export function useRouteContext () {

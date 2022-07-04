@@ -9,10 +9,17 @@ export let getMeta = () => {
 <script>
 import logo from '/assets/logo.svg'
 import { Link } from 'svelte-routing'
+import { isServer, useRouteContext } from '/dx:core.js'
+const { state } = useRouteContext()
+
+if (isServer) {
+  // Should be automatically hydrated on the client
+  state.message = 'Welcome to Fastify DX for Svelte!'
+}
 </script>
 
 <img src={logo} alt="Fastify DX" />
-<h1>Welcome to Fastify DX for Svelte!</h1>
+<h1>{state.message}</h1>
 <ul class="columns-2">
   <li><Link to="/using-data">/using-data</Link> demonstrates how to 
   leverage the <code>getData()</code> function 

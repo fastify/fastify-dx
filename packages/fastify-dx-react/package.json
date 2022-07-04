@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "name": "fastify-dx-react",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "files": [
     "virtual/create.jsx",
     "virtual/root.jsx",
@@ -27,10 +27,11 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
+    "devalue": "^2.0.1",
+    "minipass": "^3.3.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
-    "devalue": "^2.0.1",
     "unihead": "^0.0.6",
     "valtio": "^1.6.1"
   },

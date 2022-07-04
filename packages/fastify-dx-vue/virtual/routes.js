@@ -53,7 +53,7 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
                 // Replace '/index' with '/'
                 .replace(/\/index$/, '/')
                 // Remove trailing slashs
-                .replace(/.+\/+$/, ''),
+                .replace(/(.+)\/+$/, (...m) => m[1]),
               ...routeModule,
             }
           }),
@@ -71,7 +71,7 @@ async function hydrateRoutes (from) {
   }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
-    route.component = lazy(from[route.id])
+    route.component = () => route.loader()
     return route
   })
 }

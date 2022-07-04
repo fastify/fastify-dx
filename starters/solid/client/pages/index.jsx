@@ -1,5 +1,6 @@
 import logo from '/assets/logo.svg'
 import { Link } from 'solid-app-router'
+import { isServer, useRouteContext } from '/dx:core.js'
 
 export function getMeta () {
   return {
@@ -8,10 +9,15 @@ export function getMeta () {
 }
 
 export default function Index () {
+  const { state } = useRouteContext()
+  if (isServer) {
+    // State is automatically hydrated on the client
+    state.message = 'Welcome to Fastify DX for Solid!'
+  }
   return (
     <>
       <img src={logo} alt="Fastify DX" />
-      <h1>Welcome to Fastify DX for Solid!</h1>
+      <h1>{state.message}</h1>
       <ul class="columns-2">
         <li><Link href="/using-data">/using-data</Link> demonstrates how to 
         leverage the <code>getData()</code> function 

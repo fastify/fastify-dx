@@ -51,7 +51,7 @@ degit fastify/fastify-dx/starters/vue
 > ```
 
 
-Run `npm install`. 
+Run `npm install -f`. 
   
 Run `npm run dev`. 
 
