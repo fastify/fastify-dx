@@ -53,7 +53,7 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
                 // Replace '/index' with '/'
                 .replace(/\/index$/, '/')
                 // Remove trailing slashs
-                .replace(/.+\/+$/, ''),
+                .replace(/(.+)\/+$/, (...m) => m[1]),
               ...routeModule,
             }
           }),
