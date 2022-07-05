@@ -5,7 +5,7 @@ const { fileURLToPath } = require('url')
 function viteSolidFastifyDX (config = {}) {  
   const prefix = /^\/?dx:/
   const routing = Object.assign({
-    globPattern: '/pages/**/*.jsx',
+    globPattern: '/pages/**/*.(jsx|tsx)',
     paramPattern: /\[(\w+)\]/,
   }, config)
   const virtualRoot = resolve(__dirname, 'virtual')
