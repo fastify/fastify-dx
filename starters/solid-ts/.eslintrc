@@ -6,7 +6,6 @@
     'standard-with-typescript',
     'plugin:solid/typescript'
   ],
-  ignorePatterns: ['*.d.js'],
   parserOptions: {
     project: './tsconfig.json'
   },

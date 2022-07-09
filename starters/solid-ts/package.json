@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "node server.js --dev",
+    "dev": "tsx server.ts --dev",
     "build": "npm run build:client && npm run build:server",
     "serve": "tsx server.ts",
     "devinstall": "zx ../../devinstall.mjs -- tsx server.ts --dev",
@@ -21,11 +21,11 @@
     "babel-preset-solid": "^1.4.4",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
-    "eslint": "^7.32.0",
+    "eslint": "^8.19.0",
     "eslint-config-standard-with-typescript": "^22.0.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-solid": "^0.4.7",
     "postcss-preset-env": "^7.7.1",
     "unocss": "^0.37.4",
