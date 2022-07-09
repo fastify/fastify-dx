@@ -11,12 +11,14 @@ function viteSvelteFastifyDX (config = {}) {
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [ 
     'mount.js', 
+    'mount.ts', 
     'routes.js',
     'layouts.js',
     'root.svelte',
     'route.svelte',
     'layouts/',
     'context.js',
+    'context.ts',
     'core.js'
   ]
   virtualModules.includes = function (virtual) {

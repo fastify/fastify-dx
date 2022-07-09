@@ -9,7 +9,7 @@ server.decorate('db', {
     'Do laundry',
     'Respond to emails',
     'Write report',
-  ]
+  ],
 })
 
 server.put('/api/todo/items', (req, reply) => {
@@ -22,8 +22,8 @@ server.delete('/api/todo/items', (req, reply) => {
   reply.send({ ok: true })
 })
 
-await server.register(FastifyVite, { 
-  root: import.meta.url, 
+await server.register(FastifyVite, {
+  root: import.meta.url,
   renderer: FastifyDXSolid,
 })
 

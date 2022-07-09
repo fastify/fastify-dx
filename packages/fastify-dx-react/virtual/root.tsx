@@ -1,10 +1,26 @@
 import { Suspense } from 'react'
-import { DXApp } from '/dx:core.jsx'
+import { DXRoute } from '/dx:core.jsx'
 
-export default function Root ({ url, serverInit }) {
+export default function Root ({ url, routes, head, ctxHydration, routeMap }) {
   return (
     <Suspense>
-      <DXApp url={url} {...serverInit} />
+      <Router location={url}>
+        <Routes>{
+          routes.map(({ path, component: Component }) =>
+            <Route
+              key={path}
+              path={path}
+              element={
+                <DXRoute
+                  head={head}
+                  ctxHydration={ctxHydration}
+                  ctx={routeMap[path]}>
+                  <Component />
+                </DXRoute>
+              } />,
+          )
+        }</Routes>
+      </Router>
     </Suspense>
   )
 }

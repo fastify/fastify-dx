@@ -3,40 +3,40 @@
   "scripts": {
     "dev": "node server.js --dev",
     "build": "npm run build:client && npm run build:server",
-    "serve": "node server.js",
-    "devinstall": "zx ../../devinstall.mjs solid -- node server.js --dev",
+    "serve": "tsx server.ts",
+    "devinstall": "zx ../../devinstall.mjs -- tsx server.ts --dev",
     "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr /index.js",
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "build:server": "vite build --outDir dist/server --ssr /index.ts",
+    "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
+    "fastify-dx-solid": "^0.0.4",
+    "tsx": "^3.7.1",
     "fastify-vite": "^3.0.0-beta.23",
     "ky-universal": "^0.10.1",
-    "ky": "^0.31.0",
-    "devalue": "^2.0.1",
-    "minipass": "^3.3.4",
-    "solid-app-router": "^0.4.1",
-    "solid-js": "^1.4.4",
-    "unihead": "^0.0.6"
+    "ky": "^0.31.0"
   },
   "devDependencies": {
-    "vite-plugin-solid": "^2.2.6",
     "@babel/eslint-parser": "^7.16.0",
     "babel-preset-solid": "^1.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.2",
+    "eslint-config-standard-with-typescript": "^22.0.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-solid": "^0.4.7",
     "postcss-preset-env": "^7.7.1",
-    "unocss": "^0.37.4"
+    "unocss": "^0.37.4",
+    "vite-plugin-solid": "^2.2.6"
   },
   "devInstall": {
     "local": {
       "fastify-dx-solid": "^0.0.1-pre"
     },
     "external": {
+      "tsx": "^3.7.1",
       "fastify-vite": "^3.0.0-beta.23",
       "ky-universal": "^0.10.1",
       "ky": "^0.31.0"

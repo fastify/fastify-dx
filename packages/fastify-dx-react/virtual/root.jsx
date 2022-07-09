@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { DXRoute } from '/dx:core.jsx'
 
-export default function Root ({ url, serverInit }) {
+export default function Root ({ url, routes, head, ctxHydration, routeMap }) {
   return (
     <Suspense>
       <Router location={url}>

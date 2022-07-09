@@ -38,6 +38,7 @@
       "fastify-dx-react": "^0.0.1-alpha.0"
     },
     "external": {
+      "tsx": "^3.7.1",
       "fastify-vite": "^3.0.0-beta.23",
       "ky-universal": "^0.10.1"
     }

@@ -1,9 +1,7 @@
 {
-  parser: '@babel/eslint-parser',
+  extends: 'standard-with-typescript',
   parserOptions: {
-    requireConfigFile: false,
-    ecmaVersion: 2021,
-    sourceType: 'module',
+    project: './tsconfig.json',
   },
   plugins: [
     'svelte3'

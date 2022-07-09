@@ -12,12 +12,16 @@ function viteReactFastifyDX (config = {}) {
   const virtualModules = [ 
     'mount.js', 
     'resource.js',
+    'resource.ts',
     'routes.js',
     'layouts.js',
     'create.jsx',
+    'create.tsx',
     'root.jsx',
+    'root.tsx',
     'layouts/',
     'context.js',
+    'context.ts',
     'core.jsx'
   ]
   virtualModules.includes = function (virtual) {
