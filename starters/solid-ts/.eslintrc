@@ -1,0 +1,20 @@
+{
+  parser: '@typescript-eslint/parser',
+  plugins: ['solid'],
+  extends: [
+    'eslint:recommended',
+    'standard-with-typescript',
+    'plugin:solid/typescript'
+  ],
+  ignorePatterns: ['*.d.js'],
+  parserOptions: {
+    project: './tsconfig.json'
+  },
+  rules: {
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    'solid/reactivity': 'off',
+    'comma-dangle': ['error', 'always-multiline'],
+    'import/no-absolute-path': 'off',
+  },
+}

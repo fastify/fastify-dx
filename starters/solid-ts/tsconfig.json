@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+  	"strictNullChecks": true
+  },
+  "include": [
+  	"**/*.ts",
+  	"**/*.tsx"
+  ],
+  "files": [
+  	"server.d.ts"
+  ]
+}
