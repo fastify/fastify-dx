@@ -1,7 +1,7 @@
 import Head from 'unihead/client'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 
-import create from '/dx:create.jsx'
+import create from '/dx:create.tsx'
 import routesPromise from '/dx:routes.js'
 
 mount('main')
