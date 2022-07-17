@@ -29,7 +29,7 @@ await server.register(FastifyVite, {
 })
 
 await server.vite.ready()
-await server.listen(3000)
+await server.listen({ port: 3000 })
 ```
 
 The starter template's [`vite.config.js`](https://github.com/fastify/fastify-dx/blob/main/starters/vue/vite.config.js) file:

@@ -22,11 +22,11 @@ server.delete('/api/todo/items', (req, reply) => {
   reply.send({ ok: true })
 })
 
-await server.register(FastifyVite, { 
+await server.register(FastifyVite, {
   root: import.meta.url, 
   renderer: FastifyDXVue,
 })
 
 await server.vite.ready()
 
-await server.listen(3000)
+await server.listen({ port: 3000 })
