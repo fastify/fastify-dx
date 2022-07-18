@@ -24,6 +24,7 @@
     'comma-dangle': ['error', 'always-multiline'],
     'react/prop-types': 'off',
     'import/no-absolute-path': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
     react: {
