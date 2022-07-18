@@ -1,0 +1,34 @@
+{
+  parser: '@typescript-eslint/parser',
+  plugins: ['react'],
+  extends: [
+    'eslint:recommended',
+    'standard-with-typescript',
+    'plugin:react/recommended',
+  ],
+  parserOptions: {
+    project: './tsconfig.json',
+    requireConfigFile: false,
+    ecmaVersion: 2021,
+    sourceType: 'module',
+    babelOptions: {
+      presets: ['@babel/preset-react'],
+   },
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  rules: {
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    'comma-dangle': ['error', 'always-multiline'],
+    'react/prop-types': 'off',
+    'import/no-absolute-path': 'off',
+    'react/react-in-jsx-scope': 'off',
+  },
+  settings: {
+    react: {
+      version: '18.0',
+    },
+  },
+}

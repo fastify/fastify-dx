@@ -5,19 +5,24 @@ const { fileURLToPath } = require('url')
 function viteReactFastifyDX (config = {}) {  
   const prefix = /^\/?dx:/
   const routing = Object.assign({
-    globPattern: '/pages/**/*.jsx',
+    globPattern: '/pages/**/*.(jsx|tsx)',
     paramPattern: /\[(\w+)\]/,
   }, config)
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [ 
     'mount.js', 
+    'mount.ts', 
     'resource.js',
+    'resource.ts',
     'routes.js',
     'layouts.js',
     'create.jsx',
+    'create.tsx',
     'root.jsx',
+    'root.tsx',
     'layouts/',
     'context.js',
+    'context.ts',
     'core.jsx'
   ]
   virtualModules.includes = function (virtual) {
