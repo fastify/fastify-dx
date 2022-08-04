@@ -74,6 +74,7 @@ export function createHtmlFunction (source, scope, config) {
       // fix inner arrow function allocation
       footer: () => footerTemplate({
         ...context,
+        hydration: '',
         // Decide whether or not to include the hydration script
         ...!context.serverOnly && {
           hydration: (

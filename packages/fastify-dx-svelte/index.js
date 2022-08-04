@@ -77,6 +77,7 @@ export function createHtmlFunction (source, scope, config) {
       }),
       footer: () => footerTemplate({
         ...context,
+        hydration: '',
         // Decide whether or not to include the hydration script
         ...!context.serverOnly && {
           hydration: (
