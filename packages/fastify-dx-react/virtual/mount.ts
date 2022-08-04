@@ -10,7 +10,7 @@ async function mount (target) {
   if (typeof target === 'string') {
     target = document.querySelector(target)
   }
-  const context = await import('/dx:context.js')
+  const context = await import('/dx:context.ts')
   const ctxHydration = await extendContext(window.route, context)
   const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await routesPromise
