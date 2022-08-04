@@ -4,7 +4,7 @@
 
 const { name: example } = path.parse(process.cwd())
 const exRoot = path.resolve(__dirname, 'starters', example)
-const command = process.argv.slice(5)
+const command = process.argv.slice(process.argv.findIndex(_ => _ === '--') + 1)
 
 if (!fs.existsSync(exRoot)) {
   console.log('Must be called from a directory under starters/.')
