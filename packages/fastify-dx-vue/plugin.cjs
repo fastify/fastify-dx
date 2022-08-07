@@ -10,14 +10,16 @@ function viteVueFastifyDX (config = {}) {
   }, config)
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [ 
-    'mount.js', 
-    'resource.js',
+    'mount.js',
+    'mount.ts',
     'routes.js',
     'layout.vue',
     'create.js',
+    'create.ts',
     'root.vue',
     'layouts/',
     'context.js',
+    'context.ts',
     'core.js'
   ]
   virtualModules.includes = function (virtual) {

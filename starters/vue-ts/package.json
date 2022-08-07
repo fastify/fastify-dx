@@ -1,29 +1,37 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "node server.js --dev",
+    "dev": "tsx server.ts --dev",
     "build": "npm run build:client && npm run build:server",
-    "serve": "node server.js",
+    "serve": "tsx server.ts",
     "devinstall": "zx ../../devinstall.mjs -- tsx server.ts --dev",
     "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr /index.js",
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "build:server": "vite build --outDir dist/server --ssr /index.ts",
+    "lint": "eslint . --ext .js,.ts,.vue --fix"
   },
   "dependencies": {
-    "fastify-dx-vue": "^0.0.2",
+    "tsx": "^3.7.1",
     "fastify-vite": "^3.0.0-beta.23",
     "ky-universal": "^0.10.1",
-    "@vueuse/core": "^8.7.4"
+    "@vueuse/core": "^8.7.4",
+    "@vue/server-renderer": "^3.2.33",
+    "devalue": "^2.0.1",
+    "vue-router": "^4.0.15",
+    "unihead": "^0.0.6"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.16.0",
-    "@vitejs/plugin-vue": "^2.3.2",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.2",
+    "@vitejs/plugin-vue": "^1.6.0",
+    "eslint": "^7.24.0",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "@vue/compiler-sfc": "^3.2.6",
+    "@vue/test-utils": "^2.0.0-rc.4",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-vue": "^8.7.1",
+    "eslint-plugin-jest": "^24.3.5",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.8.0",
     "postcss-preset-env": "^7.7.1",
     "unocss": "^0.37.4"
   },
