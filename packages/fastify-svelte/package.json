@@ -1,23 +1,18 @@
 {
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "lint": "eslint . --ext .js,.svelte --fix"
   },
   "type": "module",
   "main": "index.js",
-  "name": "fastify-dx-solid",
-  "version": "0.0.4",
+  "name": "@fastify/svelte",
+  "version": "0.1.0",
   "files": [
-    "virtual/create.jsx",
-    "virtual/create.tsx",
-    "virtual/root.jsx",
-    "virtual/root.tsx",
-    "virtual/route.jsx",
+    "virtual/root.svelte",
+    "virtual/route.svelte",
     "virtual/layouts.js",
-    "virtual/layouts/default.jsx",
+    "virtual/layouts/default.svelte",
     "virtual/context.js",
-    "virtual/context.ts",
     "virtual/mount.js",
-    "virtual/mount.ts",
     "virtual/core.js",
     "virtual/routes.js",
     "index.js",
@@ -32,20 +27,18 @@
   },
   "dependencies": {
     "devalue": "^2.0.1",
-    "minipass": "^3.3.4",
-    "solid-app-router": "^0.4.1",
-    "solid-js": "^1.4.4",
+    "svelte-loadable": "^2.0.1",
+    "svelte-routing": "^1.6.0",
+    "sveltio": "^1.0.5",
     "unihead": "^0.0.6"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.16.0",
-    "babel-preset-solid": "^1.4.4",
-    "eslint": "^7.32.0",
+    "@babel/eslint-parser": "^7.18.2",
+    "eslint": "^8.18.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-solid": "^0.4.7",
-    "vite-plugin-solid": "^2.2.6"
+    "eslint-plugin-svelte3": "^4.0.0"
   }
 }

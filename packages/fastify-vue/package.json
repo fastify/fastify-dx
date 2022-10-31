@@ -1,16 +1,16 @@
 {
   "scripts": {
-    "lint": "eslint . --ext .js,.svelte --fix"
+    "lint": "eslint . --ext .js,.jsx --fix"
   },
   "type": "module",
   "main": "index.js",
-  "name": "fastify-dx-svelte",
-  "version": "0.0.4",
+  "name": "@fastify/vue",
+  "version": "0.1.0",
   "files": [
-    "virtual/root.svelte",
-    "virtual/route.svelte",
-    "virtual/layouts.js",
-    "virtual/layouts/default.svelte",
+    "virtual/create.js",
+    "virtual/root.vue",
+    "virtual/layout.vue",
+    "virtual/layouts/default.vue",
     "virtual/context.js",
     "virtual/mount.js",
     "virtual/core.js",
@@ -26,19 +26,19 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
+    "@vue/server-renderer": "^3.2.33",
     "devalue": "^2.0.1",
-    "svelte-loadable": "^2.0.1",
-    "svelte-routing": "^1.6.0",
-    "sveltio": "^1.0.5",
+    "vue-router": "^4.0.15",
     "unihead": "^0.0.6"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.18.2",
-    "eslint": "^8.18.0",
+    "@babel/eslint-parser": "^7.16.0",
+    "@vitejs/plugin-vue": "^2.3.2",
+    "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-svelte3": "^4.0.0"
+    "eslint-plugin-vue": "^8.7.1"
   }
 }
