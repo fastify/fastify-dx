@@ -19,9 +19,16 @@ const template = require(path.join(exRoot, 'package.json'))
 const { external, local } = template.devInstall
 const dependencies = { ...external }
 
+const localDepMap = {
+  '@fastify/react': 'fastify-react',
+  '@fastify/solid': 'fastify-solid',
+  '@fastify/svelte': 'fastify-svelte',
+  '@fastify/vue': 'fastify-vue',
+}
+
 for (const localDep of Object.keys(local)) {
   for (const [dep, version] of Object.entries(
-    require(path.join(__dirname, 'packages', localDep, 'package.json')).dependencies || [])
+    require(path.join(__dirname, 'packages', localDepMap[localDep], 'package.json')).dependencies || [])
   ) {
     if (!Object.keys(local).includes(dep)) {
       dependencies[dep] = version
@@ -32,16 +39,12 @@ for (const localDep of Object.keys(local)) {
 await createPackageFile(exRoot, dependencies)
 await $`npm install -f`
 
-const localDepMap = {
-  '@fastify/react': 'fastify-dx-react',
-}
-
 for (const localDep of Object.keys(local)) {
   await $`rm -rf ${exRoot}/node_modules/${localDep}`
-  await $`cp -r ${__dirname}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
-  if (localDep === 'fastify-dx') {
-    await $`ln -s ${exRoot}/node_modules/${localDep}/index.mjs ${exRoot}/node_modules/.bin/dx`
-  }
+  await $`cp -r ${__dirname}/packages/${localDepMap[localDep]} ${exRoot}/node_modules/${localDep}`
+  // if (localDep === 'fastify-dx') {
+  //   await $`ln -s ${exRoot}/node_modules/${localDep}/index.mjs ${exRoot}/node_modules/.bin/dx`
+  // }
 }
 
 try {
