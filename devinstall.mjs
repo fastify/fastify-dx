@@ -32,6 +32,10 @@ for (const localDep of Object.keys(local)) {
 await createPackageFile(exRoot, dependencies)
 await $`npm install -f`
 
+const localDepMap = {
+  '@fastify/react': 'fastify-dx-react',
+}
+
 for (const localDep of Object.keys(local)) {
   await $`rm -rf ${exRoot}/node_modules/${localDep}`
   await $`cp -r ${__dirname}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
