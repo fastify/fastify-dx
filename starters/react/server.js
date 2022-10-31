@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-import FastifyDXReact from 'fastify-dx-react'
+import FastifyReact from '@fastify/react'
 
 const server = Fastify()
 
@@ -24,7 +24,7 @@ server.delete('/api/todo/items', (req, reply) => {
 
 await server.register(FastifyVite, { 
   root: import.meta.url, 
-  renderer: FastifyDXReact,
+  renderer: FastifyReact,
 })
 
 await server.vite.ready()

@@ -2,7 +2,7 @@ import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 import viteReact from '@vitejs/plugin-react'
-import viteReactFastifyDX from 'fastify-dx-react/plugin'
+import viteReactFastifyDX from '@fastify/react/plugin'
 import unocss from 'unocss/vite'
 
 const path = fileURLToPath(import.meta.url)
