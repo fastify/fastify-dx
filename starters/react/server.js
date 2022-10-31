@@ -1,5 +1,5 @@
 import Fastify from 'fastify'
-import FastifyVite from 'fastify-vite'
+import FastifyVite from '@fastify/vite'
 import FastifyDXReact from 'fastify-dx-react'
 
 const server = Fastify()
@@ -29,4 +29,4 @@ await server.register(FastifyVite, {
 
 await server.vite.ready()
 
-await server.listen(3000)
+await server.listen({ port: 3000 })
