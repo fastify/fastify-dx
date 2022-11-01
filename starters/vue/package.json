@@ -10,10 +10,11 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
-    "fastify-dx-vue": "^0.0.2",
-    "fastify-vite": "^3.0.0-beta.23",
     "ky-universal": "^0.10.1",
-    "@vueuse/core": "^8.7.4"
+    "@vueuse/core": "^8.7.4",
+    "ky": "^0.31.4",
+    "fastify": "^4.9.2",
+    "@fastify/vite": "^3.0.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
@@ -29,12 +30,14 @@
   },
   "devInstall": {
     "local": {
-      "fastify-dx-vue": "0.0.1-pre"
+      "@fastify/vue": "^0.1.0"
     },
     "external": {
-      "fastify-vite": "^3.0.0-beta.23",
       "ky-universal": "^0.10.1",
-      "@vueuse/core": "^8.7.4"
+      "@vueuse/core": "^8.7.4",
+      "ky": "^0.31.4",
+      "fastify": "^4.9.2",
+      "@fastify/vite": "^3.0.1"
     }
   }
 }

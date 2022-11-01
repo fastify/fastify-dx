@@ -11,13 +11,11 @@
   },
   "dependencies": {
     "tsx": "^3.7.1",
-    "fastify-vite": "^3.0.0-beta.23",
     "ky-universal": "^0.10.1",
     "@vueuse/core": "^8.7.4",
-    "@vue/server-renderer": "^3.2.33",
-    "devalue": "^2.0.1",
-    "vue-router": "^4.0.15",
-    "unihead": "^0.0.6"
+    "ky": "^0.31.4",
+    "fastify": "^4.9.2",
+    "@fastify/vite": "^3.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.0",
@@ -37,13 +35,15 @@
   },
   "devInstall": {
     "local": {
-      "fastify-dx-vue": "0.0.1-pre"
+      "@fastify/vue": "^0.1.0"
     },
     "external": {
       "tsx": "^3.7.1",
-      "fastify-vite": "^3.0.0-beta.23",
       "ky-universal": "^0.10.1",
-      "@vueuse/core": "^8.7.4"
+      "@vueuse/core": "^8.7.4",
+      "ky": "^0.31.4",
+      "fastify": "^4.9.2",
+      "@fastify/vite": "^3.0.1"
     }
   }
 }

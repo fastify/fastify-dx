@@ -2,7 +2,7 @@ import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 import { svelte as viteSvelte } from '@sveltejs/vite-plugin-svelte'
-import viteSvelteFastifyDX from 'fastify-dx-svelte/plugin'
+import fastifySvelte from '@fastify/svelte/plugin'
 import unocss from 'unocss/vite'
 import { extractorSvelte } from '@unocss/core'
 
@@ -16,7 +16,7 @@ const plugins = [
       hydratable: true,
     },
   }),
-  viteSvelteFastifyDX(),
+  fastifySvelte(),
 ]
 
 export default {

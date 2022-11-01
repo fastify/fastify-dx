@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
-import FastifyVite from 'fastify-vite'
-import FastifyDXSolid from 'fastify-dx-solid'
+import FastifyVite from '@fastify/vite'
+import FastifySolid from '@fastify/solid'
 
 const server = Fastify()
 
@@ -24,9 +24,9 @@ server.delete('/api/todo/items', (req, reply) => {
 
 await server.register(FastifyVite, { 
   root: import.meta.url, 
-  renderer: FastifyDXSolid,
+  renderer: FastifySolid,
 })
 
 await server.vite.ready()
 
-await server.listen(3000)
+await server.listen({ port: 3000 })
