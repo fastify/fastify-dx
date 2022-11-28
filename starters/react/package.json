@@ -11,21 +11,15 @@
   },
   "dependencies": {
     "fastify": "^4.9.2",
-    "@fastify/vite": "^3.0.1",
+    "@fastify/vite": "^3.0.2",
+    "@fastify/react": "^0.1.0",
     "ky-universal": "^0.10.1",
-    "ky": "^0.31.4",
-    "devalue": "^2.0.1",
-    "minipass": "^3.3.4",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-router-dom": "^6.3.0",
-    "unihead": "^0.0.6",
-    "valtio": "^1.6.1"
+    "ky": "^0.31.4"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
-    "@vitejs/plugin-react": "^1.3.2",
+    "@vitejs/plugin-react": "^2.2.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -33,8 +27,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.29.4",
     "postcss-preset-env": "^7.7.1",
-    "unocss": "^0.37.4",
-    "vite-plugin-blueprint": "^0.0.4"
+    "unocss": "^0.37.4"
   },
   "devInstall": {
     "local": {
@@ -42,7 +35,7 @@
     },
     "external": {
       "fastify": "^4.9.2",
-      "@fastify/vite": "^3.0.1",
+      "@fastify/vite": "^3.0.2",
       "ky-universal": "^0.10.1",
       "ky": "^0.31.4"
     }
