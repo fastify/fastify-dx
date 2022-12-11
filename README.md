@@ -9,11 +9,11 @@
 
 - [**@fastify/react**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-react) supports **React v18** and includes a base application with all logic needed for **universal routing** with [**React Router**](https://github.com/remix-run/react-router) and global state management with [**Valtio**](https://github.com/pmndrs/valtio). A [**starter template**]() is provided with [**@vitejs/plugin-react**](https://github.com/vitejs/vite-plugin-react).
  
-- [**@fastify/vue**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-vue) supports **Vue v3** and includes a base application with all logic needed for **universal routing** with [**Vue Router**](https://github.com/vuejs/router) and global state management with Vue's own [**reactive()**](https://vuejs.org/api/reactivity-core.html#reactive) primitive. A [**starter template**]() is provided with [**@vitejs/plugin-vue**](https://github.com/vitejs/vite-plugin-vue).
+- [**@fastify/vue**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-vue) supports **Vue v3** and includes a base application with all logic needed for **universal routing** with [**Vue Router**](https://github.com/vuejs/router) and global state management with Vue's own [**`reactive()`**](https://vuejs.org/api/reactivity-core.html#reactive) primitive. A [**starter template**]() is provided with [**@vitejs/plugin-vue**](https://github.com/vitejs/vite-plugin-vue).
  
-- [**@fastify/svelte**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-svelte) supports **Svelte v3** and includes a base application with all logic needed for **universal routing** with [**Svelte Navigator**](https://github.com/mefechoel/svelte-navigator) and global state management with [**Sveltio**](https://github.com/wobsoriano/sveltio). A [**starter template**]() is provided with [**@sveltejs/vite-plugin-svelte**](@sveltejs/vite-plugin-svelte).
+- [**@fastify/svelte**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-svelte) supports **Svelte v3** and includes a base application with all logic needed for **universal routing** with [**Svelte Navigator**](https://github.com/mefechoel/svelte-navigator) and global state management with [**Sveltio**](https://github.com/wobsoriano/sveltio). A [**starter template**]() is provided with [**@sveltejs/vite-plugin-svelte**](https://github.com/sveltejs/vite-plugin-svelte).
  
-- [**@fastify/solid**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-solid)
+- [**@fastify/solid**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-solid) supports **Solid v1.6** and includes a base a application with all logic needed for **universal routing** with [**Solid App Router**](solid-app-router) and global state management with Solid's own [**`createMutable()`**](https://www.solidjs.com/docs/latest/api#createmutable) primitive. A [**starter template**]() is provided with [**vite-plugin-solid**](https://github.com/solidjs/vite-plugin-solid).
 
 ## Status
 
@@ -39,6 +39,6 @@ Created by [Jonas Galvez](https://github.com/sponsors/galvez), **Principal Engin
 - [**A-J Roos**](https://github.com/Asjas)
 - [**James Isaacs**](https://github.com/jamesisaacs2)
 
-[Click here]((https://github.com/sponsors/galvez) to add your name to this list.
+[**Click here**](https://github.com/sponsors/galvez) to add your name to this list.
 
 _Thank you!_
