@@ -1,7 +1,7 @@
 
 #### <img width="200px" alt="Fastify DX" src="https://user-images.githubusercontent.com/12291/163095704-d1bd8541-ecde-4707-8068-17d2fd725c01.svg">
 
-**Fastify DX** is a collection of [@fastify/vite](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) Vue, React, Svelte or Solid from Fastify, while benefiting from automatic hydration, universal routing and data fetching and global, reactive state.
+**Fastify DX** is a collection of [@fastify/vite](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) Vue, React, Svelte or Solid from Fastify, while benefiting from automatic hydration, universal routing and data fetching and global state management.
 
 All renderers implement exactly the same API and functionality, following the the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
 
@@ -9,78 +9,17 @@ All renderers implement exactly the same API and functionality, following the th
 
 **Currently Node v16+, Fastify v4+ and Vite v3+ are supported.**
 
-<table>
-<tr>
-<td width="200px" valign="top">
-
-### [fastify-dx-react](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-dx-react)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) 
+- [**@fastify/react**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-react) supports **React v18+** and is built with [**@vitejs/plugin-react**](https://github.com/vitejs/vite-plugin-react). It is implemented with [**React Router**](https://github.com/remix-run/react-router) for universal routing and [**Valtio**](https://github.com/pmndrs/valtio) for global, reactive state management.
  
-</td>
-<td width="500px"><br>
-
-Try out the [**alpha release** of Fastify DX for React](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md).
-
-</td>
-</tr>
-</table>
-
-
-<table>
-<tr>
-<td width="200px" valign="top">
-
-### [fastify-dx-vue](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-dx-vue)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-vue.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-vue) 
+- [**@fastify/vue**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-vue) supports **Vue v3** and is built with [**@vitejs/plugin-vue**](https://github.com/vitejs/vite-plugin-vue). It is implemented with [**Vue Router**](https://github.com/vuejs/router) for universal routing and Vue's own [**reactive()**](https://vuejs.org/api/reactivity-core.html#reactive) primitive for global state management.
  
-</td>
-<td width="500px"><br>
-
-Try out the [**alpha release** of Fastify DX for Vue](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-vue/README.md).
-
-</td>
-</tr>
-</table>  
-
-
-<table>
-<tr>
-<td width="200px" valign="top">
-
-### [fastify-dx-svelte](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-dx-svelte)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-svelte.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-svelte) 
+- [**@fastify/svelte**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-svelte)
  
-</td>
-<td width="500px"><br>
-
-Try out the [**alpha release** of Fastify DX for Svelte](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-svelte/README.md).
-
-</td>
-</tr>
-</table>  
-
-<table>
-<tr>
-<td width="200px" valign="top">
-
-### [fastify-dx-solid](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-dx-solid)<br><br>[![NPM version](https://img.shields.io/npm/v/fastify-dx-solid.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-solid) 
- 
-</td>
-<td width="500px"><br>
-
-Try out the [**alpha release** of Fastify DX for Solid](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-solid/README.md).
-
-</td>
-</tr>
-</table>  
-
+- [**@fastify/solid**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-solid)
 
 ## Status
 
-Fastify DX is currently in **alpha**.
-
-Right now the focus is on implementing the same API for React, Vue, Solid and Svelte.
-
-A minimal [`zx`](https://github.com/google/zx)-based **CLI** for enhanced **Developer Experience** is planned next.
-
-Subscribe to [**this newsletter**](https://www.getrevue.co/profile/fastify-dx) to hear about the public beta.
+Fastify DX is currently in **beta**.
 
 ## Meta
 
