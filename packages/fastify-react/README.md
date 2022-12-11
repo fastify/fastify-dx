@@ -4,17 +4,7 @@
 
 **Fastify DX for React** (**`@fastify/react`**) is a renderer for [**@fastify/vite**](https://github.com/fastify/fastify-vite).
 
-It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
-
 It has an extremely small core (~1k LOC total) and is built on top of [Fastify](https://github.com/fastify/fastify), [Vite](https://vitejs.dev/), [React Router](https://reactrouter.com/docs/en/v6) and [Valtio](https://github.com/pmndrs/valtio).
-
-[**See the release notes for the 0.0.1 alpha release**](https://github.com/fastify/fastify-dx/releases/tag/v0.0.1).
-
-> At this stage this project is mostly a [**one-man show**](https://github.com/sponsors/galvez), who's devoting all his free time to its completion. Contributions are extremely welcome, as well as bug reports for any issues you may find. 
-
-In this first alpha release it's still missing a test suite. The same is true for [**fastify-vite**](). 
-
-It'll move into **beta** status when test suites are added to both packages.
 
 ## Quick Start
 
@@ -372,7 +362,6 @@ function Login ({ onClick }) {
 
 Note that like routes, it has access to `useRouteContext()`.
 
-
 ## Route Context
 
 ### Initialization module
@@ -651,7 +640,7 @@ See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/p
 
 Created and maintained by [Jonas Galvez](https://github.com/sponsors/galvez), **Principal Engineer** and **Open Sourcerer** at [NodeSource](https://nodesource.com).
 
-New contributors are extremely welcome to look for good first issues.
+New contributors are extremely welcome to look for [good first issues](https://github.com/fastify/fastify-dx/labels/good%20first%20issue).
 
 ## Gold Sponsors
 
