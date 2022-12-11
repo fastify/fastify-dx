@@ -84,10 +84,20 @@ Subscribe to [**this newsletter**](https://www.getrevue.co/profile/fastify-dx) t
 
 ## Meta
 
-Created by [Jonas Galvez](https://github.com/sponsors/galvez), **Engineering Manager** and **Open Sourcerer** at [NearForm](https://nearform.com).
+Created by [Jonas Galvez](https://github.com/sponsors/galvez), **Principal Engineer** and **Open Sourcerer** at [NodeSource](https://nodesource.com).
 
 ## Sponsors
 
-<a href="https://nearform.com"><img width="200px" src="https://user-images.githubusercontent.com/12291/172310344-594669fd-da4c-466b-a250-a898569dfea3.svg"></a>
+<a href="https://nodesource.com"><img width="200px" src="https://user-images.githubusercontent.com/12291/206885948-3fa742a2-1057-4db2-8648-46f5cb673461.svg"></a>
 
-Also [**Duc-Thien Bui**](https://github.com/aecea) and [**Tom Preston-Werner**](https://github.com/mojombo) [via GitHub Sponsors](https://github.com/sponsors/galvez). _Thank you!_
+And [via GitHub Sponsors](https://github.com/sponsors/galvez):
+
+- [**Duc-Thien Bui**](https://github.com/aecea)
+- [**Tom Preston-Werner**](https://github.com/mojombo) 
+- [**Clifford Fajardo**](https://github.com/cliffordfajardo)
+- [**David Adam Coffey**](https://github.com/dacoffey)
+- [**Mezereon**](https://github.com/mezereon-co)
+- [**A-J Roos**](https://github.com/Asjas)
+- [**James Isaacs**](https://github.com/jamesisaacs2)
+
+_Thank you!_
