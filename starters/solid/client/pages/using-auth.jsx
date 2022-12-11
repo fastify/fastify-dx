@@ -11,7 +11,7 @@ export default function UsingCustomLayout (props) {
   let input
   const {state, actions} = useRouteContext()
   const addItem = (value) => {
-    actions.addTodoItem(state, value)
+    actions.todolist.add(state, value)
     input.value = ''
   }
   return (
