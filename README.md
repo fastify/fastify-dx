@@ -1,13 +1,13 @@
 
 #### <img width="200px" alt="Fastify DX" src="https://user-images.githubusercontent.com/12291/163095704-d1bd8541-ecde-4707-8068-17d2fd725c01.svg">
 
-**Fastify DX** is an upcoming **full stack framework** built on top of [**Fastify and Vite**](https://fastify-vite.dev).
+**Fastify DX** is a collection of [@fastify/vite](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) Vue, React, Svelte or Solid from Fastify, while benefiting from automatic hydration, universal routing and data fetching and global, reactive state.
 
-In this early stage, we're working to define a [**Universal Route Module API**](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
+All renderers implement exactly the same API and functionality, following the the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
 
 ## Packages
 
-**Currently only Fastify v3 is supported — v4 support is already in the works.**
+**Currently Node v16+, Fastify v4+ and Vite v3+ are supported.**
 
 <table>
 <tr>
@@ -86,11 +86,13 @@ Subscribe to [**this newsletter**](https://www.getrevue.co/profile/fastify-dx) t
 
 Created by [Jonas Galvez](https://github.com/sponsors/galvez), **Principal Engineer** and **Open Sourcerer** at [NodeSource](https://nodesource.com).
 
-## Sponsors
+## Gold Sponsors
 
 <a href="https://nodesource.com"><img width="200px" src="https://user-images.githubusercontent.com/12291/206885948-3fa742a2-1057-4db2-8648-46f5cb673461.svg"></a>
 
-And [via GitHub Sponsors](https://github.com/sponsors/galvez):
+[Contact me](mailto:jonasgalvez@gmail.com) to add your company's logo here.
+
+## GitHub Sponsors
 
 - [**Duc-Thien Bui**](https://github.com/aecea)
 - [**Tom Preston-Werner**](https://github.com/mojombo) 
@@ -99,5 +101,7 @@ And [via GitHub Sponsors](https://github.com/sponsors/galvez):
 - [**Mezereon**](https://github.com/mezereon-co)
 - [**A-J Roos**](https://github.com/Asjas)
 - [**James Isaacs**](https://github.com/jamesisaacs2)
+
+[Click here]((https://github.com/sponsors/galvez) to add your name to this list.
 
 _Thank you!_
