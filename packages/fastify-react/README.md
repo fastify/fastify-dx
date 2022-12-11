@@ -2,8 +2,6 @@
 
 # @fastify/react [![NPM version](https://img.shields.io/npm/v/@fastify/react.svg?style=flat)](https://www.npmjs.com/package/@fastify/react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-## Introduction
-
 **Fastify DX for React** (**`@fastify/react`**) is a renderer for [**@fastify/vite**](https://github.com/fastify/fastify-vite).
 
 It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
