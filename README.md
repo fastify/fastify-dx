@@ -1,19 +1,17 @@
 
 #### <img width="200px" alt="Fastify DX" src="https://user-images.githubusercontent.com/12291/163095704-d1bd8541-ecde-4707-8068-17d2fd725c01.svg">
 
-**Fastify DX** is a collection of [@fastify/vite](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) Vue, React, Svelte or Solid from Fastify, while benefiting from automatic hydration, universal routing and data fetching and global state management.
-
-All renderers implement exactly the same API and functionality, following the the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
+**Fastify DX** is a collection of [**@fastify/vite**](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) **Vue**, **React**, **Svelte** and **Solid** applications. Each renderer includes an extensible base application provided as [virtual modules](https://hire.jonasgalvez.com.br/2022/jun/10/virtual-modules-for-fun-and-profit/), implementing automatic **serialization**, **hydration**, **universal routing**, **data fetching** and **global state management**. They all follow the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
 
 ## Packages
 
 **Currently Node v16+, Fastify v4+ and Vite v3+ are supported.**
 
-- [**@fastify/react**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-react) supports **React v18+** and is built with [**@vitejs/plugin-react**](https://github.com/vitejs/vite-plugin-react). It is implemented with [**React Router**](https://github.com/remix-run/react-router) for universal routing and [**Valtio**](https://github.com/pmndrs/valtio) for global, reactive state management.
+- [**@fastify/react**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-react) supports **React v18+** and includes a base application with all logic needed for **universal routing** with [**React Router**](https://github.com/remix-run/react-router) and global state management with [**Valtio**](https://github.com/pmndrs/valtio). The [**starter template**]() is provided with [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react).
  
 - [**@fastify/vue**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-vue) supports **Vue v3** and is built with [**@vitejs/plugin-vue**](https://github.com/vitejs/vite-plugin-vue). It is implemented with [**Vue Router**](https://github.com/vuejs/router) for universal routing and Vue's own [**reactive()**](https://vuejs.org/api/reactivity-core.html#reactive) primitive for global state management.
  
-- [**@fastify/svelte**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-svelte)
+- [**@fastify/svelte**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-svelte) supports **Svelte v3**
  
 - [**@fastify/solid**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-solid)
 
