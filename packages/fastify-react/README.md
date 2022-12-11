@@ -1,28 +1,10 @@
 <br>
 
-_This package is part of the [Fastify DX](https://github.com/fastify/fastify-dx) project._
-
 # @fastify/react [![NPM version](https://img.shields.io/npm/v/@fastify/react.svg?style=flat)](https://www.npmjs.com/package/@fastify/react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
-
-# fastify-dx-react [![NPM version](https://img.shields.io/npm/v/fastify-dx-react.svg?style=flat)](https://www.npmjs.com/package/fastify-dx-react) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
-
-- [**Introduction**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#introduction)
-- [**Quick Start**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#quick-start)
-- [**Package Scripts**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#package-scripts)
-- [**Basic Setup**](https://github.com/fastify/fastify-dx/blob/main/docs/react/basic-setup.md)
-- [**Project Structure**](https://github.com/fastify/fastify-dx/blob/main/docs/react/project-structure.md)
-- [**Rendering Modes**](https://github.com/fastify/fastify-dx/blob/main/docs/react/rendering-modes.md)
-- [**Routing Configuration**](https://github.com/fastify/fastify-dx/blob/main/docs/react/routing-config.md)
-- [**Data Prefetching**](https://github.com/fastify/fastify-dx/blob/main/docs/react/data-prefetching.md)
-- [**Route Layouts**](https://github.com/fastify/fastify-dx/blob/main/docs/react/route-layouts.md)
-- [**Route Context**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#route-enter-event)
-- [**Route Enter Event**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#route-enter-event)
-- [**Meta Tags**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#meta-tags)
-- [**Virtual Modules**](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#quick-start)
 
 ## Introduction
 
-**Fastify DX for React** is a renderer adapter for [**fastify-vite**](https://github.com/fastify/fastify-vite).
+**Fastify DX for React** (**`@fastify/react`**) is a renderer for [**@fastify/vite**](https://github.com/fastify/fastify-vite).
 
 It is a **fast**, **lightweight** alternative to Next.js and Remix packed with **Developer Experience** features.
 
