@@ -32,7 +32,7 @@ export default {
     const inputValue = ref(null)
     const { state, actions } = useRouteContext()
     const addItem = async () => {
-      await actions.addTodoItem(state, inputValue.value)
+      await actions.todoList.add(state, inputValue.value)
       inputValue.value = ''
     }
     return { state, inputValue, addItem }
