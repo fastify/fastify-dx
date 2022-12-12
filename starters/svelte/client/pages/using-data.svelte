@@ -11,7 +11,7 @@ export let getData = ({ server }) => {
 </script>
 
 <script>
-import { Link } from 'svelte-routing'
+import { Link } from 'svelte-navigator'
 import { useRouteContext } from '/dx:core.js'
 
 const { data } = useRouteContext()

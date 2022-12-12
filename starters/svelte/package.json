@@ -10,10 +10,13 @@
     "lint": "eslint . --ext .js,.svelte --fix"
   },
   "dependencies": {
-    "ky-universal": "^0.10.1",
-    "ky": "^0.31.4",
     "fastify": "^4.9.2",
-    "@fastify/vite": "^3.0.1"
+    "@fastify/vite": "^3.0.1",
+    "devalue": "^2.0.1",
+    "svelte-loadable": "^2.0.1",
+    "svelte-navigator": "^3.2.2",
+    "sveltio": "^1.0.5",
+    "unihead": "^0.0.6"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
@@ -32,8 +35,6 @@
       "@fastify/svelte": "^0.1.0"
     },
     "external": {
-      "ky-universal": "^0.10.1",
-      "ky": "^0.31.4",
       "fastify": "^4.9.2",
       "@fastify/vite": "^3.0.1"
     }

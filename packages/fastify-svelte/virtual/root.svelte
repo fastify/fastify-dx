@@ -1,15 +1,12 @@
 <script>
-import { proxy } from 'sveltio'
-import { Router, Route } from 'svelte-routing'
+import { Router, Route } from 'svelte-navigator'
 import DXRoute from '/dx:route.svelte'
 import { isServer } from '/dx:core.js'
 
 export let url = null
 export let payload
 
-let state = isServer
-  ? payload.serverRoute.state
-  : proxy(payload.serverRoute.state)
+let state = payload.serverRoute.state
 </script>
 
 <Router url="{url}">

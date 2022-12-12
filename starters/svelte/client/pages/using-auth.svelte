@@ -7,7 +7,7 @@ export let layout = 'auth'
 </script>
 
 <script>
-import { Link } from 'svelte-routing'
+import { Link } from 'svelte-navigator'
 import { useRouteContext } from '/dx:core.js'
 
 let value = null
@@ -15,7 +15,7 @@ let value = null
 const { snapshot, state, actions } = useRouteContext()
 
 const addItem = async () => {
-  await actions.addTodoItem(state, value)
+  await actions.todoList.add(state, value)
   value = ''
 }
 </script>

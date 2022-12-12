@@ -1,5 +1,6 @@
 <script>
 import { setContext } from 'svelte'
+import { proxy } from 'sveltio'
 import Loadable from 'svelte-loadable'
 import { routeContext, jsonDataFetch } from '/dx:core.js'
 import layouts from '/dx:layouts.js'
@@ -17,6 +18,8 @@ export let component
 export let payload
 export let state
 export let location
+
+state = proxy(state)
 
 let ctx = payload.routeMap[path]
 
@@ -66,6 +69,8 @@ async function setup () {
     }
   }
 }
+
+console.log('isServer', isServer)
 
 let setupClientRouteContext = !isServer && setup()
 </script>

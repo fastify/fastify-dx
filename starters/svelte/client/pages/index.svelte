@@ -8,7 +8,7 @@ export let getMeta = () => {
 
 <script>
 import logo from '/assets/logo.svg'
-import { Link } from 'svelte-routing'
+import { Link } from 'svelte-navigator'
 import { isServer, useRouteContext } from '/dx:core.js'
 const { state } = useRouteContext()
 

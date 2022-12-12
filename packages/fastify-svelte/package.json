@@ -28,7 +28,7 @@
   "dependencies": {
     "devalue": "^2.0.1",
     "svelte-loadable": "^2.0.1",
-    "svelte-routing": "^1.6.0",
+    "svelte-navigator": "^3.2.2",
     "sveltio": "^1.0.5",
     "unihead": "^0.0.6"
   },

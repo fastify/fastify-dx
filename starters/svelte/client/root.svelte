@@ -1,7 +1,7 @@
 <script>
 import 'uno.css'
 import { proxy } from 'sveltio'
-import { Router, Route } from 'svelte-routing'
+import { Router, Route } from 'svelte-navigator'
 import DXRoute from '/dx:route.svelte'
 import { isServer } from '/dx:core.js'
 

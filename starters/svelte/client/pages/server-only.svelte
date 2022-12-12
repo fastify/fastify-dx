@@ -9,7 +9,7 @@ export function getMeta () {
 </script>
 
 <script>
-import { Link } from 'svelte-routing'
+import { Link } from 'svelte-navigator'
 </script>
 
 <p>This route is rendered on the server only!</p>
