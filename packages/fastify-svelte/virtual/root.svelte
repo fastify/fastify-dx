@@ -5,8 +5,6 @@ import { isServer } from '/dx:core.js'
 
 export let url = null
 export let payload
-
-let state = payload.serverRoute.state
 </script>
 
 <Router url="{url}">
@@ -15,7 +13,6 @@ let state = payload.serverRoute.state
       <DXRoute 
         path={path}
         location={location}
-        state={state}
         payload={payload}
         component={component} />
     </Route>

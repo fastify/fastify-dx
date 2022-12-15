@@ -20,12 +20,12 @@ server.decorate('db', {
 })
 
 server.put('/api/todo/items', (req, reply) => {
-  server.db.todoList.push(req.body.item)
+  server.db.todoList.push(req.body)
   reply.send({ ok: true })
 })
 
 server.delete('/api/todo/items', (req, reply) => {
-  server.db.todoList.splice(req.body.index, 1)
+  server.db.todoList.splice(req.body, 1)
   reply.send({ ok: true })
 })
 

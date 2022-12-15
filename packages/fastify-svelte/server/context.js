@@ -1,4 +1,3 @@
-
 const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
@@ -21,6 +20,7 @@ export default class RouteContext {
     this.reply = reply
     this.head = {}
     this.state = null
+    this.stateProxy = null
     this.data = route.data
     this.firstRender = true
     this.layout = route.layout
@@ -43,7 +43,7 @@ export default class RouteContext {
 
   toJSON () {
     return {
-      state: this.state,
+      state: this.stateProxy,
       data: this.data,
       layout: this.layout,
       getMeta: this.getMeta,
