@@ -6,8 +6,9 @@
 - [**Solid Router**](https://github.com/solidjs/solid-router) for **universal routing**;
 - Solid's own [**`createMutable()`**](https://www.solidjs.com/docs/latest/api#createmutable) primitive for global state management.
 
-👉 [**Starter template**]()<br>
-👉 [**Documentation**]()
+👉 [**Starter template**](https://github.com/fastify/fastify-dx/tree/main/starters/solid)<br>
+👉 [**Documentation**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-solid)
+
 
 ## @fastify/svelte
 
@@ -16,5 +17,5 @@
 - [**Svelte Navigator**](https://github.com/mefechoel/svelte-navigator) for **universal routing**;
 - [**Sveltio**](https://github.com/wobsoriano/sveltio) for global state management.
 
-👉 [**Starter template**]()<br>
-👉 [**Documentation**]()
+👉 [**Starter template**](https://github.com/fastify/fastify-dx/tree/main/starters/svelte)<br>
+👉 [**Documentation**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-svelte)
