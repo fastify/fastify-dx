@@ -39,7 +39,7 @@ Created by [Jonas Galvez](https://github.com/sponsors/galvez), **Principal Engin
 
 <a href="https://nodesource.com"><img width="200px" src="https://user-images.githubusercontent.com/12291/206885948-3fa742a2-1057-4db2-8648-46f5cb673461.svg"></a>
 
-[Contact me](mailto:jonasgalvez@gmail.com) to add your company's logo here.
+[**Contact me**](mailto:jonasgalvez@gmail.com) to add your company's logo here.
 
 ## GitHub Sponsors
 
