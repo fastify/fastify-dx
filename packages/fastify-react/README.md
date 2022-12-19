@@ -60,7 +60,7 @@ It also includes some _**opinionated**_ essentials:
 
 ## Basic setup
 
-The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react) follows [fastify-vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. 
+The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react) follows [@fastify/vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. 
 
 If you want a flat directory setup, where server and client files are mixed together, you can manually set `clientModule` to something else. Note that in this case you'll also need to update `root` in your `vite.config.js` file.
 
@@ -74,14 +74,14 @@ The starter template's `server.js` file:
 
 ```js
 import Fastify from 'fastify'
-import FastifyVite from 'fastify-vite'
-import FastifyDXReact from '@fastify/react'
+import FastifyVite from '@fastify/vite'
+import FastifyReact from '@fastify/react'
 
 const server = Fastify()
 
 await server.register(FastifyVite, { 
   root: import.meta.url, 
-  renderer: FastifyDXReact,
+  renderer: FastifyReact,
 })
 
 await server.vite.ready()
@@ -107,7 +107,7 @@ const plugins = [
 export default { root, plugins }
 ```
 
-Note that you only need to use Fastify DX's Vite plugin, which includes all functionality from [fastify-vite](https://github.com/fastify/fastify-vite)'s Vite plugin.
+Note that you only need to use Fastify DX's Vite plugin, which includes all functionality from [@fastify/vite](https://github.com/fastify/fastify-vite)'s Vite plugin.
 
 </td>
 </tr>
@@ -484,7 +484,7 @@ The example demonstrates how to turn off SSR and downgrade to CSR-only, assuming
 
 Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX renders `<head>` elements independently from the SSR phase. This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then perform SSR.
 
-> Additional `<link>` preload tags can be produced from the SSR phase. This is **not currently implemented** in this **alpha release** but is a planned feature. If you can't wait for it, you can roll out your own (and perhaps contribute your solution) by providing your own [`createHtmlFunction()`](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/index.js#L57) to [fastify-vite](https://github.com/fastify/fastify-vite).
+> Additional `<link>` preload tags can be produced from the SSR phase. This is **not currently implemented** in this **alpha release** but is a planned feature. If you can't wait for it, you can roll out your own (and perhaps contribute your solution) by providing your own [`createHtmlFunction()`](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/index.js#L57) to [@fastify/vite](https://github.com/fastify/fastify-vite).
 
 ### `getMeta()`
 
