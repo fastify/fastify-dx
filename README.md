@@ -14,7 +14,7 @@
 - [**Vue Router**](https://github.com/vuejs/router) for **universal routing**;
 - Vue's own [**`reactive()`**](https://vuejs.org/api/reactivity-core.html#reactive) primitive for global state management.
 
-👉 [**Starter template**](https://github.com/fastify/fastify-dx/tree/dev/starter/vue)<br>
+👉 [**Starter template**](https://github.com/fastify/fastify-dx/tree/main/starter/vue)<br>
 👉 [**Documentation**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-vue)
 
 ## @fastify/react
@@ -24,7 +24,7 @@
 - [**React Router**](https://github.com/remix-run/react-router) for universal routing 
 - [**Valtio**](https://github.com/pmndrs/valtio) for global state management. 
 
-👉 [**Starter template**](https://github.com/fastify/fastify-dx/tree/dev/starter/react)<br>
+👉 [**Starter template**](https://github.com/fastify/fastify-dx/tree/main/starter/react)<br>
 👉 [**Documentation**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-react)
 
 ## Status
