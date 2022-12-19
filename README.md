@@ -1,7 +1,7 @@
 
 #### <img width="200px" alt="Fastify DX" src="https://user-images.githubusercontent.com/12291/163095704-d1bd8541-ecde-4707-8068-17d2fd725c01.svg">
 
-**Fastify DX** is a collection of [**@fastify/vite**](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) **Vue**, **React**, **Svelte** and **Solid** applications. Each renderer includes an extensible base application provided as [virtual modules](https://hire.jonasgalvez.com.br/2022/jun/10/virtual-modules-for-fun-and-profit/), implementing automatic **serialization**, **hydration**, **universal routing**, **data fetching** and **global state management**. They all follow the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
+**Fastify DX** is a collection of [**@fastify/vite**](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) **Vue** and **React**applications (support for **Svelte** and **Solid** coming soon). Each renderer includes an extensible base application provided as [virtual modules](https://hire.jonasgalvez.com.br/2022/jun/10/virtual-modules-for-fun-and-profit/), implementing automatic **serialization**, **hydration**, **universal routing**, **data fetching** and **global state management**. They all follow the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
 
 ## Packages
 
@@ -14,28 +14,8 @@
 - [**Vue Router**](https://github.com/vuejs/router) for **universal routing**;
 - Vue's own [**`reactive()`**](https://vuejs.org/api/reactivity-core.html#reactive) primitive for global state management.
 
-👉 [**Starter template**]()<br>
-👉 [**Documentation**]()
-
-## @fastify/solid
-
-[**@fastify/solid**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-solid) features **Solid v1.6** support via [**vite-plugin-solid**](https://github.com/solidjs/vite-plugin-solid) with:
-
-- [**Solid Router**](https://github.com/solidjs/solid-router) for **universal routing**;
-- Solid's own [**`createMutable()`**](https://www.solidjs.com/docs/latest/api#createmutable) primitive for global state management.
-
-👉 [**Starter template**]()<br>
-👉 [**Documentation**]()
-
-## @fastify/svelte
-
-[**@fastify/svelte**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-svelte) features **Svelte v3** support via [**@sveltejs/vite-plugin-svelte**](https://github.com/sveltejs/vite-plugin-svelte) with:
-
-- [**Svelte Navigator**](https://github.com/mefechoel/svelte-navigator) for **universal routing**;
-- [**Sveltio**](https://github.com/wobsoriano/sveltio) for global state management.
-
-👉 [**Starter template**]()<br>
-👉 [**Documentation**]()
+👉 [**Starter template**](https://github.com/fastify/fastify-dx/tree/dev/starter/vue)<br>
+👉 [**Documentation**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-vue)
 
 ## @fastify/react
 
@@ -44,9 +24,8 @@
 - [**React Router**](https://github.com/remix-run/react-router) for universal routing 
 - [**Valtio**](https://github.com/pmndrs/valtio) for global state management. 
 
-👉 [**Starter template**]()<br>
-👉 [**Documentation**]()
-
+👉 [**Starter template**](https://github.com/fastify/fastify-dx/tree/dev/starter/react)<br>
+👉 [**Documentation**](https://github.com/fastify/fastify-dx/tree/main/packages/fastify-react)
 
 ## Status
 

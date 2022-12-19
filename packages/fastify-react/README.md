@@ -19,7 +19,7 @@ degit fastify/fastify-dx/starters/react
 > **If you're starting a project from scratch**, you'll need these packages installed.
 >
 > ```bash
-> npm i fastify fastify-vite fastify-dx-react -P
+> npm i fastify @fastify/vite @fastify/react -P
 > npm i @vitejs/plugin-react -D
 > ```
 
@@ -75,7 +75,7 @@ The starter template's `server.js` file:
 ```js
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import FastifyDXReact from 'fastify-dx-react'
+import FastifyDXReact from '@fastify/react'
 
 const server = Fastify()
 
@@ -92,7 +92,7 @@ The starter template's [`vite.config.js`](https://github.com/fastify/fastify-dx/
 
 ```js
 import viteReact from '@vitejs/plugin-react'
-import viteReactFastifyDX from 'fastify-dx-react/plugin'
+import viteReactFastifyDX from '@fastify/react/plugin'
 import unocss from 'unocss/vite'
 
 const path = fileURLToPath(import.meta.url)
@@ -139,7 +139,7 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/r
 └── package.json
 ```
   
-Several internal files are provided as virtual modules by Fastify DX. They are located inside the `fastify-dx-react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. 
+Several internal files are provided as virtual modules by Fastify DX. They are located inside the `@fastify/react` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. 
 
 In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. Find the detailed rundown of all virtual modules [here][virtual-modules].
 
@@ -279,7 +279,7 @@ const plugins = [
 
 You also can export a `path` constant from your route modules, in which case its value will be used to **override the dynamically inferred paths from the directory structure**. 
 
-Additionally, [**you can provide your own routes**](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-dx-react#dxroutesjs).
+Additionally, [**you can provide your own routes**](https://github.com/fastify/fastify-dx/tree/dev/packages/fastify-react#dxroutesjs).
 
 ```jsx
 export const path = '/my-page'
@@ -484,13 +484,13 @@ The example demonstrates how to turn off SSR and downgrade to CSR-only, assuming
 
 Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX renders `<head>` elements independently from the SSR phase. This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then perform SSR.
 
-> Additional `<link>` preload tags can be produced from the SSR phase. This is **not currently implemented** in this **alpha release** but is a planned feature. If you can't wait for it, you can roll out your own (and perhaps contribute your solution) by providing your own [`createHtmlFunction()`](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/index.js#L57) to [fastify-vite](https://github.com/fastify/fastify-vite).
+> Additional `<link>` preload tags can be produced from the SSR phase. This is **not currently implemented** in this **alpha release** but is a planned feature. If you can't wait for it, you can roll out your own (and perhaps contribute your solution) by providing your own [`createHtmlFunction()`](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/index.js#L57) to [fastify-vite](https://github.com/fastify/fastify-vite).
 
 ### `getMeta()`
 
 To populate `<title>`, `<meta>` and `<link>` elements, export a `getMeta()` function that returns an object matching the format expected by [unihead](https://github.com/galvez/unihead), the underlying library used by Fastify DX.
   
-It receives the [route context](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/README.md#route-context) as first parameter and runs after `getData()`, allowing you to access any `data` populated by these other functions to generate your tags.
+It receives the [route context](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/README.md#route-context) as first parameter and runs after `getData()`, allowing you to access any `data` populated by these other functions to generate your tags.
 
 ```jsx
 export function getMeta (ctx) {
@@ -512,7 +512,7 @@ export function Index () {
 
 **Fastify DX** relies on [virtual modules](https://github.com/rollup/plugins/tree/master/packages/virtual) to save your project from having too many boilerplate files. Virtual modules are a [Rollup](https://rollupjs.org/guide/en/) feature exposed and fully supported by [Vite](https://vitejs.dev/). When you see imports that start with `/dx:`, you know a Fastify DX virtual module is being used.
 
-Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:root.jsx` virtual module to provide the React Router shell of your application. If you copy the `root.jsx` file [from the fastify-dx-react package](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/root.jsx) and place it your Vite project root, **that copy of the file is used instead**. In fact, the starter template already comes with a custom `root.jsx` of its own to include UnoCSS.
+Fastify DX virtual modules are **fully ejectable**. For instance, the starter template relies on the `/dx:root.jsx` virtual module to provide the React Router shell of your application. If you copy the `root.jsx` file [from the @fastify/react package](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/virtual/root.jsx) and place it your Vite project root, **that copy of the file is used instead**. In fact, the starter template already comes with a custom `root.jsx` of its own to include UnoCSS.
 
 Aside from `root.jsx`, the starter template comes with two other virtual modules already ejected and part of the local project — `context.js` and `layouts/default.jsx`. If you don't need to customize them, you can safely removed them from your project.
 
@@ -548,7 +548,7 @@ export default import.meta.env.SSR
   : hydrateRoutes(import.meta.glob('$globPattern'))
 ```
 
-See [the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/routes.js) for the `createRoutes()` and `hydrateRoutes()` definitions. 
+See [the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/virtual/routes.js) for the `createRoutes()` and `hydrateRoutes()` definitions. 
 
 If you want to use your own custom routes list, you must eject this file as-is and replace the glob imports with your own routes list:
 
@@ -573,7 +573,7 @@ Implements `useRouteContext()`, `DXApp` and `DXRoute`.
 
 > React Router's [nested routes](https://reactrouter.com/docs/en/v6/getting-started/concepts#nested-routes) aren't supported yet.
 
-See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/core.jsx).
+See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/virtual/core.jsx).
 
 ### `/dx:create.jsx`
 
@@ -593,7 +593,7 @@ export default function create ({ url, ...serverInit }) {
 }
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/create.jsx).
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/virtual/create.jsx).
 
 ### `/dx:layouts.js`
 
@@ -618,7 +618,7 @@ export default Object.fromEntries(
 )
 ```
 
-What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/layouts.js).
+What you see above is its [full definition](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/virtual/layouts.js).
 
 ### `/dx:mount.js`
 
@@ -626,7 +626,7 @@ This is the file `index.html` links to by default. It sets up the application wi
 
 <b>You'll rarely need to customize this file.</b>
 
-[See the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/mount.js) for the `mount()` function definition.
+[See the full file](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/virtual/mount.js) for the `mount()` function definition.
 
 ### `/dx:resource.js`
 
@@ -634,7 +634,7 @@ Provides the `waitResource()` and `waitFetch()` data fetching helpers implementi
 
 <b>You'll rarely need to customize this file.</b>
 
-See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-dx-react/virtual/resource.js).
+See its full definition [here](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-react/virtual/resource.js).
 
 ## Maintainance
 

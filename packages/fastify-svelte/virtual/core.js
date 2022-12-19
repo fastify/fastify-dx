@@ -5,8 +5,14 @@ export const isServer = import.meta.env.SSR
 export const routeContext = Symbol('routeContext')
 
 export function useRouteContext () {
-  const ctx = getContext(routeContext).routeContext
-  ctx.snapshot = useSnapshot(ctx.state)
+  const { 
+    routeContext: ctx, 
+    state,
+    actions
+  } = getContext(routeContext)
+  ctx.state = state
+  ctx.actions = actions
+  ctx.snapshot = useSnapshot(state)
   return ctx
 }
 

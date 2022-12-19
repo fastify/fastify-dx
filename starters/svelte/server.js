@@ -20,6 +20,7 @@ server.decorate('db', {
 })
 
 server.put('/api/todo/items', (req, reply) => {
+  console.log('!')
   server.db.todoList.push(req.body)
   reply.send({ ok: true })
 })
