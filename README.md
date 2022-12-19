@@ -1,7 +1,7 @@
 
 #### <img width="200px" alt="Fastify DX" src="https://user-images.githubusercontent.com/12291/163095704-d1bd8541-ecde-4707-8068-17d2fd725c01.svg">
 
-**Fastify DX** is a collection of [**@fastify/vite**](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) **Vue** and **React**applications (support for **Svelte** and **Solid** coming soon). Each renderer includes an extensible base application provided as [virtual modules](https://hire.jonasgalvez.com.br/2022/jun/10/virtual-modules-for-fun-and-profit/), implementing automatic **serialization**, **hydration**, **universal routing**, **data fetching** and **global state management**. They all follow the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
+**Fastify DX** is a collection of [**@fastify/vite**](https://fastify-vite.dev) renderers, allowing you to serve static or live (SSR) **Vue** and **React** applications (support for **Svelte** and **Solid** coming soon). Each renderer includes an extensible base application provided as [virtual modules](https://hire.jonasgalvez.com.br/2022/jun/10/virtual-modules-for-fun-and-profit/), implementing automatic **serialization**, **hydration**, **universal routing**, **data fetching** and **global state management**. They all follow the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md).
 
 ## Packages
 
