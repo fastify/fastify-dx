@@ -14,7 +14,7 @@
     "ky": "^0.31.4",
     "fastify": "^4.9.2",
     "@fastify/vite": "^3.0.1",
-    "devalue": "^2.0.1",
+    "devalue": "^5.5.0",
     "minipass": "^3.3.4",
     "solid-app-router": "^0.4.1",
     "solid-js": "^1.4.4",
