@@ -1,4 +1,4 @@
 
-**Fastify DX** has been deprecated in favor of [**@fastify/vite**](https://fastify-vite.dev).
+**Fastify DX** has been deprecated in favor of [**@fastify/vite**](https://github.com/fastify/fastify-vite).
 
-Read all about it in [this blog post](https://hire.jonasgalvez.com.br/2023/nov/23/fastify-frontends).
+Read all about it in [this blog post](./blog-post.pdf).
